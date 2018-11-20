@@ -1,0 +1,74 @@
+/* Alert message for expired card */
+"Card has expired. Please select a valid card!" = "Kortti ei ole voimassa. Ole hyvä, valitse voimassaoleva kortti";
+
+/* Action sheet title for user to select payment method */
+"Choose a payment method" = "Valitse maksutapa";
+
+/* Payment option */
+"Credit cards" = "Luottokortit";
+
+/* Payment option */
+"Other" = "Muut";
+
+/* Alert displayed when user selects a payment option not supported */
+"Payment method not supported" = "Maksutapa ei tuettu";
+
+/* Alert message instructing the user to input a valid value */
+"Please add a non-zero value." = "Ole hyvä, syötä arvo";
+
+/* Label for UISwitch. Production case */
+"Production" = "Tuotanto";
+
+/* Label for UISwitch. Test case */
+"Test" = "Testi";
+
+/* Transaction rollback error message */
+"There was an error when rolling back the transaction." = "Virhe tapahtuman peruutuksessa";
+
+/* Generic error message. */
+"There was an unexpected error. \n Please contact customer service if the problem persists." = "Odottamaton virhe. \n Ole hyvä, ota yhteyttä asiakaspalveluun jos ongelma jatkuu";
+
+/* Generic error message for whenever something went wrong with a transaction */
+"There was an unexpected error. Please contact customer service if the problem persists." = " Odottamaton virhe. \n Ole hyvä, ota yhteyttä asiakaspalveluun jos ongelma jatkuu ";
+
+/* Cancelation message */
+"You cancelled the transaction." = "Keskeytit tapahtuman";
+
+/* Generic successful message */
+"Your payment was approved. You will receive the items within 1-3 business days." = "Maksu on hyväksytty. Saat tuotteet 1-3 arkipäivässä";
+
+/* Action sheet cancel option */
+"CANCEL" = "KESKEYTÄ";
+
+/* Used as screen title */
+"Pay" = "Maksu";
+
+/* Navigation bar title after the card was saved */
+"Card saved" = "Kortti talletettu";
+
+/* Successful case message after the card was saved */
+"Your card has been saved" = "Korttisi on talletettu ";
+
+/* Navigation bar title for successful purchase */
+"Payment completed" = "Maksu suoritettu";
+
+/* Successful purchase message */
+"Thanks for shopping" = "Kiitos ostoksista";
+
+/* Navigation bar title */
+"Failed" = "Epäonnistui";
+
+/* Failed saving card message */
+"There was an error. Please try again later" = "Virhe, yritä myöhemmin uudestaan";
+
+/* Navigation bar title */
+"Cancelled" = "Keskeytetty";
+
+/* Cancelled transaction message */
+"Process is cancelled" = "Tapahtuma keskeytetty";
+
+/* Failed transaction navigation title */
+"Failed" = "Virhe";
+
+/* Failed transaction message */
+"There was an error. Please try again later" = " Virhe, yritä myöhemmin uudestaan ";

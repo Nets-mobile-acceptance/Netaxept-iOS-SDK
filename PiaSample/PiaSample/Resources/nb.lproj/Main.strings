@@ -1,0 +1,252 @@
+
+/* Class = "UIButton"; normalTitle = "  Sign Up  "; ObjectID = "0He-er-SC3"; */
+"0He-er-SC3.normalTitle" = "  Sign Up  ";
+
+/* Class = "UITextField"; placeholder = "Enter total amount"; ObjectID = "16c-gT-MXO"; */
+"16c-gT-MXO.placeholder" = "Enter total amount";
+
+/* Class = "UITextField"; text = "10.00"; ObjectID = "16c-gT-MXO"; */
+"16c-gT-MXO.text" = "10.00";
+
+/* Class = "UILabel"; text = "Background color"; ObjectID = "1sB-Lc-xJK"; */
+"1sB-Lc-xJK.text" = "Background color";
+
+/* Class = "UILabel"; text = "Main Button Background color"; ObjectID = "2nr-ps-PDe"; */
+"2nr-ps-PDe.text" = "Main Button Background color";
+
+/* Class = "UIViewController"; title = "Card saved"; ObjectID = "3p2-x6-l4q"; */
+"3p2-x6-l4q.title" = "Card saved";
+
+/* Class = "UILabel"; text = "Text field error message color"; ObjectID = "4Gt-AX-vcV"; */
+"4Gt-AX-vcV.text" = "Text field error message color";
+
+/* Class = "UILabel"; text = "Test Merchant ID"; ObjectID = "5a4-Xy-kOF"; */
+"5a4-Xy-kOF.text" = "Test Merchant ID";
+
+/* Class = "UILabel"; text = "New Configuration"; ObjectID = "5sa-xh-vv4"; */
+"5sa-xh-vv4.text" = "New Configuration";
+
+/* Class = "UILabel"; text = "Netaxept Merchant ID"; ObjectID = "8Fa-Km-69V"; */
+"8Fa-Km-69V.text" = "Netaxept Merchant ID";
+
+/* Class = "UILabel"; text = "Netaxept Merchant ID"; ObjectID = "8jT-QC-dLt"; */
+"8jT-QC-dLt.text" = "Netaxept Merchant ID";
+
+/* Class = "UILabel"; text = "Production Merchant ID"; ObjectID = "96U-Gf-GaM"; */
+"96U-Gf-GaM.text" = "Production Merchant ID";
+
+/* Class = "UILabel"; text = "CardIO Button Text Color"; ObjectID = "9gW-Sb-uYr"; */
+"9gW-Sb-uYr.text" = "CardIO Button Text Color";
+
+/* Class = "UILabel"; text = "Card Info"; ObjectID = "AIY-bG-WPu"; */
+"AIY-bG-WPu.text" = "Card Info";
+
+/* Class = "UIBarButtonItem"; title = "< Back"; ObjectID = "AKG-5S-WfC"; */
+"AKG-5S-WfC.title" = "< Back";
+
+/* Class = "UILabel"; text = "Navigation Bar color"; ObjectID = "Ajm-0p-9np"; */
+"Ajm-0p-9np.text" = "Navigation Bar color";
+
+/* Class = "UIButton"; normalTitle = "☰"; ObjectID = "B4D-Ye-kLs"; */
+"B4D-Ye-kLs.normalTitle" = "☰";
+
+/* Class = "UILabel"; text = "Production Base URL"; ObjectID = "BBX-6f-dMu"; */
+"BBX-6f-dMu.text" = "Production Base URL";
+
+/* Class = "UILabel"; text = "CardIO Text Font"; ObjectID = "BMR-QW-SDQ"; */
+"BMR-QW-SDQ.text" = "CardIO Text Font";
+
+/* Class = "UINavigationItem"; title = "Payment Methods"; ObjectID = "BUe-6Y-32Q"; */
+"BUe-6Y-32Q.title" = "Payment Methods";
+
+/* Class = "UILabel"; text = "Total"; ObjectID = "BkM-HE-tqR"; */
+"BkM-HE-tqR.text" = "Total";
+
+/* Class = "UILabel"; text = "Production Merchant ID"; ObjectID = "C6T-Zy-IV8"; */
+"C6T-Zy-IV8.text" = "Production Merchant ID";
+
+/* Class = "UILabel"; text = "Switch on tint color"; ObjectID = "DR1-VP-TfM"; */
+"DR1-VP-TfM.text" = "Switch on tint color";
+
+/* Class = "UILabel"; text = "Enter customer ID"; ObjectID = "FbJ-NK-SOH"; */
+"FbJ-NK-SOH.text" = "Enter customer ID";
+
+/* Class = "UILabel"; text = "Navigation Bar title color"; ObjectID = "GCN-oF-rbs"; */
+"GCN-oF-rbs.text" = "Navigation Bar title color";
+
+/* Class = "UILabel"; text = "CardIO Button Text Font"; ObjectID = "GGS-2e-Xg6"; */
+"GGS-2e-Xg6.text" = "CardIO Button Text Font";
+
+/* Class = "UIButton"; normalTitle = "Change"; ObjectID = "HKu-1g-cex"; */
+"HKu-1g-cex.normalTitle" = "Change";
+
+/* Class = "UIButton"; normalTitle = "Cancel"; ObjectID = "IZv-9G-XZT"; */
+"IZv-9G-XZT.normalTitle" = "Cancel";
+
+/* Class = "UILabel"; text = "Test Merchant ID"; ObjectID = "KKx-05-IXe"; */
+"KKx-05-IXe.text" = "Test Merchant ID";
+
+/* Class = "UILabel"; text = "Production"; ObjectID = "KPd-X7-yrN"; */
+"KPd-X7-yrN.text" = "Production";
+
+/* Class = "UILabel"; text = "Application Version"; ObjectID = "Ktq-8y-Kly"; */
+"Ktq-8y-Kly.text" = "Application Version";
+
+/* Class = "UILabel"; text = "Text field success color"; ObjectID = "OfS-o1-ua3"; */
+"OfS-o1-ua3.text" = "Text field success color";
+
+/* Class = "UIButton"; normalTitle = "Change"; ObjectID = "OlM-Lj-eZq"; */
+"OlM-Lj-eZq.normalTitle" = "Change";
+
+/* Class = "UIBarButtonItem"; title = "Save"; ObjectID = "QaH-9X-I5Q"; */
+"QaH-9X-I5Q.title" = "Save";
+
+/* Class = "UIBarButtonItem"; title = "< Back"; ObjectID = "Qdt-b7-gO2"; */
+"Qdt-b7-gO2.title" = "< Back";
+
+/* Class = "UIBarButtonItem"; title = "Save"; ObjectID = "Qg8-eU-wwj"; */
+"Qg8-eU-wwj.title" = "Save";
+
+/* Class = "UILabel"; text = "Use sample font and font weight"; ObjectID = "RUq-zt-967"; */
+"RUq-zt-967.text" = "Use sample font and font weight";
+
+/* Class = "UIButton"; normalTitle = "Confirm"; ObjectID = "UjV-iC-ODM"; */
+"UjV-iC-ODM.normalTitle" = "Confirm";
+
+/* Class = "UILabel"; text = "Use sample images for logo"; ObjectID = "Ujz-qn-jhh"; */
+"Ujz-qn-jhh.text" = "Use sample images for logo";
+
+/* Class = "UILabel"; text = "Register new card"; ObjectID = "Vgf-Oq-il3"; */
+"Vgf-Oq-il3.text" = "Register new card";
+
+/* Class = "UILabel"; text = "Use system authentication"; ObjectID = "WGu-LU-m5J"; */
+"WGu-LU-m5J.text" = "Use system authentication";
+
+/* Class = "UILabel"; text = "Text field color"; ObjectID = "X9w-pe-uex"; */
+"X9w-pe-uex.text" = "Text field color";
+
+/* Class = "UILabel"; text = "Production"; ObjectID = "XGj-g0-MFx"; */
+"XGj-g0-MFx.text" = "Production";
+
+/* Class = "UILabel"; text = "0.0.1"; ObjectID = "XT6-gd-r9y"; */
+"XT6-gd-r9y.text" = "0.0.1";
+
+/* Class = "UILabel"; text = "CardIO UI Customization"; ObjectID = "YX2-WO-mB0"; */
+"YX2-WO-mB0.text" = "CardIO UI Customization";
+
+/* Class = "UILabel"; text = "CardIO Text color"; ObjectID = "YgC-Bn-4nm"; */
+"YgC-Bn-4nm.text" = "CardIO Text color";
+
+/* Class = "UILabel"; text = "CardIO Button Background"; ObjectID = "ZTL-jH-OdO"; */
+"ZTL-jH-OdO.text" = "CardIO Button Background";
+
+/* Class = "UIButton"; normalTitle = "Add"; ObjectID = "aTi-US-rRp"; */
+"aTi-US-rRp.normalTitle" = "Add";
+
+/* Class = "UILabel"; text = "Test"; ObjectID = "axX-iu-hfc"; */
+"axX-iu-hfc.text" = "Test";
+
+/* Class = "UILabel"; text = "Test Base URL"; ObjectID = "b2g-GA-UXh"; */
+"b2g-GA-UXh.text" = "Test Base URL";
+
+/* Class = "UIButton"; normalTitle = "Details"; ObjectID = "bvy-pq-jle"; */
+"bvy-pq-jle.normalTitle" = "Details";
+
+/* Class = "UILabel"; text = "Features"; ObjectID = "cLn-ec-9lN"; */
+"cLn-ec-9lN.text" = "Features";
+
+/* Class = "UILabel"; text = "Global UI Customization"; ObjectID = "d6f-Bh-Grh"; */
+"d6f-Bh-Grh.text" = "Global UI Customization";
+
+/* Class = "UIViewController"; title = "Configure Merchant Info"; ObjectID = "dlM-cr-uPy"; */
+"dlM-cr-uPy.title" = "Configure Merchant Info";
+
+/* Class = "UILabel"; text = "Navigation Bar item color"; ObjectID = "ezU-n1-bi7"; */
+"ezU-n1-bi7.text" = "Navigation Bar item color";
+
+/* Class = "UINavigationItem"; title = "Settings"; ObjectID = "f1X-tQ-ChQ"; */
+"f1X-tQ-ChQ.title" = "Settings";
+
+/* Class = "UILabel"; text = "000000"; ObjectID = "gZE-82-Z6G"; */
+"gZE-82-Z6G.text" = "000000";
+
+/* Class = "UILabel"; text = "Test environment"; ObjectID = "gh0-pb-gLk"; */
+"gh0-pb-gLk.text" = "Test environment";
+
+/* Class = "UILabel"; text = "Label text color"; ObjectID = "gtW-IZ-ZH0"; */
+"gtW-IZ-ZH0.text" = "Label text color";
+
+/* Class = "UILabel"; text = "Switch thumb color"; ObjectID = "gwf-bx-gfi"; */
+"gwf-bx-gfi.text" = "Switch thumb color";
+
+/* Class = "UITextField"; placeholder = "- - - - - -"; ObjectID = "h12-iS-wSv"; */
+"h12-iS-wSv.placeholder" = "- - - - - -";
+
+/* Class = "UILabel"; text = "Card IO Frame color"; ObjectID = "hjD-7e-FhP"; */
+"hjD-7e-FhP.text" = "Card IO Frame color";
+
+/* Class = "UILabel"; text = "Customer ID"; ObjectID = "hoH-hs-X44"; */
+"hoH-hs-X44.text" = "Customer ID";
+
+/* Class = "UINavigationItem"; title = "UI Customization"; ObjectID = "iAe-tM-PNy"; */
+"iAe-tM-PNy.title" = "UI Customization";
+
+/* Class = "UILabel"; text = "Customize UI"; ObjectID = "iD6-FU-0ef"; */
+"iD6-FU-0ef.text" = "Customize UI";
+
+/* Class = "UILabel"; text = "Test"; ObjectID = "iM0-lv-AAD"; */
+"iM0-lv-AAD.text" = "Test";
+
+/* Class = "UILabel"; text = "Production environment"; ObjectID = "iVR-pP-VSr"; */
+"iVR-pP-VSr.text" = "Production environment";
+
+/* Class = "UIButton"; normalTitle = "Custom"; ObjectID = "j4o-mX-RIQ"; */
+"j4o-mX-RIQ.normalTitle" = "Custom";
+
+/* Class = "UILabel"; text = "Use test environment"; ObjectID = "kpb-ZH-Rl9"; */
+"kpb-ZH-Rl9.text" = "Use test environment";
+
+/* Class = "UIButton"; normalTitle = "Save"; ObjectID = "pfJ-vE-yf2"; */
+"pfJ-vE-yf2.normalTitle" = "Save";
+
+/* Class = "UILabel"; text = "Error"; ObjectID = "pm0-ZE-c4u"; */
+"pm0-ZE-c4u.text" = "Error";
+
+/* Class = "UILabel"; text = "Change Merchant Info"; ObjectID = "q5j-Yk-8ej"; */
+"q5j-Yk-8ej.text" = "Change Merchant Info";
+
+/* Class = "UINavigationItem"; title = "Card saved"; ObjectID = "uCz-h3-bgd"; */
+"uCz-h3-bgd.title" = "Card saved";
+
+/* Class = "UIButton"; normalTitle = "Cancel"; ObjectID = "vJ2-cK-tBa"; */
+"vJ2-cK-tBa.normalTitle" = "Cancel";
+
+/* Class = "UILabel"; text = "Configurations"; ObjectID = "vP1-GM-p25"; */
+"vP1-GM-p25.text" = "Configurations";
+
+/* Class = "UILabel"; text = "Token Card CVC area color"; ObjectID = "wQS-B6-IuG"; */
+"wQS-B6-IuG.text" = "Token Card CVC area color";
+
+/* Class = "UIBarButtonItem"; title = "< Back"; ObjectID = "wQx-tI-Un6"; */
+"wQx-tI-Un6.title" = "< Back";
+
+/* Class = "UILabel"; text = "New Customer ID"; ObjectID = "wlO-7I-jyO"; */
+"wlO-7I-jyO.text" = "New Customer ID";
+
+/* Class = "UILabel"; text = "Merchant backend base URL"; ObjectID = "wrs-81-Jrd"; */
+"wrs-81-Jrd.text" = "Merchant backend base URL";
+
+/* Class = "UILabel"; text = "Your card have been saved"; ObjectID = "y60-Kd-osm"; */
+"y60-Kd-osm.text" = "Your card have been saved";
+
+/* Class = "UITextField"; placeholder = "- - - - - -"; ObjectID = "yac-Pr-mMc"; */
+"yac-Pr-mMc.placeholder" = "- - - - - -";
+
+/* Class = "UILabel"; text = "Button text color"; ObjectID = "ywc-Do-oHn"; */
+"ywc-Do-oHn.text" = "Button text color";
+
+/* Class = "UILabel"; text = "CardIO background"; ObjectID = "zgn-c5-8pS"; */
+"zgn-c5-8pS.text" = "CardIO background";
+
+/* Class = "UILabel"; text = "Merchant backend base URL"; ObjectID = "zrX-6S-y5M"; */
+"zrX-6S-y5M.text" = "Merchant backend base URL";

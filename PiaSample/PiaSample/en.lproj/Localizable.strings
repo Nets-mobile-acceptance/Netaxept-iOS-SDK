@@ -1,0 +1,74 @@
+/* Alert message for expired card */
+"Card has expired. Please select a valid card!" = "Card has expired. Please select a valid card!";
+
+/* Action sheet title for user to select payment method */
+"Choose a payment method" = "Choose a payment method";
+
+/* Payment option */
+"Credit cards" = "Credit cards";
+
+/* Payment option */
+"Other" = "Other";
+
+/* Alert displayed when user selects a payment option not supported */
+"Payment method not supported" = "Payment method not supported";
+
+/* Alert message instructing the user to input a valid value */
+"Please add a non-zero value." = "Please add a non-zero value.";
+
+/* Label for UISwitch. Production case */
+"Production" = "Production";
+
+/* Label for UISwitch. Test case */
+"Test" = "Test";
+
+/* Transaction rollback error message */
+"There was an error when rolling back the transaction." = "There was an error when rolling back the transaction.";
+
+/* Generic error message. */
+"There was an unexpected error. \n Please contact customer service if the problem persists." = "There was an unexpected error. \n Please contact customer service if the problem persists.";
+
+/* Generic error message for whenever something went wrong with a transaction */
+"There was an unexpected error. Please contact customer service if the problem persists." = "There was an unexpected error. Please contact customer service if the problem persists.";
+
+/* Cancelation message */
+"You cancelled the transaction." = "You cancelled the transaction.";
+
+/* Generic successful message */
+"Your payment was approved. You will receive the items within 1-3 business days." = "Your payment was approved. You will receive the items within 1-3 business days.";
+
+/* Action sheet cancel option */
+"CANCEL" = "CANCEL";
+
+/* Used as screen title */
+"Pay" = "Pay";
+
+/* Navigation bar title after the card was saved */
+"Card saved" = "Card saved";
+
+/* Successful case message after the card was saved */
+"Your card has been saved" = "Your card has been saved";
+
+/* Navigation bar title for successful purchase */
+"Payment completed" = "Payment completed";
+
+/* Successful purchase message */
+"Thanks for shopping" = "Thanks for shopping";
+
+/* Navigation bar title */
+"Failed" = "Failed";
+
+/* Failed saving card message */
+"There was an error. Please try again later" = "There was an error. Please try again later";
+
+/* Navigation bar title */
+"Cancelled" = "Cancelled";
+
+/* Canceled transaction message */
+"Process is cancelled" = "Process is cancelled";
+
+/* Failed transaction navigation title */
+"Failed" = "Failed";
+
+/* Failed transaction message */
+"There was an error. Please try again later" = "There was an error. Please try again later";

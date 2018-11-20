@@ -1,0 +1,26 @@
+# Uncomment the next line to define a global platform for your project
+platform :ios, '9.0'
+
+target 'PiaSample' do
+  # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
+  use_frameworks!
+
+  # Pods for PiaSample
+  
+  pod 'Fabric'
+  pod 'Crashlytics'
+
+  pod 'Moya', '~> 11.0'
+  pod 'IQKeyboardManagerSwift'
+  
+  target 'PiaSampleTests' do
+    inherit! :search_paths
+    # Pods for testing
+  end
+
+  target 'PiaSampleUITests' do
+    inherit! :search_paths
+    # Pods for testing
+  end
+
+end

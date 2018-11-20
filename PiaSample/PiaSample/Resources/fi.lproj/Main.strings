@@ -1,0 +1,62 @@
+/* Class = "UIButton"; normalTitle = "  Sign Up  "; ObjectID = "0He-er-SC3"; */
+"0He-er-SC3.normalTitle" = "  Rekisteröidy  ";
+
+/* Class = "UITextField"; placeholder = "Enter total amount"; ObjectID = "16c-gT-MXO"; */
+"16c-gT-MXO.placeholder" = "Syötä kokonaissumma";
+
+/* Class = "UITextField"; text = "10.00"; ObjectID = "16c-gT-MXO"; */
+"16c-gT-MXO.text" = "10.00";
+
+/* Class = "UIViewController"; title = "Card saved"; ObjectID = "3p2-x6-l4q"; */
+"3p2-x6-l4q.title" = "Kortti talletettu";
+
+/* Class = "UIButton"; normalTitle = "☰"; ObjectID = "B4D-Ye-kLs"; */
+"B4D-Ye-kLs.normalTitle" = "☰";
+
+/* Class = "UILabel"; text = "Total"; ObjectID = "BkM-HE-tqR"; */
+"BkM-HE-tqR.text" = "Yhteensä";
+
+/* Class = "UILabel"; text = "Enter customer ID"; ObjectID = "FbJ-NK-SOH"; */
+"FbJ-NK-SOH.text" = "Syötä asiakas ID";
+
+/* Class = "UITextField"; placeholder = "- - - - - -"; ObjectID = "Jbb-BK-Sse"; */
+"Jbb-BK-Sse.placeholder" = "- - - - - -";
+
+/* Class = "UIButton"; normalTitle = "  Log in  "; ObjectID = "THW-1n-qgn"; */
+"THW-1n-qgn.normalTitle" = "  Kirjaudu  ";
+
+/* Class = "UILabel"; text = "You are logged in as:"; ObjectID = "ZvU-Ou-Z3R"; */
+"ZvU-Ou-Z3R.text" = "Olet kirjautunut käyttäjänä:";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "ax7-1f-5pJ"; */
+"ax7-1f-5pJ.text" = "Label";
+
+/* Class = "UITextField"; placeholder = "- - - - - -"; ObjectID = "h12-iS-wSv"; */
+"h12-iS-wSv.placeholder" = "- - - - - -";
+
+/* Class = "UIButton"; normalTitle = "  Save card  "; ObjectID = "mYN-Fo-BHU"; */
+"mYN-Fo-BHU.normalTitle" = "  Talleta kortti  ";
+
+/* Class = "UILabel"; text = "Error"; ObjectID = "pm0-ZE-c4u"; */
+"pm0-ZE-c4u.text" = "Virhe";
+
+/* Class = "UINavigationItem"; title = "Card saved"; ObjectID = "uCz-h3-bgd"; */
+"uCz-h3-bgd.title" = "Kortti talletettu";
+
+/* Class = "UILabel"; text = "Change to customer ID"; ObjectID = "voK-kB-36D"; */
+"voK-kB-36D.text" = "Change to customer ID";
+
+/* Class = "UIButton"; normalTitle = "< Back"; ObjectID = "xBa-Ik-0iw"; */
+"xBa-Ik-0iw.normalTitle" = "Muutos asiakas tunnukseen";
+
+/* Class = "UIButton"; normalTitle = "BUY"; ObjectID = "y0L-iY-3XG"; */
+"y0L-iY-3XG.normalTitle" = "OSTA";
+
+/* Class = "UILabel"; text = "Your card have been saved"; ObjectID = "y60-Kd-osm"; */
+"y60-Kd-osm.text" = "Korttisi on talletettu";
+
+/* Class = "UISegmentedControl"; zQa-GC-OSW.segmentTitles[0] = "EUR"; ObjectID = "zQa-GC-OSW"; */
+"zQa-GC-OSW.segmentTitles[0]" = "EUR";
+
+/* Class = "UISegmentedControl"; zQa-GC-OSW.segmentTitles[1] = "SEK"; ObjectID = "zQa-GC-OSW"; */
+"zQa-GC-OSW.segmentTitles[1]" = "SEK";

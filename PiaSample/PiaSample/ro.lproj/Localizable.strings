@@ -1,0 +1,74 @@
+/* Alert message for expired card */
+"Card has expired. Please select a valid card!" = "Cardul a expirat. Te rugam sa selectezi un card valid!";
+
+/* Action sheet title for user to select payment method */
+"Choose a payment method" = "Alege o metoda de plata";
+
+/* Payment option */
+"Credit cards" = "Carduri de credit";
+
+/* Payment option */
+"Other" = "Alta";
+
+/* Alert displayed when user selects a payment option not supported */
+"Payment method not supported" = "Metoda nu e suportata";
+
+/* Alert message instructing the user to input a valid value */
+"Please add a non-zero value." = "Te rugam sa adaugi o valoare ne-nula.";
+
+/* Label for UISwitch. Production case */
+"Production" = "Productie";
+
+/* Label for UISwitch. Test case */
+"Test" = "Test";
+
+/* Transaction rollback error message */
+"There was an error when rolling back the transaction." = "Eroare la anularea tranzactiei.";
+
+/* Generic error message. */
+"There was an unexpected error. \n Please contact customer service if the problem persists." = "Eroare nedefinita. Te rugam sa contactezi serviciul suport daca problema persista.";
+
+/* Generic error message for whenever something went wrong with a transaction */
+"There was an unexpected error. Please contact customer service if the problem persists." = "Eroare nedefinita. Te rugam sa contactezi serviciul suport daca problema persista.";
+
+/* Cancelation message */
+"You cancelled the transaction." = "Ati anulat tranzactia.";
+
+/* Generic successful message */
+"Your payment was approved. You will receive the items within 1-3 business days." = "Plata a fost aprobata. Veti primi produsele in 1-3 zile lucratoare";
+
+/* Action sheet cancel option */
+"CANCEL" = "ANULARE";
+
+/* Used as screen title */
+"Pay" = "Plata";
+
+/* Navigation bar title after the card was saved */
+"Card saved" = "Card salvat";
+
+/* Successful case message after the card was saved */
+"Your card has been saved" = "Cardul dumneavoastra a fost salvat";
+
+/* Navigation bar title for successful purchase */
+"Payment completed" = "Plata completa";
+
+/* Successful purchase message */
+"Thanks for shopping" = "Multumim pentru cumparaturi";
+
+/* Navigation bar title */
+"Failed" = "Eroare";
+
+/* Failed saving card message */
+"There was an error. Please try again later" = "A aparut o eroare. Va rugam sa incercati din nou";
+
+/* Navigation bar title */
+"Cancelled" = "Anulat";
+
+/* Canceled transaction message */
+"Process is cancelled" = "Procesul a fost anulat";
+
+/* Failed transaction navigation title */
+"Failed" = "Anulat";
+
+/* Failed transaction message */
+"There was an error. Please try again later" = "A aparut o eroare. Va rugam sa incercati din nou";

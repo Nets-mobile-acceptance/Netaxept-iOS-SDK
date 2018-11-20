@@ -1,0 +1,62 @@
+/* Class = "UIButton"; normalTitle = "  Sign Up  "; ObjectID = "0He-er-SC3"; */
+"0He-er-SC3.normalTitle" = "  Registrera ";
+
+/* Class = "UITextField"; placeholder = "Enter total amount"; ObjectID = "16c-gT-MXO"; */
+"16c-gT-MXO.placeholder" = "Ange totalt belopp";
+
+/* Class = "UITextField"; text = "10.00"; ObjectID = "16c-gT-MXO"; */
+"16c-gT-MXO.text" = "10.00";
+
+/* Class = "UIViewController"; title = "Card saved"; ObjectID = "3p2-x6-l4q"; */
+"3p2-x6-l4q.title" = "Ditt kort har sparats";
+
+/* Class = "UIButton"; normalTitle = "☰"; ObjectID = "B4D-Ye-kLs"; */
+"B4D-Ye-kLs.normalTitle" = "☰";
+
+/* Class = "UILabel"; text = "Total"; ObjectID = "BkM-HE-tqR"; */
+"BkM-HE-tqR.text" = "Summa";
+
+/* Class = "UILabel"; text = "Enter customer ID"; ObjectID = "FbJ-NK-SOH"; */
+"FbJ-NK-SOH.text" = "Ange kundnummer";
+
+/* Class = "UITextField"; placeholder = "- - - - - -"; ObjectID = "Jbb-BK-Sse"; */
+"Jbb-BK-Sse.placeholder" = "- - - - - -";
+
+/* Class = "UIButton"; normalTitle = "  Log in  "; ObjectID = "THW-1n-qgn"; */
+"THW-1n-qgn.normalTitle" = "  Logga in  ";
+
+/* Class = "UILabel"; text = "You are logged in as:"; ObjectID = "ZvU-Ou-Z3R"; */
+"ZvU-Ou-Z3R.text" = "Inloggad som";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "ax7-1f-5pJ"; */
+"ax7-1f-5pJ.text" = "Label";
+
+/* Class = "UITextField"; placeholder = "- - - - - -"; ObjectID = "h12-iS-wSv"; */
+"h12-iS-wSv.placeholder" = "- - - - - -";
+
+/* Class = "UIButton"; normalTitle = "  Save card  "; ObjectID = "mYN-Fo-BHU"; */
+"mYN-Fo-BHU.normalTitle" = "  Spara kort  ";
+
+/* Class = "UILabel"; text = "Error"; ObjectID = "pm0-ZE-c4u"; */
+"pm0-ZE-c4u.text" = "Fel";
+
+/* Class = "UINavigationItem"; title = "Card saved"; ObjectID = "uCz-h3-bgd"; */
+"uCz-h3-bgd.title" = "Kort sparat";
+
+/* Class = "UILabel"; text = "Change to customer ID"; ObjectID = "voK-kB-36D"; */
+"voK-kB-36D.text" = "Ändra kundnummer";
+
+/* Class = "UIButton"; normalTitle = "< Back"; ObjectID = "xBa-Ik-0iw"; */
+"xBa-Ik-0iw.normalTitle" = "< Bakåt";
+
+/* Class = "UIButton"; normalTitle = "BUY"; ObjectID = "y0L-iY-3XG"; */
+"y0L-iY-3XG.normalTitle" = "KÖP";
+
+/* Class = "UILabel"; text = "Your card have been saved"; ObjectID = "y60-Kd-osm"; */
+"y60-Kd-osm.text" = "Ditt kort har sparats";
+
+/* Class = "UISegmentedControl"; zQa-GC-OSW.segmentTitles[0] = "EUR"; ObjectID = "zQa-GC-OSW"; */
+"zQa-GC-OSW.segmentTitles[0]" = "EUR";
+
+/* Class = "UISegmentedControl"; zQa-GC-OSW.segmentTitles[1] = "SEK"; ObjectID = "zQa-GC-OSW"; */
+"zQa-GC-OSW.segmentTitles[1]" = "SEK";

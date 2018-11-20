@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>PiaSDKDelegate Protocol Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset="utf-8">
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+    <script src="../js/lunr.min.js" defer></script>
+    <script src="../js/typeahead.jquery.js" defer></script>
+    <script src="../js/jazzy.search.js" defer></script>
+  </head>
+  <body>
+
+    <a name="//apple_ref/objc/Protocol/PiaSDKDelegate" class="dashAnchor"></a>
+
+    <a title="PiaSDKDelegate Protocol Reference"></a>
+
+    <header class="header">
+      <p class="header-col header-col--primary">
+        <a class="header-link" href="../index.html">
+          Pia Docs
+        </a>
+         (97% documented)
+      </p>
+    
+      <p class="header-col--secondary">
+        <form role="search" action="../search.json">
+          <input type="text" placeholder="Search documentation" data-typeahead>
+        </form>
+      </p>
+    
+    
+    </header>
+
+    <p class="breadcrumbs">
+      <a class="breadcrumb" href="../index.html">Pia Reference</a>
+      <img class="carat" src="../img/carat.png" />
+      PiaSDKDelegate Protocol Reference
+    </p>
+
+    <div class="content-wrapper">
+      <nav class="navigation">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Guides.html">Guides</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../0-getting-started.html">0. Getting started</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../11-basic-payment-flow.html">1.1. Basic payment flow</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../12-easy-one-click-payment-flow.html">1.2. Easy (one click) payment flow</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../13-easy-payment-without-cvv.html">1.3. Easy payment without CVV</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../2-register-flow.html">2. Register flow</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../31-apple-pay-integration.html">3.1. Apple Pay Integration</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../32-paypal-integration.html">3.2. PayPal Integration</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../4-ui-customization.html">4. UI Customization</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../51-error-codes-handling.html">5.1. Error Codes Handling</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../52-terminology.html">5.2. Terminology</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../6-licenses.html">6. Licenses</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../7-changelog.html">7. Changelog</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../8-get-in-touch.html">8. Get in touch</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/NPIApplePayInfo.html">NPIApplePayInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/NPIApplePayShippingInfo.html">NPIApplePayShippingInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/NPIError.html">NPIError</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/NPIInterfaceConfiguration.html">NPIInterfaceConfiguration</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/NPIMerchantInfo.html">NPIMerchantInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/NPIOrderInfo.html">NPIOrderInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/NPITokenCardInfo.html">NPITokenCardInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/NPITransactionInfo.html">NPITransactionInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/PiaSDKController.html">PiaSDKController</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Constants.html">Constants</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Constants.html#/c:@NPIPiaSemanticVersionString">NPIPiaSemanticVersionString</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Constants.html#/c:@NPIPiaTechnicalVersionString">NPIPiaTechnicalVersionString</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Constants.html#/c:@PiaVersionNumber">PiaVersionNumber</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Constants.html#/c:@PiaVersionString">PiaVersionString</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/SchemeType.html">SchemeType</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/PiaSDKDelegate.html">PiaSDKDelegate</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Type Definitions.html">Type Definitions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Type Definitions/NPIErrorCode.html">NPIErrorCode</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+
+        <section class="section">
+          <div class="section-content">
+            <h1>PiaSDKDelegate</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight"><code><span class="k">@protocol</span> <span class="nc">PiaSDKDelegate</span> <span class="o">&lt;</span><span class="n">UINavigationControllerDelegate</span><span class="o">&gt;</span></code></pre>
+
+                </div>
+              </div>
+            <p>The PiaSDK protocol provides a mechanism for your application to take
+action on events that occur in both payment and saving card processes. You can make
+use of these calls by assigning an object to the PiaSDK&rsquo; delegate property directly.</p>
+
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-content">
+            <div class="task-group">
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(pl)PiaSDKDelegate(im)doInitialAPICall:storeCard:withCompletion:"></a>
+                    <a name="//apple_ref/objc/Method/-doInitialAPICall:storeCard:withCompletion:" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(pl)PiaSDKDelegate(im)doInitialAPICall:storeCard:withCompletion:">-doInitialAPICall:storeCard:withCompletion:</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Before the actual payment, the app should register the payment in it&rsquo;s own backend. This method will get called when the sdk needs the app to do that.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight"><code><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">doInitialAPICall</span><span class="p">:(</span><span class="n"><a href="../Classes/PiaSDKController.html">PiaSDKController</a></span> <span class="o">*</span><span class="n">_Nonnull</span><span class="p">)</span><span class="nv">PiaSDKController</span>
+               <span class="nf">storeCard</span><span class="p">:(</span><span class="n">BOOL</span><span class="p">)</span><span class="nv">storeCard</span>
+          <span class="nf">withCompletion</span><span class="p">:(</span><span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="n">_Nonnull</span><span class="p">)(</span><span class="n"><a href="../Classes/NPITransactionInfo.html">NPITransactionInfo</a></span> <span class="o">*</span><span class="n">_Nullable</span><span class="p">))</span>
+                             <span class="n">completionHandler</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">func</span> <span class="nf">doInitialAPICall</span><span class="p">(</span><span class="n">_</span> <span class="kt"><a href="../Classes/PiaSDKController.html">PiaSDKController</a></span><span class="p">:</span> <span class="kt"><a href="../Classes/PiaSDKController.html">PiaSDKController</a></span><span class="p">,</span> <span class="nv">storeCard</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">,</span> <span class="n">withCompletion</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt"><a href="../Classes/NPITransactionInfo.html">NPITransactionInfo</a></span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>storeCard</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Boolean value determines if card should be saved for later uses (chosen by user). Note: this value will always be TRUE if process is saving card</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(pl)PiaSDKDelegate(im)registerPaymentWithApplePayData:paymentData:newShippingContact:withCompletion:"></a>
+                    <a name="//apple_ref/objc/Method/-registerPaymentWithApplePayData:paymentData:newShippingContact:withCompletion:" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(pl)PiaSDKDelegate(im)registerPaymentWithApplePayData:paymentData:newShippingContact:withCompletion:">-registerPaymentWithApplePayData:paymentData:newShippingContact:withCompletion:</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Unlike the normal card payment, you should register the payment with this Apple Pay payment data. This method will be called if the payment method is Apple Pay</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight"><code><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">registerPaymentWithApplePayData</span><span class="p">:</span>
+            <span class="p">(</span><span class="n"><a href="../Classes/PiaSDKController.html">PiaSDKController</a></span> <span class="o">*</span><span class="n">_Nonnull</span><span class="p">)</span><span class="nv">PiaSDKController</span>
+                            <span class="nf">paymentData</span><span class="p">:(</span><span class="n">PKPaymentToken</span> <span class="o">*</span><span class="n">_Nonnull</span><span class="p">)</span><span class="nv">paymentData</span>
+                     <span class="nf">newShippingContact</span><span class="p">:(</span><span class="n">PKContact</span> <span class="o">*</span><span class="n">_Nullable</span><span class="p">)</span><span class="nv">newShippingContact</span>
+                         <span class="nf">withCompletion</span><span class="p">:</span>
+                             <span class="p">(</span><span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="n">_Nonnull</span><span class="p">)(</span><span class="n"><a href="../Classes/NPITransactionInfo.html">NPITransactionInfo</a></span> <span class="o">*</span><span class="n">_Nullable</span><span class="p">))</span>
+                                 <span class="n">completionHandler</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">func</span> <span class="nf">registerPayment</span><span class="p">(</span><span class="n">withApplePayData</span> <span class="kt"><a href="../Classes/PiaSDKController.html">PiaSDKController</a></span><span class="p">:</span> <span class="kt"><a href="../Classes/PiaSDKController.html">PiaSDKController</a></span><span class="p">,</span> <span class="nv">paymentData</span><span class="p">:</span> <span class="kt">PKPaymentToken</span><span class="p">,</span> <span class="nv">newShippingContact</span><span class="p">:</span> <span class="kt">PKContact</span><span class="p">?,</span> <span class="n">withCompletion</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt"><a href="../Classes/NPITransactionInfo.html">NPITransactionInfo</a></span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>paymentData</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A JSON/Dictionary data returned by Apple Pay, use this data to register your payment with NetAxept</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(pl)PiaSDKDelegate(im)registerPaymentWithPayPal:withCompletion:"></a>
+                    <a name="//apple_ref/objc/Method/-registerPaymentWithPayPal:withCompletion:" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(pl)PiaSDKDelegate(im)registerPaymentWithPayPal:withCompletion:">-registerPaymentWithPayPal:withCompletion:</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>This method will get called if the chosen payment type will be PayPal.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight"><code><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">registerPaymentWithPayPal</span><span class="p">:(</span><span class="n"><a href="../Classes/PiaSDKController.html">PiaSDKController</a></span> <span class="o">*</span><span class="n">_Nonnull</span><span class="p">)</span><span class="nv">PiaSDKController</span>
+                   <span class="nf">withCompletion</span><span class="p">:</span>
+                       <span class="p">(</span><span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="n">_Nonnull</span><span class="p">)(</span><span class="n"><a href="../Classes/NPITransactionInfo.html">NPITransactionInfo</a></span> <span class="o">*</span><span class="n">_Nullable</span><span class="p">))</span>
+                           <span class="n">completionHandler</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">func</span> <span class="nf">registerPayment</span><span class="p">(</span><span class="n">withPayPal</span> <span class="kt"><a href="../Classes/PiaSDKController.html">PiaSDKController</a></span><span class="p">:</span> <span class="kt"><a href="../Classes/PiaSDKController.html">PiaSDKController</a></span><span class="p">,</span> <span class="n">withCompletion</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt"><a href="../Classes/NPITransactionInfo.html">NPITransactionInfo</a></span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(pl)PiaSDKDelegate(im)PiaSDK:didFailWithError:"></a>
+                    <a name="//apple_ref/objc/Method/-PiaSDK:didFailWithError:" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(pl)PiaSDKDelegate(im)PiaSDK:didFailWithError:">-PiaSDK:didFailWithError:</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Will get called if, for whatever reason, the payment process fails. Check the error code to see what went wrong (both saving card and payment).</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight"><code><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">PiaSDK</span><span class="p">:(</span><span class="n"><a href="../Classes/PiaSDKController.html">PiaSDKController</a></span> <span class="o">*</span><span class="n">_Nonnull</span><span class="p">)</span><span class="nv">PiaSDKController</span>
+    <span class="nf">didFailWithError</span><span class="p">:(</span><span class="n"><a href="../Classes/NPIError.html">NPIError</a></span> <span class="o">*</span><span class="n">_Nonnull</span><span class="p">)</span><span class="nv">error</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">func</span> <span class="nf">piaSDK</span><span class="p">(</span><span class="n">_</span> <span class="kt"><a href="../Classes/PiaSDKController.html">PiaSDKController</a></span><span class="p">:</span> <span class="kt"><a href="../Classes/PiaSDKController.html">PiaSDKController</a></span><span class="p">,</span> <span class="n">didFailWithError</span> <span class="nv">error</span><span class="p">:</span> <span class="kt"><a href="../Classes/NPIError.html">NPIError</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(pl)PiaSDKDelegate(im)PiaSDKDidCompleteWithSuccess:"></a>
+                    <a name="//apple_ref/objc/Method/-PiaSDKDidCompleteWithSuccess:" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(pl)PiaSDKDelegate(im)PiaSDKDidCompleteWithSuccess:">-PiaSDKDidCompleteWithSuccess:</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Will get called if payment process goes well.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight"><code><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">PiaSDKDidCompleteWithSuccess</span><span class="p">:</span>
+    <span class="p">(</span><span class="n"><a href="../Classes/PiaSDKController.html">PiaSDKController</a></span> <span class="o">*</span><span class="n">_Nonnull</span><span class="p">)</span><span class="nv">PiaSDKController</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">func</span> <span class="nf">piaSDKDidComplete</span><span class="p">(</span><span class="n">withSuccess</span> <span class="kt"><a href="../Classes/PiaSDKController.html">PiaSDKController</a></span><span class="p">:</span> <span class="kt"><a href="../Classes/PiaSDKController.html">PiaSDKController</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(pl)PiaSDKDelegate(im)PiaSDKDidCompleteSaveCardWithSuccess:"></a>
+                    <a name="//apple_ref/objc/Method/-PiaSDKDidCompleteSaveCardWithSuccess:" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(pl)PiaSDKDelegate(im)PiaSDKDidCompleteSaveCardWithSuccess:">-PiaSDKDidCompleteSaveCardWithSuccess:</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Will get called if saving card process goes well.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight"><code><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">PiaSDKDidCompleteSaveCardWithSuccess</span><span class="p">:</span>
+    <span class="p">(</span><span class="n"><a href="../Classes/PiaSDKController.html">PiaSDKController</a></span> <span class="o">*</span><span class="n">_Nonnull</span><span class="p">)</span><span class="nv">PiaSDKController</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">func</span> <span class="nf">piaSDKDidCompleteSaveCard</span><span class="p">(</span><span class="n">withSuccess</span> <span class="kt"><a href="../Classes/PiaSDKController.html">PiaSDKController</a></span><span class="p">:</span> <span class="kt"><a href="../Classes/PiaSDKController.html">PiaSDKController</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(pl)PiaSDKDelegate(im)PiaSDKDidCancel:"></a>
+                    <a name="//apple_ref/objc/Method/-PiaSDKDidCancel:" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(pl)PiaSDKDelegate(im)PiaSDKDidCancel:">-PiaSDKDidCancel:</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Will get called if user decides to cancel the process (both saving card and payment)</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight"><code><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">PiaSDKDidCancel</span><span class="p">:(</span><span class="n"><a href="../Classes/PiaSDKController.html">PiaSDKController</a></span> <span class="o">*</span><span class="n">_Nonnull</span><span class="p">)</span><span class="nv">PiaSDKController</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">func</span> <span class="nf">piaSDKDidCancel</span><span class="p">(</span><span class="n">_</span> <span class="kt"><a href="../Classes/PiaSDKController.html">PiaSDKController</a></span><span class="p">:</span> <span class="kt"><a href="../Classes/PiaSDKController.html">PiaSDKController</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(pl)PiaSDKDelegate(im)PiaSDK:didChangeApplePayShippingContact:withCompletion:"></a>
+                    <a name="//apple_ref/objc/Method/-PiaSDK:didChangeApplePayShippingContact:withCompletion:" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(pl)PiaSDKDelegate(im)PiaSDK:didChangeApplePayShippingContact:withCompletion:">-PiaSDK:didChangeApplePayShippingContact:withCompletion:</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Will get called if user decides to change the shipping contact inside Apple Pay process</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight"><code><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">PiaSDK</span><span class="p">:(</span><span class="n"><a href="../Classes/PiaSDKController.html">PiaSDKController</a></span> <span class="o">*</span><span class="n">_Nonnull</span><span class="p">)</span><span class="nv">PiaSDKController</span>
+    <span class="nf">didChangeApplePayShippingContact</span><span class="p">:(</span><span class="n">PKContact</span> <span class="o">*</span><span class="n">_Nonnull</span><span class="p">)</span><span class="nv">contact</span>
+                      <span class="nf">withCompletion</span><span class="p">:</span>
+                          <span class="p">(</span><span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="n">_Nonnull</span><span class="p">)(</span><span class="n">BOOL</span><span class="p">,</span> <span class="n">NSDecimalNumber</span> <span class="o">*</span><span class="n">_Nullable</span><span class="p">))</span>
+                              <span class="n">completionHandler</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">optional</span> <span class="kd">func</span> <span class="nf">piaSDK</span><span class="p">(</span><span class="n">_</span> <span class="kt"><a href="../Classes/PiaSDKController.html">PiaSDKController</a></span><span class="p">:</span> <span class="kt"><a href="../Classes/PiaSDKController.html">PiaSDKController</a></span><span class="p">,</span> <span class="n">didChangeApplePayShippingContact</span> <span class="nv">contact</span><span class="p">:</span> <span class="kt">PKContact</span><span class="p">,</span> <span class="n">withCompletion</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Bool</span><span class="p">,</span> <span class="kt">NSDecimalNumber</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>contact</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>PKContact object returned by Apple Pay after user changed the shipping contact</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+      </article>
+    </div>
+    <section class="footer">
+      <p>&copy; 2018 <a class="link" href="https://nets.eu" target="_blank" rel="external">Nets</a>. All rights reserved. (Last updated: 2018-11-20)</p>
+      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.0</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+    </section>
+  </body>
+</div>
+</html>
