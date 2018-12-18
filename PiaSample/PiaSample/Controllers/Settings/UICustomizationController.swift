@@ -52,6 +52,11 @@ class UICustomizationController: UIViewController {
     @IBOutlet weak var useSampleFontSwitch: UISwitch!
     @IBOutlet weak var useSampleImagesSwitch: UISwitch!
     
+    @IBOutlet weak var useStatusBarLightContentSwitch: UISwitch!
+    @IBOutlet weak var statusBarColorLabel: UILabel!
+    @IBOutlet weak var useStatusBarLightContentLabel: UILabel!
+    
+    
     // Card IO IBOutlets
     @IBOutlet weak var cardIOBackgroundColor: UILabel!
     @IBOutlet weak var cardIOTextColor: UILabel!
@@ -80,6 +85,7 @@ class UICustomizationController: UIViewController {
     fileprivate var sampleFont: UIFont? = nil
     fileprivate var sampleImage: UIImage? = nil
     fileprivate var tokenCardCVCColorVar: UIColor? = nil
+    fileprivate var statusBarColor: UIColor? = nil
     
     // Card IO properties to be saved later
     fileprivate var cardIOBackgroundColorVar: UIColor? = nil
@@ -101,6 +107,11 @@ class UICustomizationController: UIViewController {
     }
     
     // IBActions
+    @IBAction func changeStatusBarColor(_ sender:UIButton) {
+        self.statusBarColorLabel.textColor = sender.backgroundColor
+        self.statusBarColor = sender.backgroundColor
+    }
+    
     @IBAction func changeNavBarColor(_ sender: UIButton) {
         self.navBarColorLabel.textColor = sender.backgroundColor
         self.navBarColor = sender.backgroundColor
@@ -254,6 +265,10 @@ class UICustomizationController: UIViewController {
         if let temp = self.mainButtonBackgroundColor {
             NPIInterfaceConfiguration.sharedInstance()?.mainButtonBackgroundColor = temp
         }
+        
+        if let temp = self.statusBarColor {
+            NPIInterfaceConfiguration.sharedInstance()?.statusBarColor = temp
+        }
 
         // Card IO
         if let temp = self.cardIOBackgroundColorVar {
@@ -284,6 +299,10 @@ class UICustomizationController: UIViewController {
             NPIInterfaceConfiguration.sharedInstance()?.cardIOButtonTextFont = temp
         }
         
+        if let temp = self.cardIOTextFontVar {
+            NPIInterfaceConfiguration.sharedInstance()?.cardIOTextFont = temp
+        }
+        
         self.navigationController?.popViewController(animated: true)
     }
     
@@ -297,6 +316,7 @@ extension UICustomizationController {
     fileprivate func addActionForSwitches() {
         self.useSampleFontSwitch.addTarget(self, action: #selector(useSampleFontAndFontWeight(_:)), for: .valueChanged)
         self.useSampleImagesSwitch.addTarget(self, action: #selector(useSampleImagesForLogo(_:)), for: .valueChanged)
+        self.useStatusBarLightContentSwitch.addTarget(self, action: #selector(useStatusBarLightContent(_:)), for: .valueChanged)
         
         // Card IO
         self.cardIOTextFontSwitch.addTarget(self, action: #selector(useSampleFontForCardIOText(_:)), for: .valueChanged)
@@ -387,10 +407,6 @@ extension UICustomizationController {
             self.cardIOButtonTextColor.textColor = NPIInterfaceConfiguration.sharedInstance()?.cardIOButtonTextColor
         }
         
-        if let temp = self.cardIOTextFontVar {
-            NPIInterfaceConfiguration.sharedInstance()?.cardIOTextFont = temp
-        }
-        
         if NPIInterfaceConfiguration.sharedInstance()?.cardIOTextFont != nil {
             self.cardIOTextFont.font = NPIInterfaceConfiguration.sharedInstance()?.cardIOTextFont
             self.cardIOTextFontSwitch.isOn = true
@@ -399,6 +415,15 @@ extension UICustomizationController {
         if NPIInterfaceConfiguration.sharedInstance()?.cardIOButtonTextFont != nil {
             self.cardIOButtonTextFont.font = NPIInterfaceConfiguration.sharedInstance()?.cardIOButtonTextFont
             self.cardIOButtonTextFontSwitch.isOn = true
+        }
+        
+        if NPIInterfaceConfiguration.sharedInstance()?.statusBarColor != nil {
+            self.statusBarColorLabel.textColor = NPIInterfaceConfiguration.sharedInstance()?.statusBarColor
+        }
+        
+        if NPIInterfaceConfiguration.sharedInstance()?.useStatusBarLightContent == true {
+            self.useStatusBarLightContentLabel.textColor = .white
+            self.useStatusBarLightContentSwitch.isOn = true
         }
     }
     
@@ -449,6 +474,16 @@ extension UICustomizationController {
             self.cardIOButtonTextFont.font = UIFont.systemFont(ofSize: 18)
             self.cardIOButtonTextFontVar = nil
             NPIInterfaceConfiguration.sharedInstance()?.cardIOButtonTextFont = nil
+        }
+    }
+    
+    @objc fileprivate func useStatusBarLightContent(_ sampleSwitch: UISwitch) {
+        if sampleSwitch.isOn {
+            self.useStatusBarLightContentLabel.textColor = .white
+            NPIInterfaceConfiguration.sharedInstance()?.useStatusBarLightContent = true
+        }else {
+            self.useStatusBarLightContentLabel.textColor = .black
+            NPIInterfaceConfiguration.sharedInstance()?.useStatusBarLightContent = false
         }
     }
 }

@@ -45,8 +45,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
          */
 //        NPIInterfaceConfiguration.sharedInstance().barTitleColor = UIColor.blue
 //        NPIInterfaceConfiguration.sharedInstance().barItemsColor = UIColor.red
-//        NPIInterfaceConfiguration.sharedInstance().barColor = UIColor.orange
-//        NPIInterfaceConfiguration.sharedInstance().backgroundColor = UIColor.lightGray
+//        NPIInterfaceConfiguration.sharedInstance().barColor = .yellow
+//        NPIInterfaceConfiguration.sharedInstance().backgroundColor = .red
 //        NPIInterfaceConfiguration.sharedInstance().buttonTextColor = UIColor.yellow
 //        NPIInterfaceConfiguration.sharedInstance().labelTextColor = UIColor.brown
 //        NPIInterfaceConfiguration.sharedInstance().fieldTextColor = UIColor.brown
@@ -56,6 +56,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        NPIInterfaceConfiguration.sharedInstance().buttonFont = UIFont(name: "AvenirNext-HeavyItalic", size: 10)
 //        NPIInterfaceConfiguration.sharedInstance().saveCardOn = true
 //        NPIInterfaceConfiguration.sharedInstance().logoImage = UIImage(named: "bikbok")
+        
+//        NPIInterfaceConfiguration.sharedInstance()?.statusBarColor = .blue
+//        NPIInterfaceConfiguration.sharedInstance()?.useStatusBarLightContent = false
+//        NPIInterfaceConfiguration.sharedInstance()?.logoImageContentMode = .scaleAspectFit
         
         return true
     }

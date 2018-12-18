@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0B9C4518689FADE7C6CD9679 /* Pods_PiaSample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1EA4FE0829D1131AF371A5F7 /* Pods_PiaSample.framework */; };
+		29556947E157D01E0331390C /* Pia.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1A48B210D38DDDA65F7DDF2A /* Pia.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		3500D89021345FFE0094EAE8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3500D88D21345FFE0094EAE8 /* Assets.xcassets */; };
 		3505C7BF205A3A5E00728609 /* ProcessingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3505C7BE205A3A5E00728609 /* ProcessingError.swift */; };
 		350AA715205BA12C00D3CD88 /* RequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 350AA714205BA12C00D3CD88 /* RequestManager.swift */; };
@@ -35,11 +36,9 @@
 		35DB97732129919D006C3781 /* UICustomizationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DB97722129919D006C3781 /* UICustomizationController.swift */; };
 		35E1B7912060FFC300B71148 /* ConstantAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E1B7902060FFC300B71148 /* ConstantAPI.swift */; };
 		35FEDB5F20DBBFE80070220B /* ResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35FEDB5E20DBBFE80070220B /* ResultViewController.swift */; };
-		4CFFC09AEFF76BC05B497F60 /* Pia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FDE463F9E816AF534585CD0 /* Pia.framework */; };
 		5F338E9C20E13B1C00B3E608 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5F338E9E20E13B1C00B3E608 /* Localizable.strings */; };
 		5F338EA120E13B1D00B3E608 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5F338EA320E13B1D00B3E608 /* InfoPlist.strings */; };
 		67DFD3022179AF66004FA317 /* CurrencyPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67DFD3012179AF66004FA317 /* CurrencyPicker.swift */; };
-		6CB3414F5DA2450FB453A2FA /* Pia.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5FDE463F9E816AF534585CD0 /* Pia.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		7547DB6A204FDF8000C280AC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7547DB69204FDF8000C280AC /* AppDelegate.swift */; };
 		7547DB6C204FDF8000C280AC /* CheckoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7547DB6B204FDF8000C280AC /* CheckoutViewController.swift */; };
 		7547DB6F204FDF8000C280AC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7547DB6D204FDF8000C280AC /* Main.storyboard */; };
@@ -49,6 +48,7 @@
 		7554A34D2056BF7100773403 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
 		75F8D6F020501EC100F99B06 /* UIColor+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F8D6EE20501EC100F99B06 /* UIColor+Ext.swift */; };
 		75F8D6F120501EC100F99B06 /* UIButton+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F8D6EF20501EC100F99B06 /* UIButton+Ext.swift */; };
+		E16CC42C127B74C2F37BB8F4 /* Pia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A48B210D38DDDA65F7DDF2A /* Pia.framework */; };
 		E5F4F8AE27E06C9EA567BCB2 /* Pods_PiaSampleUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EF911800CEB5C1F14FC0BF7 /* Pods_PiaSampleUITests.framework */; };
 		FB8389986800864C6F045126 /* Pods_PiaSampleTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F856BF6102DF1DFD0EC41584 /* Pods_PiaSampleTests.framework */; };
 /* End PBXBuildFile section */
@@ -77,7 +77,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				6CB3414F5DA2450FB453A2FA /* Pia.framework in Embed Frameworks */,
+				29556947E157D01E0331390C /* Pia.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -86,6 +86,7 @@
 
 /* Begin PBXFileReference section */
 		0F068B36DA93338B498C4904 /* Pods-PiaSampleTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PiaSampleTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-PiaSampleTests/Pods-PiaSampleTests.release.xcconfig"; sourceTree = "<group>"; };
+		1A48B210D38DDDA65F7DDF2A /* Pia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pia.framework; path = ../libs/Pia.framework; sourceTree = "<group>"; };
 		1E54D4868148F22E3EF8DDFC /* Pods-PiaSampleUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PiaSampleUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-PiaSampleUITests/Pods-PiaSampleUITests.release.xcconfig"; sourceTree = "<group>"; };
 		1EA4FE0829D1131AF371A5F7 /* Pods_PiaSample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PiaSample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		31B997FBEBFB1BF3D1080F80 /* Pods-PiaSampleUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PiaSampleUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PiaSampleUITests/Pods-PiaSampleUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -131,7 +132,6 @@
 		5FC29A0020F4FF58004EA978 /* ro */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ro; path = ro.lproj/Main.strings; sourceTree = "<group>"; };
 		5FC29A1120F5ED79004EA978 /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = fi.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		5FC29A1320F5EDBD004EA978 /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = fi.lproj/Localizable.strings; sourceTree = "<group>"; };
-		5FDE463F9E816AF534585CD0 /* Pia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pia.framework; path = ../libs/Pia.framework; sourceTree = "<group>"; };
 		67DFD3012179AF66004FA317 /* CurrencyPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyPicker.swift; sourceTree = "<group>"; };
 		7547DB66204FDF8000C280AC /* PiaSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PiaSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7547DB69204FDF8000C280AC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -166,7 +166,7 @@
 			files = (
 				0B9C4518689FADE7C6CD9679 /* Pods_PiaSample.framework in Frameworks */,
 				7554A34D2056BF7100773403 /* BuildFile in Frameworks */,
-				4CFFC09AEFF76BC05B497F60 /* Pia.framework in Frameworks */,
+				E16CC42C127B74C2F37BB8F4 /* Pia.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -296,7 +296,7 @@
 		5F7FDEEE2062808D0063A407 /* libs */ = {
 			isa = PBXGroup;
 			children = (
-				5FDE463F9E816AF534585CD0 /* Pia.framework */,
+				1A48B210D38DDDA65F7DDF2A /* Pia.framework */,
 			);
 			name = libs;
 			path = ../../libs;
@@ -792,7 +792,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 87;
+				CURRENT_PROJECT_VERSION = 97;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -856,7 +856,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 87;
+				CURRENT_PROJECT_VERSION = 97;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -889,7 +889,7 @@
 				CODE_SIGN_ENTITLEMENTS = PiaSample/PiaSample.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 87;
+				CURRENT_PROJECT_VERSION = 97;
 				DEVELOPMENT_TEAM = EGNFYS6P3L;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = PiaSample/Info.plist;
@@ -915,7 +915,7 @@
 				CODE_SIGN_ENTITLEMENTS = PiaSample/PiaSample.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 87;
+				CURRENT_PROJECT_VERSION = 97;
 				DEVELOPMENT_TEAM = EGNFYS6P3L;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = PiaSample/Info.plist;

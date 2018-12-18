@@ -2,7 +2,7 @@
   "warnings": [
     {
       "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/Controllers/Pia SDK/PiaSDKController.h",
-      "line": 74,
+      "line": 72,
       "symbol": "PiaSDKController.PiaDelegate",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"

@@ -269,7 +269,7 @@ extension PaymentMethodViewController {
     fileprivate func performPayPalPayment() {
         let merchantInfo = NPIMerchantInfo(identifier: constantAPI.getMerchantID(), testMode: ConstantAPI.testMode)
         
-        let piaSDK = PiaSDKController(forPayPalPurchaseWith: merchantInfo)
+        let piaSDK = PiaSDKController(merchantInfo: merchantInfo, payWithPayPal: true)
         piaSDK.piaDelegate = self
         
         DispatchQueue.main.async {

@@ -40,6 +40,7 @@ class SettingsViewController: UIViewController {
     @IBOutlet weak var systemAuthenticationSwitch: UISwitch!
     @IBOutlet weak var testModeSwitch: UISwitch!
     @IBOutlet var changeCustomerIDView: UIView!
+    @IBOutlet weak var disableCardIOSwitch: UISwitch!
     
     fileprivate let cache = Cache()
     fileprivate let constantAPI = ConstantAPI()
@@ -184,10 +185,11 @@ extension SettingsViewController {
     fileprivate func updateSwitches() {
         self.systemAuthenticationSwitch.isOn = UserDefaults.standard.bool(forKey: "systemAuthentication")
         self.testModeSwitch.isOn = UserDefaults.standard.bool(forKey: "useProductionURL")
+        self.disableCardIOSwitch.isOn = UserDefaults.standard.bool(forKey: "disableCardIO")
         
         self.systemAuthenticationSwitch.addTarget(self, action: #selector(systemAuthenticationSwitchChanged(_:)), for: .valueChanged)
-        
         self.testModeSwitch.addTarget(self, action: #selector(urlSwitchChanged(_:)), for: .valueChanged)
+        self.disableCardIOSwitch.addTarget(self, action: #selector(disableCardIOChanged(_:)), for: .valueChanged)
     }
     
     @objc private func urlSwitchChanged(_ urlSwitch: UISwitch) {
@@ -198,6 +200,12 @@ extension SettingsViewController {
     @objc private func systemAuthenticationSwitchChanged(_ systemAuthenticationSwitch: UISwitch) {
         UserDefaults.standard.set(systemAuthenticationSwitch.isOn, forKey: "systemAuthentication")
         UserDefaults.standard.synchronize()
+    }
+    
+    @objc private func disableCardIOChanged(_ disableCardIOUISwitch: UISwitch) {
+        UserDefaults.standard.set(disableCardIOUISwitch.isOn, forKey: "disableCardIO")
+        UserDefaults.standard.synchronize()
+        NPIInterfaceConfiguration.sharedInstance()?.disableCardIO = disableCardIOUISwitch.isOn
     }
     
     fileprivate func removeSubviews() {

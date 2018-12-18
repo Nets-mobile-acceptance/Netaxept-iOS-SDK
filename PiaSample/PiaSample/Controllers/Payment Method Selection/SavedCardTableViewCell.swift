@@ -48,10 +48,13 @@ class SavedCardTableViewCell: UITableViewCell {
                 tempCardInfo += "Visa •••• "
             case AMEX:
                 self.cardBackgroundImage.image = UIImage(named: "BackgroundAmericanExpress")
-                tempCardInfo += "American Express •••• "
+                tempCardInfo += "AmericanExpress •••• "
             case DANKORT:
                 self.cardBackgroundImage.image = UIImage(named: "BackgroundDanCard")
                 tempCardInfo += "Dankort •••• "
+            case DINERS_CLUB_INTERNATIONAL:
+                self.cardBackgroundImage.image = UIImage(named: "BackgroundDiners")
+                tempCardInfo += "Diners •••• "
             default:
                 break
             }

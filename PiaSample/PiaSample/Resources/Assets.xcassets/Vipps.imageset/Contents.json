@@ -2,12 +2,12 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "vipps.png",
+      "filename" : "vipps_logo_rgbv2.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "vipps@2x.png",
+      "filename" : "vipps_logo_rgbv2-1.png",
       "scale" : "2x"
     },
     {
