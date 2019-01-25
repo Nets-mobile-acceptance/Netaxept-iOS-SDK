@@ -3,7 +3,7 @@
 //
 //  MIT License
 //
-//  Copyright (c) 2018 Nets Denmark A/S
+//  Copyright (c) 2019 Nets Denmark A/S
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a
 //  copy of this software and associated documentation files (the "Software"),
@@ -128,6 +128,14 @@ class SettingsViewController: UIViewController {
     
     @IBAction func customizeUI(_ sender: UIButton) {
         self.performSegue(withIdentifier: "UICustomizationControllerSegue", sender: self)
+    }
+    
+    @IBAction func didPressChangeApplePayInfo(_ sender: UIButton) {
+        if constantAPI.isReleasePackage() {
+            self.performSegue(withIdentifier: "SetApplePayMerchantIDSegue", sender: self)
+        } else {
+            self.showAlert(title: "", message: "This feature is only available for Release Package")
+        }
     }
     
     // MARK: segue

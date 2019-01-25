@@ -393,6 +393,18 @@ namespace XamarinPia
         [Export("useStatusBarLightContent")]
         bool UseStatusBarLightContent { get; set; }
 
+	    // @property (readwrite, nonatomic) UIViewContentMode logoImageContentMode;
+	    [Export ("logoImageContentMode", ArgumentSemantic.Assign)]
+	    UIViewContentMode LogoImageContentMode { get; set; }
+
+        // @property (nonatomic, readwrite) BOOL disableSaveCardOption;
+        [Export("disableSaveCardOption")]
+        bool DisableSaveCardOption { get; set; }
+
+        // @property (nonatomic, strong) UIColor *fieldBackgroundColor;
+        [Export("fieldBackgroundColor", ArgumentSemantic.Strong)]
+        UIColor FieldBackgroundColor { get; set; }
+
         // +(instancetype)sharedInstance;
         [Static]
         [Export("sharedInstance")]

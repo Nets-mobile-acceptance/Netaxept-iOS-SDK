@@ -1,4 +1,4 @@
-# PiA - Netaxept iOS SDK v1.1.0
+# PiA - Netaxept iOS SDK v1.1.1
 
 ![](./Resources/NetsLogo.jpg)
 
@@ -32,6 +32,13 @@ New releases (improvements and fixes) since `v1.0.0`:
    + New CONVENIENCE initializer for PayPal payment flow
    + New configuration to disable card scanner
    + Added new UI customization options
+
+- `v1.1.1`: Released on 25-Jan-2019
+    + Improvements for UI Customization:
+        - Added new flag for hiding the "Save card for later use" functionality from payment screen
+        - Added new option for setting custom background color for input fields
+        - Updated card logos
+    + Improvements in WebView navigation bar: replaced text with specific icons
 
 ## Requirements
 * PiA iOS SDK requires iOS 9 or above.
@@ -122,7 +129,7 @@ If you have any question or feedback, please contact us via email: mobile-accept
 License
 ----
 
-*****Copyright (c) 2018 Nets Denmark A/S*****
+*****Copyright (c) 2019 Nets Denmark A/S*****
 
 
 NETS DENMARK A/S, ("NETS"), FOR AND ON BEHALF OF ITSELF AND ITS SUBSIDIARIES AND AFFILIATES UNDER COMMON CONTROL, IS WILLING TO LICENSE THE SOFTWARE TO YOU ONLY UPON THE CONDITION THAT YOU ACCEPT ALL OF THE TERMS CONTAINED IN THIS BINARY CODE LICENSE AGREEMENT. BY USING THE SOFTWARE YOU ACKNOWLEDGE THAT YOU HAVE READ THE TERMS AND AGREE TO THEM. IF YOU ARE AGREEING TO THESE TERMS ON BEHALF OF A COMPANY OR OTHER LEGAL ENTITY, YOU REPRESENT THAT YOU HAVE THE LEGAL AUTHORITY TO BIND THE LEGAL ENTITY TO THESE TERMS. IF YOU DO NOT HAVE SUCH AUTHORITY, OR IF YOU DO NOT WISH TO BE BOUND BY THE TERMS, YOU MUST NOT USE THE SOFTWARE ON THIS SITE OR ANY OTHER MEDIA ON WHICH THE SOFTWARE IS CONTAINED.

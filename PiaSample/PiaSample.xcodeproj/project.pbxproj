@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		0B9C4518689FADE7C6CD9679 /* Pods_PiaSample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1EA4FE0829D1131AF371A5F7 /* Pods_PiaSample.framework */; };
-		29556947E157D01E0331390C /* Pia.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1A48B210D38DDDA65F7DDF2A /* Pia.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		3500D89021345FFE0094EAE8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3500D88D21345FFE0094EAE8 /* Assets.xcassets */; };
 		3505C7BF205A3A5E00728609 /* ProcessingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3505C7BE205A3A5E00728609 /* ProcessingError.swift */; };
 		350AA715205BA12C00D3CD88 /* RequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 350AA714205BA12C00D3CD88 /* RequestManager.swift */; };
@@ -48,8 +47,10 @@
 		7554A34D2056BF7100773403 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
 		75F8D6F020501EC100F99B06 /* UIColor+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F8D6EE20501EC100F99B06 /* UIColor+Ext.swift */; };
 		75F8D6F120501EC100F99B06 /* UIButton+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F8D6EF20501EC100F99B06 /* UIButton+Ext.swift */; };
-		E16CC42C127B74C2F37BB8F4 /* Pia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A48B210D38DDDA65F7DDF2A /* Pia.framework */; };
+		85B2855A21F9ECC6004FA525 /* SetApplePayMerchantIDViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B2855921F9ECC6004FA525 /* SetApplePayMerchantIDViewController.swift */; };
+		A9917F77B83B9681B39D20F3 /* Pia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 387F25F4BB6DF1893EC93276 /* Pia.framework */; };
 		E5F4F8AE27E06C9EA567BCB2 /* Pods_PiaSampleUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EF911800CEB5C1F14FC0BF7 /* Pods_PiaSampleUITests.framework */; };
+		E7B8D047268789F147713E15 /* Pia.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 387F25F4BB6DF1893EC93276 /* Pia.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FB8389986800864C6F045126 /* Pods_PiaSampleTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F856BF6102DF1DFD0EC41584 /* Pods_PiaSampleTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -77,7 +78,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				29556947E157D01E0331390C /* Pia.framework in Embed Frameworks */,
+				E7B8D047268789F147713E15 /* Pia.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -86,7 +87,6 @@
 
 /* Begin PBXFileReference section */
 		0F068B36DA93338B498C4904 /* Pods-PiaSampleTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PiaSampleTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-PiaSampleTests/Pods-PiaSampleTests.release.xcconfig"; sourceTree = "<group>"; };
-		1A48B210D38DDDA65F7DDF2A /* Pia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pia.framework; path = ../libs/Pia.framework; sourceTree = "<group>"; };
 		1E54D4868148F22E3EF8DDFC /* Pods-PiaSampleUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PiaSampleUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-PiaSampleUITests/Pods-PiaSampleUITests.release.xcconfig"; sourceTree = "<group>"; };
 		1EA4FE0829D1131AF371A5F7 /* Pods_PiaSample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PiaSample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		31B997FBEBFB1BF3D1080F80 /* Pods-PiaSampleUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PiaSampleUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PiaSampleUITests/Pods-PiaSampleUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -123,6 +123,7 @@
 		35E1B7902060FFC300B71148 /* ConstantAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstantAPI.swift; sourceTree = "<group>"; };
 		35FEDB5E20DBBFE80070220B /* ResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewController.swift; sourceTree = "<group>"; };
 		35FF4008213EA8D30095BB88 /* PiaSample.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PiaSample.entitlements; sourceTree = "<group>"; };
+		387F25F4BB6DF1893EC93276 /* Pia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pia.framework; path = ../libs/Pia.framework; sourceTree = "<group>"; };
 		3C2C8ED4BF1B1DFE5C2627EB /* Pods-PiaSampleTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PiaSampleTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PiaSampleTests/Pods-PiaSampleTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5F338E6D20DD321500B3E608 /* ro */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ro; path = ro.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		5F338E9D20E13B1C00B3E608 /* ro */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ro; path = ro.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -155,6 +156,7 @@
 		857FE13E21A2A9D50027D508 /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/Main.strings; sourceTree = "<group>"; };
 		857FE13F21A2A9D50027D508 /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		857FE14021A2A9D60027D508 /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/Localizable.strings; sourceTree = "<group>"; };
+		85B2855921F9ECC6004FA525 /* SetApplePayMerchantIDViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetApplePayMerchantIDViewController.swift; sourceTree = "<group>"; };
 		CFB2A9B99C45792A2B128C82 /* Pods-PiaSample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PiaSample.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PiaSample/Pods-PiaSample.debug.xcconfig"; sourceTree = "<group>"; };
 		F856BF6102DF1DFD0EC41584 /* Pods_PiaSampleTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PiaSampleTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -166,7 +168,7 @@
 			files = (
 				0B9C4518689FADE7C6CD9679 /* Pods_PiaSample.framework in Frameworks */,
 				7554A34D2056BF7100773403 /* BuildFile in Frameworks */,
-				E16CC42C127B74C2F37BB8F4 /* Pia.framework in Frameworks */,
+				A9917F77B83B9681B39D20F3 /* Pia.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -259,6 +261,7 @@
 				35994AA4208877180028C120 /* SettingsViewController.swift */,
 				35C7A1CD211336660063497E /* SetURLViewController.swift */,
 				35DB97722129919D006C3781 /* UICustomizationController.swift */,
+				85B2855921F9ECC6004FA525 /* SetApplePayMerchantIDViewController.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -296,7 +299,7 @@
 		5F7FDEEE2062808D0063A407 /* libs */ = {
 			isa = PBXGroup;
 			children = (
-				1A48B210D38DDDA65F7DDF2A /* Pia.framework */,
+				387F25F4BB6DF1893EC93276 /* Pia.framework */,
 			);
 			name = libs;
 			path = ../../libs;
@@ -650,6 +653,7 @@
 				7547DB6C204FDF8000C280AC /* CheckoutViewController.swift in Sources */,
 				35C7A1CE211336660063497E /* SetURLViewController.swift in Sources */,
 				3528ACD620919DDD0060DF20 /* CardToken.swift in Sources */,
+				85B2855A21F9ECC6004FA525 /* SetApplePayMerchantIDViewController.swift in Sources */,
 				358D37D12137CCA0009C9324 /* PaymentMethodViewController.swift in Sources */,
 				35DB97732129919D006C3781 /* UICustomizationController.swift in Sources */,
 				35D39F6A214B9608005B6370 /* SupportedSchemeTableViewCell.swift in Sources */,
@@ -792,7 +796,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 97;
+				CURRENT_PROJECT_VERSION = 104;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -856,7 +860,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 97;
+				CURRENT_PROJECT_VERSION = 104;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -889,7 +893,7 @@
 				CODE_SIGN_ENTITLEMENTS = PiaSample/PiaSample.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 97;
+				CURRENT_PROJECT_VERSION = 104;
 				DEVELOPMENT_TEAM = EGNFYS6P3L;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = PiaSample/Info.plist;
@@ -915,7 +919,7 @@
 				CODE_SIGN_ENTITLEMENTS = PiaSample/PiaSample.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 97;
+				CURRENT_PROJECT_VERSION = 104;
 				DEVELOPMENT_TEAM = EGNFYS6P3L;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = PiaSample/Info.plist;

@@ -3,7 +3,7 @@
 //
 //  MIT License
 //
-//  Copyright (c) 2018 Nets Denmark A/S
+//  Copyright (c) 2019 Nets Denmark A/S
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a
 //  copy of this software and associated documentation files (the "Software"),
@@ -41,6 +41,7 @@ class UICustomizationController: UIViewController {
     @IBOutlet weak var labelTextColorLabel: UILabel!
     @IBOutlet weak var textFieldColorLabel: UILabel!
     @IBOutlet weak var textFieldSuccessColor: UILabel!
+    @IBOutlet weak var textFieldBackgroundColorLabel: UILabel!
     @IBOutlet weak var textFieldErrorMessageColorLabel: UILabel!
     @IBOutlet weak var switchThumbColorLabel: UILabel!
     @IBOutlet weak var switchOnTintColor: UILabel!
@@ -55,6 +56,10 @@ class UICustomizationController: UIViewController {
     @IBOutlet weak var useStatusBarLightContentSwitch: UISwitch!
     @IBOutlet weak var statusBarColorLabel: UILabel!
     @IBOutlet weak var useStatusBarLightContentLabel: UILabel!
+    @IBOutlet weak var turnOnSaveCardSwitch: UISwitch!
+    @IBOutlet weak var disableSaveCardSwitch: UISwitch!
+    @IBOutlet weak var turnOnSaveCardSwitchLabel: UILabel!
+    @IBOutlet weak var disableSaveCardLabel: UILabel!
     
     
     // Card IO IBOutlets
@@ -79,6 +84,7 @@ class UICustomizationController: UIViewController {
     fileprivate var labelTextColor: UIColor? = nil
     fileprivate var textFieldColor: UIColor? = nil
     fileprivate var textFielSuccess: UIColor? = nil
+    fileprivate var textFieldBackgroundColor: UIColor? = nil
     fileprivate var textFieldErrorMessageColor: UIColor? = nil
     fileprivate var switchThumbColor: UIColor? = nil
     fileprivate var switchOnTint: UIColor? = nil
@@ -145,6 +151,11 @@ class UICustomizationController: UIViewController {
     @IBAction func changeTextFieldColor(_ sender: UIButton) {
         self.textFieldColorLabel.textColor = sender.backgroundColor
         self.textFieldColor = sender.backgroundColor
+    }
+    
+    @IBAction func changeTextFieldBackgroundColor(_ sender: UIButton) {
+        self.textFieldBackgroundColorLabel.textColor = sender.backgroundColor
+        self.textFieldBackgroundColor = sender.backgroundColor
     }
     
     @IBAction func changeTextFieldSuccessColor(_ sender: UIButton) {
@@ -234,6 +245,10 @@ class UICustomizationController: UIViewController {
             NPIInterfaceConfiguration.sharedInstance()?.fieldTextColor = temp
         }
         
+        if let temp = self.textFieldBackgroundColor {
+            NPIInterfaceConfiguration.sharedInstance()?.fieldBackgroundColor = temp
+        }
+        
         if let temp = self.textFieldErrorMessageColor {
             NPIInterfaceConfiguration.sharedInstance()?.errorFieldColor = temp
         }
@@ -317,6 +332,8 @@ extension UICustomizationController {
         self.useSampleFontSwitch.addTarget(self, action: #selector(useSampleFontAndFontWeight(_:)), for: .valueChanged)
         self.useSampleImagesSwitch.addTarget(self, action: #selector(useSampleImagesForLogo(_:)), for: .valueChanged)
         self.useStatusBarLightContentSwitch.addTarget(self, action: #selector(useStatusBarLightContent(_:)), for: .valueChanged)
+        self.turnOnSaveCardSwitch.addTarget(self, action: #selector(turnOnSaveCard(_:)), for: .valueChanged)
+        self.disableSaveCardSwitch.addTarget(self, action: #selector(disableSaveCard(_:)), for: .valueChanged)
         
         // Card IO
         self.cardIOTextFontSwitch.addTarget(self, action: #selector(useSampleFontForCardIOText(_:)), for: .valueChanged)
@@ -352,11 +369,15 @@ extension UICustomizationController {
             self.textFieldColorLabel.textColor = NPIInterfaceConfiguration.sharedInstance()?.fieldTextColor
         }
         
+        if NPIInterfaceConfiguration.sharedInstance()?.fieldBackgroundColor != nil {
+            self.textFieldBackgroundColorLabel.textColor = NPIInterfaceConfiguration.sharedInstance()?.fieldBackgroundColor
+        }
+        
         if NPIInterfaceConfiguration.sharedInstance()?.successFieldColor != nil {
             self.textFieldSuccessColor.textColor = NPIInterfaceConfiguration.sharedInstance()?.successFieldColor
         }
         
-        if NPIInterfaceConfiguration.sharedInstance()?.errorFieldColor != nil {
+        if NPIInterfaceConfiguration.sharedInstance()?.errorFieldColor != nil && NPIInterfaceConfiguration.sharedInstance()?.errorFieldColor != UIColor.red {
             self.textFieldErrorMessageColorLabel.textColor = NPIInterfaceConfiguration.sharedInstance()?.errorFieldColor
         }
         
@@ -417,13 +438,23 @@ extension UICustomizationController {
             self.cardIOButtonTextFontSwitch.isOn = true
         }
         
-        if NPIInterfaceConfiguration.sharedInstance()?.statusBarColor != nil {
+        if NPIInterfaceConfiguration.sharedInstance()?.statusBarColor != nil && NPIInterfaceConfiguration.sharedInstance()?.statusBarColor != UIColor.white {
             self.statusBarColorLabel.textColor = NPIInterfaceConfiguration.sharedInstance()?.statusBarColor
         }
         
         if NPIInterfaceConfiguration.sharedInstance()?.useStatusBarLightContent == true {
             self.useStatusBarLightContentLabel.textColor = .white
             self.useStatusBarLightContentSwitch.isOn = true
+        }
+        
+        if NPIInterfaceConfiguration.sharedInstance()?.disableSaveCardOption == true {
+            self.disableSaveCardLabel.textColor = .white
+            self.disableSaveCardSwitch.isOn = true
+        }
+        
+        if NPIInterfaceConfiguration.sharedInstance()?.saveCardOn == true {
+            self.turnOnSaveCardSwitchLabel.textColor = .white
+            self.turnOnSaveCardSwitch.isOn = true
         }
     }
     
@@ -484,6 +515,28 @@ extension UICustomizationController {
         }else {
             self.useStatusBarLightContentLabel.textColor = .black
             NPIInterfaceConfiguration.sharedInstance()?.useStatusBarLightContent = false
+        }
+    }
+    
+    @objc fileprivate func turnOnSaveCard(_ sampleSwitch: UISwitch) {
+        if sampleSwitch.isOn {
+            self.turnOnSaveCardSwitchLabel.textColor = .white
+            NPIInterfaceConfiguration.sharedInstance()?.saveCardOn = true
+        }else {
+            self.turnOnSaveCardSwitchLabel.textColor = .black
+            NPIInterfaceConfiguration.sharedInstance()?.saveCardOn = false
+        }
+    }
+    
+    @objc fileprivate func disableSaveCard(_ sampleSwitch: UISwitch) {
+        UserDefaults.standard.set(sampleSwitch.isOn, forKey: "disableSaveCard")
+        UserDefaults.standard.synchronize()
+        if sampleSwitch.isOn {
+            self.disableSaveCardLabel.textColor = .white
+            NPIInterfaceConfiguration.sharedInstance()?.disableSaveCardOption = true
+        }else {
+            self.disableSaveCardLabel.textColor = .black
+            NPIInterfaceConfiguration.sharedInstance()?.disableSaveCardOption = false
         }
     }
 }

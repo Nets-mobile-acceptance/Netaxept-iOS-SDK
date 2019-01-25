@@ -3,7 +3,7 @@
 //
 //  MIT License
 //
-//  Copyright (c) 2018 Nets Denmark A/S
+//  Copyright (c) 2019 Nets Denmark A/S
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a
 //  copy of this software and associated documentation files (the "Software"),
@@ -111,7 +111,9 @@ extension UIViewController {
     func createApplePayInfo(amount: Double, currencyCode: String,usingExpressCheckout: Bool) -> NPIApplePayInfo {
         let constant = ConstantAPI()
         
-        let applePayMerchantID = constant.getApplePayMerchantID()
+         let applePayMerchantID = constant.getApplePayMerchantID(testEnvironment: ConstantAPI.testMode)
+        
+        
         let applePayItemDisplayName = "Lightning Cable"
         let applePayMerchantDisplayName = "PiA SDK iOS"
         let applePayItemCost = NSDecimalNumber(value: amount - 2.0)

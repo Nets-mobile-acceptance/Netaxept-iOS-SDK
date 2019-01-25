@@ -3,7 +3,7 @@
 //
 //  MIT License
 //
-//  Copyright (c) 2018 Nets Denmark A/S
+//  Copyright (c) 2019 Nets Denmark A/S
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a
 //  copy of this software and associated documentation files (the "Software"),
@@ -29,14 +29,13 @@ import Foundation
 
 class ConstantAPI {
     
-     
+     let isReleasePackageVersion         = true
      let testBEURL                       = "YOUR TEST BACKEND BASE URL HERE"
      let productionBEURL                 = "YOUR PRODUCTION BACKEND BASE URL HERE"
      let testID                          = "YOUR TEST NETAXEPT MERCHANT ID HERE"
      let productionID                    = "YOUR PRODUCTION NETAXEPT MERCHANT ID HERE"
      let testApplePayMerchantID          = "YOUR TEST APPLE PAY MERCHANT ID HERE"
-     let productionApplePayMerchantID1   = "YOUR PRODUCTION APPLE PAY MERCHANT ID HERE"
-     let productionApplePayMerchantID2   = "YOUR PRODUCTION APPLE PAY MERCHANT ID HERE"
+     let productionApplePayMerchantID    = "YOUR PRODUCTION APPLE PAY MERCHANT ID HERE"
      
     
     
@@ -106,17 +105,30 @@ class ConstantAPI {
         return merchantID
     }
     
-    func getApplePayMerchantID() -> String {
-        if ConstantAPI.testMode {
-            return testApplePayMerchantID
-        } else {
-            if self.getMerchantID() == "733255" {
-                return productionApplePayMerchantID1
+     
+    func getApplePayMerchantID(testEnvironment: Bool) -> String {
+        if testEnvironment {
+            if cache.object(forKey: "testApplePayMerchantID") != nil {
+                let temp = String(describing: cache.object(forKey: "testApplePayMerchantID")!)
+                return temp
             } else {
-                return productionApplePayMerchantID2
+                return testApplePayMerchantID
+            }
+        } else {
+            if cache.object(forKey: "productionApplePayMerchantID") != nil {
+                let temp = String(describing: cache.object(forKey: "productionApplePayMerchantID")!)
+                return temp
+            }else {
+                return productionApplePayMerchantID
             }
         }
     }
+     
+    
+    func isReleasePackage() -> Bool {
+        return self.isReleasePackageVersion
+    }
+    
     
     func displayMerchantID(testEnvironment: Bool) -> String {
         if testEnvironment {

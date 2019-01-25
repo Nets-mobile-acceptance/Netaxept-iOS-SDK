@@ -3,7 +3,7 @@
 //
 //  MIT License
 //
-//  Copyright (c) 2018 Nets Denmark A/S
+//  Copyright (c) 2019 Nets Denmark A/S
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a
 //  copy of this software and associated documentation files (the "Software"),
@@ -30,15 +30,19 @@ import IQKeyboardManagerSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
+    
     var window: UIWindow?
-
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
         IQKeyboardManager.shared.enable = true
         IQKeyboardManager.shared.keyboardDistanceFromTextField = 75
         
-
+        
+        NPIInterfaceConfiguration.sharedInstance()?.disableCardIO = UserDefaults.standard.bool(forKey: "disableCardIO")
+        
+        NPIInterfaceConfiguration.sharedInstance()?.disableSaveCardOption = UserDefaults.standard.bool(forKey: "disableSaveCard")
+        
         /*
          Customise any of the properties of NPIInterfaceConfiguration.sharedInstance
          The uncustomised ones will just use the default value.
@@ -48,7 +52,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        NPIInterfaceConfiguration.sharedInstance().barColor = .yellow
 //        NPIInterfaceConfiguration.sharedInstance().backgroundColor = .red
 //        NPIInterfaceConfiguration.sharedInstance().buttonTextColor = UIColor.yellow
-//        NPIInterfaceConfiguration.sharedInstance().labelTextColor = UIColor.brown
+//        NPIInterfaceConfiguration.sharedInstance().labelTextColor = UIColor.magenta
 //        NPIInterfaceConfiguration.sharedInstance().fieldTextColor = UIColor.brown
 //        NPIInterfaceConfiguration.sharedInstance().switchThumbColor = UIColor.red
 //        NPIInterfaceConfiguration.sharedInstance().errorLabelTextColor = UIColor.magenta
@@ -60,6 +64,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        NPIInterfaceConfiguration.sharedInstance()?.statusBarColor = .blue
 //        NPIInterfaceConfiguration.sharedInstance()?.useStatusBarLightContent = false
 //        NPIInterfaceConfiguration.sharedInstance()?.logoImageContentMode = .scaleAspectFit
+//        NPIInterfaceConfiguration.sharedInstance()?.disableSaveCardOption = true
+//        NPIInterfaceConfiguration.sharedInstance()?.saveCardOn = true
+//        NPIInterfaceConfiguration.sharedInstance()?.fieldBackgroundColor = .magenta
         
         return true
     }
