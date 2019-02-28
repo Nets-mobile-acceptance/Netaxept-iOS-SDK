@@ -1,4 +1,28 @@
-﻿using System;
+﻿//
+//  MIT License
+//
+//  Copyright (c) 2019 Nets Denmark A/S
+//
+//  Permission is hereby granted, free of charge, to any person obtaining a
+//  copy of this software and associated documentation files (the "Software"),
+//  to deal in the Software without restriction, including without limitation
+//  the rights to use, copy, modify, merge, publish, distribute, sublicense,
+//  and/or sell copies of the Software, and to permit persons to whom the
+//  Software is furnished to do so, subject to the following conditions:
+//
+//  The above copyright notice and this permission notice shall be
+//  included in all copies or substantial portions of the Software.
+//
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+//  OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+//  ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+//  OTHER DEALINGS IN THE SOFTWARE.
+//
+
+using System;
 using Contacts;
 using Foundation;
 using ObjCRuntime;
@@ -393,17 +417,21 @@ namespace XamarinPia
         [Export("useStatusBarLightContent")]
         bool UseStatusBarLightContent { get; set; }
 
-	    // @property (readwrite, nonatomic) UIViewContentMode logoImageContentMode;
+        // @property (readwrite, nonatomic) UIViewContentMode logoImageContentMode;
 	    [Export ("logoImageContentMode", ArgumentSemantic.Assign)]
 	    UIViewContentMode LogoImageContentMode { get; set; }
 
-        // @property (nonatomic, readwrite) BOOL disableSaveCardOption;
-        [Export("disableSaveCardOption")]
-        bool DisableSaveCardOption { get; set; }
+	    // @property (readwrite, nonatomic) BOOL disableSaveCardOption;
+	    [Export ("disableSaveCardOption")]
+	    bool DisableSaveCardOption { get; set; }
 
-        // @property (nonatomic, strong) UIColor *fieldBackgroundColor;
-        [Export("fieldBackgroundColor", ArgumentSemantic.Strong)]
-        UIColor FieldBackgroundColor { get; set; }
+	    // @property (nonatomic, strong) UIColor * fieldBackgroundColor;
+	    [Export ("fieldBackgroundColor", ArgumentSemantic.Strong)]
+	    UIColor FieldBackgroundColor { get; set; }
+
+	    // @property (nonatomic) PiALanguage language;
+	    [Export ("language", ArgumentSemantic.Assign)]
+	    PiALanguage Language { get; set; }
 
         // +(instancetype)sharedInstance;
         [Static]

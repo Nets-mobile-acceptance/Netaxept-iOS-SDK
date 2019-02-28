@@ -38,10 +38,12 @@ class SupportedSchemeTableViewCell: UITableViewCell {
         stackView.axis = .horizontal
         stackView.distribution = .equalSpacing
         
+        let sizeOfImage = self.suportedSchemeView.bounds.width / CGFloat(schemes.count)  - 10.0
+        
         for scheme in schemes {
             let imageView = UIImageView()
-            imageView.heightAnchor.constraint(equalToConstant: self.suportedSchemeView.frame.height - 15).isActive = true
-            imageView.widthAnchor.constraint(equalToConstant: self.suportedSchemeView.frame.height - 15).isActive = true
+            imageView.heightAnchor.constraint(equalToConstant: sizeOfImage).isActive = true
+            imageView.widthAnchor.constraint(equalToConstant: sizeOfImage).isActive = true
             imageView.image = UIImage(named: "\(scheme)")
             imageView.contentMode = .scaleAspectFit
             

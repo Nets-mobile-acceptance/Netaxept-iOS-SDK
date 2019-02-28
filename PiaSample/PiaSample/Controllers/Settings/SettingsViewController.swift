@@ -32,6 +32,8 @@ import Pia
  */
 class SettingsViewController: UIViewController {
     
+    @IBOutlet weak var languageButton: PiaSamplePickerButton!
+    
     @IBOutlet weak var applicationVersionLabel: UILabel!
     
     @IBOutlet weak var customerIDLabel: UILabel!
@@ -42,22 +44,30 @@ class SettingsViewController: UIViewController {
     @IBOutlet var changeCustomerIDView: UIView!
     @IBOutlet weak var disableCardIOSwitch: UISwitch!
     
+    @IBOutlet weak var disableCardIOStackView: UIStackView!
+    
     fileprivate let cache = Cache()
     fileprivate let constantAPI = ConstantAPI()
     
     var transactionResult: PiaResult?    
     fileprivate var transactionInfo: NPITransactionInfo?
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         self.customerIDTextField.delegate = self
         self.displayCustomerID()
         self.updateSwitches()
+        self.languageButton.setUpLanguagePicker()
+        
+        /*#light_version_section_start
+         self.disableCardIOStackView.isHidden = true
+         #light_version_section_end*/
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.applicationVersionLabel.text = NPIPiaSemanticVersionString
+        self.languageButton.updateDropDownButton(with: .Language)
     }
     
     @IBAction func onBack(_ sender: Any) {

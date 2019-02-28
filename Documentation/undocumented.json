@@ -20,6 +20,13 @@
       "symbol": "NPIErrorCode",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.typedef",
       "warning": "undocumented"
+    },
+    {
+      "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/Models/Language Support/PiALanguage.h",
+      "line": 15,
+      "symbol": "PiALanguage",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.typedef",
+      "warning": "undocumented"
     }
   ],
   "source_directory": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia"

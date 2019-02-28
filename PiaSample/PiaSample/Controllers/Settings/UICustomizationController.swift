@@ -74,6 +74,11 @@ class UICustomizationController: UIViewController {
     @IBOutlet weak var cardIOTextFontSwitch: UISwitch!
     @IBOutlet weak var cardIOButtonTextFontSwitch: UISwitch!
     
+    
+    @IBOutlet weak var cardIOSpecificStackView: UIStackView!
+    @IBOutlet weak var cardIOSpecificLabel: UILabel!
+    
+    
     // properties to be saved later
     fileprivate var navBarColor: UIColor? = nil
     fileprivate var navBarItemColor: UIColor? = nil
@@ -105,6 +110,11 @@ class UICustomizationController: UIViewController {
     // UIViewController lifecycle
     override func viewDidLoad() {
         self.addActionForSwitches()
+        
+        /*#light_version_section_start
+         self.cardIOSpecificLabel.isHidden = true
+         self.cardIOSpecificStackView.isHidden = true
+         #light_version_section_end*/
     }
     
     override func viewWillAppear(_ animated: Bool) {

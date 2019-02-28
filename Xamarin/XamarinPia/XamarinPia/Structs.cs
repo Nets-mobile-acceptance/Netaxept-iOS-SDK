@@ -58,4 +58,12 @@ namespace XamarinPia
         MerchantTimeout = 901
     }
 
+    public enum PiALanguage : uint
+    {
+	    English,
+	    Swedish,
+	    Danish,
+	    Norwegian,
+	    Finnish
+    }
 }

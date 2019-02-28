@@ -12,15 +12,14 @@ target 'PiaSample' do
 
   pod 'Moya', '~> 11.0'
   pod 'IQKeyboardManagerSwift'
+  pod 'DropDown', '2.3.2'
   
   target 'PiaSampleTests' do
     inherit! :search_paths
-    # Pods for testing
   end
 
   target 'PiaSampleUITests' do
     inherit! :search_paths
-    # Pods for testing
   end
 
 end

@@ -39,7 +39,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         IQKeyboardManager.shared.keyboardDistanceFromTextField = 75
         
         
+        //#cardio_code_section_start
         NPIInterfaceConfiguration.sharedInstance()?.disableCardIO = UserDefaults.standard.bool(forKey: "disableCardIO")
+        //#cardio_code_section_end
         
         NPIInterfaceConfiguration.sharedInstance()?.disableSaveCardOption = UserDefaults.standard.bool(forKey: "disableSaveCard")
         
@@ -67,7 +69,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        NPIInterfaceConfiguration.sharedInstance()?.disableSaveCardOption = true
 //        NPIInterfaceConfiguration.sharedInstance()?.saveCardOn = true
 //        NPIInterfaceConfiguration.sharedInstance()?.fieldBackgroundColor = .magenta
-        
+//        NPIInterfaceConfiguration.sharedInstance()?.language = Finnish
         return true
     }
 }

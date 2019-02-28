@@ -38,9 +38,9 @@ class CheckoutViewController: UIViewController {
     @IBOutlet weak var contentScrollView: UIScrollView!
     @IBOutlet weak var amountTextField: UITextField!
     
-    @IBOutlet weak var currencyPicker: CurrencyPickerField!
-    
     @IBOutlet weak var buttonStackview: UIStackView!
+    
+    @IBOutlet weak var currencyButton: PiaSamplePickerButton!
     
     fileprivate var tokenCardInfos = [NPITokenCardInfo]()
     fileprivate var supportedSchemes = [String]()
@@ -59,11 +59,6 @@ class CheckoutViewController: UIViewController {
         return UserDefaults.standard.bool(forKey: "systemAuthentication")
     }
     
-    fileprivate let currencies = ["EUR", "SEK", "DKK", "NOK"]
-    private var currencyCode: String {
-        return currencyPicker.currencyCode
-    }
-    
     var formattedInputValue: Double? {
         guard self.amountTextField.text != nil else {
             return nil
@@ -79,14 +74,14 @@ class CheckoutViewController: UIViewController {
         }
         
         let vatAmount = Int64(2)
-        return Amount(totalAmount: Int64(self.formattedInputValue! * 100), vatAmount: vatAmount, currencyCode: self.currencyCode)
+        return Amount(totalAmount: Int64(self.formattedInputValue! * 100), vatAmount: vatAmount, currencyCode: globalCurrency)
     }
     
     // MARK: Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         self.addButtons()
-        self.setupCurrencyPicker()
+        self.currencyButton.setUpCurrencyPicker()
     }
     
     override func viewWillLayoutSubviews() {
@@ -97,6 +92,7 @@ class CheckoutViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.cleanVariables()
+        self.currencyButton.updateDropDownButton(with: .Currency)
     }
     
     
@@ -158,11 +154,6 @@ extension CheckoutViewController {
         self.buttonStackview.spacing = 10.0
     }
     
-    fileprivate func setupCurrencyPicker() {
-        currencyPicker.currencies = currencies
-        currencyPicker.delegate = self
-    }
-    
     @objc fileprivate func buyWithNormalFlow() {
         self.buy {
             self.performSegue(withIdentifier: "PaymentMethodSegue", sender: self)
@@ -211,7 +202,7 @@ extension CheckoutViewController {
      This function shows how you can call PiA SDK to pay with ApplePay
      */
     fileprivate func presentSDKWithApplePay() {
-        let applePayInfo = self.createApplePayInfo(amount: self.formattedInputValue!, currencyCode: self.currencyCode, usingExpressCheckout: true)
+        let applePayInfo = self.createApplePayInfo(amount: self.formattedInputValue!, currencyCode: globalCurrency, usingExpressCheckout: true)
         
         // ApplePay flow only needs ApplePay info
         let piaSDK = PiaSDKController(applePayInfo: applePayInfo)
@@ -403,17 +394,6 @@ extension CheckoutViewController: PiaSDKDelegate {
     
     func piaSDKDidCancel(_ PiaSDK: PiaSDKController) {
         self.dismiss(animated: false, completion: nil)
-    }
-}
-
-// MARK: TextField Delegate
-extension CheckoutViewController: UITextFieldDelegate {
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        if textField == currencyPicker {
-            return false
-        }
-        
-        return true
     }
 }
 

@@ -35,9 +35,9 @@
 		35DB97732129919D006C3781 /* UICustomizationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DB97722129919D006C3781 /* UICustomizationController.swift */; };
 		35E1B7912060FFC300B71148 /* ConstantAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E1B7902060FFC300B71148 /* ConstantAPI.swift */; };
 		35FEDB5F20DBBFE80070220B /* ResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35FEDB5E20DBBFE80070220B /* ResultViewController.swift */; };
+		45B93A67AFBA69BD93140A6B /* Pia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A207087FF7CBE015457576A2 /* Pia.framework */; };
 		5F338E9C20E13B1C00B3E608 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5F338E9E20E13B1C00B3E608 /* Localizable.strings */; };
 		5F338EA120E13B1D00B3E608 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5F338EA320E13B1D00B3E608 /* InfoPlist.strings */; };
-		67DFD3022179AF66004FA317 /* CurrencyPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67DFD3012179AF66004FA317 /* CurrencyPicker.swift */; };
 		7547DB6A204FDF8000C280AC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7547DB69204FDF8000C280AC /* AppDelegate.swift */; };
 		7547DB6C204FDF8000C280AC /* CheckoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7547DB6B204FDF8000C280AC /* CheckoutViewController.swift */; };
 		7547DB6F204FDF8000C280AC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7547DB6D204FDF8000C280AC /* Main.storyboard */; };
@@ -47,10 +47,10 @@
 		7554A34D2056BF7100773403 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
 		75F8D6F020501EC100F99B06 /* UIColor+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F8D6EE20501EC100F99B06 /* UIColor+Ext.swift */; };
 		75F8D6F120501EC100F99B06 /* UIButton+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F8D6EF20501EC100F99B06 /* UIButton+Ext.swift */; };
+		7D2B61B60768E7B10D9C1AF6 /* Pia.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A207087FF7CBE015457576A2 /* Pia.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		8504F2622212D84D00634FCD /* PiaSamplePickerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8504F2612212D84D00634FCD /* PiaSamplePickerButton.swift */; };
 		85B2855A21F9ECC6004FA525 /* SetApplePayMerchantIDViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B2855921F9ECC6004FA525 /* SetApplePayMerchantIDViewController.swift */; };
-		A9917F77B83B9681B39D20F3 /* Pia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 387F25F4BB6DF1893EC93276 /* Pia.framework */; };
 		E5F4F8AE27E06C9EA567BCB2 /* Pods_PiaSampleUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EF911800CEB5C1F14FC0BF7 /* Pods_PiaSampleUITests.framework */; };
-		E7B8D047268789F147713E15 /* Pia.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 387F25F4BB6DF1893EC93276 /* Pia.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FB8389986800864C6F045126 /* Pods_PiaSampleTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F856BF6102DF1DFD0EC41584 /* Pods_PiaSampleTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -78,7 +78,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				E7B8D047268789F147713E15 /* Pia.framework in Embed Frameworks */,
+				7D2B61B60768E7B10D9C1AF6 /* Pia.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -123,7 +123,6 @@
 		35E1B7902060FFC300B71148 /* ConstantAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstantAPI.swift; sourceTree = "<group>"; };
 		35FEDB5E20DBBFE80070220B /* ResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewController.swift; sourceTree = "<group>"; };
 		35FF4008213EA8D30095BB88 /* PiaSample.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PiaSample.entitlements; sourceTree = "<group>"; };
-		387F25F4BB6DF1893EC93276 /* Pia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pia.framework; path = ../libs/Pia.framework; sourceTree = "<group>"; };
 		3C2C8ED4BF1B1DFE5C2627EB /* Pods-PiaSampleTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PiaSampleTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PiaSampleTests/Pods-PiaSampleTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5F338E6D20DD321500B3E608 /* ro */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ro; path = ro.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		5F338E9D20E13B1C00B3E608 /* ro */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ro; path = ro.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -133,7 +132,6 @@
 		5FC29A0020F4FF58004EA978 /* ro */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ro; path = ro.lproj/Main.strings; sourceTree = "<group>"; };
 		5FC29A1120F5ED79004EA978 /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = fi.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		5FC29A1320F5EDBD004EA978 /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = fi.lproj/Localizable.strings; sourceTree = "<group>"; };
-		67DFD3012179AF66004FA317 /* CurrencyPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyPicker.swift; sourceTree = "<group>"; };
 		7547DB66204FDF8000C280AC /* PiaSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PiaSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7547DB69204FDF8000C280AC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7547DB6B204FDF8000C280AC /* CheckoutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckoutViewController.swift; sourceTree = "<group>"; };
@@ -149,6 +147,7 @@
 		75F8D6EE20501EC100F99B06 /* UIColor+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Ext.swift"; sourceTree = "<group>"; };
 		75F8D6EF20501EC100F99B06 /* UIButton+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIButton+Ext.swift"; sourceTree = "<group>"; };
 		7EF911800CEB5C1F14FC0BF7 /* Pods_PiaSampleUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PiaSampleUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8504F2612212D84D00634FCD /* PiaSamplePickerButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PiaSamplePickerButton.swift; sourceTree = "<group>"; };
 		85730E1621A2C86C0016FB69 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		857FE13921A2A9C30027D508 /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = nb.lproj/Main.strings; sourceTree = "<group>"; };
 		857FE13A21A2A9C40027D508 /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = nb.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
@@ -157,6 +156,7 @@
 		857FE13F21A2A9D50027D508 /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		857FE14021A2A9D60027D508 /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/Localizable.strings; sourceTree = "<group>"; };
 		85B2855921F9ECC6004FA525 /* SetApplePayMerchantIDViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetApplePayMerchantIDViewController.swift; sourceTree = "<group>"; };
+		A207087FF7CBE015457576A2 /* Pia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pia.framework; path = ../libs/Pia.framework; sourceTree = "<group>"; };
 		CFB2A9B99C45792A2B128C82 /* Pods-PiaSample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PiaSample.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PiaSample/Pods-PiaSample.debug.xcconfig"; sourceTree = "<group>"; };
 		F856BF6102DF1DFD0EC41584 /* Pods_PiaSampleTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PiaSampleTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -168,7 +168,7 @@
 			files = (
 				0B9C4518689FADE7C6CD9679 /* Pods_PiaSample.framework in Frameworks */,
 				7554A34D2056BF7100773403 /* BuildFile in Frameworks */,
-				A9917F77B83B9681B39D20F3 /* Pia.framework in Frameworks */,
+				45B93A67AFBA69BD93140A6B /* Pia.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -270,7 +270,7 @@
 			isa = PBXGroup;
 			children = (
 				35994AA02088756E0028C120 /* Cache.swift */,
-				67DFD3012179AF66004FA317 /* CurrencyPicker.swift */,
+				8504F2612212D84D00634FCD /* PiaSamplePickerButton.swift */,
 			);
 			path = "Helper Class";
 			sourceTree = "<group>";
@@ -299,7 +299,7 @@
 		5F7FDEEE2062808D0063A407 /* libs */ = {
 			isa = PBXGroup;
 			children = (
-				387F25F4BB6DF1893EC93276 /* Pia.framework */,
+				A207087FF7CBE015457576A2 /* Pia.framework */,
 			);
 			name = libs;
 			path = ../../libs;
@@ -502,6 +502,7 @@
 				fi,
 				nb,
 				da,
+				ro,
 			);
 			mainGroup = 7547DB5D204FDF8000C280AC;
 			productRefGroup = 7547DB67204FDF8000C280AC /* Products */;
@@ -574,7 +575,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
-			shellScript = "APP_PATH=\"${TARGET_BUILD_DIR}/${WRAPPER_NAME}\"\n\n# This script loops through the frameworks embedded in the application and\n# removes unused architectures.\nfind \"$APP_PATH\" -name 'Pia.framework' -type d | while read -r FRAMEWORK\ndo\nFRAMEWORK_EXECUTABLE_NAME=$(defaults read \"$FRAMEWORK/Info.plist\" CFBundleExecutable)\nFRAMEWORK_EXECUTABLE_PATH=\"$FRAMEWORK/$FRAMEWORK_EXECUTABLE_NAME\"\necho \"Executable is $FRAMEWORK_EXECUTABLE_PATH\"\n\nEXTRACTED_ARCHS=()\n\nfor ARCH in $ARCHS\ndo\necho \"Extracting $ARCH from $FRAMEWORK_EXECUTABLE_NAME\"\nlipo -extract \"$ARCH\" \"$FRAMEWORK_EXECUTABLE_PATH\" -o \"$FRAMEWORK_EXECUTABLE_PATH-$ARCH\"\nEXTRACTED_ARCHS+=(\"$FRAMEWORK_EXECUTABLE_PATH-$ARCH\")\ndone\n\necho \"Merging extracted architectures: ${ARCHS}\"\nlipo -o \"$FRAMEWORK_EXECUTABLE_PATH-merged\" -create \"${EXTRACTED_ARCHS[@]}\"\nrm \"${EXTRACTED_ARCHS[@]}\"\n\necho \"Replacing original executable with thinned version\"\nrm \"$FRAMEWORK_EXECUTABLE_PATH\"\nmv \"$FRAMEWORK_EXECUTABLE_PATH-merged\" \"$FRAMEWORK_EXECUTABLE_PATH\"\n\ndone\n";
+			shellScript = "APP_PATH=\"${TARGET_BUILD_DIR}/${WRAPPER_NAME}\"\n\n# This script loops through the frameworks embedded in the application and\n# removes unused architectures.\nfind \"$APP_PATH\" -name '*.framework' -type d | while read -r FRAMEWORK\ndo\nFRAMEWORK_EXECUTABLE_NAME=$(defaults read \"$FRAMEWORK/Info.plist\" CFBundleExecutable)\nFRAMEWORK_EXECUTABLE_PATH=\"$FRAMEWORK/$FRAMEWORK_EXECUTABLE_NAME\"\necho \"Executable is $FRAMEWORK_EXECUTABLE_PATH\"\n\nEXTRACTED_ARCHS=()\n\nfor ARCH in $ARCHS\ndo\necho \"Extracting $ARCH from $FRAMEWORK_EXECUTABLE_NAME\"\nlipo -extract \"$ARCH\" \"$FRAMEWORK_EXECUTABLE_PATH\" -o \"$FRAMEWORK_EXECUTABLE_PATH-$ARCH\"\nEXTRACTED_ARCHS+=(\"$FRAMEWORK_EXECUTABLE_PATH-$ARCH\")\ndone\n\necho \"Merging extracted architectures: ${ARCHS}\"\nlipo -o \"$FRAMEWORK_EXECUTABLE_PATH-merged\" -create \"${EXTRACTED_ARCHS[@]}\"\nrm \"${EXTRACTED_ARCHS[@]}\"\n\necho \"Replacing original executable with thinned version\"\nrm \"$FRAMEWORK_EXECUTABLE_PATH\"\nmv \"$FRAMEWORK_EXECUTABLE_PATH-merged\" \"$FRAMEWORK_EXECUTABLE_PATH\"\n\ndone\n";
 		};
 		962C8A876F19EB19AF4DCB31 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -584,6 +585,7 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-PiaSample/Pods-PiaSample-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/DropDown/DropDown.framework",
 				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Moya/Moya.framework",
 				"${BUILT_PRODUCTS_DIR}/Result/Result.framework",
@@ -591,6 +593,7 @@
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DropDown.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Moya.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Result.framework",
@@ -645,7 +648,6 @@
 			files = (
 				350AA715205BA12C00D3CD88 /* RequestManager.swift in Sources */,
 				3505C7BF205A3A5E00728609 /* ProcessingError.swift in Sources */,
-				67DFD3022179AF66004FA317 /* CurrencyPicker.swift in Sources */,
 				35171ABF2057ECAE00D946AA /* PaymentRegisterResponse.swift in Sources */,
 				75F8D6F020501EC100F99B06 /* UIColor+Ext.swift in Sources */,
 				35994AA3208876F40028C120 /* LoginViewController.swift in Sources */,
@@ -674,6 +676,7 @@
 				35FEDB5F20DBBFE80070220B /* ResultViewController.swift in Sources */,
 				35171AB62057EAE700D946AA /* Method.swift in Sources */,
 				3538FEC62141295E002CA4BE /* SavedCardTableViewCell.swift in Sources */,
+				8504F2622212D84D00634FCD /* PiaSamplePickerButton.swift in Sources */,
 				35994AA5208877180028C120 /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -796,7 +799,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 104;
+				CURRENT_PROJECT_VERSION = 114;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -816,7 +819,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -860,7 +863,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 104;
+				CURRENT_PROJECT_VERSION = 114;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -874,7 +877,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -893,7 +896,7 @@
 				CODE_SIGN_ENTITLEMENTS = PiaSample/PiaSample.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 104;
+				CURRENT_PROJECT_VERSION = 114;
 				DEVELOPMENT_TEAM = EGNFYS6P3L;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = PiaSample/Info.plist;
@@ -919,7 +922,7 @@
 				CODE_SIGN_ENTITLEMENTS = PiaSample/PiaSample.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 104;
+				CURRENT_PROJECT_VERSION = 114;
 				DEVELOPMENT_TEAM = EGNFYS6P3L;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = PiaSample/Info.plist;

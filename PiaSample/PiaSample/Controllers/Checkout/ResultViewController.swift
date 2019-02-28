@@ -80,7 +80,7 @@ class ResultViewController: UIViewController {
                     if let temp = self.contact {
                         self.timeInterval = 6
                         self.errorLabel.isHidden = false
-                        let newShippingDetailString = "Your new shipping contact: \n \(String(describing: temp.name?.givenName)) \(String(describing: temp.name?.familyName)) \n \(String(describing: temp.phoneNumber?.stringValue)) \n \(String(describing: temp.emailAddress)) \n \(String(describing: temp.postalAddress?.street)) \(String(describing: temp.postalAddress?.city)) \(String(describing: temp.postalAddress?.postalCode)) \(String(describing: temp.postalAddress?.country)) \(String(describing: temp.postalAddress?.isoCountryCode))"
+                        let newShippingDetailString = "Your new shipping contact: \n \(String( temp.name?.givenName ?? "")) \(String(temp.name?.familyName ?? "")) \n \(String(temp.phoneNumber?.stringValue ?? "")) \n \(String(temp.emailAddress ?? "")) \n \(String(temp.postalAddress?.street ?? "")) \(String(temp.postalAddress?.city ?? "")) \(String(temp.postalAddress?.postalCode ?? "")) \(String(temp.postalAddress?.country ?? "")) \(String(temp.postalAddress?.isoCountryCode ?? ""))"
                         self.errorLabel.text = newShippingDetailString
                     }
                 }
@@ -101,10 +101,21 @@ class ResultViewController: UIViewController {
             self.navItem.title = NSLocalizedString("Failed", comment: "Failed transaction navigation title")
             self.timeInterval = 6
             self.resultView.backgroundColor = self.hexStringToUIColor(hex: "#ff0040")
-            self.resultImage.image = #imageLiteral(resourceName: "FailedIcon")
             self.errorLabel.isHidden = false
+            
+            var tempResultString = ""
+            var tempImage = #imageLiteral(resourceName: "FailedIcon")
+            
+            if error.code().rawValue == 301 {
+                self.resultLabel.font = UIFont.boldSystemFont(ofSize: 20)
+                tempResultString = "Operation denied by transaction filter\n\nExamples of reason:\n• Credit card type denied\n• Velocity filter\n• Blocked IP\n..."
+                tempImage = #imageLiteral(resourceName: "TerminalError")
+            } else {
+                tempResultString = NSLocalizedString("There was an error. Please try again later", comment:"Failed transaction message")
+            }
+            self.resultImage.image = tempImage
             self.errorLabel.text = error.localizedDescription
-            self.resultLabel.text = NSLocalizedString("There was an error. Please try again later", comment:"Failed transaction message")
+            self.resultLabel.text = tempResultString
         }
     }
 

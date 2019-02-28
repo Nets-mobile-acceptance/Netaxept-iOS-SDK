@@ -1,4 +1,4 @@
-# PiA - Netaxept iOS SDK v1.1.1
+# PiA - Netaxept iOS SDK v1.2.0
 
 ![](./Resources/NetsLogo.jpg)
 
@@ -21,24 +21,6 @@ Supported payment methods:
 * Apple Pay
 * PayPal
 * Nordic mobile wallets (Vipps, Swish, MobilePay) – *available soon*
-
-
-## Releases
-New releases (improvements and fixes) since `v1.0.0`:
-
-- `v1.1.0`: Released on 18-Dec-2018
-   + **Xamarin** and **React Native** support
-   + Fixed logo issue for _DinersClubInternational_ recurring payments
-   + New CONVENIENCE initializer for PayPal payment flow
-   + New configuration to disable card scanner
-   + Added new UI customization options
-
-- `v1.1.1`: Released on 25-Jan-2019
-    + Improvements for UI Customization:
-        - Added new flag for hiding the "Save card for later use" functionality from payment screen
-        - Added new option for setting custom background color for input fields
-        - Updated card logos
-    + Improvements in WebView navigation bar: replaced text with specific icons
 
 ## Requirements
 * PiA iOS SDK requires iOS 9 or above.
@@ -66,8 +48,9 @@ github "Nets-mobile-acceptance/Netaxept-iOS-SDK"
 * Go to your project's target General tab and drag the Pia.framework into the Linked Frameworks and Libraries section.
 * Add Pia.framework to Embedded Binaries from the General tab.
 
+
 ### Manually
-* Download/clone this https://github.com/Nets-mobile-acceptance/Netaxept-iOS-SDK.git.
+* Download/clone this https://github.com/Nets-mobile-acceptance/Netaxept-iOS-SDK.git
 * Unzip **PiaSDKFramework.zip** to obtain **Pia.framework**.
 * Drag and drop **Pia.framework** to your project.
 * Go to your project target at Build Phases.
@@ -82,6 +65,9 @@ One option is to use Carthage for automated installation.
 Alternatively, if you wish to install the SDK manually, please refer to the following walk-around for uploading to GitHub:
 1. Add "Pia.framework" to your **.gitignore** list
 2. Use [GitHub large file system](https://git-lfs.github.com/) to continue uploading framework within your working project
+
+## Frequently Asked Questions
+If you encounter any blockers when integrating the `Netaxept - iOS SDK`, feel free to check the [Frequently Asked Questions](FAQs.md) page. If any of these answers does not fit your question, don't hesitate to [contact us](#contact).
 
 ## Usage
 After setup is ready, using PiA SDK is easy. For full references, please refer to **Documentation** folder.
