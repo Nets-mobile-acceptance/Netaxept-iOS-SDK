@@ -94,8 +94,13 @@ namespace XamarinPia
         string CancelRedirectUrl { get; }
 
         // -(instancetype _Nonnull)initWithTransactionID:(NSString * _Nonnull)transactionId okRedirectUrl:(NSString * _Nonnull)okRedirectUrl cancelRedirectUrl:(NSString * _Nonnull)cancelRedirectUrl;
+        //Deprecated : Use the constructor with two parameters containing transactionId and okRedirectUrl only
         [Export("initWithTransactionID:okRedirectUrl:cancelRedirectUrl:")]
         IntPtr Constructor(string transactionId, string okRedirectUrl, string cancelRedirectUrl);
+
+        // -(instancetype _Nonnull)initWithTransactionID:(NSString * _Nonnull)transactionId okRedirectUrl:(NSString * _Nonnull)okRedirectUrl;
+        [Export("initWithTransactionID:okRedirectUrl:")]
+        IntPtr Constructor(string transactionId, string okRedirectUrl);
     }
 
     // @interface NPITokenCardInfo : NSObject

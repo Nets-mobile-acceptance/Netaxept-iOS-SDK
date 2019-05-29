@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>eu.nets.pia.pia-xamarin-ios</id>
+    <version>$version$</version>
+    <title>PiA - Netaxept iOS SDK</title>
+    <authors>Nets Denmark A/S</authors>
+    <owners>Nets Denmark A/S</owners>
+    <licenseUrl>https://github.com/Nets-mobile-acceptance/Netaxept-iOS-SDK</licenseUrl>
+    <projectUrl>https://github.com/Nets-mobile-acceptance/Netaxept-iOS-SDK</projectUrl>
+    <iconUrl>https://github.com/Nets-mobile-acceptance/Netaxept-iOS-SDK/blob/master/Resources/NetsLogo.jpg</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>
+      PiA Netaxept iOS SDK is a library that provides the native in-app interactions to accept payments with Netaxept directly from native iOS apps while minimizing PCI DSS requirements for you.
+    </description>
+    <releaseNotes>See technical documentation for more details</releaseNotes>
+    <copyright>Copyright 2019</copyright>
+    <tags>Netaxept Pia Xamarin iOS</tags>
+  </metadata>
+
+  <files>
+        <file src="*.dll" target="lib\Xamarin.iOS10" />
+    </files>
+</package>

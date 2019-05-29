@@ -84,8 +84,11 @@ extension PaymentService: TargetType {
     
     var task: Task {
         switch self {
-        case .commit(_), .rollback(_), .storeCard(_):
+        case .rollback(_):
             return .requestPlain
+            
+        case .commit(_),.storeCard(_):
+            return .requestParameters(parameters: [:], encoding: JSONEncoding.default)
             
         case .methods:
             let cache = Cache()

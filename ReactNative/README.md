@@ -1,4 +1,7 @@
 #React Native iOS Integration Guide
+
+This is a reference source code of an application (under MIT license) using the SDK, provided for demo purpose!
+
 This guide is intended to help you integrate PiA - Netaxept iOS SDK within your React Native project fast and easy.
 
 ## Pre-requisites
@@ -56,7 +59,7 @@ In your `[YOUR DESIRE NAME].m`, start exposing SDK functionalities to React Nati
 
 ```objective-c
 RCT_EXPORT_METHOD(callPiaWithPayPal:(RCTResponseSenderBlock)callback) {
-  NPIMerchantInfo *merchantInfo = [[NPIMerchantInfo alloc] initWithIdentifier:@"12002835"];
+  NPIMerchantInfo *merchantInfo = [[NPIMerchantInfo alloc] initWithIdentifier:@"YOUR_MERCHANT_ID_HERE"];
   PiaSDKController *controller = [[PiaSDKController alloc] initForPayPalPurchaseWithMerchantInfo:merchantInfo];
   controller.PiaDelegate = self;
   

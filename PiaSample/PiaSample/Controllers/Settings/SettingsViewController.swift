@@ -291,7 +291,7 @@ extension SettingsViewController {
             switch result {
             case .success(let res):
                 print(res)
-                self.transactionInfo = NPITransactionInfo(transactionID: res.transactionId, okRedirectUrl: res.redirectOK, cancelRedirectUrl: res.redirectCancel)
+                self.transactionInfo = NPITransactionInfo(transactionID: res.transactionId, okRedirectUrl: res.redirectOK)
                 completed()
             case .failure(let err):
                 print(err)

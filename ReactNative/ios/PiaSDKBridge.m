@@ -39,7 +39,9 @@ RCT_EXPORT_MODULE()
 
 RCT_EXPORT_METHOD(callPia) {
   
-  NPIMerchantInfo *merchantInfo = [[NPIMerchantInfo alloc] initWithIdentifier:@"12002835" testMode:TRUE];
+   NSString *merchantId = @"YOUR MERCHANT ID HERE";
+  
+  NPIMerchantInfo *merchantInfo = [[NPIMerchantInfo alloc] initWithIdentifier:merchantId testMode:TRUE];
   NSNumber *amount = [[NSNumber alloc] initWithInt:10];
   NPIOrderInfo *orderInfo = [[NPIOrderInfo alloc] initWithAmount:amount currencyCode:@"EUR"];
   PiaSDKController *controller = [[PiaSDKController alloc] initWithOrderInfo:orderInfo merchantInfo:merchantInfo];
@@ -94,6 +96,9 @@ RCT_EXPORT_METHOD(callPiaWithPayPal:(RCTResponseSenderBlock)callback) {
 }
 
 - (void)getTransactionInfo:(void (^)(void))callbackBlock {
+  
+   NSString *merchantURL = @"YOUR MERCHANT BACKEND URL HERE";
+  
   __block NSMutableDictionary *resultsDictionary;
   
   NSMutableDictionary *amount = [[NSMutableDictionary alloc] init];
@@ -110,7 +115,7 @@ RCT_EXPORT_METHOD(callPiaWithPayPal:(RCTResponseSenderBlock)callback) {
   if ([NSJSONSerialization isValidJSONObject:jsonDictionary]) {//validate it
     NSError* error;
     NSData* jsonData = [NSJSONSerialization dataWithJSONObject:jsonDictionary options:NSJSONWritingPrettyPrinted error: &error];
-    NSURL* url = [NSURL URLWithString:@"https://api-gateway-pp.nets.eu/pia/test/merchantdemo/v1/payment/12002835/register"];
+    NSURL* url = [NSURL URLWithString:merchantURL];
     NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:30.0];
     [request setHTTPMethod:@"POST"];//use POST
     [request setValue:@"application/vnd.nets.pia.v1.2+json" forHTTPHeaderField:@"Accept"];
@@ -128,7 +133,7 @@ RCT_EXPORT_METHOD(callPiaWithPayPal:(RCTResponseSenderBlock)callback) {
         NSString *redirectOK = resultsDictionary[@"redirectOK"];
         NSString *redirectCancel = resultsDictionary[@"redirectCancel"];
         
-        self.transactionInfo = [[NPITransactionInfo alloc] initWithTransactionID:transactionId okRedirectUrl:redirectOK cancelRedirectUrl:redirectCancel];
+        self.transactionInfo = [[NPITransactionInfo alloc] initWithTransactionID:transactionId okRedirectUrl:redirectOK];
         callbackBlock();
       } else if ([data length]==0 && error ==nil) {
         NSLog(@" download data is null");

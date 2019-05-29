@@ -56,7 +56,7 @@ namespace XamarinPiaSample
     public partial class PiaXamarinDelegate : PiaSDKDelegate {
         public override void DoInitialAPICall(PiaSDKController PiaSDKController, bool storeCard, Action<NPITransactionInfo> completionHandler)
         {
-            var transactionInfo = new NPITransactionInfo("", "", "");
+            var transactionInfo = new NPITransactionInfo("", "");
             completionHandler(transactionInfo);
         }
 

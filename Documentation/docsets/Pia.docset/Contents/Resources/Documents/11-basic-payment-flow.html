@@ -183,11 +183,31 @@ SDK to start the <strong>basic payment flow</strong> by using the payment card:<
 <p>In the basic payment flow, <strong>PiaSDKController</strong> should be instantiated with the following parameters:</p>
 
 <ul>
-<li><strong>merchantInfo</strong> - Uniquely identifies the merchant</li>
-<li><strong>orderInfo</strong> - Describes the amount to be paid and the currency to be used</li>
-<li><strong>tokenCardInfo</strong> - Saved card token. This is optional - if nil, the user will have to input his card details</li>
+<li><p><strong>merchantInfo</strong> - Uniquely identifies the merchant</p>
+<pre class="highlight swift"><code><span class="cm">/**
+ @param identifier Merchant id provided by Nets. Must not be nil.
+*/</span>
+<span class="o">-</span> <span class="p">(</span><span class="n">instancetype</span> <span class="n">_Nonnull</span><span class="p">)</span><span class="nv">initWithIdentifier</span><span class="p">:(</span><span class="kt">NSString</span> <span class="o">*</span> <span class="n">_Nonnull</span><span class="p">)</span><span class="n">identifier</span><span class="p">;</span>
+
+<span class="cm">/**
+ @param identifier Merchant id provided by Nets. Must not be nil.
+ @param testMode Default is false, set it to true to use Netaxept's test environment
+*/</span>
+<span class="o">-</span> <span class="p">(</span><span class="n">instancetype</span> <span class="n">_Nonnull</span><span class="p">)</span><span class="nv">initWithIdentifier</span><span class="p">:(</span><span class="kt">NSString</span> <span class="o">*</span> <span class="n">_Nonnull</span><span class="p">)</span><span class="n">identifier</span> <span class="nv">testMode</span><span class="p">:(</span><span class="kt">BOOL</span><span class="p">)</span><span class="n">testMode</span><span class="p">;</span>
+
+<span class="cm">/**
+ @param identifier Merchant id provided by Nets. Must not be nil.
+ @param testMode Default is false, set it to true to use Netaxept's test environment
+ @param cvcRequired Default is true, set it to false to make payments without Security Code
+ Important: Note that disabling Security Code entry by setting _cvcRequired=False_ is submitted to both approval from your acquirer and activation by Netaxept customer service. Before proceeding, please contact your Netaxept customer service.
+ */</span>
+<span class="o">-</span> <span class="p">(</span><span class="n">instancetype</span> <span class="n">_Nonnull</span><span class="p">)</span><span class="nv">initWithIdentifier</span><span class="p">:(</span><span class="kt">NSString</span> <span class="o">*</span> <span class="n">_Nonnull</span><span class="p">)</span><span class="n">identifier</span> <span class="nv">testMode</span><span class="p">:(</span><span class="kt">BOOL</span><span class="p">)</span><span class="n">testMode</span> <span class="nv">cvcRequired</span><span class="p">:(</span><span class="kt">BOOL</span><span class="p">)</span><span class="n">cvcRequired</span><span class="p">;</span>
+</code></pre></li>
+<li><p><strong>orderInfo</strong> - Describes the amount to be paid and the currency to be used</p></li>
+<li><p><strong>tokenCardInfo</strong> - Saved card token. This is optional - if nil, the user will have to input his card details</p></li>
 </ul>
-<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">merchantInfo</span> <span class="o">=</span> <span class="kt">NPIMerchantInfo</span><span class="p">(</span><span class="nv">identifier</span><span class="p">:</span> <span class="s">"your merchant ID here, provided by Nets"</span><span class="p">)</span>
+<pre class="highlight swift"><code><span class="n">boolean</span> <span class="n">testMode</span> <span class="o">=</span> <span class="kc">true</span> <span class="c1">//Notify the SDK to use the test environment</span>
+<span class="k">let</span> <span class="nv">merchantInfo</span> <span class="o">=</span> <span class="kt">NPIMerchantInfo</span><span class="p">(</span><span class="nv">identifier</span><span class="p">:</span> <span class="s">"your merchant ID here, provided by Nets"</span><span class="p">,</span> <span class="n">testMode</span><span class="p">)</span>
 <span class="k">let</span> <span class="nv">orderInfo</span> <span class="o">=</span> <span class="kt">NPIOrderInfo</span><span class="p">(</span><span class="nv">amount</span><span class="p">:</span> <span class="kt">NSNumber</span><span class="p">(</span><span class="nv">value</span><span class="p">:</span><span class="mf">4.5</span><span class="p">),</span> <span class="nv">currencyCode</span><span class="p">:</span> <span class="s">"EUR"</span><span class="p">)</span>
 
 <span class="k">let</span> <span class="nv">piaSDK</span> <span class="o">=</span> <span class="kt">PiaSDKController</span><span class="p">(</span><span class="nv">merchantInfo</span><span class="p">:</span> <span class="n">merchantInfo</span><span class="p">,</span> <span class="nv">orderInfo</span><span class="p">:</span> <span class="n">orderInfo</span><span class="p">,</span> <span class="nv">tokenCardInfo</span><span class="p">:</span> <span class="kc">nil</span><span class="p">)</span>
@@ -217,7 +237,7 @@ SDK to start the <strong>basic payment flow</strong> by using the payment card:<
         <span class="kt">RequestManager</span><span class="o">.</span><span class="n">shared</span><span class="o">.</span><span class="nf">postRegister</span><span class="p">(</span><span class="nv">parameters</span><span class="p">:</span> <span class="n">params</span><span class="p">)</span> <span class="p">{</span> <span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="k">in</span>
             <span class="k">switch</span> <span class="n">result</span> <span class="p">{</span>
             <span class="k">case</span> <span class="o">.</span><span class="nf">success</span><span class="p">(</span><span class="k">let</span> <span class="nv">res</span><span class="p">):</span>
-                <span class="k">self</span><span class="o">.</span><span class="n">transactionInfo</span> <span class="o">=</span> <span class="kt">NPITransactionInfo</span><span class="p">(</span><span class="nv">transactionID</span><span class="p">:</span> <span class="n">res</span><span class="o">.</span><span class="n">transactionId</span><span class="p">,</span> <span class="nv">okRedirectUrl</span><span class="p">:</span> <span class="n">res</span><span class="o">.</span><span class="n">redirectOK</span><span class="p">,</span> <span class="nv">cancelRedirectUrl</span><span class="p">:</span> <span class="n">res</span><span class="o">.</span><span class="n">redirectCancel</span><span class="p">)</span>
+                <span class="k">self</span><span class="o">.</span><span class="n">transactionInfo</span> <span class="o">=</span> <span class="kt">NPITransactionInfo</span><span class="p">(</span><span class="nv">transactionID</span><span class="p">:</span> <span class="n">res</span><span class="o">.</span><span class="n">transactionId</span><span class="p">,</span> <span class="nv">okRedirectUrl</span><span class="p">:</span> <span class="n">res</span><span class="o">.</span><span class="n">redirectOK</span><span class="p">)</span>
                 <span class="nf">completed</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
             <span class="k">case</span> <span class="o">.</span><span class="nf">failure</span><span class="p">(</span><span class="k">let</span> <span class="nv">err</span><span class="p">):</span>
                 <span class="nf">completed</span><span class="p">(</span><span class="kc">false</span><span class="p">)</span>
@@ -252,7 +272,7 @@ handling is completed by getting a call to one of the following methods:</p>
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2019 <a class="link" href="https://nets.eu" target="_blank" rel="external">Nets</a>. All rights reserved. (Last updated: 2019-03-08)</p>
+      <p>&copy; 2019 <a class="link" href="https://nets.eu" target="_blank" rel="external">Nets</a>. All rights reserved. (Last updated: 2019-05-29)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.0</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

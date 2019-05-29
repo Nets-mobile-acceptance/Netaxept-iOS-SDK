@@ -1,16 +1,24 @@
 # Xamarin Integration Guide
+This is a reference source code of an application (under MIT license) using the SDK, provided for demo purpose !
+
 This guided is intended to help you get up to speed and start implementing PiA - Netaxept iOS SDK right away.
+
+**Note:** The `PiA Xamarin iOS` library is also available on [NuGet](https://www.nuget.org/).
+
 ## Step-by-step instruction
-1. From your solution, right click and choose **Add** and then **Add New Project**
-
-2. From the project Template, choose **Library** under **iOS** section and then choose **Binding Library**
-
-3. After adding new Binding Library to your solution, you will get the similar structure
-![Binding Library Structure](./Resources/BindingStructure.png)
-
-1. Navigate to your **Native References** folder, right click and choose **Add Native Reference**, from here choose the right place that contains Pia.framework
-2. Open your `ApiDefinition.cs` and `Structs.cs`, replace the contents inside with these two files' contents. [ApiDefinition.cs](./Resources/ApiDefinition.cs) [Structs.cs](./Resources/Structs.cs)
-3. Right click on your Binding Library solution and choose **Build [YOUR BINDING LIBRARY NAME]** to make sure everything is working as expected.
+Include **PiA Xamarin SDK** in your application. You can do this in two ways:
++ Include NuGet solution `eu.nets.pia.pia-xamarin-ios` from **Nuget Gallery**. Just Add Package and it will be configured automatically. 
++ Manual installation: 
+    1. From your solution, right click and choose **Add** and then **Add New Project**
+    
+    2. From the project Template, choose **Library** under **iOS** section and then choose **Binding Library**
+    
+    3. After adding new Binding Library to your solution, you will get the similar structure
+    ![Binding Library Structure](./Resources/BindingStructure.png)
+    
+    4. Navigate to your **Native References** folder, right click and choose **Add Native Reference**, from here choose the right place that contains Pia.framework
+    5. Open your `ApiDefinition.cs` and `Structs.cs`, replace the contents inside with these two files' contents. [ApiDefinition.cs](./Resources/ApiDefinition.cs) [Structs.cs](./Resources/Structs.cs)
+    6. Right click on your Binding Library solution and choose **Build [YOUR BINDING LIBRARY NAME]** to make sure everything is working as expected.
 
 ## Using new Binding Library with your project
 1. From your project solution, right click on **Reference** folder and choose **Edit References...**
@@ -34,7 +42,7 @@ public override void ViewDidAppear(bool animated) {
 public partial class PiaXamarinDelegate : PiaSDKDelegate {
         public override void DoInitialAPICall(PiaSDKController PiaSDKController, bool storeCard, Action<NPITransactionInfo> completionHandler)
         {
-            var transactionInfo = new NPITransactionInfo("", "", "");
+            var transactionInfo = new NPITransactionInfo("", "");
             completionHandler(transactionInfo);
         }
 
