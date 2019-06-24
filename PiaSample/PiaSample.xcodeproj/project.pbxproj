@@ -35,6 +35,8 @@
 		35DB97732129919D006C3781 /* UICustomizationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DB97722129919D006C3781 /* UICustomizationController.swift */; };
 		35E1B7912060FFC300B71148 /* ConstantAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E1B7902060FFC300B71148 /* ConstantAPI.swift */; };
 		35FEDB5F20DBBFE80070220B /* ResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35FEDB5E20DBBFE80070220B /* ResultViewController.swift */; };
+		41E56A16F49D54951F3B27C7 /* Pia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD6490A19FFDEABB1860C519 /* Pia.framework */; };
+		57AD3D310EE11E0B4781AF85 /* Pia.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CD6490A19FFDEABB1860C519 /* Pia.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5F338E9C20E13B1C00B3E608 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5F338E9E20E13B1C00B3E608 /* Localizable.strings */; };
 		5F338EA120E13B1D00B3E608 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5F338EA320E13B1D00B3E608 /* InfoPlist.strings */; };
 		7547DB6A204FDF8000C280AC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7547DB69204FDF8000C280AC /* AppDelegate.swift */; };
@@ -46,10 +48,8 @@
 		7554A34D2056BF7100773403 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
 		75F8D6F020501EC100F99B06 /* UIColor+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F8D6EE20501EC100F99B06 /* UIColor+Ext.swift */; };
 		75F8D6F120501EC100F99B06 /* UIButton+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F8D6EF20501EC100F99B06 /* UIButton+Ext.swift */; };
-		79DD06301CE82FAB0C57CBE8 /* Pia.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DF245414E3448C540035DE98 /* Pia.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		8504F2622212D84D00634FCD /* PiaSamplePickerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8504F2612212D84D00634FCD /* PiaSamplePickerButton.swift */; };
 		85B2855A21F9ECC6004FA525 /* SetApplePayMerchantIDViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B2855921F9ECC6004FA525 /* SetApplePayMerchantIDViewController.swift */; };
-		C1300AB3F69E36F6D3BB7EDE /* Pia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF245414E3448C540035DE98 /* Pia.framework */; };
 		E5F4F8AE27E06C9EA567BCB2 /* Pods_PiaSampleUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EF911800CEB5C1F14FC0BF7 /* Pods_PiaSampleUITests.framework */; };
 		FB8389986800864C6F045126 /* Pods_PiaSampleTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F856BF6102DF1DFD0EC41584 /* Pods_PiaSampleTests.framework */; };
 /* End PBXBuildFile section */
@@ -78,7 +78,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				79DD06301CE82FAB0C57CBE8 /* Pia.framework in Embed Frameworks */,
+				57AD3D310EE11E0B4781AF85 /* Pia.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -156,8 +156,8 @@
 		857FE13F21A2A9D50027D508 /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		857FE14021A2A9D60027D508 /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/Localizable.strings; sourceTree = "<group>"; };
 		85B2855921F9ECC6004FA525 /* SetApplePayMerchantIDViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetApplePayMerchantIDViewController.swift; sourceTree = "<group>"; };
+		CD6490A19FFDEABB1860C519 /* Pia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pia.framework; path = ../libs/Pia.framework; sourceTree = "<group>"; };
 		CFB2A9B99C45792A2B128C82 /* Pods-PiaSample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PiaSample.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PiaSample/Pods-PiaSample.debug.xcconfig"; sourceTree = "<group>"; };
-		DF245414E3448C540035DE98 /* Pia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pia.framework; path = ../libs/Pia.framework; sourceTree = "<group>"; };
 		F856BF6102DF1DFD0EC41584 /* Pods_PiaSampleTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PiaSampleTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -168,7 +168,7 @@
 			files = (
 				0B9C4518689FADE7C6CD9679 /* Pods_PiaSample.framework in Frameworks */,
 				7554A34D2056BF7100773403 /* BuildFile in Frameworks */,
-				C1300AB3F69E36F6D3BB7EDE /* Pia.framework in Frameworks */,
+				41E56A16F49D54951F3B27C7 /* Pia.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -299,7 +299,7 @@
 		5F7FDEEE2062808D0063A407 /* libs */ = {
 			isa = PBXGroup;
 			children = (
-				DF245414E3448C540035DE98 /* Pia.framework */,
+				CD6490A19FFDEABB1860C519 /* Pia.framework */,
 			);
 			name = libs;
 			path = ../../libs;
@@ -803,7 +803,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 124;
+				CURRENT_PROJECT_VERSION = 127;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -867,7 +867,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 124;
+				CURRENT_PROJECT_VERSION = 127;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -900,7 +900,7 @@
 				CODE_SIGN_ENTITLEMENTS = PiaSample/PiaSample.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 124;
+				CURRENT_PROJECT_VERSION = 127;
 				DEVELOPMENT_TEAM = EGNFYS6P3L;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = PiaSample/Info.plist;
@@ -926,7 +926,7 @@
 				CODE_SIGN_ENTITLEMENTS = PiaSample/PiaSample.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 124;
+				CURRENT_PROJECT_VERSION = 127;
 				DEVELOPMENT_TEAM = EGNFYS6P3L;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = PiaSample/Info.plist;
