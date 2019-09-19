@@ -35,8 +35,11 @@ struct PaymentRegisterRequest: Codable {
     let storeCard: Bool?
     let items: [LineItem]?
     let paymentData: String?
+    let phoneNumber: String?
+    let redirectURL: String?
+
     
-    init(customerId:String, orderNumber: String, amount: Amount, method: Method?, cardId:String?, storeCard:Bool?, items: [LineItem]?, paymentData: String?) {
+    init(customerId:String, orderNumber: String, amount: Amount, method: Method?, cardId:String?, storeCard:Bool?, items: [LineItem]?, paymentData: String?, phoneNumber: String?, redirectURL : String?) {
         self.customerId = customerId
         self.orderNumber = orderNumber
         self.amount = amount
@@ -45,6 +48,8 @@ struct PaymentRegisterRequest: Codable {
         self.storeCard = storeCard
         self.items = items
         self.paymentData = paymentData
+        self.phoneNumber = phoneNumber
+        self.redirectURL = redirectURL
     }
     
     func toDict() -> [String: Any] {
@@ -65,7 +70,9 @@ struct PaymentRegisterRequest: Codable {
         
         parameter["items"] = processedItems
         parameter["paymentData"] = paymentData
-        
+        parameter["phoneNumber"] = phoneNumber
+        parameter["redirectUrl"] = redirectURL
+
         return parameter
     }
 }

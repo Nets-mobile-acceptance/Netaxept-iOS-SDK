@@ -36,10 +36,10 @@
 		2D16E6881FA4F8E400B85C8A /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D16E6891FA4F8E400B85C8A /* libReact.a */; };
 		2DCD954D1E0B4F2C00145EB5 /* ReactPiaTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* ReactPiaTests.m */; };
 		2DF0FFEE2056DD460020B375 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DAD3EA31DF850E9000B6D8A /* libReact.a */; };
+		6EA883EE231E4B3000920631 /* Pia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EA883ED231E4B3000920631 /* Pia.framework */; };
+		6EA883EF231E4B3000920631 /* Pia.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6EA883ED231E4B3000920631 /* Pia.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		85778C94219D5CBE00CDE0D1 /* PiaSDKBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 85778C93219D5CBE00CDE0D1 /* PiaSDKBridge.m */; };
-		85778C9C219D612700CDE0D1 /* Pia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85778C97219D60AE00CDE0D1 /* Pia.framework */; };
-		85778C9D219D612700CDE0D1 /* Pia.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 85778C97219D60AE00CDE0D1 /* Pia.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
 /* End PBXBuildFile section */
 
@@ -327,13 +327,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		85778C9E219D612700CDE0D1 /* Embed Frameworks */ = {
+		6EA883F0231E4B3000920631 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				85778C9D219D612700CDE0D1 /* Pia.framework in Embed Frameworks */,
+				6EA883EF231E4B3000920631 /* Pia.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -364,11 +364,11 @@
 		2D02E4901E0B4A5D006451C7 /* ReactPia-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ReactPia-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D16E6891FA4F8E400B85C8A /* libReact.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libReact.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
+		6EA883ED231E4B3000920631 /* Pia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Pia.framework; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		85778C92219D5CBE00CDE0D1 /* PiaSDKBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PiaSDKBridge.h; sourceTree = "<group>"; };
 		85778C93219D5CBE00CDE0D1 /* PiaSDKBridge.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PiaSDKBridge.m; sourceTree = "<group>"; };
-		85778C97219D60AE00CDE0D1 /* Pia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Pia.framework; sourceTree = "<group>"; };
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -385,7 +385,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				85778C9C219D612700CDE0D1 /* Pia.framework in Frameworks */,
+				6EA883EE231E4B3000920631 /* Pia.framework in Frameworks */,
 				ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */,
 				11D1A2F320CAFA9E000508D9 /* libRCTAnimation.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
@@ -600,7 +600,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				85778C97219D60AE00CDE0D1 /* Pia.framework */,
+				6EA883ED231E4B3000920631 /* Pia.framework */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
 				13B07FAE1A68108700A75B9A /* ReactPia */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
@@ -671,7 +671,7 @@
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				85778C9E219D612700CDE0D1 /* Embed Frameworks */,
+				6EA883F0231E4B3000920631 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -730,9 +730,11 @@
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
 						CreatedOnToolsVersion = 6.2;
+						DevelopmentTeam = EGNFYS6P3L;
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
+						DevelopmentTeam = EGNFYS6P3L;
 						LastSwiftMigration = 1010;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
@@ -751,6 +753,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -1217,6 +1220,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = EGNFYS6P3L;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -1239,6 +1243,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = EGNFYS6P3L;
 				INFOPLIST_FILE = ReactPiaTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -1259,6 +1264,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
+				DEVELOPMENT_TEAM = EGNFYS6P3L;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -1285,6 +1291,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = EGNFYS6P3L;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",

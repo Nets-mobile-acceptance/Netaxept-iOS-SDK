@@ -46,19 +46,13 @@ extension PaymentService: TargetType {
         
         switch self {
         case .register(_):
-            return "v1/payment/\(constantAPI.getMerchantID())/register"
+            return "v2/payment/\(constantAPI.getMerchantID())/register"
             
         case .methods:
-            return "v1/payment/methods"
+            return "v2/payment/methods"
             
-        case .rollback(let transactionId):
-            return "v1/payment/\(constantAPI.getMerchantID())/\(transactionId)/rollback"
-            
-        case .commit(let transactionId):
-            return "v1/payment/\(constantAPI.getMerchantID())/\(transactionId)/commit"
-            
-        case .storeCard(let transactionId):
-            return "v1/payment/\(constantAPI.getMerchantID())/\(transactionId)/storecard"
+        case .rollback(let transactionId), .commit(let transactionId), .storeCard(let transactionId):
+            return "v2/payment/\(constantAPI.getMerchantID())/\(transactionId)"
         }
     }
     
@@ -87,8 +81,11 @@ extension PaymentService: TargetType {
         case .rollback(_):
             return .requestPlain
             
-        case .commit(_),.storeCard(_):
-            return .requestParameters(parameters: [:], encoding: JSONEncoding.default)
+        case .commit(_):
+            return .requestParameters(parameters: ["operation":"COMMIT"], encoding: JSONEncoding.default)
+            
+        case .storeCard(_):
+            return .requestParameters(parameters: ["operation":"VERIFY"], encoding: JSONEncoding.default)
             
         case .methods:
             let cache = Cache()
@@ -105,8 +102,10 @@ extension PaymentService: TargetType {
     
     var headers: [String : String]? {
         switch self {
-        case .register(_):
-            return ["Content-Type":"application/vnd.nets.pia.v1.2+json", "Accept":"application/vnd.nets.pia.v1.2+json"]
+        case .register(_), .commit(_), .storeCard(_):
+            return ["Content-Type":"application/json;charset=utf-8;version=2.0", "Accept":"application/json;charset=utf-8;version=2.0"]
+		case .methods:
+            return ["Accept":"application/json;charset=utf-8;version=2.0"]
         default:
             return nil
         }

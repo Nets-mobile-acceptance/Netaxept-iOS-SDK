@@ -42,9 +42,11 @@ class UICustomizationController: UIViewController {
     @IBOutlet weak var textFieldColorLabel: UILabel!
     @IBOutlet weak var textFieldSuccessColor: UILabel!
     @IBOutlet weak var textFieldBackgroundColorLabel: UILabel!
+    @IBOutlet weak var textFieldPlaceholderColorLabel: UILabel!
     @IBOutlet weak var textFieldErrorMessageColorLabel: UILabel!
     @IBOutlet weak var switchThumbColorLabel: UILabel!
     @IBOutlet weak var switchOnTintColor: UILabel!
+    @IBOutlet weak var switchOffTintColor: UILabel!
     @IBOutlet weak var tokenCardCVCColor: UILabel!
     
     @IBOutlet weak var mainButtonBackgroundColorLabel: UILabel!
@@ -61,6 +63,16 @@ class UICustomizationController: UIViewController {
     @IBOutlet weak var turnOnSaveCardSwitchLabel: UILabel!
     @IBOutlet weak var disableSaveCardLabel: UILabel!
     
+    @IBOutlet weak var saveCardText: UITextField!
+    @IBOutlet weak var textFieldActiveBorderColorLabel: UILabel!
+    
+    @IBOutlet weak var sampleButtonLeftMarginSwitch: UISwitch!
+    @IBOutlet weak var sampleButtonRightMarginSwitch: UISwitch!
+    @IBOutlet weak var sampleButtonBottomMarginSwitch: UISwitch!
+
+    @IBOutlet weak var roundedCornerField: UISwitch!
+    @IBOutlet weak var roundedCornerForButton: UISwitch!
+
     
     // Card IO IBOutlets
     @IBOutlet weak var cardIOBackgroundColor: UILabel!
@@ -90,13 +102,17 @@ class UICustomizationController: UIViewController {
     fileprivate var textFieldColor: UIColor? = nil
     fileprivate var textFielSuccess: UIColor? = nil
     fileprivate var textFieldBackgroundColor: UIColor? = nil
+    fileprivate var textFieldPlaceholderColor: UIColor? = nil
     fileprivate var textFieldErrorMessageColor: UIColor? = nil
     fileprivate var switchThumbColor: UIColor? = nil
     fileprivate var switchOnTint: UIColor? = nil
+    fileprivate var switchOffTint: UIColor? = nil
     fileprivate var sampleFont: UIFont? = nil
     fileprivate var sampleImage: UIImage? = nil
     fileprivate var tokenCardCVCColorVar: UIColor? = nil
     fileprivate var statusBarColor: UIColor? = nil
+    fileprivate var textFieldActiveColor: UIColor? = nil
+
     
     // Card IO properties to be saved later
     fileprivate var cardIOBackgroundColorVar: UIColor? = nil
@@ -109,6 +125,7 @@ class UICustomizationController: UIViewController {
     
     // UIViewController lifecycle
     override func viewDidLoad() {
+        self.saveCardText.text = "Securely save my card for later use"
         self.addActionForSwitches()
         
         /*#light_version_section_start
@@ -168,6 +185,11 @@ class UICustomizationController: UIViewController {
         self.textFieldBackgroundColor = sender.backgroundColor
     }
     
+    @IBAction func changeTextFieldPlaceholderColor(_ sender: UIButton) {
+        self.textFieldPlaceholderColorLabel.textColor = sender.backgroundColor
+        self.textFieldPlaceholderColor = sender.backgroundColor
+    }
+    
     @IBAction func changeTextFieldSuccessColor(_ sender: UIButton) {
         self.textFieldSuccessColor.textColor = sender.backgroundColor
         self.textFielSuccess = sender.backgroundColor
@@ -188,9 +210,19 @@ class UICustomizationController: UIViewController {
         self.switchOnTint = sender.backgroundColor
     }
     
+    @IBAction func changeSwitchOffTintColor(_ sender: UIButton) {
+        self.switchOffTintColor.textColor  = sender.backgroundColor
+        self.switchOffTint = sender.backgroundColor
+    }
+    
     @IBAction func changeMainButtonBackgroundColor(_ sender: UIButton) {
         self.mainButtonBackgroundColorLabel.textColor = sender.backgroundColor
         self.mainButtonBackgroundColor = sender.backgroundColor
+    }
+    
+    @IBAction func changeTextFieldActiveColor(_ sender: UIButton) {
+        self.textFieldActiveBorderColorLabel.textColor = sender.backgroundColor
+        self.textFieldActiveColor = sender.backgroundColor
     }
     
     // Card IO IBAction
@@ -259,6 +291,10 @@ class UICustomizationController: UIViewController {
             NPIInterfaceConfiguration.sharedInstance()?.fieldBackgroundColor = temp
         }
         
+        if let temp = self.textFieldPlaceholderColor {
+            NPIInterfaceConfiguration.sharedInstance()?.textFieldPlaceholderColor = temp
+        }
+        
         if let temp = self.textFieldErrorMessageColor {
             NPIInterfaceConfiguration.sharedInstance()?.errorFieldColor = temp
         }
@@ -273,6 +309,10 @@ class UICustomizationController: UIViewController {
         
         if let temp = self.switchOnTint {
             NPIInterfaceConfiguration.sharedInstance()?.switchOnTintColor = temp
+        }
+        
+        if let temp = self.switchOffTint {
+            NPIInterfaceConfiguration.sharedInstance()?.switchOffTintColor = temp
         }
         
         if let temp = self.sampleFont {
@@ -293,6 +333,38 @@ class UICustomizationController: UIViewController {
         
         if let temp = self.statusBarColor {
             NPIInterfaceConfiguration.sharedInstance()?.statusBarColor = temp
+        }
+        
+        NPIInterfaceConfiguration.sharedInstance()?.attributedSaveCardText = NSAttributedString(string: saveCardText.text! ,attributes:[NSAttributedStringKey.font: UIFont.systemFont(ofSize: 17)])
+
+        if sampleButtonLeftMarginSwitch.isOn {
+            NPIInterfaceConfiguration.sharedInstance().buttonLeftMargin = 50
+        } else {
+            NPIInterfaceConfiguration.sharedInstance().buttonLeftMargin = 20
+        }
+        
+        if sampleButtonRightMarginSwitch.isOn {
+            NPIInterfaceConfiguration.sharedInstance().buttonRightMargin = 50
+        } else {
+            NPIInterfaceConfiguration.sharedInstance().buttonRightMargin = 20
+        }
+        
+        if sampleButtonBottomMarginSwitch.isOn {
+            NPIInterfaceConfiguration.sharedInstance().buttonBottomMargin = 50
+        } else {
+            NPIInterfaceConfiguration.sharedInstance().buttonBottomMargin = 20
+        }
+        
+        if roundedCornerField.isOn {
+            NPIInterfaceConfiguration.sharedInstance()?.textFieldCornerRadius = 0.5
+        } else {
+            NPIInterfaceConfiguration.sharedInstance().textFieldCornerRadius = 0
+        }
+        
+        if roundedCornerForButton.isOn {
+            NPIInterfaceConfiguration.sharedInstance()?.buttonCornerRadius = 0.5
+        } else {
+            NPIInterfaceConfiguration.sharedInstance().buttonCornerRadius = 0
         }
 
         // Card IO
@@ -326,6 +398,10 @@ class UICustomizationController: UIViewController {
         
         if let temp = self.cardIOTextFontVar {
             NPIInterfaceConfiguration.sharedInstance()?.cardIOTextFont = temp
+        }
+        
+        if let temp = self.textFieldActiveColor {
+            NPIInterfaceConfiguration.sharedInstance()?.activeFieldBorderColor = temp
         }
         
         self.navigationController?.popViewController(animated: true)
@@ -383,6 +459,10 @@ extension UICustomizationController {
             self.textFieldBackgroundColorLabel.textColor = NPIInterfaceConfiguration.sharedInstance()?.fieldBackgroundColor
         }
         
+        if NPIInterfaceConfiguration.sharedInstance()?.textFieldPlaceholderColor != nil {
+            self.textFieldPlaceholderColorLabel.textColor = NPIInterfaceConfiguration.sharedInstance()?.textFieldPlaceholderColor
+        }
+        
         if NPIInterfaceConfiguration.sharedInstance()?.successFieldColor != nil {
             self.textFieldSuccessColor.textColor = NPIInterfaceConfiguration.sharedInstance()?.successFieldColor
         }
@@ -397,6 +477,10 @@ extension UICustomizationController {
         
         if NPIInterfaceConfiguration.sharedInstance()?.switchOnTintColor != nil {
             self.switchOnTintColor.textColor = NPIInterfaceConfiguration.sharedInstance()?.switchOnTintColor
+        }
+        
+        if NPIInterfaceConfiguration.sharedInstance()?.switchOffTintColor != nil {
+            self.switchOffTintColor.textColor = NPIInterfaceConfiguration.sharedInstance()?.switchOffTintColor
         }
         
         if NPIInterfaceConfiguration.sharedInstance()?.labelFont != nil {
@@ -415,6 +499,34 @@ extension UICustomizationController {
         
         if NPIInterfaceConfiguration.sharedInstance()?.mainButtonBackgroundColor != nil {
             self.mainButtonBackgroundColorLabel.textColor = NPIInterfaceConfiguration.sharedInstance()?.mainButtonBackgroundColor
+        }
+        
+        if (NPIInterfaceConfiguration.sharedInstance()?.attributedSaveCardText) != nil {
+            self.saveCardText.attributedText = NPIInterfaceConfiguration.sharedInstance()?.attributedSaveCardText
+        }
+        
+        if NPIInterfaceConfiguration.sharedInstance()?.activeFieldBorderColor != nil {
+            self.textFieldActiveBorderColorLabel.textColor = NPIInterfaceConfiguration.sharedInstance()?.activeFieldBorderColor
+        }
+        
+        if NPIInterfaceConfiguration.sharedInstance().buttonLeftMargin == 50 {
+            sampleButtonLeftMarginSwitch.isOn = true
+        }
+        
+        if NPIInterfaceConfiguration.sharedInstance().buttonRightMargin == 50 {
+            sampleButtonRightMarginSwitch.isOn = true
+        }
+        
+        if NPIInterfaceConfiguration.sharedInstance().buttonBottomMargin == 50 {
+            sampleButtonBottomMarginSwitch.isOn = true
+        }
+        
+        if(NPIInterfaceConfiguration.sharedInstance().textFieldCornerRadius == 0.5) {
+            roundedCornerField.isOn = true
+        }
+        
+        if(NPIInterfaceConfiguration.sharedInstance().buttonCornerRadius == 0.5) {
+            roundedCornerForButton.isOn = true
         }
         
         // Card IO
@@ -466,6 +578,7 @@ extension UICustomizationController {
             self.turnOnSaveCardSwitchLabel.textColor = .white
             self.turnOnSaveCardSwitch.isOn = true
         }
+        
     }
     
     @objc fileprivate func useSampleFontAndFontWeight(_ sampleSwitch: UISwitch) {

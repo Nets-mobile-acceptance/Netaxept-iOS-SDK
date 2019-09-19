@@ -38,10 +38,16 @@ class SettingsViewController: UIViewController {
     
     @IBOutlet weak var customerIDLabel: UILabel!
     @IBOutlet weak var customerIDTextField: UITextField!
+    
+    @IBOutlet weak var phoneNumberLabel: UILabel!
+    @IBOutlet weak var phoneNumberTextField: UITextField!
+
 
     @IBOutlet weak var systemAuthenticationSwitch: UISwitch!
     @IBOutlet weak var testModeSwitch: UISwitch!
     @IBOutlet var changeCustomerIDView: UIView!
+    @IBOutlet var changePhoneNumberView: UIView!
+
     @IBOutlet weak var disableCardIOSwitch: UISwitch!
     
     @IBOutlet weak var disableCardIOStackView: UIStackView!
@@ -56,6 +62,7 @@ class SettingsViewController: UIViewController {
         super.viewDidLoad()
         self.customerIDTextField.delegate = self
         self.displayCustomerID()
+        self.displayPhoneNumber()
         self.updateSwitches()
         self.languageButton.setUpLanguagePicker()
         
@@ -121,6 +128,49 @@ class SettingsViewController: UIViewController {
     }
     
     @IBAction func didPressCancelChangeCustomerID(_ sender: UIButton) {
+        self.removeSubviews()
+    }
+    
+    @IBAction func didPressChangePhoneNumber(_ sender: UIButton) {
+        if cache.object(forKey: "phoneNumber") != nil {
+            self.phoneNumberTextField.text = String(describing: cache.object(forKey: "phoneNumber")!)
+        }
+        self.changePhoneNumberView.tag = 1
+        var blurEffect:UIBlurEffect = UIBlurEffect()
+        blurEffect = UIBlurEffect(style: UIBlurEffectStyle.light)
+        let blurView = UIVisualEffectView(effect: blurEffect)
+        blurView.frame = self.view.frame
+        blurView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        blurView.tag = 2
+        view.addSubview(blurView)
+        
+        changePhoneNumberView.center = self.view.center
+        changePhoneNumberView.layer.shadowColor = UIColor.gray.cgColor
+        changePhoneNumberView.layer.shadowOpacity = 1
+        changePhoneNumberView.layer.shadowOffset = CGSize.zero
+        changePhoneNumberView.layer.shadowRadius = 2
+        changePhoneNumberView.layer.cornerRadius = 5
+        
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.3, execute: {
+            self.view.addSubview(self.changePhoneNumberView)
+            UIView.animate(withDuration: 0.5, animations: {
+                self.view.layoutIfNeeded()
+            })
+        })
+    }
+    
+    @IBAction func didPressPhonenNumberSaveButton(_ sender: UIButton) {
+        if self.phoneNumberTextField.text?.isEmpty == false {
+            let phoneNumber = self.phoneNumberTextField.text!
+            cache.addObject(object: phoneNumber, forKey: "phoneNumber")
+            self.displayPhoneNumber()
+            self.removeSubviews()
+        }else {
+            self.showAlert(title: "", message: "Please input phone number")
+        }
+    }
+    
+    @IBAction func didPressCancelPhoneNumber(_ sender: UIButton) {
         self.removeSubviews()
     }
     
@@ -197,6 +247,16 @@ extension SettingsViewController {
         if cache.object(forKey: "customerID") != nil {
             let text = String(describing: cache.object(forKey: "customerID")!)
             self.customerIDLabel.text = text
+        }
+    }
+    
+    fileprivate func displayPhoneNumber() {
+        if cache.object(forKey: "phoneNumber") != nil {
+            let text = String(describing: cache.object(forKey: "phoneNumber")!)
+            self.phoneNumberLabel.text = text
+        }
+        else {
+            self.phoneNumberLabel.text = "Not Configured"
         }
     }
     
@@ -285,7 +345,7 @@ extension SettingsViewController {
         let customerId = String(describing: self.cache.object(forKey: "customerID")!)
         let amount = Amount(totalAmount: 0, vatAmount: 0, currencyCode: "EUR")
         
-        let parameter = PaymentRegisterRequest(customerId: customerId, orderNumber: orderNumber, amount: amount, method: nil, cardId: nil, storeCard: true, items: nil, paymentData: nil)
+        let parameter = PaymentRegisterRequest(customerId: customerId, orderNumber: orderNumber, amount: amount, method: nil, cardId: nil, storeCard: true, items: nil, paymentData: nil, phoneNumber: nil, redirectURL: nil)
         
         RequestManager.shared.postRegister(parameters: parameter) { (result) in
             switch result {

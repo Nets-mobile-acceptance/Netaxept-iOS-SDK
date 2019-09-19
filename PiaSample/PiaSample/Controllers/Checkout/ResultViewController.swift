@@ -51,6 +51,8 @@ class ResultViewController: UIViewController {
     var contact: PKContact?
     
     var cache = Cache()
+    
+    var walletNotFound = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,7 +65,11 @@ class ResultViewController: UIViewController {
     }
     
     @objc fileprivate func goBack() {
-        self.navigationController?.popToRootViewController(animated: true)
+        if(walletNotFound) {
+            self.navigationController?.popViewController(animated: true)
+        } else {
+            self.navigationController?.popToRootViewController(animated: true)
+        }
     }
     
     fileprivate func updateView() {
@@ -105,13 +111,20 @@ class ResultViewController: UIViewController {
             
             var tempResultString = ""
             var tempImage = #imageLiteral(resourceName: "FailedIcon")
-            
-            if error.code().rawValue == 301 {
-                self.resultLabel.font = UIFont.boldSystemFont(ofSize: 20)
-                tempResultString = "Operation denied by transaction filter\n\nExamples of reason:\n• Credit card type denied\n• Velocity filter\n• Blocked IP\n..."
-                tempImage = #imageLiteral(resourceName: "TerminalError")
-            } else {
-                tempResultString = NSLocalizedString("There was an error. Please try again later", comment:"Failed transaction message")
+            walletNotFound = false
+            switch error.code().rawValue
+            {
+                case 301:
+                    self.resultLabel.font = UIFont.boldSystemFont(ofSize: 20)
+                    tempResultString = "Operation denied by transaction filter\n\nExamples of reason:\n• Credit card type denied\n• Velocity filter\n• Blocked IP\n..."
+                    tempImage = #imageLiteral(resourceName: "TerminalError")
+                case 302:
+                    tempResultString = NSLocalizedString("Payment with Vipps failed", comment:"Failed transaction message")
+                case 303:
+                    tempResultString = NSLocalizedString("Wallet app not installed", comment:"Failed transaction message")
+                    walletNotFound = true
+                default:
+                    tempResultString = NSLocalizedString("There was an error. Please try again later", comment:"Failed transaction message")
             }
             self.resultImage.image = tempImage
             self.errorLabel.text = error.localizedDescription

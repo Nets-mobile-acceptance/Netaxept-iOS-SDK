@@ -30,10 +30,12 @@ struct PaymentRegisterResponse: Codable {
     let transactionId: String
     let redirectOK: String
     let redirectCancel: String
+    let walletUrl: String?
     
-    init (transactionId: String, redirectOK: String, redirectCancel: String ) {
+    init (transactionId: String, redirectOK: String, redirectCancel: String, walletUrl: String?) {
         self.transactionId = transactionId
         self.redirectOK = redirectOK
         self.redirectCancel = redirectCancel
+        self.walletUrl = walletUrl;
     }
 }

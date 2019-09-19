@@ -40,10 +40,7 @@ class PaymentMethodTableViewCell: UITableViewCell {
             
         case PaymentMethodList.MobilePay.rawValue:
             self.paymentMethodImage.image = UIImage(named: "Mobile Pay")
-            
-        case PaymentMethodList.Klarna.rawValue:
-            self.paymentMethodImage.image = UIImage(named: "Klarna")
-            
+                        
         case PaymentMethodList.Swish.rawValue:
             self.paymentMethodImage.image = UIImage(named: "Swish")
             

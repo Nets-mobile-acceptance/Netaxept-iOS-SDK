@@ -15,15 +15,17 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.3.1</string>
+	<string>1.4.0</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
 			<key>CFBundleURLName</key>
 			<string>eu.nets.mcommerce.PiaSample</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>PiaSample</string>
+				<string>eu.nets.pia.sample</string>
 			</array>
 		</dict>
 		<dict>
@@ -34,12 +36,24 @@
 				<string>prefs</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>eu.nets.mcommerce.PiaSample</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>PiaSample</string>
+			</array>
+		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>127</string>
+	<string>141</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>bankid</string>
+		<string>vipps</string>
+		<string>swish</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>

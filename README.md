@@ -1,4 +1,4 @@
-# PiA - Netaxept iOS SDK v1.3.1
+# PiA - Netaxept iOS SDK v1.4.0
 
 ![](./Resources/NetsLogo.jpg)
 
@@ -17,10 +17,11 @@ We have provided a sample project, PiaSample, in the repository which is written
 
 ## Project status
 Supported payment methods:
-* Cards: Visa, Mastercard, American Express, Diners, JCB, Dankort
+* Cards: Visa, Mastercard, American Express, Diners, JCB, Dankort, Maestro
 * Apple Pay
 * PayPal
-* Nordic mobile wallets (Vipps, Swish, MobilePay) – *available soon*
+* Vipps
+* Nordic mobile wallets (MobilePay, Swish, etc) – *available soon*
 
 ## Requirements
 * PiA iOS SDK requires iOS 9 or above.
@@ -93,6 +94,13 @@ piaSDK.piaDelegate = self
 self.present(piaSDK, animated: true,  completion: nil)
 ```
 
+### Vipps flow - Use this flow to trigger Vipps Pay payments 
+```swift
+guard PiaSDK.initiateVipps(fromSender: viewController, delegate: vippsPaymentDelegate) else {
+    return
+}
+```
+
 ### Delegation
 ```swift
 * func piaSDK(_ PiaSDK: PiaSDKController, didFailWithError error: NPIError)
@@ -103,6 +111,19 @@ self.present(piaSDK, animated: true,  completion: nil)
 
 * func piaSDKDidCancel(_ PiaSDK: PiaSDKController)
 ```
+
+### Mobile wallet payment delegates
+```swift
+* func walletPaymentDidSucceed(_ transitionIndicatorView: UIView?)
+* func walletPaymentInterrupted(_ transitionIndicatorView: UIView?)
+
+```
+#### Vipps delegates
+```swift
+* func registerVippsPayment(_ completionWithWalletURL: @escaping (String?) -> Void)
+* func vippsPaymentDidFail(with error: NPIError, vippsStatusCode: VippsStatusCode?)
+```
+
 **NOTE:** If you wish to support Shipping Address with Apple Pay, remember to conform to this (optional) delegate.
 
 ```swift

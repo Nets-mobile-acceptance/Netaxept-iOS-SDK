@@ -56,7 +56,7 @@
                 <a class="nav-group-task-link" href="12-easy-one-click-payment-flow.html">1.2. Easy (one click) payment flow</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="13-easy-payment-without-cvv.html">1.3. Easy payment without CVV</a>
+                <a class="nav-group-task-link" href="13-recurring-payments.html">1.3. Recurring payments</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="2-register-flow.html">2. Register flow</a>
@@ -66,6 +66,9 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="32-paypal-integration.html">3.2. PayPal Integration</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="33-vipps-integration.html">3.3. Vipps Integration</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="4-ui-customization.html">4. UI Customization</a>
@@ -78,6 +81,9 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="53-faqs.html">5.3. FAQs</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="54-backend-tips.html">5.4. Backend Tips</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="6-licenses.html">6. Licenses</a>
@@ -118,6 +124,9 @@
                 <a class="nav-group-task-link" href="Classes/NPITransactionInfo.html">NPITransactionInfo</a>
               </li>
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/PiaSDK.html">PiaSDK</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Classes/PiaSDKController.html">PiaSDKController</a>
               </li>
             </ul>
@@ -156,6 +165,12 @@
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Protocols/PiaSDKDelegate.html">PiaSDKDelegate</a>
               </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Protocols/VippsPaymentDelegate.html">VippsPaymentDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Protocols/WalletPaymentDelegate.html">WalletPaymentDelegate</a>
+              </li>
             </ul>
           </li>
           <li class="nav-group-name">
@@ -163,6 +178,9 @@
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Type Definitions/NPIErrorCode.html">NPIErrorCode</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Type Definitions.html#/c:PiaSDK.h@T@VippsStatusCode">VippsStatusCode</a>
               </li>
             </ul>
           </li>
@@ -259,11 +277,54 @@
 
 <p><em>Released on 20-Jun-2019</em></p>
 
+<p><strong>Release notes:</strong>
+Added support of app switch for the Swedish BankId verification on <strong>Nordea Visa</strong> card.</p>
+<h2 id='1-3-2' class='heading'>1.3.2</h2>
+
+<p><em>Released on 5-Aug-2019</em></p>
+
+<p><strong>Release notes:</strong>
+Added support for Vipps Payment Method.</p>
+<h2 id='1-3-3' class='heading'>1.3.3</h2>
+
+<p><em>Released on 26-Aug-2019</em></p>
+
+<p><strong>Release notes:</strong>
+Bugfix for 3DS authentication in Web-View.</p>
+<h2 id='1-4-0' class='heading'>1.4.0</h2>
+
+<p><em>Released on 18-Sep-2019</em></p>
+
 <p><strong>Release notes:</strong></p>
 
 <ul>
-<li>Added support of app switch for the Swedish BankId verification on <strong>Nordea Visa</strong> card.</li>
+<li>More UI customization</li>
+<li>Maestro card support</li>
+<li>Removed system authentication (according to PSD2/SCA regulation)</li>
+<li>Bugfix for iOS 13 status bar customization</li>
 </ul>
+
+<p><strong>PSD2 requirements:</strong></p>
+
+<ul>
+<li>On September 14, 2019, a new requirement for all online payments is being introduced in the EU, stating that all transactions should be verified by the buyer, only a few types of payments are exempt. The verification of payments is made by the consumer, who has to approve the payment with two-factor authentication. For example, for Visa and Mastercard, this is done by using 3D Secure (3DS) authentication. More information can be found in Netaxept <a href="https://shop.nets.eu/web/partners/psd2" title="here">documentation</a>.</li>
+</ul>
+
+<p><strong>Guidelines for app merchants:</strong></p>
+
+<ul>
+<li>Please make 3D Secure is activated for your Netaxept Merchant account in production. Reach out to your Netaxept contact if this is not the case.</li>
+</ul>
+
+<p><strong>One click payments:</strong></p>
+<li>Please make sure to use the Easy payment flow combined with 3D-Secure by adding the parameter recurringUse3DS=true in the register request from your backend.</li>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    Note that system authentication for subsequent payment is now deprecated
+
+</div>
+
+<p>Please make sure Dynamic 3DS is not in use in your Netaxept implementation after the deadline.</p>
 
           </div>
         </section>
@@ -272,7 +333,7 @@
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2019 <a class="link" href="https://nets.eu" target="_blank" rel="external">Nets</a>. All rights reserved. (Last updated: 2019-06-20)</p>
+      <p>&copy; 2019 <a class="link" href="https://nets.eu" target="_blank" rel="external">Nets</a>. All rights reserved. (Last updated: 2019-09-19)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.0</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

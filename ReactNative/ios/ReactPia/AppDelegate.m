@@ -25,6 +25,7 @@
 
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
+#import <Pia/PiaSDK.h>
 
 @implementation AppDelegate
 
@@ -52,6 +53,11 @@ RCT_EXPORT_MODULE()
 
 RCT_EXPORT_METHOD(pushVC:(UIViewController *)vc){
   [[UIApplication sharedApplication].delegate.window.rootViewController presentViewController:vc animated:YES completion:nil];
+}
+
+-(BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
+  [PiaSDK applicationDidOpenFromRedirectWith:url andOptions:options];
+  return true;
 }
 
 @end

@@ -37,7 +37,7 @@
     <DefineConstants></DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CodesignKey>iPhone Developer: Triet Le (PXU82DJAW6)</CodesignKey>
+    <CodesignKey>iPhone Developer: sagar bheda (GMC6UZD4JF)</CodesignKey>
     <MtouchUseLlvm>true</MtouchUseLlvm>
     <MtouchFloat32>true</MtouchFloat32>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
@@ -54,7 +54,7 @@
     <DefineConstants></DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CodesignKey>iPhone Developer: Triet Le (PXU82DJAW6)</CodesignKey>
+    <CodesignKey>iPhone Developer: sagar bheda (GMC6UZD4JF)</CodesignKey>
     <MtouchNoSymbolStrip>true</MtouchNoSymbolStrip>
     <MtouchLink>None</MtouchLink>
     <MtouchArch>x86_64</MtouchArch>
@@ -70,7 +70,7 @@
     <DefineConstants>DEBUG;ENABLE_TEST_CLOUD;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CodesignKey>iPhone Developer: Triet Le (PXU82DJAW6)</CodesignKey>
+    <CodesignKey>iPhone Developer: sagar bheda (4XNW66UFF9)</CodesignKey>
     <DeviceSpecificBuild>true</DeviceSpecificBuild>
     <MtouchDebug>true</MtouchDebug>
     <MtouchNoSymbolStrip>true</MtouchNoSymbolStrip>
@@ -82,7 +82,7 @@
     <MtouchArch>ARM64</MtouchArch>
     <MtouchHttpClientHandler>NSUrlSessionHandler</MtouchHttpClientHandler>
     <MtouchVerbosity></MtouchVerbosity>
-    <CodesignProvision>VS: WildCard Development</CodesignProvision>
+    <CodesignProvision>WildCard</CodesignProvision>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />

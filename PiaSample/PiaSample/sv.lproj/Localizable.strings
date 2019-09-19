@@ -72,3 +72,9 @@
 
 /* Failed transaction message */
 "There was an error. Please try again later" = "Ett fel inträffade. Försök igen senare";
+
+/* Failed Vipps Transaction */
+"Payment with Vipps failed" = "Betalning med Vipps misslyckades";
+
+/*Wallet app not installed*/
+"Swish App is not installed, select another payment method" = "Swish är inte installerat på denna mobil, välj en annan betalningsmetod.";

@@ -118,6 +118,7 @@ extension UIViewController {
         let applePayMerchantDisplayName = "PiA SDK iOS"
         let applePayItemCost = NSDecimalNumber(value: amount - 2.0)
         let applePayItemShippingCost = NSDecimalNumber(value: 2)
+        let supportedPaymentNetworks :[PKPaymentNetwork] = [.visa, .masterCard, .discover, .amex]
         
         let shippingAddress = CNMutablePostalAddress()
         shippingAddress.city = "Helsinki"
@@ -145,9 +146,20 @@ extension UIViewController {
                                            applePayItemShippingCost: applePayItemShippingCost,
                                            currencyCode: currencyCode,
                                            applePayShippingInfo: applePayShippingInfo,
-                                           usingExpressCheckout: usingExpressCheckout)
+                                           usingExpressCheckout: usingExpressCheckout,
+                                           supportedPaymentNetworks: supportedPaymentNetworks)
         
         return applePayInfo
+    }
+    
+    
+    func showSwishRegisCallError()
+    {
+        self.showIndicator(show: false) {
+            DispatchQueue.main.async {
+                self.showAlert(title: "", message: NSLocalizedString("There was an unexpected error. \n Please contact customer service if the problem persists.", comment: "Generic error"))
+            }
+        }
     }
 }
 

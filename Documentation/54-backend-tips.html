@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>5.4. Backend Tips  Reference</title>
+    <link rel="stylesheet" type="text/css" href="css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="css/highlight.css" />
+    <meta charset="utf-8">
+    <script src="js/jquery.min.js" defer></script>
+    <script src="js/jazzy.js" defer></script>
+    
+    <script src="js/lunr.min.js" defer></script>
+    <script src="js/typeahead.jquery.js" defer></script>
+    <script src="js/jazzy.search.js" defer></script>
+  </head>
+  <body>
+
+
+    <a title="5.4. Backend Tips  Reference"></a>
+
+    <header class="header">
+      <p class="header-col header-col--primary">
+        <a class="header-link" href="index.html">
+          Pia Docs
+        </a>
+         (97% documented)
+      </p>
+    
+      <p class="header-col--secondary">
+        <form role="search" action="search.json">
+          <input type="text" placeholder="Search documentation" data-typeahead>
+        </form>
+      </p>
+    
+    
+    </header>
+
+    <p class="breadcrumbs">
+      <a class="breadcrumb" href="index.html">Pia Reference</a>
+      <img class="carat" src="img/carat.png" />
+      5.4. Backend Tips  Reference
+    </p>
+
+    <div class="content-wrapper">
+      <nav class="navigation">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="Guides.html">Guides</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="0-getting-started.html">0. Getting started</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="11-basic-payment-flow.html">1.1. Basic payment flow</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="12-easy-one-click-payment-flow.html">1.2. Easy (one click) payment flow</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="13-recurring-payments.html">1.3. Recurring payments</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="2-register-flow.html">2. Register flow</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="31-apple-pay-integration.html">3.1. Apple Pay Integration</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="32-paypal-integration.html">3.2. PayPal Integration</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="33-vipps-integration.html">3.3. Vipps Integration</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="4-ui-customization.html">4. UI Customization</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="51-error-codes-handling.html">5.1. Error Codes Handling</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="52-terminology.html">5.2. Terminology</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="53-faqs.html">5.3. FAQs</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="54-backend-tips.html">5.4. Backend Tips</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="6-licenses.html">6. Licenses</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="7-changelog.html">7. Changelog</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="8-get-in-touch.html">8. Get in touch</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/NPIApplePayInfo.html">NPIApplePayInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/NPIApplePayShippingInfo.html">NPIApplePayShippingInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/NPIError.html">NPIError</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/NPIInterfaceConfiguration.html">NPIInterfaceConfiguration</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/NPIMerchantInfo.html">NPIMerchantInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/NPIOrderInfo.html">NPIOrderInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/NPITokenCardInfo.html">NPITokenCardInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/NPITransactionInfo.html">NPITransactionInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/PiaSDK.html">PiaSDK</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/PiaSDKController.html">PiaSDKController</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="Constants.html">Constants</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Constants.html#/c:@NPIPiaSemanticVersionString">NPIPiaSemanticVersionString</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Constants.html#/c:@NPIPiaTechnicalVersionString">NPIPiaTechnicalVersionString</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Constants.html#/c:@PiaVersionNumber">PiaVersionNumber</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Constants.html#/c:@PiaVersionString">PiaVersionString</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Enums/PiALanguage.html">PiALanguage</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Enums/SchemeType.html">SchemeType</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Protocols/PiaSDKDelegate.html">PiaSDKDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Protocols/VippsPaymentDelegate.html">VippsPaymentDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Protocols/WalletPaymentDelegate.html">WalletPaymentDelegate</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="Type Definitions.html">Type Definitions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Type Definitions/NPIErrorCode.html">NPIErrorCode</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Type Definitions.html#/c:PiaSDK.h@T@VippsStatusCode">VippsStatusCode</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+
+        <section class="section">
+          <div class="section-content">
+            
+            <h1 id='backend-tips' class='heading'>Backend Tips</h1>
+
+<p>Netaxept offers <a href="https://shop.nets.eu/web/partners/appi" title="REST API">REST API</a> to register, authorize and capture payments and query transaction status. This section provides backend tips of each API and some variations for different payment flows. </p>
+<h3 id='register-api' class='heading'>Register API</h3>
+
+<p>Merchant backend registers payments with netaxept through the register API. This API is also used to register/store cards in Netaxept&rsquo;s secure store (for cards that support this feature).  The API retruns a transaction ID which the client SDK (Pia SDK) uses to make <em>terminal call</em> with Netaxept for most transaction flows. </p>
+<h4 id='registering-em-card-em-for-em-easy-payment-em' class='heading'>Registering <em>card</em> for <em>Easy Payment</em></h4>
+
+<p>Note: See <a href="https://shop.nets.eu/web/partners/register" title="Netaxept">Netaxept</a> documentation for more details on this API. </p>
+
+<blockquote>
+<p>Test: <a href="https://test.epayment.nets.eu">https://test.epayment.nets.eu</a>
+Production: <a href="https://epayment.nets.eu">https://epayment.nets.eu</a>
+Path:  <strong>/netaxept/register.aspx</strong>
+Method: <strong><em>POST</em></strong></p>
+</blockquote>
+
+<p>Request body:</p>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"merchantId"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"integer"</span><span class="p">,</span><span class="w"> 
+    </span><span class="nt">"token"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"orderNumber"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"currencyCode"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">  
+    </span><span class="nt">"redirectUrl"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"serviceType"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"M"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"recurringType"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"S"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"force3DSecure"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"true"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"updateStoredPaymentInfo"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"true"</span><span class="w">
+</span><span class="p">}</span><span class="w"> 
+</span></code></pre>
+
+<p>Netaxept returns transaction ID following the above register call. In order to store the card, make a verify API call to Netaxept with the given transaction ID.</p>
+
+<p>(Query the status of the register call with Netaxept to retreive and store the Pan-hash associated with the card)</p>
+
+<blockquote>
+<p>Test: <a href="https://test.epayment.nets.eu">https://test.epayment.nets.eu</a>
+Production: <a href="https://epayment.nets.eu">https://epayment.nets.eu</a>
+Path:  <strong>/netaxept/process.aspx</strong>
+Method: <strong><em>POST</em></strong></p>
+</blockquote>
+
+<p>Request body: </p>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"merchantId"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"token"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"transactionId"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"operation"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"VERIFY"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>Use the <em>query</em> API to fetch the Pan Hash associated with the card once process VERIFY is successful.</p>
+<h4 id='registering-em-easy-payment-em' class='heading'>Registering <em>Easy Payment</em></h4>
+<h5 id='initial-transaction' class='heading'>Initial transaction</h5>
+
+<blockquote>
+<p>Test: <a href="https://test.epayment.nets.eu">https://test.epayment.nets.eu</a>
+Production: <a href="https://epayment.nets.eu">https://epayment.nets.eu</a>
+Path:  <strong>/netaxept/register.aspx</strong>
+Method: <strong><em>POST</em></strong></p>
+</blockquote>
+
+<p>Request body:</p>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"merchantId"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"integer"</span><span class="p">,</span><span class="w"> 
+    </span><span class="nt">"token"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"language"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w"> 
+    </span><span class="nt">"orderNumber"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"amount"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"integer"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"currencyCode"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">  
+    </span><span class="nt">"redirectUrl"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"serviceType"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"M"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"recurringType"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"S"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"force3DSecure"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"true"</span><span class="w">
+</span><span class="p">}</span><span class="w"> 
+</span></code></pre>
+<h5 id='subsequent-transaction' class='heading'>Subsequent transaction</h5>
+
+<p>Subsequent easy payment requires <code>recurringUse3DS = true</code> and the <code>panHash</code> additional fields.</p>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"merchantId"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"integer"</span><span class="p">,</span><span class="w"> 
+    </span><span class="nt">"token"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"language"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w"> 
+    </span><span class="nt">"orderNumber"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"amount"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"integer"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"currencyCode"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">  
+    </span><span class="nt">"redirectUrl"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"serviceType"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"M"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"recurringType"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"S"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"recurringUse3DS"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"true"</span><span class="p">,</span><span class="w"> 
+    </span><span class="nt">"panHash"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
+</span><span class="p">}</span><span class="w"> 
+</span></code></pre>
+<h4 id='registering-recurring-payment' class='heading'>Registering Recurring Payment</h4>
+<h5 id='initial-transaction' class='heading'>Initial transaction</h5>
+
+<blockquote>
+<p>Test: <a href="https://test.epayment.nets.eu">https://test.epayment.nets.eu</a>
+Production: <a href="https://epayment.nets.eu">https://epayment.nets.eu</a>
+Path:  <strong>/netaxept/register.aspx</strong>
+Method: <strong><em>POST</em></strong></p>
+</blockquote>
+
+<p>Request body:</p>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"merchantId"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"integer"</span><span class="p">,</span><span class="w"> 
+    </span><span class="nt">"token"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"language"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w"> 
+    </span><span class="nt">"orderNumber"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"amount"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"integer"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"currencyCode"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">  
+    </span><span class="nt">"redirectUrl"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"serviceType"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"M"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"recurringType"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"R"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"force3DSecure"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"true"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"recurringExpiryDate"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"YYYYMMDD"</span><span class="p">,</span><span class="w"> 
+    </span><span class="nt">"recurringFrequency"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"integer"</span><span class="w">
+</span><span class="p">}</span><span class="w"> 
+</span></code></pre>
+
+<p>If the initial transaction is merely to store card for further payments, add <code>&quot;updateStoredPaymentInfo&quot; : &quot;true&quot;</code> field to the request body. </p>
+<h5 id='subsequent-transaction' class='heading'>Subsequent transaction</h5>
+
+<p>Subsequent recurring payment requires <code>&quot;recurringUse3DS&quot; : &quot;true&quot;</code> and the <code>&quot;panHash&quot; : &quot;string&quot;</code> additional fields.</p>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"merchantId"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"integer"</span><span class="p">,</span><span class="w"> 
+    </span><span class="nt">"token"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"language"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w"> 
+    </span><span class="nt">"orderNumber"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"amount"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"integer"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"currencyCode"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">  
+    </span><span class="nt">"redirectUrl"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"serviceType"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"M"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"recurringType"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"R"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"recurringUse3DS"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"true"</span><span class="p">,</span><span class="w"> 
+    </span><span class="nt">"panHash"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
+</span><span class="p">}</span><span class="w"> 
+</span></code></pre>
+<h5 id='request-body-pay-pal-payment-registration' class='heading'>Request body - Pay Pal payment registration:</h5>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"paymentMethodActionList"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> 
+        </span><span class="nt">"PaymentMethod"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"PayPal"</span><span class="w"> 
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<h5 id='request-body-apple-pay-payment-registration' class='heading'>Request body - Apple Pay payment registration:</h5>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"paymentData"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"paymentMethodActionList"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> 
+        </span><span class="nt">"PaymentMethod"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"ApplePay"</span><span class="w"> 
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>The <em>paymentData</em> should contain th encrypted Payment Data from Apple pay of the following format: </p>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"paymentData"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"version"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"data"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"signature"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w"> 
+        </span><span class="nt">"header"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"ephemeralPublicKey"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w"> 
+            </span><span class="nt">"publicKeyHash"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"transactionId"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"paymentMethod"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"displayName"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"network"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w"> 
+        </span><span class="nt">"type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"transactionIdentifier"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<h4 id='payment-authorization-with-netaxept' class='heading'>Payment authorization with Netaxept</h4>
+
+<p>Send authorization of payment to Netaxept following user&rsquo;s action (handled by the client Pia SDK)</p>
+
+<blockquote>
+<p>Test: <a href="https://test.epayment.nets.eu">https://test.epayment.nets.eu</a>
+Production: <a href="https://epayment.nets.eu">https://epayment.nets.eu</a>
+Path:  <strong>/netaxept/process.aspx</strong>
+Method: <strong><em>POST</em></strong></p>
+</blockquote>
+
+<p>Request body: </p>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"merchantId"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"token"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"transactionId"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"operation"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"AUTH"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>Note: See <a href="https://shop.nets.eu/web/partners/process" title="Netaxept">Netaxept</a> documentation for more details on this API. </p>
+<h3 id='capture-payment' class='heading'>Capture payment</h3>
+
+<blockquote>
+<p>Test: <a href="https://test.epayment.nets.eu">https://test.epayment.nets.eu</a>
+Production: <a href="https://epayment.nets.eu">https://epayment.nets.eu</a>
+Path:  <strong>/netaxept/process.aspx</strong>
+Method: <strong><em>POST</em></strong></p>
+</blockquote>
+
+<p>Request body: </p>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"merchantId"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"token"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"transactionId"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"transactionAmount "</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"integer"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"operation"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"CAPTURE "</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<h3 id='query-transaction-status' class='heading'>Query transaction status</h3>
+
+<blockquote>
+<p>Test: <a href="https://test.epayment.nets.eu">https://test.epayment.nets.eu</a>
+Production: <a href="https://epayment.nets.eu">https://epayment.nets.eu</a>
+Path:  <strong>/netaxept/query.aspx</strong>
+Method: <strong><em>POST</em></strong></p>
+</blockquote>
+
+<p>Request body: </p>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"merchantId"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"token"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"transactionId"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>Note: See <a href="https://shop.nets.eu/web/partners/query" title="Netaxept">Netaxept</a> documentation for more details on this API. </p>
+
+          </div>
+        </section>
+
+
+      </article>
+    </div>
+    <section class="footer">
+      <p>&copy; 2019 <a class="link" href="https://nets.eu" target="_blank" rel="external">Nets</a>. All rights reserved. (Last updated: 2019-09-19)</p>
+      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.0</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+    </section>
+  </body>
+</div>
+</html>

@@ -24,6 +24,7 @@
 
 using Foundation;
 using UIKit;
+using XamarinPia;
 
 namespace XamarinPiaSample
 {
@@ -77,6 +78,12 @@ namespace XamarinPiaSample
         public override void WillTerminate(UIApplication application)
         {
             // Called when the application is about to terminate. Save data, if needed. See also DidEnterBackground.
+        }
+
+        public override bool OpenUrl(UIApplication app, NSUrl url, NSDictionary options)
+        {
+            XamarinPia.PiaSDK.ApplicationDidOpenFromRedirectWith(url, options);
+            return true;
         }
     }
 }

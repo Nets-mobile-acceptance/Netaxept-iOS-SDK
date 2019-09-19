@@ -26,6 +26,7 @@
 
 import UIKit
 import Pia
+import SwiftyXMLParser
 
 enum PaymentMethodSection: Int {
     case SavedCard = 0,
@@ -39,7 +40,6 @@ enum PaymentMethodList: Int {
     case ApplePay = 0,
     PayPal,
     MobilePay,
-    Klarna,
     Swish,
     Vipps
     
@@ -48,8 +48,8 @@ enum PaymentMethodList: Int {
 
 class PaymentMethodViewController: UIViewController {
     
-    var isApplePayAnOption = false
-    var isPayPalAnOption = false
+    var paymentMethodIDs: [PaymentMethodID] = []
+    
     var cvcRequired = true
     
     var amount: Amount!
@@ -71,7 +71,7 @@ class PaymentMethodViewController: UIViewController {
     fileprivate var transactionInfo: NPITransactionInfo?
     
     var canDisplayApplePay: Bool {
-        return self.isApplePayAnOption && self.isDeviceSupportApplePay()
+        return paymentMethodIDs.contains(.applePay) && self.isDeviceSupportApplePay()
     }
     
     @IBOutlet weak var paymentMethodTableView: UITableView!
@@ -186,7 +186,16 @@ extension PaymentMethodViewController: UITableViewDelegate, UITableViewDataSourc
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.section == PaymentMethodSection.PaymentMethodList.rawValue {
-            if (indexPath.row == PaymentMethodList.PayPal.rawValue && !self.isPayPalAnOption) || (indexPath.row == PaymentMethodList.ApplePay.rawValue && !self.isApplePayAnOption) {
+            var show = false
+            switch indexPath.row {
+                case PaymentMethodList.PayPal.rawValue : show = paymentMethodIDs.contains(.payPal)
+                case PaymentMethodList.ApplePay.rawValue : show = paymentMethodIDs.contains(.applePay)
+                case PaymentMethodList.MobilePay.rawValue : show = paymentMethodIDs.contains(.mobilePay)
+                case PaymentMethodList.Swish.rawValue : show = paymentMethodIDs.contains(.swish)
+                case PaymentMethodList.Vipps.rawValue : show = paymentMethodIDs.contains(.vipps)
+                default : show = true
+            }
+            if !show {
                 return 0
             }
         }
@@ -209,12 +218,12 @@ extension PaymentMethodViewController: UITableViewDelegate, UITableViewDataSourc
             self.presentPiASDK(tokenCardInfo: nil)
             
         } else if indexPath.section == PaymentMethodSection.PaymentMethodList.rawValue {
-            if indexPath.row == PaymentMethodList.ApplePay.rawValue {
-                self.presentPiaSDKWithApplePay()
-            } else if indexPath.row == PaymentMethodList.PayPal.rawValue {
-                self.performPayPalPayment()
-            } else {
-                self.showAlertForNonSupportedMethods()
+            
+            switch (indexPath.row){
+            case PaymentMethodList.ApplePay.rawValue: self.presentPiaSDKWithApplePay()
+            case PaymentMethodList.PayPal.rawValue: self.performPayPalPayment()
+            case PaymentMethodList.Vipps.rawValue: self.presentSDKWithVipps()
+            default:self.showAlertForNonSupportedMethods()
             }
         }
     }
@@ -230,7 +239,8 @@ extension PaymentMethodViewController {
         let merchantInfo = NPIMerchantInfo(identifier: constantAPI.getMerchantID(), testMode: ConstantAPI.testMode, cvcRequired: self.cvcRequired)
         let orderInfo = NPIOrderInfo(amount: NSNumber(value: self.formattedInputValue), currencyCode: self.amount.currencyCode)
         
-        let piaSDK = PiaSDKController(merchantInfo, orderInfo: orderInfo, tokenCardInfo: tokenCardInfo, applePayInfo: nil, performingPayPalPurchase: false)
+        let piaSDK = PiaSDKController(merchantInfo: merchantInfo, orderInfo: orderInfo, tokenCardInfo: tokenCardInfo)
+
         piaSDK.piaDelegate = self
         
         DispatchQueue.main.async {
@@ -276,6 +286,45 @@ extension PaymentMethodViewController {
             self.present(piaSDK, animated: true, completion: nil)
         }
     }
+    
+    /**
+     This function shows how you can call PiA SDK to pay with Vipps
+     */
+    fileprivate func presentSDKWithVipps() {
+        if cache.object(forKey: "phoneNumber") != nil {
+            /// SDK will present default transition UI (during app switch) if `sender` is not nil
+            guard PiaSDK.initiateVipps(fromSender: self, delegate: self) else {
+                showAlert(title: "Vipps app is not installed!", message: "Choose other payment method")
+                return
+            }
+        } else {
+            self.showAlert(title: "", message: "Please configure your phone number in settings")
+        }
+    }
+}
+
+extension PaymentMethodViewController: VippsPaymentDelegate {
+    func registerVippsPayment(_ completionWithWalletURL: @escaping (String?) -> Void) {
+        postRegisterPayment(storeCard: false, paymentData: nil, mobileWallet: .Vipps) {
+            completionWithWalletURL(self.transactionInfo?.walletUrl)
+        }
+    }
+
+    func walletPaymentDidSucceed(_ transitionIndicatorView: UIView?) {
+        commitCall()
+    }
+
+    func walletPaymentInterrupted(_ transitionIndicatorView: UIView?) {
+        prepareForResultViewController(result: .cancelled)
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func vippsPaymentDidFail(with error: NPIError, vippsStatusCode: VippsStatusCode?) {
+        prepareForResultViewController(result: .error(error))
+        dismiss(animated: true, completion: nil)
+    }
+    
+
 }
 
 // MARK: PiaSDK delegate
@@ -316,10 +365,7 @@ extension PaymentMethodViewController: PiaSDKDelegate {
     }
     
     func piaSDKDidComplete(withSuccess PiaSDK: PiaSDKController) {
-        self.commitPayment { (result) in
-            self.prepareForResultViewController(result: .response(result, "payment"))
-            self.dismiss(animated: true, completion: nil)
-        }
+        commitCall()
     }
     
     func piaSDKDidCompleteSaveCard(withSuccess PiaSDK: PiaSDKController) {
@@ -329,16 +375,30 @@ extension PaymentMethodViewController: PiaSDKDelegate {
         self.prepareForResultViewController(result: .cancelled)
         self.dismiss(animated: true, completion: nil)
     }
+    
+    func commitCall() {
+        commitPayment { (result) in
+            self.prepareForResultViewController(result: .response(result, "payment"))
+            self.dismiss(animated: true, completion: nil)
+        }
+    }
+}
+
+// TODO: remove. apparently neccessary for current implementation.
+enum MobileWallet: Int {
+    case None, Vipps
 }
 
 // MARK: REST call API functions
 extension PaymentMethodViewController {
-    fileprivate func postRegisterPayment(storeCard:Bool, paymentData: PKPaymentToken?, payPalPayment: Bool = false, completed: @escaping () -> Void) {
+    fileprivate func postRegisterPayment(storeCard:Bool, paymentData: PKPaymentToken?, payPalPayment: Bool = false, mobileWallet: MobileWallet = .None , completed: @escaping () -> Void) {
         let orderNumber = "PiaSDK-iOS"
         let customerId = String(describing: self.cache.object(forKey: "customerID")!)
         
         var method: Method?
         var paymentDataString: String?
+        var phoneNumber: String?
+        var redirectURL: String?
         
         if let paymentData = paymentData {
             method = Method(id: "ApplePay", displayName: "Apple Pay", fee: 0)
@@ -374,6 +434,14 @@ extension PaymentMethodViewController {
             paymentDataString = cardCryptogramPacketString
         } else if payPalPayment {
             method = Method(id: "PayPal", displayName: "PayPal", fee: 0)
+        } else if mobileWallet != .None {
+            phoneNumber = String(describing: self.cache.object(forKey: "phoneNumber") ?? "")
+            redirectURL = "eu.nets.pia.sample://piasdk"
+            switch mobileWallet {
+                case .Vipps :
+                    method = Method(id: "Vipps", displayName: "Vipps", fee: 0)
+                default: break;
+            }
         }
         else {
             if self.token != nil {
@@ -381,13 +449,17 @@ extension PaymentMethodViewController {
             }
         }
         
-        let parameter = PaymentRegisterRequest(customerId: customerId, orderNumber: orderNumber, amount: self.amount, method: method, cardId: self.token, storeCard: storeCard, items: nil, paymentData: paymentDataString)
+        let parameter = PaymentRegisterRequest(customerId: customerId, orderNumber: orderNumber, amount: self.amount, method: method, cardId: self.token, storeCard: storeCard, items: nil, paymentData: paymentDataString, phoneNumber: phoneNumber, redirectURL: redirectURL)
         
         RequestManager.shared.postRegister(parameters: parameter) { (result) in
             switch result {
             case .success(let res):
                 print(res)
-                self.transactionInfo = NPITransactionInfo(transactionID: res.transactionId, okRedirectUrl: res.redirectOK)
+                if(mobileWallet == .None) {
+                    self.transactionInfo = NPITransactionInfo(transactionID: res.transactionId, okRedirectUrl: res.redirectOK)
+                } else {
+                    self.transactionInfo = NPITransactionInfo(transactionID: res.transactionId, walletUrl: res.walletUrl ?? "")
+                }
                 completed()
             case .failure(let err):
                 print(err)
@@ -424,5 +496,21 @@ extension PaymentMethodViewController {
                 self.showAlert(title: "", message: NSLocalizedString("There was an error when rolling back the transaction.", comment: "Transaction rollback error message"))
             }
         })
+    }
+}
+
+extension URL {
+    /// Returns a new URL by adding the query items, or nil if the URL doesn't support it.
+    /// URL must conform to RFC 3986.
+    func appending(_ queryItems: [URLQueryItem]) -> URL? {
+        guard var urlComponents = URLComponents(url: self, resolvingAgainstBaseURL: true) else {
+            // URL is not conforming to RFC 3986 (maybe it is only conforming to RFC 1808, RFC 1738, and RFC 2732)
+            return nil
+        }
+        // append the query items to the existing ones
+        urlComponents.queryItems = (urlComponents.queryItems ?? []) + queryItems
+
+        // return the url from new url components
+        return urlComponents.url
     }
 }

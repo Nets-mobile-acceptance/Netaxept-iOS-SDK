@@ -46,19 +46,31 @@ RCT_EXPORT_METHOD(callPia) {
   NPIOrderInfo *orderInfo = [[NPIOrderInfo alloc] initWithAmount:amount currencyCode:@"EUR"];
   PiaSDKController *controller = [[PiaSDKController alloc] initWithOrderInfo:orderInfo merchantInfo:merchantInfo];
   controller.PiaDelegate = self;
-  
-  [[UIApplication sharedApplication].delegate.window.rootViewController presentViewController:controller animated:YES completion:^{
-  }];
+  dispatch_async(dispatch_get_main_queue(), ^{
+    [[UIApplication sharedApplication].delegate.window.rootViewController presentViewController:controller animated:YES completion:^{
+    }];
+  });
 }
 
 RCT_EXPORT_METHOD(callPiaWithPayPal:(RCTResponseSenderBlock)callback) {
   NPIMerchantInfo *merchantInfo = [[NPIMerchantInfo alloc] initWithIdentifier:@"12002835"];
   PiaSDKController *controller = [[PiaSDKController alloc] initForPayPalPurchaseWithMerchantInfo:merchantInfo];
   controller.PiaDelegate = self;
-  
-  [[UIApplication sharedApplication].delegate.window.rootViewController presentViewController:controller animated:YES completion:^{
-    callback(@[[NSNull null], @"Yes"]);
-  }];
+  dispatch_async(dispatch_get_main_queue(), ^{
+    [[UIApplication sharedApplication].delegate.window.rootViewController presentViewController:controller animated:YES completion:^{
+      callback(@[[NSNull null], @"Yes"]);
+    }];
+  });
+}
+
+RCT_EXPORT_METHOD(callPiaWithVipps){
+  dispatch_async(dispatch_get_main_queue(), ^{
+    UIViewController *vc = [UIApplication sharedApplication].delegate.window.rootViewController;
+    
+    if(![PiaSDK initiateVippsFromSender:vc delegate:self]) {
+      [self sendEventWithName:@"PiaSDKResult" body:@{@"name": @"Vipps not installed"}];
+    }
+  });
 }
 
 - (void)PiaSDK:(PiaSDKController * _Nonnull)PiaSDKController didFailWithError:(NPIError * _Nonnull)error {
@@ -95,6 +107,89 @@ RCT_EXPORT_METHOD(callPiaWithPayPal:(RCTResponseSenderBlock)callback) {
 - (void)registerPaymentWithPayPal:(PiaSDKController * _Nonnull)PiaSDKController withCompletion:(void (^ _Nonnull)(NPITransactionInfo * _Nullable))completionHandler {
 }
 
+- (void)registerVippsPayment:(void (^)(NSString * _Nullable))completionWithWalletURL{
+  [self getTransactionInfoForVippsWithcallback:^{
+    completionWithWalletURL(self.transactionInfo.walletUrl);
+  }];
+}
+
+- (void)walletPaymentDidSucceed:(UIView *)transitionIndicatorView{
+  [transitionIndicatorView removeFromSuperview];
+  [self sendEventWithName:@"PiaSDKResult" body:@{@"name": @"success"}];
+}
+
+- (void)walletPaymentInterrupted:(UIView *)transitionIndicatorView {
+  [transitionIndicatorView removeFromSuperview];
+  [self sendEventWithName:@"PiaSDKResult" body:@{@"name": @"Interrupted"}];
+}
+
+- (void)vippsPaymentDidFailWith:(NPIError *)error vippsStatusCode:(VippsStatusCode)vippsStatusCode {
+  [self sendEventWithName:@"PiaSDKResult" body:@{@"name": error.localizedDescription}];
+}
+
+
+-(void)getTransactionInfoForVippsWithcallback:(void (^)(void))callbackBlock {
+  
+   NSString *merchantURL = @"YOUR MERCHANT BACKEND URL HERE";
+  
+  __block NSMutableDictionary *resultsDictionary;
+  
+  NSMutableDictionary *jsonDictionary = [[NSMutableDictionary alloc] init];
+  
+  NSMutableDictionary *amount = [[NSMutableDictionary alloc] init];
+  [amount setValue:[NSNumber numberWithInt:1000] forKey:@"totalAmount"];
+  [amount setValue:[NSNumber numberWithInt:200] forKey:@"vatAmount"];
+  [amount setValue:@"NOK" forKey:@"currencyCode"];
+  [jsonDictionary setValue:amount forKey:@"amount"];
+  
+  NSMutableDictionary *method = [[NSMutableDictionary alloc] init];
+  [method setValue:@"Vipps" forKey:@"id"];
+  [method setValue:@"Vipps" forKey:@"displayName"];
+  [method setValue:[NSNumber numberWithInt:0] forKey:@"fee"];
+  [jsonDictionary setValue:method forKey:@"method"];
+  
+  [jsonDictionary setValue:@"000012" forKey:@"customerId"];
+  [jsonDictionary setValue:@"PiaSDK-iOS" forKey:@"orderNumber"];
+  [jsonDictionary setValue:false forKey:@"storeCard"];
+  
+  
+   [jsonDictionary setValue:@"+471111..." forKey:@"phoneNumber"];
+   [jsonDictionary setValue:@"YOUR_APP_SCHEME_URL://piasdk" forKey:@"redirectURL"];
+
+  if ([NSJSONSerialization isValidJSONObject:jsonDictionary]) {//validate it
+    NSError* error;
+    NSData* jsonData = [NSJSONSerialization dataWithJSONObject:jsonDictionary options:NSJSONWritingPrettyPrinted error: &error];
+    NSURL* url = [NSURL URLWithString:merchantURL];
+    NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:30.0];
+    [request setHTTPMethod:@"POST"];//use POST
+    [request setValue:@"application/json;charset=utf-8;version=2.0" forHTTPHeaderField:@"Accept"];
+    [request setValue:@"application/json;charset=utf-8;version=2.0" forHTTPHeaderField:@"Content-Type"];
+    [request setHTTPBody:jsonData];//set data
+    __block NSError *error1 = [[NSError alloc] init];
+    
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+      if ([data length]>0 && error == nil) {
+        resultsDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:&error1];
+        NSLog(@"resultsDictionary is %@",resultsDictionary);
+        
+        NSString *transactionId = resultsDictionary[@"transactionId"];
+        NSString *walletURL = resultsDictionary[@"walletUrl"];
+        self.transactionInfo = [[NPITransactionInfo alloc] initWithTransactionID:transactionId walletUrl:walletURL];
+        callbackBlock();
+      } else if ([data length]==0 && error ==nil) {
+        NSLog(@" download data is null");
+        self.transactionInfo = nil;
+        callbackBlock();
+      } else if( error!=nil) {
+        NSLog(@" error is %@",error);
+        self.transactionInfo = nil;
+        callbackBlock();
+      }
+    }];
+    [dataTask resume];
+  }
+}
 - (void)getTransactionInfo:(void (^)(void))callbackBlock {
   
    NSString *merchantURL = @"YOUR MERCHANT BACKEND URL HERE";
@@ -103,7 +198,7 @@ RCT_EXPORT_METHOD(callPiaWithPayPal:(RCTResponseSenderBlock)callback) {
   
   NSMutableDictionary *amount = [[NSMutableDictionary alloc] init];
   [amount setValue:[NSNumber numberWithInt:1000] forKey:@"totalAmount"];
-  [amount setValue:[NSNumber numberWithInt:2] forKey:@"vatAmount"];
+  [amount setValue:[NSNumber numberWithInt:200] forKey:@"vatAmount"];
   [amount setValue:@"EUR" forKey:@"currencyCode"];
   
   NSMutableDictionary *jsonDictionary = [[NSMutableDictionary alloc] init];
@@ -118,8 +213,8 @@ RCT_EXPORT_METHOD(callPiaWithPayPal:(RCTResponseSenderBlock)callback) {
     NSURL* url = [NSURL URLWithString:merchantURL];
     NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:30.0];
     [request setHTTPMethod:@"POST"];//use POST
-    [request setValue:@"application/vnd.nets.pia.v1.2+json" forHTTPHeaderField:@"Accept"];
-    [request setValue:@"application/vnd.nets.pia.v1.2+json" forHTTPHeaderField:@"Content-Type"];
+    [request setValue:@"application/json;charset=utf-8;version=2.0" forHTTPHeaderField:@"Accept"];
+    [request setValue:@"application/json;charset=utf-8;version=2.0" forHTTPHeaderField:@"Content-Type"];
     [request setHTTPBody:jsonData];//set data
     __block NSError *error1 = [[NSError alloc] init];
     
@@ -131,7 +226,6 @@ RCT_EXPORT_METHOD(callPiaWithPayPal:(RCTResponseSenderBlock)callback) {
         
         NSString *transactionId = resultsDictionary[@"transactionId"];
         NSString *redirectOK = resultsDictionary[@"redirectOK"];
-        NSString *redirectCancel = resultsDictionary[@"redirectCancel"];
         
         self.transactionInfo = [[NPITransactionInfo alloc] initWithTransactionID:transactionId okRedirectUrl:redirectOK];
         callbackBlock();

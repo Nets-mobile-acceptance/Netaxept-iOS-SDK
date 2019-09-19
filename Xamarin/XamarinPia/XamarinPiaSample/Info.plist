@@ -36,5 +36,10 @@
 	<string>Assets.xcassets/AppIcon.appiconset</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Use camera to scan credit card</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>bankid</string>
+		<string>vipps</string>
+	</array>
 </dict>
 </plist>

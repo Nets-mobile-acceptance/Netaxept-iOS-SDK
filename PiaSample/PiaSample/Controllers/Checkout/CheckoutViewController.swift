@@ -27,6 +27,14 @@
 import UIKit
 import Pia
 
+enum PaymentMethodID: String {
+    case applePay = "ApplePay"
+    case payPal = "PayPal"
+    case mobilePay = "MobilePay"
+    case swish = "SwishM"
+    case vipps = "Vipps"
+}
+
 /**
  This viewcontroller is used for Normal flow and Apple Pay flow
  */
@@ -45,8 +53,8 @@ class CheckoutViewController: UIViewController {
     fileprivate var tokenCardInfos = [NPITokenCardInfo]()
     fileprivate var supportedSchemes = [String]()
     
-    fileprivate var isApplePayAnOption = false
-    fileprivate var isPayPalAnOption = false
+    fileprivate var paymentMethodIDs: [PaymentMethodID] = []
+
     fileprivate var cvcRequired = true
     
     var transactionResult: PiaResult?
@@ -105,8 +113,7 @@ class CheckoutViewController: UIViewController {
     // MARK: segue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let paymentMethodViewController = segue.destination as? PaymentMethodViewController {
-            paymentMethodViewController.isApplePayAnOption = self.isApplePayAnOption
-            paymentMethodViewController.isPayPalAnOption = self.isPayPalAnOption
+            paymentMethodViewController.paymentMethodIDs = paymentMethodIDs
             paymentMethodViewController.amount = self.amount
             paymentMethodViewController.formattedInputValue = self.formattedInputValue
             paymentMethodViewController.tokenCardInfo = self.tokenCardInfos
@@ -163,7 +170,7 @@ extension CheckoutViewController {
     
     @objc fileprivate func buyWithApplePay() {
         self.buy {
-            if self.isApplePayAnOption {
+            if (self.paymentMethodIDs.contains(.applePay)) {
                 if self.isApplePayAvailable() {
                     self.presentSDKWithApplePay()
                 } else {
@@ -217,8 +224,7 @@ extension CheckoutViewController {
     fileprivate func cleanVariables() {
         self.tokenCardInfos = []
         self.supportedSchemes = []
-        self.isApplePayAnOption = false
-        self.isPayPalAnOption = false
+        paymentMethodIDs.removeAll()
         self.cvcRequired = true
     }
 }
@@ -234,17 +240,14 @@ extension CheckoutViewController {
             case .success(let res):
                 print(res)
                 
-                for method in res.methods! {
-                    if method.id == "ApplePay" {
-                        self.isApplePayAnOption = true
-                    } else if method.id == "PayPal" {
-                        self.isPayPalAnOption = true
+                (res.methods ?? []).forEach { method in
+                    if let id = PaymentMethodID(rawValue: method.id) {
+                        self.paymentMethodIDs.append(id)
                     } else {
                         self.supportedSchemes.append(method.id)
                     }
                 }
-                
-                
+
                 /**
                  NOTE: the cardVerificationRequired here is just an example from our backend
                        Please make your own logic for this part.
@@ -265,11 +268,13 @@ extension CheckoutViewController {
                         tempScheme = DINERS_CLUB_INTERNATIONAL
                     }else if tempIssuer.contains("Dankort") == true {
                         tempScheme = DANKORT
+                    }else if tempIssuer.contains("Maestro") == true {
+                        tempScheme = MAESTRO
                     }else {
                         tempScheme = OTHER
                     }
                     
-                    let cardTokenInfo = NPITokenCardInfo(tokenId: card.tokenId, schemeType: tempScheme, expiryDate: card.expiryDate ?? "", cvcRequired: res.cardVerificationRequired ?? true, systemAuthenticationRequired: self.systemAuthenticationRequired)
+                    let cardTokenInfo = NPITokenCardInfo(tokenId: card.tokenId, schemeType: tempScheme, expiryDate: card.expiryDate ?? "", cvcRequired: res.cardVerificationRequired ?? true)
                     if self.tokenCardInfos.contains(cardTokenInfo) == false {
                         self.tokenCardInfos.append(cardTokenInfo)
                     }
@@ -319,7 +324,7 @@ extension CheckoutViewController {
             paymentDataString = cardCryptogramPacketString
         }
         
-        let parameter = PaymentRegisterRequest(customerId: customerId, orderNumber: orderNumber, amount: self.amount!, method: method, cardId: nil, storeCard: storeCard, items: nil, paymentData: paymentDataString)
+        let parameter = PaymentRegisterRequest(customerId: customerId, orderNumber: orderNumber, amount: self.amount!, method: method, cardId: nil, storeCard: storeCard, items: nil, paymentData: paymentDataString, phoneNumber: nil, redirectURL: nil)
         
         RequestManager.shared.postRegister(parameters: parameter) { (result) in
             switch result {

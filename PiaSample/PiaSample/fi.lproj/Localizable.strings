@@ -72,3 +72,9 @@
 
 /* Failed transaction message */
 "There was an error. Please try again later" = " Virhe, yritä myöhemmin uudestaan ";
+
+/* Failed Vipps Transaction */
+"Payment with Vipps failed" = "Maksu Vippillä epäonnistui";
+
+/*Wallet app not installed*/
+"Swish App is not installed, select another payment method" = "Swish sovellusta ei ole asennettu, valitse toinen maksutapa.";

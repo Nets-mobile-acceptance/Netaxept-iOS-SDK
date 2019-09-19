@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>VippsPaymentDelegate Protocol Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset="utf-8">
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+    <script src="../js/lunr.min.js" defer></script>
+    <script src="../js/typeahead.jquery.js" defer></script>
+    <script src="../js/jazzy.search.js" defer></script>
+  </head>
+  <body>
+
+    <a name="//apple_ref/objc/Protocol/VippsPaymentDelegate" class="dashAnchor"></a>
+
+    <a title="VippsPaymentDelegate Protocol Reference"></a>
+
+    <header class="header">
+      <p class="header-col header-col--primary">
+        <a class="header-link" href="../index.html">
+          Pia Docs
+        </a>
+         (97% documented)
+      </p>
+    
+      <p class="header-col--secondary">
+        <form role="search" action="../search.json">
+          <input type="text" placeholder="Search documentation" data-typeahead>
+        </form>
+      </p>
+    
+    
+    </header>
+
+    <p class="breadcrumbs">
+      <a class="breadcrumb" href="../index.html">Pia Reference</a>
+      <img class="carat" src="../img/carat.png" />
+      VippsPaymentDelegate Protocol Reference
+    </p>
+
+    <div class="content-wrapper">
+      <nav class="navigation">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Guides.html">Guides</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../0-getting-started.html">0. Getting started</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../11-basic-payment-flow.html">1.1. Basic payment flow</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../12-easy-one-click-payment-flow.html">1.2. Easy (one click) payment flow</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../13-recurring-payments.html">1.3. Recurring payments</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../2-register-flow.html">2. Register flow</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../31-apple-pay-integration.html">3.1. Apple Pay Integration</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../32-paypal-integration.html">3.2. PayPal Integration</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../33-vipps-integration.html">3.3. Vipps Integration</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../4-ui-customization.html">4. UI Customization</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../51-error-codes-handling.html">5.1. Error Codes Handling</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../52-terminology.html">5.2. Terminology</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../53-faqs.html">5.3. FAQs</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../54-backend-tips.html">5.4. Backend Tips</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../6-licenses.html">6. Licenses</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../7-changelog.html">7. Changelog</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../8-get-in-touch.html">8. Get in touch</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/NPIApplePayInfo.html">NPIApplePayInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/NPIApplePayShippingInfo.html">NPIApplePayShippingInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/NPIError.html">NPIError</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/NPIInterfaceConfiguration.html">NPIInterfaceConfiguration</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/NPIMerchantInfo.html">NPIMerchantInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/NPIOrderInfo.html">NPIOrderInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/NPITokenCardInfo.html">NPITokenCardInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/NPITransactionInfo.html">NPITransactionInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/PiaSDK.html">PiaSDK</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/PiaSDKController.html">PiaSDKController</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Constants.html">Constants</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Constants.html#/c:@NPIPiaSemanticVersionString">NPIPiaSemanticVersionString</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Constants.html#/c:@NPIPiaTechnicalVersionString">NPIPiaTechnicalVersionString</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Constants.html#/c:@PiaVersionNumber">PiaVersionNumber</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Constants.html#/c:@PiaVersionString">PiaVersionString</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/PiALanguage.html">PiALanguage</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/SchemeType.html">SchemeType</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/PiaSDKDelegate.html">PiaSDKDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/VippsPaymentDelegate.html">VippsPaymentDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/WalletPaymentDelegate.html">WalletPaymentDelegate</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Type Definitions.html">Type Definitions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Type Definitions/NPIErrorCode.html">NPIErrorCode</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Type Definitions.html#/c:PiaSDK.h@T@VippsStatusCode">VippsStatusCode</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+
+        <section class="section">
+          <div class="section-content">
+            <h1>VippsPaymentDelegate</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight"><code><span class="k">@protocol</span> <span class="nc">VippsPaymentDelegate</span> <span class="o">&lt;</span><span class="n"><a href="../Protocols/WalletPaymentDelegate.html">WalletPaymentDelegate</a></span><span class="o">&gt;</span></code></pre>
+
+                </div>
+              </div>
+            <p>Vipps payment delegate is used by the SDK throughout Vipps payment process;
+to obtain wallet URL from merchant BE and report payment status from Vipps app.</p>
+
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-content">
+            <div class="task-group">
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(pl)VippsPaymentDelegate(im)registerVippsPayment:"></a>
+                    <a name="//apple_ref/objc/Method/-registerVippsPayment:" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(pl)VippsPaymentDelegate(im)registerVippsPayment:">-registerVippsPayment:</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Register Vipps payment with merchant backend. Callback with wallet URL
+following successful registration.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight"><code><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">registerVippsPayment</span><span class="p">:</span>
+    <span class="p">(</span><span class="n">nonnull</span> <span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="n">NSString</span> <span class="o">*</span><span class="n">_Nullable</span><span class="p">))</span><span class="nv">completionWithWalletURL</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">func</span> <span class="nf">registerVippsPayment</span><span class="p">(</span><span class="n">_</span> <span class="nv">completionWithWalletURL</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">String</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>completionWithWalletURL</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>callback with retreived wallet URL</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(pl)VippsPaymentDelegate(im)vippsPaymentDidFailWith:vippsStatusCode:"></a>
+                    <a name="//apple_ref/objc/Method/-vippsPaymentDidFailWith:vippsStatusCode:" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(pl)VippsPaymentDelegate(im)vippsPaymentDidFailWith:vippsStatusCode:">-vippsPaymentDidFailWith:vippsStatusCode:</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Vipps payment failed with internal or Vipps error status.
+The <code><a href="../Type Definitions.html#/c:PiaSDK.h@T@VippsStatusCode">VippsStatusCode</a></code> is nil if failure is internal.</p>
+
+<p>Reasons for internal error include:</p>
+
+<ul>
+<li><p>Failure to open wallet app: not installed / the URL scheme is not registered.</p></li>
+<li><p>Invalid wallet URL (from payment registration response)</p></li>
+<li><p>Unknown redirect URL (UIApplication open:url redirect URL)</p></li>
+</ul>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight"><code><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">vippsPaymentDidFailWith</span><span class="p">:(</span><span class="n">nonnull</span> <span class="n"><a href="../Classes/NPIError.html">NPIError</a></span> <span class="o">*</span><span class="p">)</span><span class="nv">error</span>
+                <span class="nf">vippsStatusCode</span><span class="p">:(</span><span class="n">nullable</span> <span class="n"><a href="../Type Definitions.html#/c:PiaSDK.h@T@VippsStatusCode">VippsStatusCode</a></span><span class="p">)</span><span class="nv">vippsStatusCode</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">func</span> <span class="nf">vippsPaymentDidFail</span><span class="p">(</span><span class="n">with</span> <span class="nv">error</span><span class="p">:</span> <span class="kt"><a href="../Classes/NPIError.html">NPIError</a></span><span class="p">,</span> <span class="nv">vippsStatusCode</span><span class="p">:</span> <span class="kt"><a href="../Type Definitions.html#/c:PiaSDK.h@T@VippsStatusCode">VippsStatusCode</a></span><span class="p">?)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>vippsStatusCode</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The status code returned from Vipps</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(pl)VippsPaymentDelegate(im)vippsDidRedirectWith:"></a>
+                    <a name="//apple_ref/objc/Method/-vippsDidRedirectWith:" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(pl)VippsPaymentDelegate(im)vippsDidRedirectWith:">-vippsDidRedirectWith:</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>(Optional) Returns the parsed raw status code from Vipps redirect.
+Note: This delegate method is invoked while application is <code>inactive</code>.
+Specific callbacks (success/failure) are followed after application
+state has changed to <code>active</code>.</p>
+
+<p>This optional method is intended to support custom transition UI needs
+during app switch transitions.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight"><code><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">vippsDidRedirectWith</span><span class="p">:(</span><span class="n">nonnull</span> <span class="n"><a href="../Type Definitions.html#/c:PiaSDK.h@T@VippsStatusCode">VippsStatusCode</a></span><span class="p">)</span><span class="nv">statusCode</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">optional</span> <span class="kd">func</span> <span class="nf">vippsDidRedirect</span><span class="p">(</span><span class="n">with</span> <span class="nv">statusCode</span><span class="p">:</span> <span class="kt"><a href="../Type Definitions.html#/c:PiaSDK.h@T@VippsStatusCode">VippsStatusCode</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>statusCode</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Parsed Vipps status code</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+      </article>
+    </div>
+    <section class="footer">
+      <p>&copy; 2019 <a class="link" href="https://nets.eu" target="_blank" rel="external">Nets</a>. All rights reserved. (Last updated: 2019-09-19)</p>
+      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.0</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+    </section>
+  </body>
+</div>
+</html>

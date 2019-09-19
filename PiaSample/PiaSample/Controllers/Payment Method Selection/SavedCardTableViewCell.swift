@@ -55,6 +55,9 @@ class SavedCardTableViewCell: UITableViewCell {
             case DINERS_CLUB_INTERNATIONAL:
                 self.cardBackgroundImage.image = UIImage(named: "BackgroundDiners")
                 tempCardInfo += "Diners •••• "
+            case MAESTRO:
+                self.cardBackgroundImage.image = UIImage(named: "BackgroundMaestro")
+                tempCardInfo += "Maestro •••• "
             default:
                 break
             }

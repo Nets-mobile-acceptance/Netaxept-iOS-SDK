@@ -64,6 +64,9 @@ export default class App extends Component<Props> {
         </View>
         <View style={styles.buttonContainer}>
           <Button onPress={this._handlePressPayPal} title="Call Pia SDK PayPal" color="#FFFFFF" accessibilityLabel="Tap on Me PayPal"/>
+            </View>
+        <View style={styles.buttonContainer}>
+          <Button onPress={this._handlePressVipps} title="Call Pia SDK Vipps" color="#FFFFFF" accessibilityLabel="Tap on Me Vipps"/>
         </View>
       </View>
     );
@@ -77,6 +80,10 @@ export default class App extends Component<Props> {
     _PiaSDK.callPiaWithPayPal((error, message) => {
       console.log(message);
     });
+  }
+
+   _handlePressVipps(event) {
+    _PiaSDK.callPiaWithVipps();
   }
 }
 

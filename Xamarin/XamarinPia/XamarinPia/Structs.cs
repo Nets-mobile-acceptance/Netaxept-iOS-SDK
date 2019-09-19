@@ -35,6 +35,7 @@ namespace XamarinPia
         DinersClubInternational,
         Dankort,
         Jcb,
+        Maestro,
         Other
     }
 
@@ -42,6 +43,7 @@ namespace XamarinPia
     public enum NPIErrorCode : long
     {
         GenericError = 300,
+        TerminalValidationError = 301,
         RequestFailed = 101,
         ThreeDSecureError = 102,
         ThreeDSecureNavigationError = 103,
@@ -55,15 +57,20 @@ namespace XamarinPia
         TransactionAlreadyProcessed = 98,
         UnknownError = 99,
         DeniedBy3DS = 900,
-        MerchantTimeout = 901
+        MerchantTimeout = 901,
+        WalletAppNotInstalled = 303,
+        WalletURLInvalid = 304,
+        WalletRedirectURLUnknown = 305,
+        VippsErrorStatusCode = 302
     }
 
-    public enum PiALanguage : uint
+    public enum PiALanguage
     {
-	    English,
-	    Swedish,
-	    Danish,
-	    Norwegian,
-	    Finnish
+        Unassigned = -1,
+        English = 0,
+        Swedish,
+        Danish,
+        Norwegian,
+        Finnish
     }
 }

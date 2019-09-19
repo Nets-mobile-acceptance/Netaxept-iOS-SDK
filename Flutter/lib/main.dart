@@ -114,6 +114,22 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  Future<void> _initiateVippsTransaction() async {
+    String piaResult;
+    try {
+      final String result = await platform.invokeMethod('payWithVipps');
+      piaResult = 'Pay with Vipps result: $result .';
+      _showDialog(piaResult);
+    } on PlatformException catch (e) {
+      piaResult = "Failed: '${e.message}'.";
+      _showDialog(piaResult);
+    }
+
+    setState(() {
+      _piaResult = piaResult;
+    });
+  }
+
   void _showDialog(String message) {
     showDialog(
       context: context,
@@ -152,6 +168,10 @@ class _MyHomePageState extends State<MyHomePage> {
           RaisedButton(
             child: Text('Pay 10 EUR with saved card'),
             onPressed: _callPiaSDKWithSavedCard,
+          ),
+	  RaisedButton(
+            child: Text('Pay 10 NOK with Vipps'),
+            onPressed: _initiateVippsTransaction,
           ),
           Text(_piaResult),
         ],
