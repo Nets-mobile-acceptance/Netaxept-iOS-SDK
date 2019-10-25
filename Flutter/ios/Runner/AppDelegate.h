@@ -26,6 +26,6 @@
 #import <UIKit/UIKit.h>
 #import "Pia.framework/Headers/Pia.h"
 
-@interface AppDelegate : FlutterAppDelegate <PiaSDKDelegate,VippsPaymentDelegate>
+@interface AppDelegate : FlutterAppDelegate <PiaSDKDelegate,VippsPaymentDelegate,SwishPaymentDelegate>
 
 @end

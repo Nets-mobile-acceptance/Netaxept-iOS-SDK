@@ -110,9 +110,6 @@ namespace XamarinPia
         [Export ("initWithWalletUrl:")]
         IntPtr Constructor (string walletUrl);
         
-        // -(instancetype _Nonnull)initWithTransactionID:(NSString * _Nonnull)transactionId walletUrl:(NSString * _Nonnull)walletUrl;
-        [Export ("initWithTransactionID:walletUrl:")]
-        IntPtr Constructor (string transactionId, string walletUrl);
     }
 
     // @interface NPITokenCardInfo : NSObject
@@ -131,17 +128,22 @@ namespace XamarinPia
         [Export("cvcRequired")]
         bool CvcRequired { get; set; }
 
-        // @property (assign, nonatomic) BOOL systemAuthenticationRequired;
+        // @property (readonly, nonatomic) BOOL systemAuthenticationRequired;
         [Export("systemAuthenticationRequired")]
-        bool SystemAuthenticationRequired { get; set; }
+        bool SystemAuthenticationRequired { get; }
 
         // @property (nonatomic) SchemeType schemeType;
         [Export("schemeType", ArgumentSemantic.Assign)]
         SchemeType SchemeType { get; set; }
 
-        // -(instancetype _Nonnull)initWithTokenId:(NSString * _Nonnull)tokenId schemeType:(SchemeType)schemeType expiryDate:(NSString * _Nonnull)expiryDate cvcRequired:(BOOL)cvcRequired systemAuthenticationRequired:(BOOL)systemAuthenticationRequired;
-        [Export("initWithTokenId:schemeType:expiryDate:cvcRequired:systemAuthenticationRequired:")]
-        IntPtr Constructor(string tokenId, SchemeType schemeType, string expiryDate, bool cvcRequired, bool systemAuthenticationRequired);
+        // -(instancetype _Nonnull)initWithTokenId:(NSString * _Nonnull)tokenId schemeType:(SchemeType)schemeType expiryDate:(NSString * _Nonnull)expiryDate cvcRequired:(BOOL)cvcRequired systemAuthenticationRequired:(BOOL)systemAuthenticationRequired; __attribute__((deprecated("System authentication becomes obsolete due to PSD2/SCA regulation. Replaced with `init(tokenId:schemeType:expiryDate:cvcRequired:)`")));
+        
+        [Export ("initWithTokenId:schemeType:expiryDate:cvcRequired:systemAuthenticationRequired:")]
+        IntPtr Constructor (string tokenId, SchemeType schemeType, string expiryDate, bool cvcRequired, bool systemAuthenticationRequired);
+        
+        // -(instancetype _Nonnull)initWithTokenId:(NSString * _Nonnull)tokenId schemeType:(SchemeType)schemeType expiryDate:(NSString * _Nonnull)expiryDate cvcRequired:(BOOL)cvcRequired;
+        [Export ("initWithTokenId:schemeType:expiryDate:cvcRequired:")]
+        IntPtr Constructor (string tokenId, SchemeType schemeType, string expiryDate, bool cvcRequired);
     }
 
     // @interface NPIError : NSObject
@@ -317,10 +319,6 @@ namespace XamarinPia
         [Export("initWithOrderInfo:merchantInfo:")]
         IntPtr Constructor(NPIOrderInfo orderInfo, NPIMerchantInfo merchantInfo);
         
-        // -(instancetype _Nonnull)initForPayPalPurchaseWithMerchantInfo:(NPIMerchantInfo * _Nonnull)merchantInfo;
-        [Export ("initForPayPalPurchaseWithMerchantInfo:")]
-        IntPtr Constructor (NPIMerchantInfo merchantInfo);
-
         // -(instancetype _Nonnull)initWithMerchantInfo:(NPIMerchantInfo * _Nonnull)merchantInfo payWithPayPal:(BOOL)payWithPayPal;
         [Export("initWithMerchantInfo:payWithPayPal:")]
         IntPtr Constructor(NPIMerchantInfo merchantInfo, bool payWithPayPal);
@@ -497,6 +495,10 @@ namespace XamarinPia
         // @property (nonatomic) CGFloat textFieldCornerRadius;
         [Export ("textFieldCornerRadius")]
         nfloat TextFieldCornerRadius { get; set; }
+        
+        // @property (nonatomic) CGFloat buttonCornerRadius;
+        [Export ("buttonCornerRadius")]
+        nfloat ButtonCornerRadius { get; set; }
 
         // +(instancetype)sharedInstance;
         [Static]
@@ -513,14 +515,19 @@ namespace XamarinPia
         [Export ("initiateVippsFromSender:delegate:")]
         bool InitiateVippsFromSender ([NullAllowed] UIViewController sender, VippsPaymentDelegate @delegate);
         
-        // +(void)applicationDidOpenFromRedirectWith:(NSURL * _Nonnull)redirectURL andOptions:(NSDictionary * _Nonnull)options;
+        // +(BOOL)initiateSwishFromSender:(UIViewController * _Nullable)sender delegate:(id<SwishPaymentDelegate> _Nonnull)delegate;
+        [Static]
+        [Export ("initiateSwishFromSender:delegate:")]
+        bool InitiateSwishFromSender ([NullAllowed] UIViewController sender, SwishPaymentDelegate @delegate);
+        
+        // +(BOOL)applicationDidOpenFromRedirectWith:(NSURL * _Nonnull)redirectURL andOptions:(NSDictionary * _Nonnull)options;
         [Static]
         [Export ("applicationDidOpenFromRedirectWith:andOptions:")]
-        void ApplicationDidOpenFromRedirectWith (NSUrl redirectURL, NSDictionary options);
+        bool ApplicationDidOpenFromRedirectWith (NSUrl redirectURL, NSDictionary options);
     }
     
     // @protocol WalletPaymentDelegate <NSObject>
-    [Protocol, Model]
+    [Model]
     [BaseType (typeof(NSObject))]
     interface WalletPaymentDelegate
     {
@@ -534,10 +541,11 @@ namespace XamarinPia
         [Export ("walletPaymentInterrupted:")]
         void WalletPaymentInterrupted ([NullAllowed] UIView transitionIndicatorView);
     }
-    
+
     // @protocol VippsPaymentDelegate <WalletPaymentDelegate>
-    [Protocol, Model]
-    interface VippsPaymentDelegate : IWalletPaymentDelegate
+    [BaseType(typeof(NSObject))]
+    [Model]
+    interface VippsPaymentDelegate : WalletPaymentDelegate
     {
         // @required -(void)registerVippsPayment:(void (^ _Nonnull)(NSString * _Nullable))completionWithWalletURL;
         [Abstract]
@@ -552,5 +560,30 @@ namespace XamarinPia
         // @optional -(void)vippsDidRedirectWith:(VippsStatusCode _Nonnull)statusCode;
         [Export ("vippsDidRedirectWith:")]
         void VippsDidRedirectWith (NSNumber statusCode);
+    }
+    
+    // @protocol SwishPaymentDelegate <WalletPaymentDelegate>
+    [BaseType(typeof(NSObject))]
+    [Model]
+    interface SwishPaymentDelegate : IWalletPaymentDelegate
+    {
+        // @required -(void)registerSwishPayment:(void (^ _Nonnull)(NSString * _Nullable))completionWithWalletURL;
+        [Abstract]
+        [Export ("registerSwishPayment:")]
+        void RegisterSwishPayment (Action<NSString> completionWithWalletURL);
+
+        // @required -(void)swishPaymentDidFailWith:(NPIError * _Nonnull)error;
+        [Abstract]
+        [Export ("swishPaymentDidFailWith:")]
+        void SwishPaymentDidFailWith (NPIError error);
+
+        // @required -(void)swishDidRedirect:(UIView * _Nullable)transitionIndicatorView;
+        [Abstract]
+        [Export ("swishDidRedirect:")]
+        void SwishDidRedirect ([NullAllowed] UIView transitionIndicatorView);
+
+        // @optional -(void)swishDidRedirect;
+        [Export ("swishDidRedirect")]
+        void SwishDidRedirect ();
     }
 }

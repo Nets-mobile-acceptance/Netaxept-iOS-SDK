@@ -223,6 +223,7 @@ extension PaymentMethodViewController: UITableViewDelegate, UITableViewDataSourc
             case PaymentMethodList.ApplePay.rawValue: self.presentPiaSDKWithApplePay()
             case PaymentMethodList.PayPal.rawValue: self.performPayPalPayment()
             case PaymentMethodList.Vipps.rawValue: self.presentSDKWithVipps()
+            case PaymentMethodList.Swish.rawValue: self.presentSDKWithSwish()
             default:self.showAlertForNonSupportedMethods()
             }
         }
@@ -236,7 +237,7 @@ extension PaymentMethodViewController {
      Note: for Normal flow and Easy flow, both Merchant info and Order info are needed. However, if you want to pay with Easy Flow, set TokenCard Info to a valid object and vice versa.
      */
     fileprivate func presentPiASDK(tokenCardInfo: NPITokenCardInfo?) {
-        let merchantInfo = NPIMerchantInfo(identifier: constantAPI.getMerchantID(), testMode: ConstantAPI.testMode, cvcRequired: self.cvcRequired)
+        let merchantInfo = NPIMerchantInfo(identifier: constantAPI.getMerchantID(), testMode: ConstantAPI.testMode, cvcRequired: (tokenCardInfo != nil) ? self.cvcRequired : true)
         let orderInfo = NPIOrderInfo(amount: NSNumber(value: self.formattedInputValue), currencyCode: self.amount.currencyCode)
         
         let piaSDK = PiaSDKController(merchantInfo: merchantInfo, orderInfo: orderInfo, tokenCardInfo: tokenCardInfo)
@@ -290,7 +291,7 @@ extension PaymentMethodViewController {
     /**
      This function shows how you can call PiA SDK to pay with Vipps
      */
-    fileprivate func presentSDKWithVipps() {
+    private func presentSDKWithVipps() {
         if cache.object(forKey: "phoneNumber") != nil {
             /// SDK will present default transition UI (during app switch) if `sender` is not nil
             guard PiaSDK.initiateVipps(fromSender: self, delegate: self) else {
@@ -301,14 +302,17 @@ extension PaymentMethodViewController {
             self.showAlert(title: "", message: "Please configure your phone number in settings")
         }
     }
-}
 
-extension PaymentMethodViewController: VippsPaymentDelegate {
-    func registerVippsPayment(_ completionWithWalletURL: @escaping (String?) -> Void) {
-        postRegisterPayment(storeCard: false, paymentData: nil, mobileWallet: .Vipps) {
-            completionWithWalletURL(self.transactionInfo?.walletUrl)
+    private func presentSDKWithSwish() {
+        /// SDK will present default transition UI (during app switch) if `sender` is not nil
+        guard PiaSDK.initiateSwish(fromSender: self, delegate: self) else {
+            showAlert(title: "Swish app is not installed!", message: "Choose other payment method")
+            return
         }
     }
+}
+
+extension PaymentMethodViewController: VippsPaymentDelegate, SwishPaymentDelegate {
 
     func walletPaymentDidSucceed(_ transitionIndicatorView: UIView?) {
         commitCall()
@@ -318,12 +322,36 @@ extension PaymentMethodViewController: VippsPaymentDelegate {
         prepareForResultViewController(result: .cancelled)
         dismiss(animated: true, completion: nil)
     }
+
+    // MARK: VippsPaymentDelegate
+
+    func registerVippsPayment(_ completionWithWalletURL: @escaping (String?) -> Void) {
+        postRegisterPayment(storeCard: false, paymentData: nil, mobileWallet: .vipps) {
+            completionWithWalletURL(self.transactionInfo?.walletUrl)
+        }
+    }
     
     func vippsPaymentDidFail(with error: NPIError, vippsStatusCode: VippsStatusCode?) {
         prepareForResultViewController(result: .error(error))
         dismiss(animated: true, completion: nil)
     }
-    
+
+    // MARK: SwishPaymentDelegate
+
+    func registerSwishPayment(_ completionWithWalletURL: @escaping (String?) -> Void) {
+        postRegisterPayment(storeCard: false, paymentData: nil, mobileWallet: .swish) {
+            completionWithWalletURL(self.transactionInfo?.walletUrl ?? "")
+        }
+    }
+
+    func swishDidRedirect(_ transitionIndicatorView: UIView?) {
+        commitCall()
+    }
+
+    func swishPaymentDidFail(with error: NPIError) {
+        prepareForResultViewController(result: .error(error))
+        dismiss(animated: true, completion: nil)
+    }
 
 }
 
@@ -377,8 +405,17 @@ extension PaymentMethodViewController: PiaSDKDelegate {
     }
     
     func commitCall() {
-        commitPayment { (result) in
-            self.prepareForResultViewController(result: .response(result, "payment"))
+        commitPayment { responseCode in
+            let result: PiaResult = {
+                switch responseCode {
+                case "OK": return .response(true, "payment")
+                case "CANCELED": return .cancelled
+                case "ERROR": fallthrough
+                default: return .error(nil)
+                }
+            }()
+
+            self.prepareForResultViewController(result: result)
             self.dismiss(animated: true, completion: nil)
         }
     }
@@ -386,12 +423,12 @@ extension PaymentMethodViewController: PiaSDKDelegate {
 
 // TODO: remove. apparently neccessary for current implementation.
 enum MobileWallet: Int {
-    case None, Vipps
+    case none, vipps, swish
 }
 
 // MARK: REST call API functions
 extension PaymentMethodViewController {
-    fileprivate func postRegisterPayment(storeCard:Bool, paymentData: PKPaymentToken?, payPalPayment: Bool = false, mobileWallet: MobileWallet = .None , completed: @escaping () -> Void) {
+    fileprivate func postRegisterPayment(storeCard:Bool, paymentData: PKPaymentToken?, payPalPayment: Bool = false, mobileWallet: MobileWallet = .none , completed: @escaping () -> Void) {
         let orderNumber = "PiaSDK-iOS"
         let customerId = String(describing: self.cache.object(forKey: "customerID")!)
         
@@ -434,13 +471,15 @@ extension PaymentMethodViewController {
             paymentDataString = cardCryptogramPacketString
         } else if payPalPayment {
             method = Method(id: "PayPal", displayName: "PayPal", fee: 0)
-        } else if mobileWallet != .None {
-            phoneNumber = String(describing: self.cache.object(forKey: "phoneNumber") ?? "")
+        } else if mobileWallet != .none {
             redirectURL = "eu.nets.pia.sample://piasdk"
             switch mobileWallet {
-                case .Vipps :
-                    method = Method(id: "Vipps", displayName: "Vipps", fee: 0)
-                default: break;
+            case .vipps:
+                method = Method(id: "Vipps", displayName: "Vipps", fee: 0)
+                phoneNumber = String(describing: self.cache.object(forKey: "phoneNumber") ?? "")
+            case .swish:
+                method = Method(id: "SwishM", displayName: "Swish", fee: 0)
+            case .none: break
             }
         }
         else {
@@ -454,10 +493,10 @@ extension PaymentMethodViewController {
         RequestManager.shared.postRegister(parameters: parameter) { (result) in
             switch result {
             case .success(let res):
-                print(res)
-                if(mobileWallet == .None) {
+                switch mobileWallet {
+                case .none:
                     self.transactionInfo = NPITransactionInfo(transactionID: res.transactionId, okRedirectUrl: res.redirectOK)
-                } else {
+                case .vipps, .swish:
                     self.transactionInfo = NPITransactionInfo(transactionID: res.transactionId, walletUrl: res.walletUrl ?? "")
                 }
                 completed()
@@ -468,19 +507,17 @@ extension PaymentMethodViewController {
         }
     }
     
-    fileprivate func commitPayment(completed: @escaping (_ success:Bool) -> Void) {
+    fileprivate func commitPayment(completed: @escaping (_ responseCode: String) -> Void) {
         if self.transactionInfo!.transactionID != "" {
             RequestManager.shared.putCommit(transactionId: self.transactionInfo!.transactionID, completion: { (result) in
                 switch result {
-                case .success(let res):
-                    print(res)
-                    completed(true)
-                case .failure(let err):
-                    print(err)
+                case .success(let response):
+                    completed(response.responseCode)
+                case .failure(_):
                     if self.transactionInfo != nil {
                         self.rollBackPayment()
                     }
-                    completed(false)
+                    completed("FAILURE")
                 }
             })
         }

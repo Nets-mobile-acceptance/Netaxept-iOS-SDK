@@ -68,6 +68,9 @@ export default class App extends Component<Props> {
         <View style={styles.buttonContainer}>
           <Button onPress={this._handlePressVipps} title="Call Pia SDK Vipps" color="#FFFFFF" accessibilityLabel="Tap on Me Vipps"/>
         </View>
+        <View style={styles.buttonContainer}>
+          <Button onPress={this._handlePressSwish} title="Call Pia SDK Swish" color="#FFFFFF" accessibilityLabel="Tap on Me Swish"/>
+        </View>
       </View>
     );
   }
@@ -84,6 +87,10 @@ export default class App extends Component<Props> {
 
    _handlePressVipps(event) {
     _PiaSDK.callPiaWithVipps();
+  }
+    
+   _handlePressSwish(event) {
+     _PiaSDK.callPiaWithSwish();
   }
 }
 

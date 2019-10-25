@@ -22,7 +22,7 @@
         <a class="header-link" href="index.html">
           Pia Docs
         </a>
-         (97% documented)
+         (95% documented)
       </p>
     
       <p class="header-col--secondary">
@@ -69,6 +69,9 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="33-vipps-integration.html">3.3. Vipps Integration</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="34-swish-m-commerce-integration.html">3.4. Swish m-commerce Integration</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="4-ui-customization.html">4. UI Customization</a>
@@ -166,6 +169,9 @@
                 <a class="nav-group-task-link" href="Protocols/PiaSDKDelegate.html">PiaSDKDelegate</a>
               </li>
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Protocols/SwishPaymentDelegate.html">SwishPaymentDelegate</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Protocols/VippsPaymentDelegate.html">VippsPaymentDelegate</a>
               </li>
               <li class="nav-group-task">
@@ -180,7 +186,13 @@
                 <a class="nav-group-task-link" href="Type Definitions/NPIErrorCode.html">NPIErrorCode</a>
               </li>
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Type Definitions.html#/c:PiaSDK.h@T@URLScheme">URLScheme</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Type Definitions.html#/c:PiaSDK.h@T@VippsStatusCode">VippsStatusCode</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Type Definitions.html#/c:PiaSDK.h@T@WalletURL">WalletURL</a>
               </li>
             </ul>
           </li>
@@ -237,7 +249,7 @@ The SDK throws <code>wallet app not installed</code> error in the corner case wh
 <ul>
 <li>The SDK will notify the app when it needs to register the payment via <code><a href="Protocols/VippsPaymentDelegate.html">VippsPaymentDelegate</a></code>. The app should register payment with merchant backend and return the wallet URL in the completion handler.</li>
 <li>The <code>redirectUrl</code> has to be the merchant app scheme url followed by piasdk as the host <code>YOUR_APP_SCHEME_URL://piasdk</code>)</li>
-<li>Provide customer&rsquo;s phone number in the following format: (Norwegian prefix): <code>phoneNumber = +4711111111</code> which must be URL encoded.</li>
+<li>Provide customer&rsquo;s phone number in the following format: (Norwegian prefix): <code>phoneNumber = +4711111111</code>. Netaxept REST API expects URL encoded phone number. The encoding can take place in the client or merchant backend.<br></li>
 <li>Vipps supports <strong>AUTH+CAPTURE</strong> process. If <strong>autoSale</strong> is set to <q>true</q>, Netaxept authorises and immediately captures the amount set in the <strong>REGISTER</strong> call. It is optional and default value is false (authorisation only and capture from the backend with additional process call).</li>
 </ul>
 
@@ -249,7 +261,7 @@ The SDK throws <code>wallet app not installed</code> error in the corner case wh
             <span class="p">}</span>
         <span class="p">}</span>
 
-        <span class="kd">func</span> <span class="nf">postRegisterPayment</span><span class="p">(</span><span class="nv">storeCard</span><span class="p">:</span><span class="kt">Bool</span><span class="p">,</span> <span class="nv">paymentData</span><span class="p">:</span> <span class="kt">PKPaymentToken</span><span class="p">?,</span> <span class="nv">payPalPayment</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">false</span><span class="p">,</span> <span class="nv">mobileWallet</span><span class="p">:</span> <span class="kt">MobileWallet</span> <span class="o">=</span> <span class="kt">None</span> <span class="p">,</span> <span class="nv">completed</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">func</span> <span class="nf">postRegisterPayment</span><span class="p">(</span><span class="nv">storeCard</span><span class="p">:</span><span class="kt">Bool</span><span class="p">,</span> <span class="nv">paymentData</span><span class="p">:</span> <span class="kt">PKPaymentToken</span><span class="p">?,</span> <span class="nv">payPalPayment</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">false</span><span class="p">,</span> <span class="nv">mobileWallet</span><span class="p">:</span> <span class="kt">MobileWallet</span><span class="p">,</span> <span class="nv">completed</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span> <span class="p">{</span>
             <span class="k">let</span> <span class="nv">orderNumber</span> <span class="o">=</span> <span class="s">"your unique order identifier"</span>
             <span class="k">var</span> <span class="nv">method</span><span class="p">:</span><span class="kt">Method</span> <span class="o">=</span> <span class="kt">Method</span><span class="p">(</span><span class="nv">id</span><span class="p">:</span> <span class="s">"Vipps"</span><span class="p">,</span> <span class="nv">displayName</span><span class="p">:</span> <span class="s">"Vipps"</span><span class="p">,</span> <span class="nv">fee</span><span class="p">:</span> <span class="mi">0</span><span class="p">)</span>
             <span class="k">let</span> <span class="nv">customerId</span> <span class="o">=</span> <span class="s">"your unique customer id"</span>
@@ -261,11 +273,14 @@ The SDK throws <code>wallet app not installed</code> error in the corner case wh
             <span class="kt">RequestManager</span><span class="o">.</span><span class="n">shared</span><span class="o">.</span><span class="nf">postRegister</span><span class="p">(</span><span class="nv">parameters</span><span class="p">:</span> <span class="n">params</span><span class="p">)</span> <span class="p">{</span> <span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="k">in</span>
                 <span class="k">switch</span> <span class="n">result</span> <span class="p">{</span>
                 <span class="k">case</span> <span class="o">.</span><span class="nf">success</span><span class="p">(</span><span class="k">let</span> <span class="nv">res</span><span class="p">):</span>
-                    <span class="nf">print</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
-                    <span class="k">self</span><span class="o">.</span><span class="n">transactionInfo</span> <span class="o">=</span> <span class="kt">NPITransactionInfo</span><span class="p">(</span><span class="nv">transactionID</span><span class="p">:</span> <span class="n">res</span><span class="o">.</span><span class="n">transactionId</span><span class="p">,</span> <span class="nv">walletUrl</span><span class="p">:</span> <span class="n">res</span><span class="o">.</span><span class="n">walletUrl</span><span class="p">)</span>
-                    <span class="nf">completed</span><span class="p">()</span>
-                <span class="k">case</span> <span class="o">.</span><span class="nf">failure</span><span class="p">(</span><span class="k">let</span> <span class="nv">err</span><span class="p">):</span>
-                    <span class="nf">print</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+                    <span class="k">switch</span> <span class="n">mobileWallet</span> <span class="p">{</span>
+                    <span class="k">case</span> <span class="o">.</span><span class="nv">none</span><span class="p">:</span>
+                        <span class="k">self</span><span class="o">.</span><span class="n">transactionInfo</span> <span class="o">=</span> <span class="kt">NPITransactionInfo</span><span class="p">(</span><span class="nv">transactionID</span><span class="p">:</span> <span class="n">res</span><span class="o">.</span><span class="n">transactionId</span><span class="p">,</span> <span class="nv">okRedirectUrl</span><span class="p">:</span> <span class="n">res</span><span class="o">.</span><span class="n">redirectOK</span><span class="p">)</span>
+                    <span class="k">case</span> <span class="o">.</span><span class="n">vipps</span><span class="p">,</span> <span class="o">.</span><span class="nv">swish</span><span class="p">:</span>
+                        <span class="k">self</span><span class="o">.</span><span class="n">transactionInfo</span> <span class="o">=</span> <span class="kt">NPITransactionInfo</span><span class="p">(</span><span class="nv">transactionID</span><span class="p">:</span> <span class="n">res</span><span class="o">.</span><span class="n">transactionId</span><span class="p">,</span> <span class="nv">walletUrl</span><span class="p">:</span> <span class="n">res</span><span class="o">.</span><span class="n">walletUrl</span> <span class="p">??</span> <span class="s">""</span><span class="p">)</span>
+                    <span class="p">}</span>
+                    <span class="nf">completed</span><span class="p">()</span>                    
+                <span class="k">case</span> <span class="o">.</span><span class="nf">failure</span><span class="p">(</span><span class="k">let</span> <span class="nv">error</span><span class="p">):</span>
                     <span class="nf">completed</span><span class="p">()</span>
                 <span class="p">}</span>
             <span class="p">}</span>
@@ -279,40 +294,11 @@ The SDK throws <code>wallet app not installed</code> error in the corner case wh
 
 <p><strong>Note:</strong> Vipps gives users 5 minutes to complete payment before the session expires. In case of a time-out, the merchant backend needs to make a Netaxept Query call to get the transaction status.</p>
 
-<p>After the transaction is performed inside the Vipps application, Vipps redirects user to the merchant app via <code>open(_ url:options:completionHandler) -&gt; Bool</code> method of <code>UIApplication</code>. The merchant app needs to notify the SDK using the API <code>PiaSDK.applicationDidOpenFromRedirect(with: url, andOptions: options)</code>. 
-From security perspective, to avoid any malicious attack, Apple recommends to validate the URL before allowing it to open the current app. For this, the merchant app can validate if the sourceApplication is a valid app. In case of Vipps, the sourceApplication can be validated against:</p>
-
-<ul>
-<li><code>no.dnb.vipps</code>(production)</li>
-<li><code>no.vipps.internal.mt.vipps</code>(test).</li>
-</ul>
-
-<p>You can further refer to <a href="https://developer.apple.com/documentation/uikit/inter-process_communication/allowing_apps_and_websites_to_link_to_your_content/defining_a_custom_url_scheme_for_your_app">Handle Incoming URLs</a> from the Apple documentation.</p>
+<p>After the transaction is performed inside the Vipps application, Vipps redirects user to the merchant app via <code>open(_ url:options:completionHandler) -&gt; Bool</code> method of <code>UIApplication</code>. The merchant app needs to notify the SDK using the API <code>PiaSDK.applicationDidOpenFromRedirect(with: url, andOptions: options)</code>. </p>
 <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">application</span><span class="p">(</span><span class="n">_</span> <span class="nv">app</span><span class="p">:</span> <span class="kt">UIApplication</span><span class="p">,</span> <span class="n">open</span> <span class="nv">url</span><span class="p">:</span> <span class="kt">URL</span><span class="p">,</span> <span class="nv">options</span><span class="p">:</span> <span class="p">[</span><span class="kt">UIApplicationOpenURLOptionsKey</span> <span class="p">:</span> <span class="kt">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">[:])</span> <span class="o">-&gt;</span> <span class="kt">Bool</span> <span class="p">{</span>
-    <span class="cm">/*
-     The Vipps app will return the status of the transaction in the url.
-     The merchant app needs to fire the below notification with this url in the userInfo dict
-     so that the SDK can parse it and return the appropriate success/error status to the merchant app.
 
-     If you have both the official Vipps app from App Store and the test Vipps app from TestFlight
-     installed, the app switch may open either one. There is no way to open one of them specifically,
-     as the URL scheme is the same for both. A workaround is to only have one of the apps installed on the device.
-    */</span>
-
-    <span class="kd">enum</span> <span class="kt">VippsAppID</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="kt">CaseIterable</span> <span class="p">{</span>
-        <span class="c1">/// Vipps production app - "no.dnb.vipps"</span>
-        <span class="k">case</span> <span class="n">production</span> <span class="o">=</span> <span class="s">"no.dnb.vipps"</span>
-        <span class="c1">/// Vipps test app - "no.vipps.internal.mt.vipps"</span>
-        <span class="k">case</span> <span class="n">test</span> <span class="o">=</span> <span class="s">"no.vipps.internal.mt.vipps"</span>
-    <span class="p">}</span>
-
-    <span class="c1">/// Handle redirects from Vipps App</span>
-    <span class="k">if</span> <span class="k">let</span> <span class="nv">sendingAppID</span> <span class="o">=</span> <span class="n">options</span><span class="p">[</span><span class="o">.</span><span class="n">sourceApplication</span><span class="p">]</span> <span class="k">as?</span> <span class="kt">String</span><span class="p">,</span>
-        <span class="kt">VippsAppID</span><span class="p">(</span><span class="nv">rawValue</span><span class="p">:</span> <span class="n">sendingAppID</span><span class="p">)</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
-        <span class="kt">PiaSDK</span><span class="o">.</span><span class="nf">applicationDidOpenFromRedirect</span><span class="p">(</span><span class="nv">with</span><span class="p">:</span> <span class="n">url</span><span class="p">,</span> <span class="nv">andOptions</span><span class="p">:</span> <span class="n">options</span><span class="p">)</span>
-        <span class="k">return</span> <span class="kc">true</span>
-    <span class="p">}</span>
-    <span class="k">return</span> <span class="kc">false</span>
+        <span class="c1">//PiA SDK will return a boolean indicating if the redirect has been triggered by a payment app which was launched by the PiA SDK.</span>
+        <span class="k">return</span> <span class="kt">PiaSDK</span><span class="o">.</span><span class="nf">applicationDidOpenFromRedirect</span><span class="p">(</span><span class="nv">with</span><span class="p">:</span> <span class="n">url</span><span class="p">,</span> <span class="nv">andOptions</span><span class="p">:</span> <span class="n">options</span><span class="p">)</span>
 <span class="p">}</span>
 </code></pre>
 
@@ -350,7 +336,7 @@ From security perspective, to avoid any malicious attack, Apple recommends to va
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2019 <a class="link" href="https://nets.eu" target="_blank" rel="external">Nets</a>. All rights reserved. (Last updated: 2019-09-19)</p>
+      <p>&copy; 2019 <a class="link" href="https://nets.eu" target="_blank" rel="external">Nets</a>. All rights reserved. (Last updated: 2019-10-25)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.0</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

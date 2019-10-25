@@ -25,6 +25,11 @@
 #include "GeneratedPluginRegistrant.h"
 #import <Flutter/Flutter.h>
 
+enum : NSUInteger {
+    Vipps = 0,
+    Swish,
+} MobileWallet;
+
 @implementation AppDelegate
 
 NPITransactionInfo *_transactionInfo;
@@ -55,6 +60,9 @@ BOOL _isPayingWithToken;
             _isPayingWithToken = TRUE;
         } else if ([@"payWithVipps" isEqualToString:call.method]) {
             [weakSelf initiateVippsTransaction];
+            _result = result;
+        } else if ([@"payWithSwish" isEqualToString:call.method]) {
+            [weakSelf initiateSwishTransaction];
             _result = result;
         }
         else {
@@ -101,14 +109,13 @@ BOOL _isPayingWithToken;
     NSString *tokenId = call.arguments[@"tokenId"];
     NSString *expirationDate = call.arguments[@"expirationDate"];
     BOOL cvcRequired = [call.arguments[@"cvcRequired"] boolValue];
-    BOOL systemAuthRequired = [call.arguments[@"systemAuthRequired"] boolValue];
     
     NPIMerchantInfo *merchantInfo = [[NPIMerchantInfo alloc] initWithIdentifier:merchantId testMode:TRUE];
     
     NSNumber *amount = [[NSNumber alloc] initWithInt:10];
     NPIOrderInfo *orderInfo = [[NPIOrderInfo alloc] initWithAmount:amount currencyCode:@"EUR"];
     
-    NPITokenCardInfo *tokenCardInfo = [[NPITokenCardInfo alloc] initWithTokenId:tokenId schemeType:[self schemeTypeForString:issuer] expiryDate:expirationDate cvcRequired:cvcRequired systemAuthenticationRequired:systemAuthRequired];
+    NPITokenCardInfo *tokenCardInfo = [[NPITokenCardInfo alloc] initWithTokenId:tokenId schemeType:[self schemeTypeForString:issuer] expiryDate:expirationDate cvcRequired:cvcRequired];
     
     PiaSDKController *controller = [[PiaSDKController alloc] initWithTokenCardInfo:tokenCardInfo merchantInfo:merchantInfo orderInfo:orderInfo];
     controller.PiaDelegate = self;
@@ -119,6 +126,14 @@ BOOL _isPayingWithToken;
 - (void)initiateVippsTransaction {
 
     if (![PiaSDK initiateVippsFromSender:[UIApplication sharedApplication].delegate.window.rootViewController delegate:self]){
+        NSLog(@"Vipps not installed");
+    }
+    
+}
+
+- (void)initiateSwishTransaction {
+
+    if (![PiaSDK initiateSwishFromSender:[UIApplication sharedApplication].delegate.window.rootViewController delegate:self]){
         NSLog(@"Vipps not installed");
     }
     
@@ -163,6 +178,15 @@ BOOL _isPayingWithToken;
     _result(@"Payment is Failed");
 }
 
+- (void)swishDidRedirect:(nullable UIView *)transitionIndicatorView {
+    [transitionIndicatorView removeFromSuperview];
+    _result(@"Check payment status for scuccess");
+}
+
+
+- (void)swishPaymentDidFailWith:(nonnull NPIError *)error {
+    _result(@"Payment is Failed");
+}
 
 - (void)doInitialAPICall:(PiaSDKController * _Nonnull)PiaSDKController storeCard:(BOOL)storeCard withCompletion:(void (^ _Nonnull)(NPITransactionInfo * _Nullable))completionHandler {
     [self getTransactionInfo:FALSE callback:^{
@@ -185,7 +209,25 @@ BOOL _isPayingWithToken;
     }];
 }
 
+- (void)registerSwishPayment:(void (^)(NSString * _Nullable))completionWithWalletURL {
+    [self getTransactionInfoForSwishWithcallback:^{
+        completionWithWalletURL(_transactionInfo.walletUrl);
+    }];
+}
+
+
 -(void)getTransactionInfoForVippsWithcallback:(void (^)(void))callbackBlock {
+    
+    [self registerCallForWallets:Vipps callback:callbackBlock];
+}
+
+-(void)getTransactionInfoForSwishWithcallback:(void (^)(void))callbackBlock {
+    
+    [self registerCallForWallets:Swish callback:callbackBlock];
+}
+
+-(void)registerCallForWallets:(int)wallet callback:(void (^)(void))callbackBlock
+{
     
      NSString *merchantURL = @"YOUR MERCHANT BACKEND URL HERE";
     
@@ -194,15 +236,32 @@ BOOL _isPayingWithToken;
     NSMutableDictionary *jsonDictionary = [[NSMutableDictionary alloc] init];
     
     NSMutableDictionary *amount = [[NSMutableDictionary alloc] init];
-    [amount setValue:[NSNumber numberWithInt:1000] forKey:@"totalAmount"];
-    [amount setValue:[NSNumber numberWithInt:200] forKey:@"vatAmount"];
-    [amount setValue:@"NOK" forKey:@"currencyCode"];
-    [jsonDictionary setValue:amount forKey:@"amount"];
+    
     
     NSMutableDictionary *method = [[NSMutableDictionary alloc] init];
-    [method setValue:@"Vipps" forKey:@"id"];
-    [method setValue:@"Vipps" forKey:@"displayName"];
-    [method setValue:[NSNumber numberWithInt:0] forKey:@"fee"];
+    
+    switch (wallet) {
+        case Vipps:
+            [amount setValue:[NSNumber numberWithInt:1000] forKey:@"totalAmount"];
+            [amount setValue:[NSNumber numberWithInt:200] forKey:@"vatAmount"];
+            [amount setValue:@"NOK" forKey:@"currencyCode"];
+            [method setValue:@"Vipps" forKey:@"id"];
+            [method setValue:@"Vipps" forKey:@"displayName"];
+            [method setValue:[NSNumber numberWithInt:0] forKey:@"fee"];
+            [jsonDictionary setValue:@"+471111..." forKey:@"phoneNumber"];
+            break;
+        case Swish:
+            [amount setValue:[NSNumber numberWithInt:1000] forKey:@"totalAmount"];
+            [amount setValue:[NSNumber numberWithInt:200] forKey:@"vatAmount"];
+            [amount setValue:@"SEK" forKey:@"currencyCode"];
+            [method setValue:@"SwishM" forKey:@"id"];
+            [method setValue:@"Swish" forKey:@"displayName"];
+            [method setValue:[NSNumber numberWithInt:0] forKey:@"fee"];
+            break;
+        default:
+            break;
+    }
+    [jsonDictionary setValue:amount forKey:@"amount"];
     [jsonDictionary setValue:method forKey:@"method"];
     
     [jsonDictionary setValue:@"000012" forKey:@"customerId"];
@@ -210,10 +269,7 @@ BOOL _isPayingWithToken;
     [jsonDictionary setValue:false forKey:@"storeCard"];
     
     
-     [jsonDictionary setValue:@"+471111..." forKey:@"phoneNumber"];
      [jsonDictionary setValue:@"YOUR_APP_SCHEME_URL://piasdk" forKey:@"redirectURL"];
-    
-    
     
     if ([NSJSONSerialization isValidJSONObject:jsonDictionary]) {//validate it
         NSError* error;
@@ -249,7 +305,6 @@ BOOL _isPayingWithToken;
         [dataTask resume];
     }
 }
-
 
 
 
@@ -362,12 +417,7 @@ BOOL _isPayingWithToken;
 
 -(BOOL)application:(UIApplication *)application openURL:(nonnull NSURL *)url options:(nonnull NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
     
-    NSString *sourceAppID = [options valueForKey:UIApplicationOpenURLOptionsSourceApplicationKey];
-    /// Handle redirects from Vipps App
-    if ([sourceAppID isEqualToString:@"no.dnb.vipps"] || [sourceAppID isEqualToString:@"no.vipps.internal.mt.vipps"]) {
-        [PiaSDK applicationDidOpenFromRedirectWith:url andOptions:options];
-        return true;
-   }
-    return false;
+      return  [PiaSDK applicationDidOpenFromRedirectWith:url andOptions:options];
 }
+
 @end

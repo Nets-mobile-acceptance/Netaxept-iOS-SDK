@@ -30,7 +30,7 @@ import Pia
 enum PiaResult {
     case cancelled
     case response(Bool,String)
-    case error(NPIError)
+    case error(NPIError?)
 }
 
 /**
@@ -112,7 +112,7 @@ class ResultViewController: UIViewController {
             var tempResultString = ""
             var tempImage = #imageLiteral(resourceName: "FailedIcon")
             walletNotFound = false
-            switch error.code().rawValue
+            switch error?.code().rawValue ?? 0
             {
                 case 301:
                     self.resultLabel.font = UIFont.boldSystemFont(ofSize: 20)
@@ -127,7 +127,7 @@ class ResultViewController: UIViewController {
                     tempResultString = NSLocalizedString("There was an error. Please try again later", comment:"Failed transaction message")
             }
             self.resultImage.image = tempImage
-            self.errorLabel.text = error.localizedDescription
+            self.errorLabel.text = error?.localizedDescription ?? tempResultString
             self.resultLabel.text = tempResultString
         }
     }

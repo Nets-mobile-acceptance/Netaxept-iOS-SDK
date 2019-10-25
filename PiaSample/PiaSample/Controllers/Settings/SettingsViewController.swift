@@ -215,23 +215,7 @@ class SettingsViewController: UIViewController {
      This function shows how to call PiA SDK with "Saving card" purpose
      */
     fileprivate func presentPiaSDK() {
-        var tempBool = true
-        
-        /**
-         NOTE: the checking for odd and even customer ID here is just an example from our backend
-         Please make your own logic for this part.
-         */
-        if let tempString = self.customerIDLabel.text {
-            let tempCustomerID = Int(tempString)!
-            
-            if tempCustomerID % 2 == 0 {
-                tempBool = false
-            } else {
-                tempBool = true
-            }
-        }
-        
-        let merchantInfo = NPIMerchantInfo(identifier: constantAPI.getMerchantID(), testMode: ConstantAPI.testMode, cvcRequired: tempBool)
+        let merchantInfo = NPIMerchantInfo(identifier: constantAPI.getMerchantID(), testMode: ConstantAPI.testMode, cvcRequired: true)
         // For the saving card flow, only Merchant Info is needed
         let piaSDK = PiaSDKController(merchantInfo: merchantInfo)
         piaSDK.piaDelegate = self

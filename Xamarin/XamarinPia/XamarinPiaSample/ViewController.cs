@@ -73,8 +73,21 @@ namespace XamarinPiaSample
                 }
             };
 
+            UIButton payWithSwish = new UIButton();
+            payWithSwish.Frame = new CGRect(40f, 200f, buttonWidth, 40f);
+            payWithSwish.SetTitle("Pay 10 SEK with Swish", UIControlState.Normal);
+            payWithSwish.BackgroundColor = UIColor.LightGray;
+
+            payWithSwish.TouchUpInside += (sender, e) => {
+                if (!PiaSDK.InitiateSwishFromSender(this, new SwishDelegate()))
+                {
+                    // show error for Swish not installed
+                }
+            };
+
             this.View.AddSubview(payWithCard);
             this.View.AddSubview(payWithVipps);
+            this.View.AddSubview(payWithSwish);
 
         }
     }
@@ -99,6 +112,27 @@ namespace XamarinPiaSample
         }
 
         public override void VippsPaymentDidFailWith(NPIError error, NSNumber vippsStatusCode)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public partial class SwishDelegate : SwishPaymentDelegate
+    {
+
+        public override void RegisterSwishPayment(Action<NSString> completionWithWalletURL)
+        {
+            //Sending empty walletURL for testing
+            NSString str = (Foundation.NSString)@"";
+            completionWithWalletURL(str);
+        }
+
+        public override void SwishDidRedirect(UIView transitionIndicatorView)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void SwishPaymentDidFailWith(NPIError error)
         {
             throw new NotImplementedException();
         }

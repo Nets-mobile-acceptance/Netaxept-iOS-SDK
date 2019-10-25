@@ -89,41 +89,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
-        /*
-         The Vipps app will return the status of the transaction in the url.
-         The merchant app needs to fire the below notification with this url in the userInfo dict
-         so that the SDK can parse it and return the appropriate success/error status to the merchant app.
-         
-         From security perspective, to avoid any malicious attack, Apple recommends to validate the URL
-         before allowing it to open the current app.
-         For this, the merchant app can validate if the sourceApplication is a valid app.
-         https://developer.apple.com/documentation/uikit/inter-process_communication/allowing_apps_and_websites_to_link_to_your_content/defining_a_custom_url_scheme_for_your_app
-         
-         Vipps production app - "no.dnb.vipps"
-         Vipps test app - "no.vipps.internal.mt.vipps"
-         
-         If you have both the official Vipps app from App Store and the test Vipps app from TestFlight
-         installed, the app switch may open either one. There is no way to open one of them specifically,
-         as the URL scheme is the same for both. A workaround is to only have one of the apps installed on the device.
-         */
 
-        enum VippsAppID: String, CaseIterable {
-            /// Vipps production app - "no.dnb.vipps"
-            case production = "no.dnb.vipps"
-            /// Vipps test app - "no.vipps.internal.mt.vipps"
-            case test = "no.vipps.internal.mt.vipps"
-        }
-
-        /// Handle redirects from Vipps App
-        if let sendingAppID = options[.sourceApplication] as? String,
-            VippsAppID(rawValue: sendingAppID) != nil {
-
-            PiaSDK.applicationDidOpenFromRedirect(with: url, andOptions: options)
-            
-            return true
-        }
-
-        return false
+        return PiaSDK.applicationDidOpenFromRedirect(with: url, andOptions: options)
     }
 }
 

@@ -40,6 +40,7 @@
 	<array>
 		<string>bankid</string>
 		<string>vipps</string>
+		<string>swish</string>
 	</array>
 </dict>
 </plist>

@@ -37,9 +37,30 @@
     },
     {
       "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/PiaSDK.h",
+      "line": 18,
+      "symbol": "WalletURL",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.typedef",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/PiaSDK.h",
       "line": 19,
+      "symbol": "URLScheme",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.typedef",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/PiaSDK.h",
+      "line": 21,
       "symbol": "PiaSDK",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/PiaSDK.h",
+      "line": 152,
+      "symbol": "SwishPaymentDelegate",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.protocol",
       "warning": "undocumented"
     }
   ],

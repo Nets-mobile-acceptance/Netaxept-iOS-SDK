@@ -130,6 +130,22 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  Future<void> _initiateSwishTransaction() async {
+    String piaResult;
+    try {
+      final String result = await platform.invokeMethod('payWithSwish');
+      piaResult = 'Pay with Swish result: $result .';
+      _showDialog(piaResult);
+    } on PlatformException catch (e) {
+      piaResult = "Failed: '${e.message}'.";
+      _showDialog(piaResult);
+    }
+
+    setState(() {
+      _piaResult = piaResult;
+    });
+  }
+
   void _showDialog(String message) {
     showDialog(
       context: context,
@@ -172,6 +188,10 @@ class _MyHomePageState extends State<MyHomePage> {
 	  RaisedButton(
             child: Text('Pay 10 NOK with Vipps'),
             onPressed: _initiateVippsTransaction,
+          ),
+	  RaisedButton(
+            child: Text('Pay 10 SEK with Swish'),
+            onPressed: _initiateSwishTransaction,
           ),
           Text(_piaResult),
         ],

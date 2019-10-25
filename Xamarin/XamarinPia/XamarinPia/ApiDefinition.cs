@@ -515,10 +515,15 @@ namespace XamarinPia
         [Export ("initiateVippsFromSender:delegate:")]
         bool InitiateVippsFromSender ([NullAllowed] UIViewController sender, VippsPaymentDelegate @delegate);
         
-        // +(void)applicationDidOpenFromRedirectWith:(NSURL * _Nonnull)redirectURL andOptions:(NSDictionary * _Nonnull)options;
+        // +(BOOL)initiateSwishFromSender:(UIViewController * _Nullable)sender delegate:(id<SwishPaymentDelegate> _Nonnull)delegate;
+        [Static]
+        [Export ("initiateSwishFromSender:delegate:")]
+        bool InitiateSwishFromSender ([NullAllowed] UIViewController sender, SwishPaymentDelegate @delegate);
+        
+        // +(BOOL)applicationDidOpenFromRedirectWith:(NSURL * _Nonnull)redirectURL andOptions:(NSDictionary * _Nonnull)options;
         [Static]
         [Export ("applicationDidOpenFromRedirectWith:andOptions:")]
-        void ApplicationDidOpenFromRedirectWith (NSUrl redirectURL, NSDictionary options);
+        bool ApplicationDidOpenFromRedirectWith (NSUrl redirectURL, NSDictionary options);
     }
     
     // @protocol WalletPaymentDelegate <NSObject>
@@ -555,5 +560,30 @@ namespace XamarinPia
         // @optional -(void)vippsDidRedirectWith:(VippsStatusCode _Nonnull)statusCode;
         [Export ("vippsDidRedirectWith:")]
         void VippsDidRedirectWith (NSNumber statusCode);
+    }
+    
+    // @protocol SwishPaymentDelegate <WalletPaymentDelegate>
+    [BaseType(typeof(NSObject))]
+    [Model]
+    interface SwishPaymentDelegate : WalletPaymentDelegate
+    {
+        // @required -(void)registerSwishPayment:(void (^ _Nonnull)(NSString * _Nullable))completionWithWalletURL;
+        [Abstract]
+        [Export ("registerSwishPayment:")]
+        void RegisterSwishPayment (Action<NSString> completionWithWalletURL);
+
+        // @required -(void)swishPaymentDidFailWith:(NPIError * _Nonnull)error;
+        [Abstract]
+        [Export ("swishPaymentDidFailWith:")]
+        void SwishPaymentDidFailWith (NPIError error);
+
+        // @required -(void)swishDidRedirect:(UIView * _Nullable)transitionIndicatorView;
+        [Abstract]
+        [Export ("swishDidRedirect:")]
+        void SwishDidRedirect ([NullAllowed] UIView transitionIndicatorView);
+
+        // @optional -(void)swishDidRedirect;
+        [Export ("swishDidRedirect")]
+        void SwishDidRedirect ();
     }
 }

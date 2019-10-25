@@ -22,7 +22,7 @@
         <a class="header-link" href="index.html">
           Pia Docs
         </a>
-         (97% documented)
+         (95% documented)
       </p>
     
       <p class="header-col--secondary">
@@ -69,6 +69,9 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="33-vipps-integration.html">3.3. Vipps Integration</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="34-swish-m-commerce-integration.html">3.4. Swish m-commerce Integration</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="4-ui-customization.html">4. UI Customization</a>
@@ -166,6 +169,9 @@
                 <a class="nav-group-task-link" href="Protocols/PiaSDKDelegate.html">PiaSDKDelegate</a>
               </li>
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Protocols/SwishPaymentDelegate.html">SwishPaymentDelegate</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Protocols/VippsPaymentDelegate.html">VippsPaymentDelegate</a>
               </li>
               <li class="nav-group-task">
@@ -180,7 +186,13 @@
                 <a class="nav-group-task-link" href="Type Definitions/NPIErrorCode.html">NPIErrorCode</a>
               </li>
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Type Definitions.html#/c:PiaSDK.h@T@URLScheme">URLScheme</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Type Definitions.html#/c:PiaSDK.h@T@VippsStatusCode">VippsStatusCode</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Type Definitions.html#/c:PiaSDK.h@T@WalletURL">WalletURL</a>
               </li>
             </ul>
           </li>
@@ -194,25 +206,25 @@
             <h1 id='terminology' class='heading'>Terminology</h1>
 
 <ul>
-<li><p>PiA Nets - <em>The SDK. From your reference, a compiled iOS Cocoa Touch Framework.</em></p></li>
-<li><p>Netaxept - <em>Netaxept is a comprehensive online payment service provided by Nets. It
+<li><p><strong>PiA Nets</strong> - <em>The SDK. From your reference, a compiled iOS Cocoa Touch Framework.</em></p></li>
+<li><p><strong>Netaxept</strong> - <em>Netaxept is a comprehensive online payment service provided by Nets. It
 enables merchants to offer their customers different ways to pay purchases easily and
 securely in webshops, mobile environment and call centre services. When using Netaxept, it
 is easy to pay with broad range of payment methods and currencies, and still meet high
 security requirements set for online paying.</em></p></li>
-<li><p>Easy Payment - <em>After the initial transaction, the customer can initiate the following
-transaction by logging in to your webshop or mobile app and paying simply with one click or
-by entering their card&rsquo;s CVV/CVC security code. Easy Payment is applicable especially for
-mobile applications where it eases the customer&rsquo;s purchase experience significantly.</em>.</p></li>
-<li><p>Easy (one-click) payment without Security Code (CVV/CVC) - <em>After the initial transaction, the customer can initiate the following
-transaction by logging in to your webshop or mobile app and paying simply with one click without entering their card&rsquo;s CVV/CVC security code. Easy (one-click) payment is applicable especially for
-mobile applications where it eases the customer&rsquo;s purchase experience significantly.</em>.</p></li>
-<li><p>Recurring Payments - <em>After the initial transaction, you as a merchant can charge the
-customer&rsquo;s preferred card at specific times based on the agreement you have made with the
-customer. Recurring Payments is applicable especially for paying subscriptions, membership
-fees and other regular payments, without the need of customer interaction after the initial
-payment.</em></p></li>
-<li><p>Register new card - <em>Users can register or save their cards in advance</em></p></li>
+<li><p><strong>Easy Payment</strong> - involve card details saved for faster checkout:</p>
+
+<ul>
+<li><em>During initial transaction, customer saves card details for faster checkout next time. Transaction can be account verification or actual purchase.</em></li>
+<li><em>Returning customer pays subsequent transactions with saved card and may be prompted to enter CVV/CVC (optional) to validate the transaction.</em></li>
+</ul></li>
+<li><p><strong>Recurring Payments</strong> - involve card details saved for subscription payments done by merchant with same frequency, for example gym memberships:</p>
+
+<ul>
+<li><em>Customer saves card details for subsequent charges. Transaction can be account verification or actual purchase.</em></li>
+<li><em>Then merchant charges saved card on a regular basis according to agreement made with the customer.</em></li>
+</ul></li>
+<li><p><strong>Register new card</strong> - <em>Users can register or save their cards in advance</em></p></li>
 </ul>
 
           </div>
@@ -222,7 +234,7 @@ payment.</em></p></li>
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2019 <a class="link" href="https://nets.eu" target="_blank" rel="external">Nets</a>. All rights reserved. (Last updated: 2019-09-19)</p>
+      <p>&copy; 2019 <a class="link" href="https://nets.eu" target="_blank" rel="external">Nets</a>. All rights reserved. (Last updated: 2019-10-25)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.0</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

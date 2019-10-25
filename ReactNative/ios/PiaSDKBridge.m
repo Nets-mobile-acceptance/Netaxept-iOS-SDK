@@ -26,6 +26,11 @@
 
 #import "PiaSDKBridge.h"
 
+enum : NSUInteger {
+    Vipps = 0,
+    Swish,
+} MobileWallet;
+
 @interface PiaSDKBridge()
 @property (strong, nonatomic) NPITransactionInfo *_Nullable transactionInfo;
 @end
@@ -69,6 +74,16 @@ RCT_EXPORT_METHOD(callPiaWithVipps){
     
     if(![PiaSDK initiateVippsFromSender:vc delegate:self]) {
       [self sendEventWithName:@"PiaSDKResult" body:@{@"name": @"Vipps not installed"}];
+    }
+  });
+}
+
+RCT_EXPORT_METHOD(callPiaWithSwish){
+  dispatch_async(dispatch_get_main_queue(), ^{
+    UIViewController *vc = [UIApplication sharedApplication].delegate.window.rootViewController;
+    
+    if(![PiaSDK initiateSwishFromSender:vc delegate:self]) {
+      [self sendEventWithName:@"PiaSDKResult" body:@{@"name": @"Swish not installed"}];
     }
   });
 }
@@ -128,68 +143,112 @@ RCT_EXPORT_METHOD(callPiaWithVipps){
 }
 
 
--(void)getTransactionInfoForVippsWithcallback:(void (^)(void))callbackBlock {
-  
-   NSString *merchantURL = @"YOUR MERCHANT BACKEND URL HERE";
-  
-  __block NSMutableDictionary *resultsDictionary;
-  
-  NSMutableDictionary *jsonDictionary = [[NSMutableDictionary alloc] init];
-  
-  NSMutableDictionary *amount = [[NSMutableDictionary alloc] init];
-  [amount setValue:[NSNumber numberWithInt:1000] forKey:@"totalAmount"];
-  [amount setValue:[NSNumber numberWithInt:200] forKey:@"vatAmount"];
-  [amount setValue:@"NOK" forKey:@"currencyCode"];
-  [jsonDictionary setValue:amount forKey:@"amount"];
-  
-  NSMutableDictionary *method = [[NSMutableDictionary alloc] init];
-  [method setValue:@"Vipps" forKey:@"id"];
-  [method setValue:@"Vipps" forKey:@"displayName"];
-  [method setValue:[NSNumber numberWithInt:0] forKey:@"fee"];
-  [jsonDictionary setValue:method forKey:@"method"];
-  
-  [jsonDictionary setValue:@"000012" forKey:@"customerId"];
-  [jsonDictionary setValue:@"PiaSDK-iOS" forKey:@"orderNumber"];
-  [jsonDictionary setValue:false forKey:@"storeCard"];
-  
-  
-   [jsonDictionary setValue:@"+471111..." forKey:@"phoneNumber"];
-   [jsonDictionary setValue:@"YOUR_APP_SCHEME_URL://piasdk" forKey:@"redirectURL"];
-
-  if ([NSJSONSerialization isValidJSONObject:jsonDictionary]) {//validate it
-    NSError* error;
-    NSData* jsonData = [NSJSONSerialization dataWithJSONObject:jsonDictionary options:NSJSONWritingPrettyPrinted error: &error];
-    NSURL* url = [NSURL URLWithString:merchantURL];
-    NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:30.0];
-    [request setHTTPMethod:@"POST"];//use POST
-    [request setValue:@"application/json;charset=utf-8;version=2.0" forHTTPHeaderField:@"Accept"];
-    [request setValue:@"application/json;charset=utf-8;version=2.0" forHTTPHeaderField:@"Content-Type"];
-    [request setHTTPBody:jsonData];//set data
-    __block NSError *error1 = [[NSError alloc] init];
-    
-    NSURLSession *session = [NSURLSession sharedSession];
-    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-      if ([data length]>0 && error == nil) {
-        resultsDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:&error1];
-        NSLog(@"resultsDictionary is %@",resultsDictionary);
-        
-        NSString *transactionId = resultsDictionary[@"transactionId"];
-        NSString *walletURL = resultsDictionary[@"walletUrl"];
-        self.transactionInfo = [[NPITransactionInfo alloc] initWithTransactionID:transactionId walletUrl:walletURL];
-        callbackBlock();
-      } else if ([data length]==0 && error ==nil) {
-        NSLog(@" download data is null");
-        self.transactionInfo = nil;
-        callbackBlock();
-      } else if( error!=nil) {
-        NSLog(@" error is %@",error);
-        self.transactionInfo = nil;
-        callbackBlock();
-      }
+- (void)registerSwishPayment:(void (^)(NSString * _Nullable))completionWithWalletURL {
+    [self getTransactionInfoForSwishWithcallback:^{
+        completionWithWalletURL(self.transactionInfo.walletUrl);
     }];
-    [dataTask resume];
-  }
 }
+
+- (void)swishDidRedirect:(nullable UIView *)transitionIndicatorView {
+  [transitionIndicatorView removeFromSuperview];
+  [self sendEventWithName:@"PiaSDKResult" body:@{@"name": @"success"}];
+}
+
+
+- (void)swishPaymentDidFailWith:(nonnull NPIError *)error {
+  [self sendEventWithName:@"PiaSDKResult" body:@{@"name": error.localizedDescription}];
+}
+
+
+
+-(void)getTransactionInfoForVippsWithcallback:(void (^)(void))callbackBlock {
+    
+    [self registerCallForWallets:Vipps callback:callbackBlock];
+}
+
+-(void)getTransactionInfoForSwishWithcallback:(void (^)(void))callbackBlock {
+    
+    [self registerCallForWallets:Swish callback:callbackBlock];
+}
+
+-(void)registerCallForWallets:(int)wallet callback:(void (^)(void))callbackBlock
+{
+    
+     NSString *merchantURL = @"YOUR MERCHANT BACKEND URL HERE";
+    
+    __block NSMutableDictionary *resultsDictionary;
+    
+    NSMutableDictionary *jsonDictionary = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary *amount = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary *method = [[NSMutableDictionary alloc] init];
+    
+    switch (wallet) {
+        case Vipps:
+            [amount setValue:[NSNumber numberWithInt:1000] forKey:@"totalAmount"];
+            [amount setValue:[NSNumber numberWithInt:200] forKey:@"vatAmount"];
+            [amount setValue:@"NOK" forKey:@"currencyCode"];
+            [method setValue:@"Vipps" forKey:@"id"];
+            [method setValue:@"Vipps" forKey:@"displayName"];
+            [method setValue:[NSNumber numberWithInt:0] forKey:@"fee"];
+            [jsonDictionary setValue:@"+471111..." forKey:@"phoneNumber"];
+            break;
+        case Swish:
+            [amount setValue:[NSNumber numberWithInt:1000] forKey:@"totalAmount"];
+            [amount setValue:[NSNumber numberWithInt:200] forKey:@"vatAmount"];
+            [amount setValue:@"SEK" forKey:@"currencyCode"];
+            [method setValue:@"SwishM" forKey:@"id"];
+            [method setValue:@"Swish" forKey:@"displayName"];
+            [method setValue:[NSNumber numberWithInt:0] forKey:@"fee"];
+            break;
+        default:
+            break;
+    }
+    [jsonDictionary setValue:amount forKey:@"amount"];
+    [jsonDictionary setValue:method forKey:@"method"];
+    
+    [jsonDictionary setValue:@"000012" forKey:@"customerId"];
+    [jsonDictionary setValue:@"PiaSDK-iOS" forKey:@"orderNumber"];
+    [jsonDictionary setValue:false forKey:@"storeCard"];
+    
+    
+     [jsonDictionary setValue:@"YOUR_APP_SCHEME_URL://piasdk" forKey:@"redirectURL"];
+    
+    if ([NSJSONSerialization isValidJSONObject:jsonDictionary]) {//validate it
+      NSError* error;
+      NSData* jsonData = [NSJSONSerialization dataWithJSONObject:jsonDictionary options:NSJSONWritingPrettyPrinted error: &error];
+      NSURL* url = [NSURL URLWithString:merchantURL];
+      NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:30.0];
+      [request setHTTPMethod:@"POST"];//use POST
+      [request setValue:@"application/json;charset=utf-8;version=2.0" forHTTPHeaderField:@"Accept"];
+      [request setValue:@"application/json;charset=utf-8;version=2.0" forHTTPHeaderField:@"Content-Type"];
+      [request setHTTPBody:jsonData];//set data
+      __block NSError *error1 = [[NSError alloc] init];
+      
+      NSURLSession *session = [NSURLSession sharedSession];
+      NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        if ([data length]>0 && error == nil) {
+          resultsDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:&error1];
+          NSLog(@"resultsDictionary is %@",resultsDictionary);
+          
+          NSString *transactionId = resultsDictionary[@"transactionId"];
+          NSString *walletURL = resultsDictionary[@"walletUrl"];
+          self.transactionInfo = [[NPITransactionInfo alloc] initWithTransactionID:transactionId walletUrl:walletURL];
+          callbackBlock();
+        } else if ([data length]==0 && error ==nil) {
+          NSLog(@" download data is null");
+          self.transactionInfo = nil;
+          callbackBlock();
+        } else if( error!=nil) {
+          NSLog(@" error is %@",error);
+          self.transactionInfo = nil;
+          callbackBlock();
+        }
+      }];
+      [dataTask resume];
+    }
+}
+
+
 - (void)getTransactionInfo:(void (^)(void))callbackBlock {
   
    NSString *merchantURL = @"YOUR MERCHANT BACKEND URL HERE";
