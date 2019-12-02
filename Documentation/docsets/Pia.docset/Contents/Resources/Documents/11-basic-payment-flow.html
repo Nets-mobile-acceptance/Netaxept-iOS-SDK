@@ -246,35 +246,77 @@ SDK to start the <strong>basic payment flow</strong> by using the payment card:<
 </code></pre>
 
 <p>The <strong>PiaSDKController</strong> instance should also have a valid delegate. The SDK will notify the app when it needs to register the payment by calling <code>doInitialAPICall</code>. After the app registers the transaction, it should call the <code>completionHandler</code> received as a parameter to pass back the transactionInfo to PiA SDK.</p>
-<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">YourViewController</span> <span class="p">:</span> <span class="kt">NPIPaymentViewControllerDelegate</span> <span class="p">{</span>
-    <span class="kd">func</span> <span class="nf">doInitialAPICall</span><span class="p">(</span><span class="n">_</span> <span class="kt">PiaSDKController</span><span class="p">:</span> <span class="kt">PiaSDKController</span><span class="p">,</span> <span class="nv">storeCard</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">,</span> <span class="n">withCompletion</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">NPITransactionInfo</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">self</span><span class="o">.</span><span class="nf">postRegisterPayment</span><span class="p">(</span><span class="nv">storeCard</span><span class="p">:</span> <span class="n">storeCard</span><span class="p">)</span> <span class="p">{</span>
-            <span class="nf">completionHandler</span><span class="p">(</span><span class="k">self</span><span class="o">.</span><span class="n">transactionInfo</span><span class="p">)</span>
+<pre class="highlight swift"><code>
+<span class="c1">// MARK: PiaSDKDelegate - Card registration </span>
+
+<span class="c1">// Delegate method called by the SDK for card payments and registration of card details (for later payments).</span>
+<span class="c1">// The implementation below shows registration call to Nets test environment</span>
+
+<span class="c1">/// Called after user has submitted **Card** details in SDK UI.</span>
+<span class="c1">/// Obtain _transaction_ details from **Merchant** BE and call `completionHandler`</span>
+<span class="kd">func</span> <span class="nf">doInitialAPICall</span><span class="p">(</span>
+    <span class="n">_</span> <span class="nv">piaController</span><span class="p">:</span> <span class="kt">PiaSDKController</span><span class="p">,</span>
+    <span class="nv">storeCard</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">,</span>
+    <span class="n">withCompletion</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">NPITransactionInfo</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span> <span class="p">{</span>
+
+    <span class="c1">// Create a register request body with order and payment details</span>
+    <span class="k">let</span> <span class="nv">requestBody</span><span class="p">:</span> <span class="kt">RegistrationRequest</span> <span class="c1">// see: Backend Models (below)</span>
+
+    <span class="kt">URLSession</span><span class="o">.</span><span class="n">shared</span><span class="o">.</span><span class="nf">makeRegisterRequest</span><span class="p">(</span><span class="nv">with</span><span class="p">:</span> <span class="n">requestBody</span><span class="p">)</span> <span class="p">{</span> <span class="n">transaction</span> <span class="k">in</span>
+        <span class="k">guard</span> <span class="k">let</span> <span class="nv">transaction</span> <span class="o">=</span> <span class="n">transaction</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="c1">// handle error</span>
         <span class="p">}</span>
+
+        <span class="c1">// The transaction ID is used to commit/rollback the registration</span>
+        <span class="c1">// Pia SDK will callback the delegate with success/error result</span>
+        <span class="c1">// Customer app is responsible for displaying the result to user</span>
+        <span class="k">self</span><span class="o">.</span><span class="n">transaction</span> <span class="o">=</span> <span class="n">transaction</span>
+
+        <span class="c1">// notify Pia SDK with registration result</span>
+        <span class="nf">completionHandler</span><span class="p">(</span><span class="kt">NPITransactionInfo</span><span class="p">(</span>
+            <span class="nv">transactionID</span><span class="p">:</span> <span class="n">transaction</span><span class="o">.</span><span class="n">transactionId</span><span class="p">,</span>
+            <span class="nv">redirectUrl</span><span class="p">:</span> <span class="n">transaction</span><span class="o">.</span><span class="n">redirectOK</span><span class="p">)</span>
+        <span class="p">)</span>
     <span class="p">}</span>
+<span class="p">}</span>
 
-   <span class="kd">func</span> <span class="nf">postRegisterPayment</span><span class="p">(</span><span class="nv">storeCard</span><span class="p">:</span><span class="kt">Bool</span><span class="p">,</span> <span class="nv">completed</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">let</span> <span class="nv">orderNumber</span> <span class="o">=</span> <span class="s">"your unique order identifier"</span>
-        <span class="k">var</span> <span class="nv">method</span><span class="p">:</span><span class="kt">Method</span><span class="p">?</span>
-        <span class="k">let</span> <span class="nv">customerId</span> <span class="o">=</span> <span class="s">"your unique customer id"</span>
+<span class="c1">// Sample implementation of registration request using `URLSession` </span>
+<span class="c1">// The models `RegistrationRequest` and `Transaction` can be found below under Backend Models</span>
 
-        <span class="k">if</span> <span class="k">self</span><span class="o">.</span><span class="n">cardId</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
-            <span class="n">method</span> <span class="o">=</span> <span class="kt">Method</span><span class="p">(</span><span class="nv">id</span><span class="p">:</span> <span class="s">"EasyPayment"</span><span class="p">,</span> <span class="nv">displayName</span><span class="p">:</span> <span class="s">"Easy Payment"</span><span class="p">,</span> <span class="nv">fee</span><span class="p">:</span> <span class="mi">0</span><span class="p">)</span>
-        <span class="p">}</span>
-
-        <span class="k">let</span> <span class="nv">params</span> <span class="o">=</span> <span class="kt">PaymentRegisterRequest</span><span class="p">(</span><span class="nv">customerId</span><span class="p">:</span> <span class="n">customerId</span><span class="p">,</span> <span class="nv">orderNumber</span><span class="p">:</span> <span class="n">orderNumber</span><span class="p">,</span> <span class="nv">amount</span><span class="p">:</span> <span class="k">self</span><span class="o">.</span><span class="n">amount</span><span class="o">!</span><span class="p">,</span> <span class="nv">method</span><span class="p">:</span> <span class="n">method</span><span class="p">,</span> <span class="nv">cardId</span><span class="p">:</span> <span class="k">self</span><span class="o">.</span><span class="n">cardId</span><span class="p">,</span> <span class="nv">storeCard</span><span class="p">:</span><span class="n">storeCard</span><span class="p">,</span> <span class="nv">items</span><span class="p">:</span> <span class="kc">nil</span> <span class="p">)</span>
-
-        <span class="kt">RequestManager</span><span class="o">.</span><span class="n">shared</span><span class="o">.</span><span class="nf">postRegister</span><span class="p">(</span><span class="nv">parameters</span><span class="p">:</span> <span class="n">params</span><span class="p">)</span> <span class="p">{</span> <span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="k">in</span>
-            <span class="k">switch</span> <span class="n">result</span> <span class="p">{</span>
-            <span class="k">case</span> <span class="o">.</span><span class="nf">success</span><span class="p">(</span><span class="k">let</span> <span class="nv">res</span><span class="p">):</span>
-                <span class="k">self</span><span class="o">.</span><span class="n">transactionInfo</span> <span class="o">=</span> <span class="kt">NPITransactionInfo</span><span class="p">(</span><span class="nv">transactionID</span><span class="p">:</span> <span class="n">res</span><span class="o">.</span><span class="n">transactionId</span><span class="p">,</span> <span class="nv">okRedirectUrl</span><span class="p">:</span> <span class="n">res</span><span class="o">.</span><span class="n">redirectOK</span><span class="p">)</span>
-                <span class="nf">completed</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
-            <span class="k">case</span> <span class="o">.</span><span class="nf">failure</span><span class="p">(</span><span class="k">let</span> <span class="nv">err</span><span class="p">):</span>
-                <span class="nf">completed</span><span class="p">(</span><span class="kc">false</span><span class="p">)</span>
+<span class="kd">extension</span> <span class="kt">URLSession</span> <span class="p">{</span>
+    <span class="kd">func</span> <span class="nf">makeRegisterRequest</span><span class="p">(</span><span class="n">with</span> <span class="nv">requestBody</span><span class="p">:</span> <span class="kt">RegistrationRequest</span><span class="p">,</span> <span class="nv">callback</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Transaction</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">/// Request to Net's (test) sample backend</span>
+        <span class="k">let</span> <span class="nv">urlRequest</span><span class="p">:</span> <span class="kt">URLRequest</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="k">let</span> <span class="nv">customerID</span> <span class="o">=</span> <span class="kt">String</span><span class="p">(</span><span class="nv">format</span><span class="p">:</span> <span class="s">"%06d"</span><span class="p">,</span> <span class="n">requestBody</span><span class="o">.</span><span class="n">customerId</span><span class="p">)</span>
+            <span class="k">let</span> <span class="nv">baseURL</span> <span class="o">=</span> <span class="s">"https://api-gateway-pp.nets.eu/pia/test/merchantdemo/"</span>
+            <span class="k">var</span> <span class="nv">request</span> <span class="o">=</span> <span class="kt">URLRequest</span><span class="p">(</span><span class="nv">url</span><span class="p">:</span> <span class="kt">URL</span><span class="p">(</span><span class="nv">string</span><span class="p">:</span> <span class="n">baseURL</span> <span class="o">+</span> <span class="s">"v2/payment/</span><span class="se">\(</span><span class="n">requestBody</span><span class="o">.</span><span class="n">customerId</span><span class="se">)</span><span class="s">/register"</span><span class="p">)</span><span class="o">!</span><span class="p">)</span>
+            <span class="n">request</span><span class="o">.</span><span class="n">httpMethod</span> <span class="o">=</span> <span class="s">"POST"</span>
+            <span class="k">let</span> <span class="nv">header</span> <span class="o">=</span> <span class="s">"application/json;charset=utf-8;version=2.0"</span>
+            <span class="p">[</span><span class="s">"Accept"</span><span class="p">,</span> <span class="s">"Content-Type"</span><span class="p">]</span><span class="o">.</span><span class="n">forEach</span> <span class="p">{</span> <span class="n">headerField</span> <span class="k">in</span>
+                <span class="n">request</span><span class="o">.</span><span class="nf">setValue</span><span class="p">(</span><span class="n">header</span><span class="p">,</span> <span class="nv">forHTTPHeaderField</span><span class="p">:</span> <span class="n">headerField</span><span class="p">)</span>
             <span class="p">}</span>
-        <span class="p">}</span>
+
+            <span class="c1">// Encode order and payment details in the request</span>
+            <span class="n">request</span><span class="o">.</span><span class="n">httpBody</span> <span class="o">=</span> <span class="k">try!</span> <span class="kt">JSONEncoder</span><span class="p">()</span><span class="o">.</span><span class="nf">encode</span><span class="p">(</span><span class="n">requestBody</span><span class="p">)</span>
+
+            <span class="k">return</span> <span class="n">request</span>
+        <span class="p">}()</span>
+
+        <span class="nf">dataTask</span><span class="p">(</span><span class="nv">with</span><span class="p">:</span> <span class="n">urlRequest</span><span class="p">)</span> <span class="p">{</span> <span class="n">data</span><span class="p">,</span> <span class="n">response</span><span class="p">,</span> <span class="n">error</span> <span class="k">in</span>
+            <span class="k">guard</span> <span class="n">error</span> <span class="o">==</span> <span class="kc">nil</span><span class="p">,</span> <span class="k">let</span> <span class="nv">response</span> <span class="o">=</span> <span class="n">response</span> <span class="k">as?</span> <span class="kt">HTTPURLResponse</span><span class="p">,</span>
+                <span class="mi">200</span><span class="o">...</span><span class="mi">299</span> <span class="o">~=</span> <span class="n">response</span><span class="o">.</span><span class="n">statusCode</span><span class="p">,</span> <span class="k">let</span> <span class="nv">data</span> <span class="o">=</span> <span class="n">data</span> <span class="k">else</span> <span class="p">{</span>
+                    <span class="nf">callback</span><span class="p">(</span><span class="kc">nil</span><span class="p">)</span>
+                    <span class="k">return</span>
+            <span class="p">}</span>
+
+            <span class="c1">// Decode registration result</span>
+            <span class="k">let</span> <span class="nv">transaction</span> <span class="o">=</span> <span class="k">try!</span> <span class="kt">JSONDecoder</span><span class="p">()</span><span class="o">.</span><span class="nf">decode</span><span class="p">(</span><span class="kt">Transaction</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">from</span><span class="p">:</span> <span class="n">data</span><span class="p">)</span>
+            <span class="kt">DispatchQueue</span><span class="o">.</span><span class="n">main</span><span class="o">.</span><span class="n">async</span> <span class="p">{</span>
+                <span class="nf">callback</span><span class="p">(</span><span class="n">transaction</span><span class="p">)</span>
+            <span class="p">}</span>
+        <span class="p">}</span><span class="o">.</span><span class="nf">resume</span><span class="p">()</span>
     <span class="p">}</span>
-  <span class="p">}</span>
+<span class="p">}</span>
 </code></pre>
 
 <p>Note: Netaxept backend integration tips can be found in <em>5.4 Backend Tips</em>,  <em>Register API</em> <a href="./54-backend-tips.html#register-api">section</a></p>
@@ -282,7 +324,7 @@ SDK to start the <strong>basic payment flow</strong> by using the payment card:<
 
 <p>After the transaction has been registered, an unique transaction identifier <code>transactionID</code> will
 be returned from Netaxept to <strong>PiA SDK</strong> and <strong>PiA SDK</strong> will post it along with the card data to
-the Netaxept. In addition, an <code>okRedirectUrl</code> is required by <strong>PiA SDK</strong> so as that SDK can
+the Netaxept. In addition, an <code>redirectUrl</code> is required by <strong>PiA SDK</strong> so as that SDK can
 be notified by Netaxept after payment card data has been delivered to Netaxept successfully.
 During this phase, the 3DS authentication is performed as well unless it has been
 waived by your chosen card acquirer.</p>
@@ -296,6 +338,52 @@ handling is completed by getting a call to one of the following methods:</p>
 <li><p>func piaSDKDidCompleteSaveCard(withSuccess PiaSDK: PiaSDKController)</p></li>
 <li><p>func piaSDKDidCancel(_ PiaSDK: PiaSDKController)</p></li>
 </ul>
+<h2 id='backend-models-net-39-s-sample-merchant-backend-models' class='heading'>Backend Models - Net&rsquo;s sample merchant backend models</h2>
+<h3 id='registration-request-body' class='heading'>Registration Request Body</h3>
+<pre class="highlight swift"><code><span class="c1">// Note: The payment method (`PaymentMethodID`) is `nil` for card payments </span>
+<span class="c1">//       and `PaymentMethodID(id: "EasyPayment", displayName: "Easy Payment", fee: 0)`</span>
+<span class="c1">//       is used for payments with a previously stored stored card, aka easy-payment.</span>
+<span class="c1">//       The `cardId` must have the card identifier token (String) for easy-payment </span>
+<span class="c1">//</span>
+<span class="kd">struct</span> <span class="kt">RegistrationRequest</span><span class="p">:</span> <span class="kt">Encodable</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="nv">customerId</span><span class="p">:</span> <span class="kt">String</span>
+    <span class="k">let</span> <span class="nv">orderNumber</span><span class="p">:</span> <span class="kt">String</span>
+    <span class="k">let</span> <span class="nv">amount</span><span class="p">:</span> <span class="kt">Amount</span>
+    <span class="k">let</span> <span class="nv">storeCard</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">?</span>
+    <span class="k">let</span> <span class="nv">method</span><span class="p">:</span> <span class="kt">PaymentMethodID</span><span class="p">?</span>
+    <span class="k">let</span> <span class="nv">cardId</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span>             <span class="c1">// set for payments with a stored card</span>
+    <span class="k">let</span> <span class="nv">items</span><span class="p">:</span> <span class="kt">LineItem</span><span class="p">?</span>
+    <span class="k">let</span> <span class="nv">paymentData</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span>        <span class="c1">// set for ApplePay payments</span>
+    <span class="k">let</span> <span class="nv">phoneNumber</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span>        <span class="c1">// set for Vipps payments</span>
+    <span class="k">let</span> <span class="nv">redirectUrl</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span>        <span class="c1">// set for Wallet App payments</span>
+<span class="p">}</span>
+</code></pre>
+<h3 id='registration-response-transaction' class='heading'>Registration Response - Transaction</h3>
+<pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">Transaction</span><span class="p">:</span> <span class="kt">Decodable</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="nv">transactionId</span><span class="p">:</span> <span class="kt">String</span>
+    <span class="k">let</span> <span class="nv">redirectOK</span><span class="p">:</span> <span class="kt">String</span>
+    <span class="k">let</span> <span class="nv">redirectCancel</span><span class="p">:</span> <span class="kt">String</span>
+    <span class="k">let</span> <span class="nv">walletUrl</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span>
+<span class="p">}</span>
+</code></pre>
+<h3 id='commit-request-body' class='heading'>Commit Request Body</h3>
+
+<p>The commit call supports two operations in our sample backend: <q>COMMIT</q> and <q>VERIFY</q>
+to commit transaction and verify a registered (stored) card respectively</p>
+<pre class="highlight swift"><code><span class="kd">struct</span> <span class="kt">Commit</span><span class="p">:</span> <span class="kt">Encodable</span> <span class="p">{</span> 
+    <span class="k">let</span> <span class="nv">operation</span><span class="p">:</span> <span class="kt">String</span> 
+<span class="p">}</span>
+</code></pre>
+<h3 id='commit-response' class='heading'>Commit Response</h3>
+<pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">CommitResponse</span><span class="p">:</span> <span class="kt">Decodable</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="nv">transactionId</span><span class="p">:</span> <span class="kt">String</span>
+    <span class="k">let</span> <span class="nv">responseCode</span><span class="p">:</span> <span class="kt">String</span>
+    <span class="k">let</span> <span class="nv">responseSource</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span>
+    <span class="k">let</span> <span class="nv">responseText</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span>
+    <span class="k">let</span> <span class="nv">authorizationId</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span>
+    <span class="k">let</span> <span class="nv">executionTimestamp</span><span class="p">:</span> <span class="kt">String</span>
+<span class="p">}</span>
+</code></pre>
 
           </div>
         </section>
@@ -304,7 +392,7 @@ handling is completed by getting a call to one of the following methods:</p>
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2019 <a class="link" href="https://nets.eu" target="_blank" rel="external">Nets</a>. All rights reserved. (Last updated: 2019-10-25)</p>
+      <p>&copy; 2019 <a class="link" href="https://nets.eu" target="_blank" rel="external">Nets</a>. All rights reserved. (Last updated: 2019-12-02)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.0</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

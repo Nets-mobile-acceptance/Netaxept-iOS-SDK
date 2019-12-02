@@ -9,11 +9,6 @@ target 'PiaSample' do
   
   pod 'Fabric'
   pod 'Crashlytics'
-
-  pod 'Moya', '~> 11.0'
-  pod 'IQKeyboardManagerSwift'
-  pod 'DropDown', '2.3.2'
-  pod 'SwiftyXMLParser'
   
   target 'PiaSampleTests' do
     inherit! :search_paths

@@ -1,47 +1,21 @@
 PODS:
-  - Alamofire (4.8.1)
   - Crashlytics (3.12.0):
     - Fabric (~> 1.9.0)
-  - DropDown (2.3.2)
   - Fabric (1.9.0)
-  - IQKeyboardManagerSwift (6.2.0)
-  - Moya (11.0.2):
-    - Moya/Core (= 11.0.2)
-  - Moya/Core (11.0.2):
-    - Alamofire (~> 4.1)
-    - Result (~> 3.0)
-  - Result (3.2.4)
-  - SwiftyXMLParser (5.0.0)
 
 DEPENDENCIES:
   - Crashlytics
-  - DropDown (= 2.3.2)
   - Fabric
-  - IQKeyboardManagerSwift
-  - Moya (~> 11.0)
-  - SwiftyXMLParser
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
-    - Alamofire
     - Crashlytics
-    - DropDown
     - Fabric
-    - IQKeyboardManagerSwift
-    - Moya
-    - Result
-    - SwiftyXMLParser
 
 SPEC CHECKSUMS:
-  Alamofire: 16ce2c353fb72865124ddae8a57c5942388f4f11
   Crashlytics: 07fb167b1694128c1c9a5a5cc319b0e9c3ca0933
-  DropDown: 7f87abecc28f9b4edad810fe1211c5c018c257e5
   Fabric: f988e33c97f08930a413e08123064d2e5f68d655
-  IQKeyboardManagerSwift: b07ccf9d8cafe993dcd6cb794eb4ba34611a0c4e
-  Moya: a725035953bc1c0eb1be505ab903984501d82440
-  Result: d2d07204ce72856f1fd9130bbe42c35a7b0fea10
-  SwiftyXMLParser: 5ebb8793192f403fa8cc691045143906122a7a75
 
-PODFILE CHECKSUM: 1e61b9abe97aed38c52e3d16edfe086df00e5559
+PODFILE CHECKSUM: ebcb697fd92631b107422fa7ec2e7104e6576c34
 
 COCOAPODS: 1.6.1

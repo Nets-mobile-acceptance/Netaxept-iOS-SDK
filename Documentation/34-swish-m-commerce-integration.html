@@ -217,7 +217,7 @@
 
 <p>To initiate Swish payment with <strong>Pia SDK</strong>, implement the <code><a href="Protocols/SwishPaymentDelegate.html">SwishPaymentDelegate</a></code> and trigger the process as follows:</p>
 <pre class="highlight swift"><code><span class="c1">/// Initiating Swish from a view controller that conforms to SwishPaymentDelegate.</span>
-<span class="c1">/// The API returns false if Swish app cannot be openned, e.g. uninstalled or missing</span>
+<span class="c1">/// The API returns false if Swish app cannot be opened, e.g. uninstalled or missing</span>
 <span class="c1">/// URL scheme in info.plist of your application. </span>
 <span class="c1">/// - Note: The `sender` view controller is optionally passed to</span>
 <span class="c1">///         display a transition view (an activity indicator)  </span>
@@ -252,37 +252,29 @@ The SDK throws <code>wallet app not installed</code> error in the corner case wh
 <li>Netaxpet requires a <code>redirectUrl</code> parameter which is the URL scheme of your application that is used to switch back to your application following app-switch to Swish app.<br></li>
 </ul>
 
-<p>The following code shows how Swish payment registration is handled in the sample app:</p>
-<pre class="highlight swift"><code>    <span class="kd">extension</span> <span class="kt">PaymentMethodViewController</span> <span class="p">:</span> <span class="kt">SwishPaymentDelegate</span> <span class="p">{</span>
-        <span class="kd">func</span> <span class="nf">registerSwishPayment</span><span class="p">(</span><span class="n">_</span> <span class="nv">completionWithWalletURL</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">String</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span> <span class="p">{</span>
-            <span class="nf">postRegisterPayment</span><span class="p">(</span><span class="nv">storeCard</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span> <span class="nv">paymentData</span><span class="p">:</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">mobileWallet</span><span class="p">:</span> <span class="o">.</span><span class="n">swish</span><span class="p">)</span> <span class="p">{</span>
-                <span class="nf">completionWithWalletURL</span><span class="p">(</span><span class="k">self</span><span class="o">.</span><span class="n">transactionInfo</span><span class="p">?</span><span class="o">.</span><span class="n">walletUrl</span> <span class="p">??</span> <span class="s">""</span><span class="p">)</span>
+<p>The following is an example of handling Swish payment registration:</p>
+<pre class="highlight swift"><code>
+<span class="c1">// MARK: SwishPaymentDelegate - Swish Registration</span>
+
+    <span class="kd">func</span> <span class="nf">registerSwishPayment</span><span class="p">(</span><span class="n">_</span> <span class="nv">completionWithWalletURL</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">String</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span> <span class="p">{</span>
+
+        <span class="c1">// Create a registration request body with order and payment details</span>
+        <span class="c1">// The sample backend identifies Swish with its method ID:</span>
+        <span class="c1">// `PaymentMethodID(id: "SwishM", displayName: "Swish", fee: 0)`</span>
+        <span class="k">let</span> <span class="nv">requestBody</span><span class="p">:</span> <span class="kt">RegistrationRequest</span> <span class="c1">// see section: Backend Models (1.1)</span>
+
+        <span class="kt">URLSession</span><span class="o">.</span><span class="n">shared</span><span class="o">.</span><span class="nf">makeRegisterRequest</span><span class="p">(</span><span class="nv">with</span><span class="p">:</span> <span class="n">requestBody</span><span class="p">)</span> <span class="p">{</span> <span class="n">transaction</span> <span class="k">in</span>
+            <span class="k">guard</span> <span class="k">let</span> <span class="nv">transaction</span> <span class="o">=</span> <span class="n">transaction</span> <span class="k">else</span> <span class="p">{</span>
+                <span class="k">return</span> <span class="c1">// handle error</span>
             <span class="p">}</span>
-         <span class="p">}</span>
 
-        <span class="kd">func</span> <span class="nf">postRegisterPayment</span><span class="p">(</span><span class="nv">storeCard</span><span class="p">:</span><span class="kt">Bool</span><span class="p">,</span> <span class="nv">paymentData</span><span class="p">:</span> <span class="kt">PKPaymentToken</span><span class="p">?,</span> <span class="nv">payPalPayment</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">false</span><span class="p">,</span> <span class="nv">mobileWallet</span><span class="p">:</span> <span class="kt">MobileWallet</span><span class="p">,</span> <span class="nv">completed</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">let</span> <span class="nv">orderNumber</span> <span class="o">=</span> <span class="s">"your unique order identifier"</span>
-            <span class="k">var</span> <span class="nv">method</span><span class="p">:</span><span class="kt">Method</span> <span class="o">=</span> <span class="kt">Method</span><span class="p">(</span><span class="nv">id</span><span class="p">:</span> <span class="s">"SwishM"</span><span class="p">,</span> <span class="nv">displayName</span><span class="p">:</span> <span class="s">"Swish"</span><span class="p">,</span> <span class="nv">fee</span><span class="p">:</span> <span class="mi">0</span><span class="p">)</span>
-            <span class="k">let</span> <span class="nv">customerId</span> <span class="o">=</span> <span class="s">"your unique customer id"</span>
-            <span class="k">var</span> <span class="nv">redirectURL</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="s">"YOUR APP SCHEME URL"</span>
+            <span class="c1">// Grab the transaction ID, its used to later commit/rollback the registration</span>
+            <span class="c1">// The SDK will callback the delegate with success/error result</span>
+            <span class="c1">// Customer app is responsible for displaying the result to user</span>
+            <span class="k">self</span><span class="o">.</span><span class="n">transaction</span> <span class="o">=</span> <span class="n">transaction</span>
 
-            <span class="k">let</span> <span class="nv">parameter</span> <span class="o">=</span> <span class="kt">PaymentRegisterRequest</span><span class="p">(</span><span class="nv">customerId</span><span class="p">:</span> <span class="n">customerId</span><span class="p">,</span> <span class="nv">orderNumber</span><span class="p">:</span> <span class="n">orderNumber</span><span class="p">,</span> <span class="nv">amount</span><span class="p">:</span> <span class="k">self</span><span class="o">.</span><span class="n">amount</span><span class="p">,</span> <span class="nv">method</span><span class="p">:</span> <span class="n">method</span><span class="p">,</span> <span class="nv">cardId</span><span class="p">:</span> <span class="k">self</span><span class="o">.</span><span class="n">token</span><span class="p">,</span> <span class="nv">storeCard</span><span class="p">:</span> <span class="n">storeCard</span><span class="p">,</span> <span class="nv">items</span><span class="p">:</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">paymentData</span><span class="p">:</span> <span class="n">paymentDataString</span><span class="p">,</span> <span class="nv">phoneNumber</span><span class="p">:</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">redirectURL</span><span class="p">:</span> <span class="n">redirectURL</span><span class="p">)</span>
-
-            <span class="kt">RequestManager</span><span class="o">.</span><span class="n">shared</span><span class="o">.</span><span class="nf">postRegister</span><span class="p">(</span><span class="nv">parameters</span><span class="p">:</span> <span class="n">params</span><span class="p">)</span> <span class="p">{</span> <span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="k">in</span>
-                <span class="k">switch</span> <span class="n">result</span> <span class="p">{</span>
-                <span class="k">case</span> <span class="o">.</span><span class="nf">success</span><span class="p">(</span><span class="k">let</span> <span class="nv">res</span><span class="p">):</span>
-                    <span class="k">switch</span> <span class="n">mobileWallet</span> <span class="p">{</span>
-                    <span class="k">case</span> <span class="o">.</span><span class="nv">none</span><span class="p">:</span>
-                        <span class="k">self</span><span class="o">.</span><span class="n">transactionInfo</span> <span class="o">=</span> <span class="kt">NPITransactionInfo</span><span class="p">(</span><span class="nv">transactionID</span><span class="p">:</span> <span class="n">res</span><span class="o">.</span><span class="n">transactionId</span><span class="p">,</span> <span class="nv">okRedirectUrl</span><span class="p">:</span> <span class="n">res</span><span class="o">.</span><span class="n">redirectOK</span><span class="p">)</span>
-                    <span class="k">case</span> <span class="o">.</span><span class="n">vipps</span><span class="p">,</span> <span class="o">.</span><span class="nv">swish</span><span class="p">:</span>
-                        <span class="k">self</span><span class="o">.</span><span class="n">transactionInfo</span> <span class="o">=</span> <span class="kt">NPITransactionInfo</span><span class="p">(</span><span class="nv">transactionID</span><span class="p">:</span> <span class="n">res</span><span class="o">.</span><span class="n">transactionId</span><span class="p">,</span> <span class="nv">walletUrl</span><span class="p">:</span> <span class="n">res</span><span class="o">.</span><span class="n">walletUrl</span> <span class="p">??</span> <span class="s">""</span><span class="p">)</span>
-                    <span class="p">}</span>
-                    <span class="nf">completed</span><span class="p">()</span>
-                <span class="k">case</span> <span class="o">.</span><span class="nf">failure</span><span class="p">(</span><span class="k">let</span> <span class="nv">err</span><span class="p">):</span>
-                    <span class="nf">print</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
-                    <span class="nf">completed</span><span class="p">()</span>
-                <span class="p">}</span>
-            <span class="p">}</span>
+            <span class="c1">// Notify Pia SDK with registration result</span>
+            <span class="nf">completionWithWalletURL</span><span class="p">(</span><span class="n">transaction</span><span class="o">.</span><span class="n">walletUrl</span><span class="p">)</span>
         <span class="p">}</span>
     <span class="p">}</span>
 </code></pre>
@@ -294,30 +286,23 @@ The SDK throws <code>wallet app not installed</code> error in the corner case wh
 <p>After the transaction is performed in Swish (and bank ID) application, user is redirected to the merchant app via <code>open(_ url:options:completionHandler) -&gt; Bool</code> method of <code>UIApplication</code>. The merchant app needs to notify the SDK using the API <code>PiaSDK.applicationDidOpenFromRedirect(with: url, andOptions: options)</code>. </p>
 <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">application</span><span class="p">(</span><span class="n">_</span> <span class="nv">app</span><span class="p">:</span> <span class="kt">UIApplication</span><span class="p">,</span> <span class="n">open</span> <span class="nv">url</span><span class="p">:</span> <span class="kt">URL</span><span class="p">,</span> <span class="nv">options</span><span class="p">:</span> <span class="p">[</span><span class="kt">UIApplicationOpenURLOptionsKey</span> <span class="p">:</span> <span class="kt">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">[:])</span> <span class="o">-&gt;</span> <span class="kt">Bool</span> <span class="p">{</span>
 
-        <span class="c1">//PiA SDK will return a boolean indicating if the redirect has been triggered by a payment app which was launched by the PiA SDK.</span>
-        <span class="k">return</span> <span class="kt">PiaSDK</span><span class="o">.</span><span class="nf">applicationDidOpenFromRedirect</span><span class="p">(</span><span class="nv">with</span><span class="p">:</span> <span class="n">url</span><span class="p">,</span> <span class="nv">andOptions</span><span class="p">:</span> <span class="n">options</span><span class="p">)</span>
+    <span class="c1">// PiA SDK will return a boolean indicating if the redirect has been triggered by a payment app launched by PiA SDK.</span>
+    <span class="k">return</span> <span class="kt">PiaSDK</span><span class="o">.</span><span class="nf">applicationDidOpenFromRedirect</span><span class="p">(</span><span class="nv">with</span><span class="p">:</span> <span class="n">url</span><span class="p">,</span> <span class="nv">andOptions</span><span class="p">:</span> <span class="n">options</span><span class="p">)</span>
 <span class="p">}</span>
 </code></pre>
 
 <p>The SDK will notify of successful redirect via <code>swishDidRedirect</code> delegate call. Merchant app should query payment status from Netaxept through 
 merchant backend.  The following code shows implementation of <code><a href="Protocols/SwishPaymentDelegate.html">SwishPaymentDelegate</a></code> in the sample app:</p>
-<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">PaymentMethodViewController</span><span class="p">:</span> <span class="kt">SwishPaymentDelegate</span> <span class="p">{</span>
-    <span class="kd">func</span> <span class="nf">registerSwishPayment</span><span class="p">(</span><span class="n">_</span> <span class="nv">completionWithWalletURL</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">String</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span> <span class="p">{</span>
-        <span class="nf">postRegisterPayment</span><span class="p">(</span><span class="nv">storeCard</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span> <span class="nv">paymentData</span><span class="p">:</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">mobileWallet</span><span class="p">:</span> <span class="o">.</span><span class="n">swish</span><span class="p">)</span> <span class="p">{</span>
-            <span class="nf">completionWithWalletURL</span><span class="p">(</span><span class="k">self</span><span class="o">.</span><span class="n">transactionInfo</span><span class="p">?</span><span class="o">.</span><span class="n">walletUrl</span> <span class="p">??</span> <span class="s">""</span><span class="p">)</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
+<pre class="highlight swift"><code>
+<span class="c1">// MARK: SwishPaymentDelegate - Results</span>
 
     <span class="kd">func</span> <span class="nf">swishDidRedirect</span><span class="p">(</span><span class="n">_</span> <span class="nv">transitionIndicatorView</span><span class="p">:</span> <span class="kt">UIView</span><span class="p">?)</span> <span class="p">{</span>
-        <span class="nf">commitCall</span><span class="p">()</span> <span class="c1">// Query payment status and handle accordingly</span>
+        <span class="c1">// Query payment status and handle accordingly</span>
     <span class="p">}</span>
 
     <span class="kd">func</span> <span class="nf">swishPaymentDidFail</span><span class="p">(</span><span class="n">with</span> <span class="nv">error</span><span class="p">:</span> <span class="kt">NPIError</span><span class="p">)</span> <span class="p">{</span>
-        <span class="nf">prepareForResultViewController</span><span class="p">(</span><span class="nv">result</span><span class="p">:</span> <span class="o">.</span><span class="nf">error</span><span class="p">(</span><span class="n">error</span><span class="p">))</span>
-        <span class="nf">dismiss</span><span class="p">(</span><span class="nv">animated</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nv">completion</span><span class="p">:</span> <span class="kc">nil</span><span class="p">)</span>
+        <span class="c1">// Handle error</span>
     <span class="p">}</span>
-
-<span class="p">}</span>
 </code></pre>
 
           </div>
@@ -327,7 +312,7 @@ merchant backend.  The following code shows implementation of <code><a href="Pro
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2019 <a class="link" href="https://nets.eu" target="_blank" rel="external">Nets</a>. All rights reserved. (Last updated: 2019-10-25)</p>
+      <p>&copy; 2019 <a class="link" href="https://nets.eu" target="_blank" rel="external">Nets</a>. All rights reserved. (Last updated: 2019-12-02)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.0</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

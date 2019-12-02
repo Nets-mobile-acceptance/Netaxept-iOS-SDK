@@ -322,34 +322,98 @@
 <p>Besides, if you allow the changes for Shipping Address from users, the new full address of users will be returned in <strong>registerPayment delegate</strong> <em>ONLY IF users authorized themselves with Apple Pay</em>.</p>
 <h2 id='processing-apple-pay-payment-token-example' class='heading'>Processing Apple Pay Payment Token (example)</h2>
 
-<p>As stated in the <strong>Delegation</strong> section, you will need to send Apple Pay Payment Token within your register call. Below is an example how you can process and send a working Apple Pay Payment Token:</p>
-<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">paymentDataDictionary</span><span class="p">:</span> <span class="p">[</span><span class="kt">AnyHashable</span><span class="p">:</span> <span class="kt">Any</span><span class="p">]?</span> <span class="o">=</span> <span class="k">try</span><span class="p">?</span> <span class="kt">JSONSerialization</span><span class="o">.</span><span class="nf">jsonObject</span><span class="p">(</span><span class="nv">with</span><span class="p">:</span> <span class="n">paymentData</span><span class="o">.</span><span class="n">paymentData</span><span class="p">,</span> <span class="nv">options</span><span class="p">:</span> <span class="o">.</span><span class="n">mutableContainers</span><span class="p">)</span> <span class="k">as!</span> <span class="p">[</span><span class="kt">AnyHashable</span> <span class="p">:</span> <span class="kt">Any</span><span class="p">]</span>
+<p>Apple Pay payment registration with merchant backend is very similar to card payment registration. The sample backend expects the same <code>RegistrationRequest</code> http request body. 
+In addition to order details, ApplePay registration requires a token <code>PKPaymentToken</code> which the sample backend expects under  <code>paymentData</code> field of the request body.  </p>
 
-<span class="k">var</span> <span class="nv">paymentType</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="s">"debit"</span>
+<p>The following example shows handling of the registration request followed by conversion of <code>PKPaymentToken</code> to merchant-expected format below. </p>
+<pre class="highlight swift"><code>
+<span class="c1">// MARK: PiaSDK Delegate - ApplePay registration</span>
 
-<span class="k">switch</span> <span class="n">paymentData</span><span class="o">.</span><span class="n">paymentMethod</span><span class="o">.</span><span class="n">type</span> <span class="p">{</span>
-<span class="k">case</span> <span class="o">.</span><span class="nv">debit</span><span class="p">:</span>
-    <span class="n">paymentType</span> <span class="o">=</span> <span class="s">"debit"</span>
-<span class="k">case</span> <span class="o">.</span><span class="nv">credit</span><span class="p">:</span>
-    <span class="n">paymentType</span> <span class="o">=</span> <span class="s">"credit"</span>
-<span class="k">case</span> <span class="o">.</span><span class="nv">store</span><span class="p">:</span>
-    <span class="n">paymentType</span> <span class="o">=</span> <span class="s">"store"</span>
-<span class="k">case</span> <span class="o">.</span><span class="nv">prepaid</span><span class="p">:</span>
-    <span class="n">paymentType</span> <span class="o">=</span> <span class="s">"prepaid"</span>
-<span class="k">default</span><span class="p">:</span>
-    <span class="n">paymentType</span> <span class="o">=</span> <span class="s">"unknown"</span>
+<span class="kd">func</span> <span class="nf">registerPayment</span><span class="p">(</span>
+    <span class="n">withApplePayData</span> <span class="nv">piaController</span><span class="p">:</span> <span class="kt">PiaSDKController</span><span class="p">,</span>
+    <span class="nv">paymentData</span><span class="p">:</span> <span class="kt">PKPaymentToken</span><span class="p">,</span>
+    <span class="nv">newShippingContact</span><span class="p">:</span> <span class="kt">PKContact</span><span class="p">?,</span>
+    <span class="n">withCompletion</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">NPITransactionInfo</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span> <span class="p">{</span>
+
+    <span class="c1">// Update shipping details (incase user has changed it)</span>
+    <span class="n">shippingDetails</span><span class="o">.</span><span class="n">latestShippingContact</span> <span class="o">=</span> <span class="n">newShippingContact</span>
+
+    <span class="c1">// Create a registration request body with order and payment details</span>
+    <span class="c1">// The sample backend identifies ApplePay with its method ID:</span>
+    <span class="c1">// `PaymentMethodID(id: "ApplePay", displayName: "Apple Pay", fee: 0)`</span>
+    <span class="k">var</span> <span class="nv">requestBody</span><span class="p">:</span> <span class="kt">RegistrationRequest</span> <span class="c1">// see section: Backend Models (1.1)</span>
+
+    <span class="c1">// Set the token in the merchant-expected format</span>
+    <span class="n">requestBody</span><span class="o">.</span><span class="n">paymentData</span> <span class="o">=</span> <span class="n">paymentData</span><span class="o">.</span><span class="n">merchantBackendFormat</span>
+
+    <span class="kt">URLSession</span><span class="o">.</span><span class="n">shared</span><span class="o">.</span><span class="nf">makeRegisterRequest</span><span class="p">(</span><span class="nv">with</span><span class="p">:</span> <span class="n">requestBody</span><span class="p">)</span> <span class="p">{</span> <span class="n">transaction</span> <span class="k">in</span>
+        <span class="k">guard</span> <span class="k">let</span> <span class="nv">transaction</span> <span class="o">=</span> <span class="n">transaction</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="c1">// handle error</span>
+        <span class="p">}</span>
+
+        <span class="c1">// Grab the transaction ID, its used to later commit/rollback the registration</span>
+        <span class="c1">// The SDK will callback the delegate with success/error result</span>
+        <span class="c1">// Customer app is responsible for displaying the result to user</span>
+        <span class="k">self</span><span class="o">.</span><span class="n">transaction</span> <span class="o">=</span> <span class="n">transaction</span>
+
+        <span class="c1">// Notify Pia SDK with registration result</span>
+        <span class="nf">completionHandler</span><span class="p">(</span><span class="kt">NPITransactionInfo</span><span class="p">(</span>
+            <span class="nv">transactionID</span><span class="p">:</span> <span class="n">transaction</span><span class="o">.</span><span class="n">transactionId</span><span class="p">,</span>
+            <span class="nv">redirectUrl</span><span class="p">:</span> <span class="n">transaction</span><span class="o">.</span><span class="n">redirectOK</span><span class="p">))</span>
+    <span class="p">}</span>
 <span class="p">}</span>
 
-<span class="k">var</span> <span class="nv">paymentMethodDictionary</span><span class="p">:</span> <span class="p">[</span><span class="kt">AnyHashable</span><span class="p">:</span> <span class="kt">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s">"network"</span><span class="p">:</span> <span class="s">""</span><span class="p">,</span> <span class="s">"type"</span><span class="p">:</span> <span class="n">paymentType</span><span class="p">,</span> <span class="s">"displayName"</span><span class="p">:</span> <span class="s">""</span><span class="p">]</span>
+</code></pre>
 
-<span class="n">paymentMethodDictionary</span> <span class="o">=</span> <span class="p">[</span><span class="s">"network"</span><span class="p">:</span> <span class="n">paymentData</span><span class="o">.</span><span class="n">paymentMethod</span><span class="o">.</span><span class="n">network</span> <span class="p">??</span> <span class="s">""</span><span class="p">,</span> <span class="s">"type"</span><span class="p">:</span> <span class="n">paymentType</span><span class="p">,</span> <span class="s">"displayName"</span><span class="p">:</span> <span class="n">paymentData</span><span class="o">.</span><span class="n">paymentMethod</span><span class="o">.</span><span class="n">displayName</span> <span class="p">??</span> <span class="s">""</span><span class="p">]</span>
+<p>Net&rsquo;s sample backend expects the <code>PKPaymentToken</code> converted to string under <code>paymentData</code> field in the registration request. 
+The following example shows converting a <code>PKPaymentToken</code> object to a string token which is passed to the sample merchant backend in registration request:</p>
+<pre class="highlight swift"><code>
+<span class="c1">// Converting `PKPaymentToken` to a `String` formatted for </span>
+<span class="c1">// Net's sample merchant backend. (reference on encoding `PKPaymentToken`)</span>
 
-<span class="k">let</span> <span class="nv">cryptogramDictionary</span><span class="p">:</span> <span class="p">[</span><span class="kt">AnyHashable</span><span class="p">:</span> <span class="kt">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s">"paymentData"</span><span class="p">:</span> <span class="n">paymentDataDictionary</span> <span class="p">??</span> <span class="s">""</span><span class="p">,</span> <span class="s">"transactionIdentifier"</span><span class="p">:</span> <span class="n">paymentData</span><span class="o">.</span><span class="n">transactionIdentifier</span><span class="p">,</span> <span class="s">"paymentMethod"</span><span class="p">:</span> <span class="n">paymentMethodDictionary</span><span class="p">]</span>
+<span class="kd">extension</span> <span class="kt">PKPaymentToken</span> <span class="p">{</span>
+    <span class="c1">/// Returns a string representation of the token formatted to fit </span>
+    <span class="c1">/// Net's sample merchant backend expectation.</span>
+    <span class="c1">/// This token is set in the registration request: `RegistrationRequest.paymentData`</span>
+    <span class="c1">/// and encoded in the URL request http body. </span>
+    <span class="k">var</span> <span class="nv">merchantBackendFormat</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span>
+        <span class="kd">struct</span> <span class="kt">TokenWrapper</span><span class="p">:</span> <span class="kt">Encodable</span> <span class="p">{</span>
+            <span class="k">let</span> <span class="nv">paymentMethod</span><span class="p">:</span> <span class="kt">PaymentMethod</span>
+            <span class="k">let</span> <span class="nv">paymentData</span><span class="p">:</span> <span class="kt">String</span>
+            <span class="k">let</span> <span class="nv">transactionIdentifier</span><span class="p">:</span> <span class="kt">String</span>
+        <span class="p">}</span>
 
-<span class="k">let</span> <span class="nv">cardCryptogramPacketDictionary</span><span class="p">:</span> <span class="p">[</span><span class="kt">AnyHashable</span><span class="p">:</span> <span class="kt">Any</span><span class="p">]</span> <span class="o">=</span> <span class="n">cryptogramDictionary</span>
-<span class="k">let</span> <span class="nv">cardCryptogramPacketData</span><span class="p">:</span> <span class="kt">Data</span><span class="p">?</span> <span class="o">=</span> <span class="k">try</span><span class="p">?</span> <span class="kt">JSONSerialization</span><span class="o">.</span><span class="nf">data</span><span class="p">(</span><span class="nv">withJSONObject</span><span class="p">:</span> <span class="n">cardCryptogramPacketDictionary</span><span class="p">,</span> <span class="nv">options</span><span class="p">:</span> <span class="p">[])</span>
+        <span class="kd">struct</span> <span class="kt">PaymentMethod</span><span class="p">:</span> <span class="kt">Encodable</span> <span class="p">{</span>
+            <span class="k">let</span> <span class="nv">network</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span>
+            <span class="k">let</span> <span class="nv">type</span><span class="p">:</span> <span class="kt">String</span>
+            <span class="k">let</span> <span class="nv">displayName</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span>
+        <span class="p">}</span>
 
-<span class="k">let</span> <span class="nv">cardCryptogramPacketString</span> <span class="o">=</span> <span class="kt">String</span><span class="p">(</span><span class="nv">data</span><span class="p">:</span> <span class="n">cardCryptogramPacketData</span><span class="p">?,</span> <span class="nv">encoding</span><span class="p">:</span> <span class="o">.</span><span class="n">utf8</span><span class="p">)</span>
+        <span class="k">let</span> <span class="nv">method</span> <span class="o">=</span> <span class="kt">PaymentMethod</span><span class="p">(</span>
+            <span class="nv">network</span><span class="p">:</span> <span class="n">paymentMethod</span><span class="o">.</span><span class="n">network</span><span class="p">?</span><span class="o">.</span><span class="n">rawValue</span><span class="p">,</span>
+            <span class="nv">type</span><span class="p">:</span> <span class="s">"</span><span class="se">\(</span><span class="n">paymentMethod</span><span class="o">.</span><span class="n">type</span><span class="se">)</span><span class="s">"</span><span class="p">,</span>
+            <span class="nv">displayName</span><span class="p">:</span> <span class="n">paymentMethod</span><span class="o">.</span><span class="n">displayName</span><span class="p">)</span>
+
+        <span class="k">let</span> <span class="nv">wrappedToken</span> <span class="o">=</span> <span class="kt">TokenWrapper</span><span class="p">(</span>
+            <span class="nv">paymentMethod</span><span class="p">:</span> <span class="n">method</span><span class="p">,</span>
+            <span class="nv">paymentData</span><span class="p">:</span> <span class="s">""</span><span class="p">,</span>
+            <span class="nv">transactionIdentifier</span><span class="p">:</span> <span class="n">transactionIdentifier</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="kt">String</span><span class="p">(</span><span class="nv">data</span><span class="p">:</span> <span class="k">try!</span> <span class="kt">JSONEncoder</span><span class="p">()</span><span class="o">.</span><span class="nf">encode</span><span class="p">(</span><span class="n">wrappedToken</span><span class="p">),</span> <span class="nv">encoding</span><span class="p">:</span> <span class="o">.</span><span class="n">utf8</span><span class="p">)</span><span class="o">!</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">extension</span> <span class="kt">PKPaymentMethodType</span><span class="p">:</span> <span class="kt">CustomStringConvertible</span> <span class="p">{</span>
+    <span class="kd">public</span> <span class="k">var</span> <span class="nv">description</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span>
+        <span class="k">switch</span> <span class="k">self</span> <span class="p">{</span>
+        <span class="k">case</span> <span class="o">.</span><span class="nv">credit</span><span class="p">:</span> <span class="k">return</span> <span class="s">"credit"</span>
+        <span class="k">case</span> <span class="o">.</span><span class="nv">debit</span><span class="p">:</span> <span class="k">return</span> <span class="s">"debit"</span>
+        <span class="k">case</span> <span class="o">.</span><span class="nv">prepaid</span><span class="p">:</span> <span class="k">return</span> <span class="s">"prepaid"</span>
+        <span class="k">case</span> <span class="o">.</span><span class="nv">store</span><span class="p">:</span> <span class="k">return</span> <span class="s">"store"</span>
+        <span class="k">default</span><span class="p">:</span> <span class="k">return</span> <span class="s">"unknown"</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 </code></pre>
 
 <p>Note: Netaxept backend integration tips can be found in <em>5.4 Backend Tips</em>,  <em>Request body - Apple Pay payment registration</em> <a href="./54-backend-tips.html#request-body-apple-pay-payment-registration">section</a></p>
@@ -361,7 +425,7 @@
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2019 <a class="link" href="https://nets.eu" target="_blank" rel="external">Nets</a>. All rights reserved. (Last updated: 2019-10-25)</p>
+      <p>&copy; 2019 <a class="link" href="https://nets.eu" target="_blank" rel="external">Nets</a>. All rights reserved. (Last updated: 2019-12-02)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.0</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

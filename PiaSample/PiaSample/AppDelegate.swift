@@ -26,25 +26,28 @@
 
 import UIKit
 import Pia
-import IQKeyboardManagerSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
+
+    let appNavigation = AppNavigation()
     
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+
+        if window == nil { window = UIWindow() }
+        if #available(iOS 13.0, *) {
+            window!.overrideUserInterfaceStyle = .light
+        }
+        appNavigation.launch(in: window!)
+                
         
-        IQKeyboardManager.shared.enable = true
-        IQKeyboardManager.shared.keyboardDistanceFromTextField = 75
-        
-        
-        //#cardio_code_section_start
-        NPIInterfaceConfiguration.sharedInstance()?.disableCardIO = UserDefaults.standard.bool(forKey: "disableCardIO")
-        //#cardio_code_section_end
-        
-        NPIInterfaceConfiguration.sharedInstance()?.disableSaveCardOption = UserDefaults.standard.bool(forKey: "disableSaveCard")
-        
+//#cardio_code_section_start
+        Settings.isCardIOEnabled = Settings.isCardIOEnabled
+//#cardio_code_section_end
+        Settings.shouldDisableSavingCard = Settings.shouldDisableSavingCard
+
         /*
          Customise any of the properties of NPIInterfaceConfiguration.sharedInstance
          The uncustomised ones will just use the default value.
@@ -88,8 +91,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
-    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
-
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
         return PiaSDK.applicationDidOpenFromRedirect(with: url, andOptions: options)
     }
 }

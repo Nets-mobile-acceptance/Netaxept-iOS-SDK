@@ -1,4 +1,4 @@
-﻿//
+//
 //  MIT License
 //
 //  Copyright (c) 2019 Nets Denmark A/S
@@ -85,9 +85,9 @@ namespace XamarinPia
         [Export("transactionID", ArgumentSemantic.Strong)]
         string TransactionID { get; }
 
-        // @property (readonly, nonatomic, strong) NSString * _Nonnull okRedirectUrl;
-        [Export("okRedirectUrl", ArgumentSemantic.Strong)]
-        string OkRedirectUrl { get; }
+        // @property (readonly, nonatomic, strong) NSString * _Nonnull redirectUrl;
+        [Export("redirectUrl", ArgumentSemantic.Strong)]
+        string redirectUrl { get; }
 
         // @property (readonly, nonatomic, strong) NSString * _Nonnull cancelRedirectUrl;
         [Export("cancelRedirectUrl", ArgumentSemantic.Strong)]
@@ -97,15 +97,14 @@ namespace XamarinPia
         [Export ("walletUrl", ArgumentSemantic.Strong)]
         string WalletUrl { get; }
 
-        // -(instancetype _Nonnull)initWithTransactionID:(NSString * _Nonnull)transactionId okRedirectUrl:(NSString * _Nonnull)okRedirectUrl cancelRedirectUrl:(NSString * _Nonnull)cancelRedirectUrl;
-        //Deprecated : Use the constructor with two parameters containing transactionId and okRedirectUrl only
-        [Export("initWithTransactionID:okRedirectUrl:cancelRedirectUrl:")]
-        IntPtr Constructor(string transactionId, string okRedirectUrl, string cancelRedirectUrl);
+    // -(instancetype _Nonnull)initWithTransactionID:(NSString * _Nonnull)transactionId okRedirectUrl:(NSString * _Nonnull)okRedirectUrl cancelRedirectUrl:(NSString * _Nonnull)cancelRedirectUrl __attribute__((deprecated("Use init(transactionID:redirectUrl:)")));
+        [Export ("initWithTransactionID:okRedirectUrl:cancelRedirectUrl:")]
+        IntPtr Constructor (string transactionId, string okRedirectUrl, string cancelRedirectUrl);
 
-        // -(instancetype _Nonnull)initWithTransactionID:(NSString * _Nonnull)transactionId okRedirectUrl:(NSString * _Nonnull)okRedirectUrl;
-        [Export("initWithTransactionID:okRedirectUrl:")]
-        IntPtr Constructor(string transactionId, string okRedirectUrl);
-        
+        // -(instancetype _Nonnull)initWithTransactionID:(NSString * _Nonnull)transactionId redirectUrl:(NSString * _Nonnull)redirectUrl;
+        [Export ("initWithTransactionID:redirectUrl:")]
+        IntPtr Constructor (string transactionId, string redirectUrl);
+
         // -(instancetype _Nonnull)initWithWalletUrl:(NSString * _Nonnull)walletUrl;
         [Export ("initWithWalletUrl:")]
         IntPtr Constructor (string walletUrl);
@@ -136,8 +135,7 @@ namespace XamarinPia
         [Export("schemeType", ArgumentSemantic.Assign)]
         SchemeType SchemeType { get; set; }
 
-        // -(instancetype _Nonnull)initWithTokenId:(NSString * _Nonnull)tokenId schemeType:(SchemeType)schemeType expiryDate:(NSString * _Nonnull)expiryDate cvcRequired:(BOOL)cvcRequired systemAuthenticationRequired:(BOOL)systemAuthenticationRequired; __attribute__((deprecated("System authentication becomes obsolete due to PSD2/SCA regulation. Replaced with `init(tokenId:schemeType:expiryDate:cvcRequired:)`")));
-        
+        // -(instancetype _Nonnull)initWithTokenId:(NSString * _Nonnull)tokenId schemeType:(SchemeType)schemeType expiryDate:(NSString * _Nonnull)expiryDate cvcRequired:(BOOL)cvcRequired systemAuthenticationRequired:(BOOL)systemAuthenticationRequired __attribute__((deprecated("System authentication becomes obsolete due to PSD2/SCA regulation.
         [Export ("initWithTokenId:schemeType:expiryDate:cvcRequired:systemAuthenticationRequired:")]
         IntPtr Constructor (string tokenId, SchemeType schemeType, string expiryDate, bool cvcRequired, bool systemAuthenticationRequired);
         
@@ -565,7 +563,7 @@ namespace XamarinPia
     // @protocol SwishPaymentDelegate <WalletPaymentDelegate>
     [BaseType(typeof(NSObject))]
     [Model]
-    interface SwishPaymentDelegate : IWalletPaymentDelegate
+    interface SwishPaymentDelegate : WalletPaymentDelegate
     {
         // @required -(void)registerSwishPayment:(void (^ _Nonnull)(NSString * _Nullable))completionWithWalletURL;
         [Abstract]

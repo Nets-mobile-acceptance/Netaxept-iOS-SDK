@@ -7,49 +7,42 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0A4D0D80D50C7C5F88C96B6E /* Pia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C24F73163EC88B45FF352416 /* Pia.framework */; };
 		0B9C4518689FADE7C6CD9679 /* Pods_PiaSample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1EA4FE0829D1131AF371A5F7 /* Pods_PiaSample.framework */; };
 		3500D89021345FFE0094EAE8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3500D88D21345FFE0094EAE8 /* Assets.xcassets */; };
-		3505C7BF205A3A5E00728609 /* ProcessingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3505C7BE205A3A5E00728609 /* ProcessingError.swift */; };
-		350AA715205BA12C00D3CD88 /* RequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 350AA714205BA12C00D3CD88 /* RequestManager.swift */; };
-		350AA718205BB66900D3CD88 /* PaymentResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 350AA717205BB66900D3CD88 /* PaymentResponse.swift */; };
-		35171AB32057EA0100D946AA /* Amount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35171AB22057EA0100D946AA /* Amount.swift */; };
-		35171AB62057EAE700D946AA /* Method.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35171AB52057EAE700D946AA /* Method.swift */; };
-		35171ABB2057EBE700D946AA /* PaymentRegisterRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35171ABA2057EBE700D946AA /* PaymentRegisterRequest.swift */; };
-		35171ABD2057EBF600D946AA /* LineItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35171ABC2057EBF600D946AA /* LineItem.swift */; };
-		35171ABF2057ECAE00D946AA /* PaymentRegisterResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35171ABE2057ECAE00D946AA /* PaymentRegisterResponse.swift */; };
-		35171AC12057EDE200D946AA /* Link.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35171AC02057EDE200D946AA /* Link.swift */; };
-		35171AC32057EE5B00D946AA /* UriBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35171AC22057EE5B00D946AA /* UriBuilder.swift */; };
-		35171AC62057FC0000D946AA /* PaymentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35171AC52057FC0000D946AA /* PaymentService.swift */; };
-		3528ACD620919DDD0060DF20 /* CardToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3528ACD520919DDD0060DF20 /* CardToken.swift */; };
-		3528ACDA20919F2C0060DF20 /* PaymentMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3528ACD920919F2C0060DF20 /* PaymentMethods.swift */; };
-		3538FEC62141295E002CA4BE /* SavedCardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3538FEC52141295E002CA4BE /* SavedCardTableViewCell.swift */; };
-		3559A7722073507D0006873F /* PiaSampleExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3559A7712073507D0006873F /* PiaSampleExtension.swift */; };
-		358D37D12137CCA0009C9324 /* PaymentMethodViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 358D37D02137CCA0009C9324 /* PaymentMethodViewController.swift */; };
-		358D37D52137CD9B009C9324 /* PaymentMethodTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 358D37D42137CD9B009C9324 /* PaymentMethodTableViewCell.swift */; };
-		35994AA12088756E0028C120 /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35994AA02088756E0028C120 /* Cache.swift */; };
-		35994AA3208876F40028C120 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35994AA2208876F40028C120 /* LoginViewController.swift */; };
-		35994AA5208877180028C120 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35994AA4208877180028C120 /* SettingsViewController.swift */; };
-		35C7A1CA211334A00063497E /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35C7A1C9211334A00063497E /* MasterViewController.swift */; };
-		35C7A1CE211336660063497E /* SetURLViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35C7A1CD211336660063497E /* SetURLViewController.swift */; };
-		35D39F6A214B9608005B6370 /* SupportedSchemeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D39F69214B9608005B6370 /* SupportedSchemeTableViewCell.swift */; };
-		35DB97732129919D006C3781 /* UICustomizationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DB97722129919D006C3781 /* UICustomizationController.swift */; };
-		35E1B7912060FFC300B71148 /* ConstantAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E1B7902060FFC300B71148 /* ConstantAPI.swift */; };
-		35FEDB5F20DBBFE80070220B /* ResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35FEDB5E20DBBFE80070220B /* ResultViewController.swift */; };
-		42F21F3FDDB3F283DE68B00B /* Pia.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C24F73163EC88B45FF352416 /* Pia.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5F338E9C20E13B1C00B3E608 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5F338E9E20E13B1C00B3E608 /* Localizable.strings */; };
 		5F338EA120E13B1D00B3E608 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5F338EA320E13B1D00B3E608 /* InfoPlist.strings */; };
 		7547DB6A204FDF8000C280AC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7547DB69204FDF8000C280AC /* AppDelegate.swift */; };
-		7547DB6C204FDF8000C280AC /* CheckoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7547DB6B204FDF8000C280AC /* CheckoutViewController.swift */; };
 		7547DB6F204FDF8000C280AC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7547DB6D204FDF8000C280AC /* Main.storyboard */; };
 		7547DB74204FDF8000C280AC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7547DB72204FDF8000C280AC /* LaunchScreen.storyboard */; };
 		7547DB7F204FDF8000C280AC /* PiaSampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7547DB7E204FDF8000C280AC /* PiaSampleTests.swift */; };
 		7547DB8A204FDF8000C280AC /* PiaSampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7547DB89204FDF8000C280AC /* PiaSampleUITests.swift */; };
 		7554A34D2056BF7100773403 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		75F8D6F020501EC100F99B06 /* UIColor+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F8D6EE20501EC100F99B06 /* UIColor+Ext.swift */; };
-		75F8D6F120501EC100F99B06 /* UIButton+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F8D6EF20501EC100F99B06 /* UIButton+Ext.swift */; };
-		8504F2622212D84D00634FCD /* PiaSamplePickerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8504F2612212D84D00634FCD /* PiaSamplePickerButton.swift */; };
-		85B2855A21F9ECC6004FA525 /* SetApplePayMerchantIDViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B2855921F9ECC6004FA525 /* SetApplePayMerchantIDViewController.swift */; };
+		922283F814248F0C9C895DEE /* Pia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8E4D3E813C3F203EB583B5E /* Pia.framework */; };
+		A30AC93D237AC11E00B8FF62 /* SampleOrderDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30AC922237AC11E00B8FF62 /* SampleOrderDetails.swift */; };
+		A30AC93E237AC11E00B8FF62 /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30AC924237AC11E00B8FF62 /* SignupViewController.swift */; };
+		A30AC93F237AC11E00B8FF62 /* CheckoutController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30AC925237AC11E00B8FF62 /* CheckoutController.swift */; };
+		A30AC940237AC11E00B8FF62 /* ResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30AC926237AC11E00B8FF62 /* ResultViewController.swift */; };
+		A30AC941237AC11E00B8FF62 /* SetURLViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30AC927237AC11E00B8FF62 /* SetURLViewController.swift */; };
+		A30AC942237AC11E00B8FF62 /* LocalizedStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30AC929237AC11E00B8FF62 /* LocalizedStrings.swift */; };
+		A30AC943237AC11E00B8FF62 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30AC92A237AC11E00B8FF62 /* Fonts.swift */; };
+		A30AC944237AC11E00B8FF62 /* PaymentSelectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30AC92B237AC11E00B8FF62 /* PaymentSelectionController.swift */; };
+		A30AC945237AC11E00B8FF62 /* UICustomizationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30AC92C237AC11E00B8FF62 /* UICustomizationController.swift */; };
+		A30AC946237AC11E00B8FF62 /* ApplePayMerchantIDController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30AC92D237AC11E00B8FF62 /* ApplePayMerchantIDController.swift */; };
+		A30AC947237AC11E00B8FF62 /* AppNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30AC92E237AC11E00B8FF62 /* AppNavigation.swift */; };
+		A30AC948237AC11E00B8FF62 /* ViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30AC930237AC11E00B8FF62 /* ViewExtensions.swift */; };
+		A30AC949237AC11E00B8FF62 /* StoryboardControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30AC931237AC11E00B8FF62 /* StoryboardControllers.swift */; };
+		A30AC94A237AC11E00B8FF62 /* Persistance.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30AC932237AC11E00B8FF62 /* Persistance.swift */; };
+		A30AC94B237AC11E00B8FF62 /* Views.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30AC933237AC11E00B8FF62 /* Views.swift */; };
+		A30AC94C237AC11E00B8FF62 /* KeyboardFrameObserving.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30AC934237AC11E00B8FF62 /* KeyboardFrameObserving.swift */; };
+		A30AC94D237AC11E00B8FF62 /* PiaSDKIntegration.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30AC935237AC11E00B8FF62 /* PiaSDKIntegration.swift */; };
+		A30AC94E237AC11E00B8FF62 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30AC936237AC11E00B8FF62 /* SettingsViewController.swift */; };
+		A30AC94F237AC11E00B8FF62 /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30AC938237AC11E00B8FF62 /* APIError.swift */; };
+		A30AC950237AC11E00B8FF62 /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30AC939237AC11E00B8FF62 /* Networking.swift */; };
+		A30AC951237AC11E00B8FF62 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30AC93A237AC11E00B8FF62 /* API.swift */; };
+		A30AC952237AC11E00B8FF62 /* APICoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30AC93B237AC11E00B8FF62 /* APICoding.swift */; };
+		A30AC953237AC11E00B8FF62 /* MerchantDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30AC93C237AC11E00B8FF62 /* MerchantDefaults.swift */; };
+		A30AC99A238D2C2B00B8FF62 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30AC999238D2C2B00B8FF62 /* Colors.swift */; };
+		C0668560C80D647B03090103 /* Pia.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C8E4D3E813C3F203EB583B5E /* Pia.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E5F4F8AE27E06C9EA567BCB2 /* Pods_PiaSampleUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EF911800CEB5C1F14FC0BF7 /* Pods_PiaSampleUITests.framework */; };
 		FB8389986800864C6F045126 /* Pods_PiaSampleTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F856BF6102DF1DFD0EC41584 /* Pods_PiaSampleTests.framework */; };
 /* End PBXBuildFile section */
@@ -78,7 +71,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				42F21F3FDDB3F283DE68B00B /* Pia.framework in Embed Frameworks */,
+				C0668560C80D647B03090103 /* Pia.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -92,36 +85,10 @@
 		31B997FBEBFB1BF3D1080F80 /* Pods-PiaSampleUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PiaSampleUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PiaSampleUITests/Pods-PiaSampleUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		347E402BC54849850C6F8F13 /* Pods-PiaSample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PiaSample.release.xcconfig"; path = "Pods/Target Support Files/Pods-PiaSample/Pods-PiaSample.release.xcconfig"; sourceTree = "<group>"; };
 		3500D88D21345FFE0094EAE8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		3505C7BE205A3A5E00728609 /* ProcessingError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessingError.swift; sourceTree = "<group>"; };
-		350AA714205BA12C00D3CD88 /* RequestManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestManager.swift; sourceTree = "<group>"; };
-		350AA717205BB66900D3CD88 /* PaymentResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentResponse.swift; sourceTree = "<group>"; };
 		350B086920F5E65D009470AC /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/Main.strings; sourceTree = "<group>"; };
 		350B086A20F5E65D009470AC /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		350B086B20F5E65E009470AC /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		350B086C20F5E65E009470AC /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/Localizable.strings; sourceTree = "<group>"; };
-		35171AB22057EA0100D946AA /* Amount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Amount.swift; sourceTree = "<group>"; };
-		35171AB52057EAE700D946AA /* Method.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Method.swift; sourceTree = "<group>"; };
-		35171ABA2057EBE700D946AA /* PaymentRegisterRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentRegisterRequest.swift; sourceTree = "<group>"; };
-		35171ABC2057EBF600D946AA /* LineItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineItem.swift; sourceTree = "<group>"; };
-		35171ABE2057ECAE00D946AA /* PaymentRegisterResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentRegisterResponse.swift; sourceTree = "<group>"; };
-		35171AC02057EDE200D946AA /* Link.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Link.swift; sourceTree = "<group>"; };
-		35171AC22057EE5B00D946AA /* UriBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UriBuilder.swift; sourceTree = "<group>"; };
-		35171AC52057FC0000D946AA /* PaymentService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentService.swift; sourceTree = "<group>"; };
-		3528ACD520919DDD0060DF20 /* CardToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardToken.swift; sourceTree = "<group>"; };
-		3528ACD920919F2C0060DF20 /* PaymentMethods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentMethods.swift; sourceTree = "<group>"; };
-		3538FEC52141295E002CA4BE /* SavedCardTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedCardTableViewCell.swift; sourceTree = "<group>"; };
-		3559A7712073507D0006873F /* PiaSampleExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PiaSampleExtension.swift; sourceTree = "<group>"; };
-		358D37D02137CCA0009C9324 /* PaymentMethodViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentMethodViewController.swift; sourceTree = "<group>"; };
-		358D37D42137CD9B009C9324 /* PaymentMethodTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentMethodTableViewCell.swift; sourceTree = "<group>"; };
-		35994AA02088756E0028C120 /* Cache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cache.swift; sourceTree = "<group>"; };
-		35994AA2208876F40028C120 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
-		35994AA4208877180028C120 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
-		35C7A1C9211334A00063497E /* MasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
-		35C7A1CD211336660063497E /* SetURLViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetURLViewController.swift; sourceTree = "<group>"; };
-		35D39F69214B9608005B6370 /* SupportedSchemeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportedSchemeTableViewCell.swift; sourceTree = "<group>"; };
-		35DB97722129919D006C3781 /* UICustomizationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UICustomizationController.swift; sourceTree = "<group>"; };
-		35E1B7902060FFC300B71148 /* ConstantAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstantAPI.swift; sourceTree = "<group>"; };
-		35FEDB5E20DBBFE80070220B /* ResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewController.swift; sourceTree = "<group>"; };
 		35FF4008213EA8D30095BB88 /* PiaSample.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PiaSample.entitlements; sourceTree = "<group>"; };
 		3C2C8ED4BF1B1DFE5C2627EB /* Pods-PiaSampleTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PiaSampleTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PiaSampleTests/Pods-PiaSampleTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5F338E6D20DD321500B3E608 /* ro */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ro; path = ro.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
@@ -134,7 +101,6 @@
 		5FC29A1320F5EDBD004EA978 /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = fi.lproj/Localizable.strings; sourceTree = "<group>"; };
 		7547DB66204FDF8000C280AC /* PiaSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PiaSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7547DB69204FDF8000C280AC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		7547DB6B204FDF8000C280AC /* CheckoutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckoutViewController.swift; sourceTree = "<group>"; };
 		7547DB6E204FDF8000C280AC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		7547DB73204FDF8000C280AC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7547DB75204FDF8000C280AC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -144,10 +110,7 @@
 		7547DB85204FDF8000C280AC /* PiaSampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PiaSampleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7547DB89204FDF8000C280AC /* PiaSampleUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PiaSampleUITests.swift; sourceTree = "<group>"; };
 		7547DB8B204FDF8000C280AC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		75F8D6EE20501EC100F99B06 /* UIColor+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Ext.swift"; sourceTree = "<group>"; };
-		75F8D6EF20501EC100F99B06 /* UIButton+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIButton+Ext.swift"; sourceTree = "<group>"; };
 		7EF911800CEB5C1F14FC0BF7 /* Pods_PiaSampleUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PiaSampleUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		8504F2612212D84D00634FCD /* PiaSamplePickerButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PiaSamplePickerButton.swift; sourceTree = "<group>"; };
 		85730E1621A2C86C0016FB69 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		857FE13921A2A9C30027D508 /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = nb.lproj/Main.strings; sourceTree = "<group>"; };
 		857FE13A21A2A9C40027D508 /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = nb.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
@@ -155,8 +118,31 @@
 		857FE13E21A2A9D50027D508 /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/Main.strings; sourceTree = "<group>"; };
 		857FE13F21A2A9D50027D508 /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		857FE14021A2A9D60027D508 /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/Localizable.strings; sourceTree = "<group>"; };
-		85B2855921F9ECC6004FA525 /* SetApplePayMerchantIDViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetApplePayMerchantIDViewController.swift; sourceTree = "<group>"; };
-		C24F73163EC88B45FF352416 /* Pia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pia.framework; path = ../libs/Pia.framework; sourceTree = "<group>"; };
+		A30AC922237AC11E00B8FF62 /* SampleOrderDetails.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleOrderDetails.swift; sourceTree = "<group>"; };
+		A30AC924237AC11E00B8FF62 /* SignupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
+		A30AC925237AC11E00B8FF62 /* CheckoutController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckoutController.swift; sourceTree = "<group>"; };
+		A30AC926237AC11E00B8FF62 /* ResultViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultViewController.swift; sourceTree = "<group>"; };
+		A30AC927237AC11E00B8FF62 /* SetURLViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetURLViewController.swift; sourceTree = "<group>"; };
+		A30AC929237AC11E00B8FF62 /* LocalizedStrings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalizedStrings.swift; sourceTree = "<group>"; };
+		A30AC92A237AC11E00B8FF62 /* Fonts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
+		A30AC92B237AC11E00B8FF62 /* PaymentSelectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentSelectionController.swift; sourceTree = "<group>"; };
+		A30AC92C237AC11E00B8FF62 /* UICustomizationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UICustomizationController.swift; sourceTree = "<group>"; };
+		A30AC92D237AC11E00B8FF62 /* ApplePayMerchantIDController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplePayMerchantIDController.swift; sourceTree = "<group>"; };
+		A30AC92E237AC11E00B8FF62 /* AppNavigation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppNavigation.swift; sourceTree = "<group>"; };
+		A30AC930237AC11E00B8FF62 /* ViewExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewExtensions.swift; sourceTree = "<group>"; };
+		A30AC931237AC11E00B8FF62 /* StoryboardControllers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoryboardControllers.swift; sourceTree = "<group>"; };
+		A30AC932237AC11E00B8FF62 /* Persistance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Persistance.swift; sourceTree = "<group>"; };
+		A30AC933237AC11E00B8FF62 /* Views.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Views.swift; sourceTree = "<group>"; };
+		A30AC934237AC11E00B8FF62 /* KeyboardFrameObserving.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardFrameObserving.swift; sourceTree = "<group>"; };
+		A30AC935237AC11E00B8FF62 /* PiaSDKIntegration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PiaSDKIntegration.swift; sourceTree = "<group>"; };
+		A30AC936237AC11E00B8FF62 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		A30AC938237AC11E00B8FF62 /* APIError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
+		A30AC939237AC11E00B8FF62 /* Networking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
+		A30AC93A237AC11E00B8FF62 /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
+		A30AC93B237AC11E00B8FF62 /* APICoding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APICoding.swift; sourceTree = "<group>"; };
+		A30AC93C237AC11E00B8FF62 /* MerchantDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MerchantDefaults.swift; sourceTree = "<group>"; };
+		A30AC999238D2C2B00B8FF62 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		C8E4D3E813C3F203EB583B5E /* Pia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pia.framework; path = ../libs/Pia.framework; sourceTree = "<group>"; };
 		CFB2A9B99C45792A2B128C82 /* Pods-PiaSample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PiaSample.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PiaSample/Pods-PiaSample.debug.xcconfig"; sourceTree = "<group>"; };
 		F856BF6102DF1DFD0EC41584 /* Pods_PiaSampleTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PiaSampleTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -168,7 +154,7 @@
 			files = (
 				0B9C4518689FADE7C6CD9679 /* Pods_PiaSample.framework in Frameworks */,
 				7554A34D2056BF7100773403 /* BuildFile in Frameworks */,
-				0A4D0D80D50C7C5F88C96B6E /* Pia.framework in Frameworks */,
+				922283F814248F0C9C895DEE /* Pia.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -191,101 +177,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		3505C7BD205A39F400728609 /* Error Handling */ = {
-			isa = PBXGroup;
-			children = (
-				3505C7BE205A3A5E00728609 /* ProcessingError.swift */,
-			);
-			path = "Error Handling";
-			sourceTree = "<group>";
-		};
-		35171AB72057EB4F00D946AA /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				35171AB22057EA0100D946AA /* Amount.swift */,
-				35171AB52057EAE700D946AA /* Method.swift */,
-				35171ABA2057EBE700D946AA /* PaymentRegisterRequest.swift */,
-				35171ABC2057EBF600D946AA /* LineItem.swift */,
-				35171ABE2057ECAE00D946AA /* PaymentRegisterResponse.swift */,
-				35171AC02057EDE200D946AA /* Link.swift */,
-				35171AC22057EE5B00D946AA /* UriBuilder.swift */,
-				350AA717205BB66900D3CD88 /* PaymentResponse.swift */,
-				3528ACD520919DDD0060DF20 /* CardToken.swift */,
-				3528ACD920919F2C0060DF20 /* PaymentMethods.swift */,
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
-		35171AC42057FBF100D946AA /* API */ = {
-			isa = PBXGroup;
-			children = (
-				35171AC52057FC0000D946AA /* PaymentService.swift */,
-				350AA714205BA12C00D3CD88 /* RequestManager.swift */,
-				35E1B7902060FFC300B71148 /* ConstantAPI.swift */,
-			);
-			path = API;
-			sourceTree = "<group>";
-		};
-		358D37DB2138009E009C9324 /* Payment Method Selection */ = {
-			isa = PBXGroup;
-			children = (
-				358D37D02137CCA0009C9324 /* PaymentMethodViewController.swift */,
-				358D37D42137CD9B009C9324 /* PaymentMethodTableViewCell.swift */,
-				3538FEC52141295E002CA4BE /* SavedCardTableViewCell.swift */,
-				35D39F69214B9608005B6370 /* SupportedSchemeTableViewCell.swift */,
-			);
-			path = "Payment Method Selection";
-			sourceTree = "<group>";
-		};
-		358D37DC213800D5009C9324 /* Checkout */ = {
-			isa = PBXGroup;
-			children = (
-				7547DB6B204FDF8000C280AC /* CheckoutViewController.swift */,
-				35FEDB5E20DBBFE80070220B /* ResultViewController.swift */,
-			);
-			path = Checkout;
-			sourceTree = "<group>";
-		};
-		358D37DD213800ED009C9324 /* Master */ = {
-			isa = PBXGroup;
-			children = (
-				35994AA2208876F40028C120 /* LoginViewController.swift */,
-				35C7A1C9211334A00063497E /* MasterViewController.swift */,
-			);
-			path = Master;
-			sourceTree = "<group>";
-		};
-		358D37DE2138010C009C9324 /* Settings */ = {
-			isa = PBXGroup;
-			children = (
-				35994AA4208877180028C120 /* SettingsViewController.swift */,
-				35C7A1CD211336660063497E /* SetURLViewController.swift */,
-				35DB97722129919D006C3781 /* UICustomizationController.swift */,
-				85B2855921F9ECC6004FA525 /* SetApplePayMerchantIDViewController.swift */,
-			);
-			path = Settings;
-			sourceTree = "<group>";
-		};
-		35994A9D2088754C0028C120 /* Helper Class */ = {
-			isa = PBXGroup;
-			children = (
-				35994AA02088756E0028C120 /* Cache.swift */,
-				8504F2612212D84D00634FCD /* PiaSamplePickerButton.swift */,
-			);
-			path = "Helper Class";
-			sourceTree = "<group>";
-		};
-		35C7A1CF2114486C0063497E /* Controllers */ = {
-			isa = PBXGroup;
-			children = (
-				358D37DE2138010C009C9324 /* Settings */,
-				358D37DD213800ED009C9324 /* Master */,
-				358D37DC213800D5009C9324 /* Checkout */,
-				358D37DB2138009E009C9324 /* Payment Method Selection */,
-			);
-			path = Controllers;
-			sourceTree = "<group>";
-		};
 		35C7A1D0211448780063497E /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -296,10 +187,10 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		5F7FDEEE2062808D0063A407 /* libs */ = {
+		6EA791B6237979AC0019757B /* libs */ = {
 			isa = PBXGroup;
 			children = (
-				C24F73163EC88B45FF352416 /* Pia.framework */,
+				C8E4D3E813C3F203EB583B5E /* Pia.framework */,
 			);
 			name = libs;
 			path = ../../libs;
@@ -332,16 +223,11 @@
 			children = (
 				35FF4008213EA8D30095BB88 /* PiaSample.entitlements */,
 				7547DB69204FDF8000C280AC /* AppDelegate.swift */,
+				A30AC921237AC11E00B8FF62 /* Sources */,
 				5F338EA320E13B1D00B3E608 /* InfoPlist.strings */,
 				5F338E9E20E13B1C00B3E608 /* Localizable.strings */,
-				35171AC42057FBF100D946AA /* API */,
-				35171AB72057EB4F00D946AA /* Models */,
-				3505C7BD205A39F400728609 /* Error Handling */,
-				35C7A1CF2114486C0063497E /* Controllers */,
 				35C7A1D0211448780063497E /* Resources */,
-				75F8D6EB20501E7D00F99B06 /* UIKit Ext */,
-				5F7FDEEE2062808D0063A407 /* libs */,
-				35994A9D2088754C0028C120 /* Helper Class */,
+				6EA791B6237979AC0019757B /* libs */,
 				7547DB75204FDF8000C280AC /* Info.plist */,
 			);
 			path = PiaSample;
@@ -365,14 +251,67 @@
 			path = PiaSampleUITests;
 			sourceTree = "<group>";
 		};
-		75F8D6EB20501E7D00F99B06 /* UIKit Ext */ = {
+		A30AC921237AC11E00B8FF62 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				75F8D6EF20501EC100F99B06 /* UIButton+Ext.swift */,
-				75F8D6EE20501EC100F99B06 /* UIColor+Ext.swift */,
-				3559A7712073507D0006873F /* PiaSampleExtension.swift */,
+				A30AC93C237AC11E00B8FF62 /* MerchantDefaults.swift */,
+				A30AC922237AC11E00B8FF62 /* SampleOrderDetails.swift */,
+				A30AC923237AC11E00B8FF62 /* UI */,
+				A30AC937237AC11E00B8FF62 /* MerchantAPI */,
 			);
-			path = "UIKit Ext";
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		A30AC923237AC11E00B8FF62 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				A30AC924237AC11E00B8FF62 /* SignupViewController.swift */,
+				A30AC92E237AC11E00B8FF62 /* AppNavigation.swift */,
+				A30AC935237AC11E00B8FF62 /* PiaSDKIntegration.swift */,
+				A30AC925237AC11E00B8FF62 /* CheckoutController.swift */,
+				A30AC92B237AC11E00B8FF62 /* PaymentSelectionController.swift */,
+				A30AC936237AC11E00B8FF62 /* SettingsViewController.swift */,
+				A30AC92C237AC11E00B8FF62 /* UICustomizationController.swift */,
+				A30AC927237AC11E00B8FF62 /* SetURLViewController.swift */,
+				A30AC92D237AC11E00B8FF62 /* ApplePayMerchantIDController.swift */,
+				A30AC926237AC11E00B8FF62 /* ResultViewController.swift */,
+				A30AC928237AC11E00B8FF62 /* Resources */,
+				A30AC92F237AC11E00B8FF62 /* Helpers */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		A30AC928237AC11E00B8FF62 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				A30AC929237AC11E00B8FF62 /* LocalizedStrings.swift */,
+				A30AC92A237AC11E00B8FF62 /* Fonts.swift */,
+				A30AC999238D2C2B00B8FF62 /* Colors.swift */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		A30AC92F237AC11E00B8FF62 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				A30AC930237AC11E00B8FF62 /* ViewExtensions.swift */,
+				A30AC931237AC11E00B8FF62 /* StoryboardControllers.swift */,
+				A30AC932237AC11E00B8FF62 /* Persistance.swift */,
+				A30AC933237AC11E00B8FF62 /* Views.swift */,
+				A30AC934237AC11E00B8FF62 /* KeyboardFrameObserving.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		A30AC937237AC11E00B8FF62 /* MerchantAPI */ = {
+			isa = PBXGroup;
+			children = (
+				A30AC93A237AC11E00B8FF62 /* API.swift */,
+				A30AC93B237AC11E00B8FF62 /* APICoding.swift */,
+				A30AC938237AC11E00B8FF62 /* APIError.swift */,
+				A30AC939237AC11E00B8FF62 /* Networking.swift */,
+			);
+			path = MerchantAPI;
 			sourceTree = "<group>";
 		};
 		B9E289CCA64DD8B28F64F8AD /* Pods */ = {
@@ -409,7 +348,6 @@
 				7547DB62204FDF8000C280AC /* Sources */,
 				7547DB63204FDF8000C280AC /* Frameworks */,
 				7547DB64204FDF8000C280AC /* Resources */,
-				962C8A876F19EB19AF4DCB31 /* [CP] Embed Pods Frameworks */,
 				7554A3512056BF7100773403 /* Embed Frameworks */,
 				8585517C217F245600B6EA78 /* ShellScript */,
 			);
@@ -472,6 +410,7 @@
 				TargetAttributes = {
 					7547DB65204FDF8000C280AC = {
 						CreatedOnToolsVersion = 9.2;
+						LastSwiftMigration = 1100;
 						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.ApplePay = {
@@ -481,11 +420,13 @@
 					};
 					7547DB79204FDF8000C280AC = {
 						CreatedOnToolsVersion = 9.2;
+						LastSwiftMigration = 1100;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 7547DB65204FDF8000C280AC;
 					};
 					7547DB84204FDF8000C280AC = {
 						CreatedOnToolsVersion = 9.2;
+						LastSwiftMigration = 1100;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 7547DB65204FDF8000C280AC;
 					};
@@ -581,34 +522,6 @@
 			shellPath = /bin/sh;
 			shellScript = "APP_PATH=\"${TARGET_BUILD_DIR}/${WRAPPER_NAME}\"\n\n# This script loops through the frameworks embedded in the application and\n# removes unused architectures.\nfind \"$APP_PATH\" -name '*.framework' -type d | while read -r FRAMEWORK\ndo\nFRAMEWORK_EXECUTABLE_NAME=$(defaults read \"$FRAMEWORK/Info.plist\" CFBundleExecutable)\nFRAMEWORK_EXECUTABLE_PATH=\"$FRAMEWORK/$FRAMEWORK_EXECUTABLE_NAME\"\necho \"Executable is $FRAMEWORK_EXECUTABLE_PATH\"\n\nEXTRACTED_ARCHS=()\n\nfor ARCH in $ARCHS\ndo\necho \"Extracting $ARCH from $FRAMEWORK_EXECUTABLE_NAME\"\nlipo -extract \"$ARCH\" \"$FRAMEWORK_EXECUTABLE_PATH\" -o \"$FRAMEWORK_EXECUTABLE_PATH-$ARCH\"\nEXTRACTED_ARCHS+=(\"$FRAMEWORK_EXECUTABLE_PATH-$ARCH\")\ndone\n\necho \"Merging extracted architectures: ${ARCHS}\"\nlipo -o \"$FRAMEWORK_EXECUTABLE_PATH-merged\" -create \"${EXTRACTED_ARCHS[@]}\"\nrm \"${EXTRACTED_ARCHS[@]}\"\n\necho \"Replacing original executable with thinned version\"\nrm \"$FRAMEWORK_EXECUTABLE_PATH\"\nmv \"$FRAMEWORK_EXECUTABLE_PATH-merged\" \"$FRAMEWORK_EXECUTABLE_PATH\"\n\ndone\n";
 		};
-		962C8A876F19EB19AF4DCB31 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PiaSample/Pods-PiaSample-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
-				"${BUILT_PRODUCTS_DIR}/DropDown/DropDown.framework",
-				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
-				"${BUILT_PRODUCTS_DIR}/Moya/Moya.framework",
-				"${BUILT_PRODUCTS_DIR}/Result/Result.framework",
-				"${BUILT_PRODUCTS_DIR}/SwiftyXMLParser/SwiftyXMLParser.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DropDown.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Moya.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Result.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyXMLParser.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PiaSample/Pods-PiaSample-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		B27536D45DDDF9D38E8F0190 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -652,38 +565,31 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				350AA715205BA12C00D3CD88 /* RequestManager.swift in Sources */,
-				3505C7BF205A3A5E00728609 /* ProcessingError.swift in Sources */,
-				35171ABF2057ECAE00D946AA /* PaymentRegisterResponse.swift in Sources */,
-				75F8D6F020501EC100F99B06 /* UIColor+Ext.swift in Sources */,
-				35994AA3208876F40028C120 /* LoginViewController.swift in Sources */,
-				35171AC32057EE5B00D946AA /* UriBuilder.swift in Sources */,
-				7547DB6C204FDF8000C280AC /* CheckoutViewController.swift in Sources */,
-				35C7A1CE211336660063497E /* SetURLViewController.swift in Sources */,
-				3528ACD620919DDD0060DF20 /* CardToken.swift in Sources */,
-				85B2855A21F9ECC6004FA525 /* SetApplePayMerchantIDViewController.swift in Sources */,
-				358D37D12137CCA0009C9324 /* PaymentMethodViewController.swift in Sources */,
-				35DB97732129919D006C3781 /* UICustomizationController.swift in Sources */,
-				35D39F6A214B9608005B6370 /* SupportedSchemeTableViewCell.swift in Sources */,
-				35C7A1CA211334A00063497E /* MasterViewController.swift in Sources */,
-				35E1B7912060FFC300B71148 /* ConstantAPI.swift in Sources */,
+				A30AC951237AC11E00B8FF62 /* API.swift in Sources */,
+				A30AC943237AC11E00B8FF62 /* Fonts.swift in Sources */,
+				A30AC946237AC11E00B8FF62 /* ApplePayMerchantIDController.swift in Sources */,
+				A30AC953237AC11E00B8FF62 /* MerchantDefaults.swift in Sources */,
+				A30AC952237AC11E00B8FF62 /* APICoding.swift in Sources */,
+				A30AC945237AC11E00B8FF62 /* UICustomizationController.swift in Sources */,
+				A30AC99A238D2C2B00B8FF62 /* Colors.swift in Sources */,
+				A30AC947237AC11E00B8FF62 /* AppNavigation.swift in Sources */,
+				A30AC94D237AC11E00B8FF62 /* PiaSDKIntegration.swift in Sources */,
+				A30AC94E237AC11E00B8FF62 /* SettingsViewController.swift in Sources */,
+				A30AC950237AC11E00B8FF62 /* Networking.swift in Sources */,
+				A30AC94B237AC11E00B8FF62 /* Views.swift in Sources */,
+				A30AC940237AC11E00B8FF62 /* ResultViewController.swift in Sources */,
+				A30AC93E237AC11E00B8FF62 /* SignupViewController.swift in Sources */,
+				A30AC949237AC11E00B8FF62 /* StoryboardControllers.swift in Sources */,
+				A30AC93F237AC11E00B8FF62 /* CheckoutController.swift in Sources */,
+				A30AC94A237AC11E00B8FF62 /* Persistance.swift in Sources */,
+				A30AC94C237AC11E00B8FF62 /* KeyboardFrameObserving.swift in Sources */,
+				A30AC94F237AC11E00B8FF62 /* APIError.swift in Sources */,
+				A30AC948237AC11E00B8FF62 /* ViewExtensions.swift in Sources */,
 				7547DB6A204FDF8000C280AC /* AppDelegate.swift in Sources */,
-				358D37D52137CD9B009C9324 /* PaymentMethodTableViewCell.swift in Sources */,
-				35171AC12057EDE200D946AA /* Link.swift in Sources */,
-				35171ABB2057EBE700D946AA /* PaymentRegisterRequest.swift in Sources */,
-				3559A7722073507D0006873F /* PiaSampleExtension.swift in Sources */,
-				35994AA12088756E0028C120 /* Cache.swift in Sources */,
-				35171ABD2057EBF600D946AA /* LineItem.swift in Sources */,
-				35171AB32057EA0100D946AA /* Amount.swift in Sources */,
-				35171AC62057FC0000D946AA /* PaymentService.swift in Sources */,
-				75F8D6F120501EC100F99B06 /* UIButton+Ext.swift in Sources */,
-				350AA718205BB66900D3CD88 /* PaymentResponse.swift in Sources */,
-				3528ACDA20919F2C0060DF20 /* PaymentMethods.swift in Sources */,
-				35FEDB5F20DBBFE80070220B /* ResultViewController.swift in Sources */,
-				35171AB62057EAE700D946AA /* Method.swift in Sources */,
-				3538FEC62141295E002CA4BE /* SavedCardTableViewCell.swift in Sources */,
-				8504F2622212D84D00634FCD /* PiaSamplePickerButton.swift in Sources */,
-				35994AA5208877180028C120 /* SettingsViewController.swift in Sources */,
+				A30AC942237AC11E00B8FF62 /* LocalizedStrings.swift in Sources */,
+				A30AC93D237AC11E00B8FF62 /* SampleOrderDetails.swift in Sources */,
+				A30AC941237AC11E00B8FF62 /* SetURLViewController.swift in Sources */,
+				A30AC944237AC11E00B8FF62 /* PaymentSelectionController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -805,7 +711,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 145;
+				CURRENT_PROJECT_VERSION = 149;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -869,7 +775,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 145;
+				CURRENT_PROJECT_VERSION = 149;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -900,9 +806,10 @@
 				CLANG_ANALYZER_LOCALIZABILITY_EMPTY_CONTEXT = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CODE_SIGN_ENTITLEMENTS = PiaSample/PiaSample.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 145;
+				CURRENT_PROJECT_VERSION = 149;
 				DEVELOPMENT_TEAM = EGNFYS6P3L;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = PiaSample/Info.plist;
@@ -912,7 +819,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = Nets_PiA_Sample_Development;
 				PROVISIONING_PROFILE_SPECIFIER = "Nets PiA SDK Development";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -926,9 +833,10 @@
 				CLANG_ANALYZER_LOCALIZABILITY_EMPTY_CONTEXT = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CODE_SIGN_ENTITLEMENTS = PiaSample/PiaSample.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 145;
+				CURRENT_PROJECT_VERSION = 149;
 				DEVELOPMENT_TEAM = EGNFYS6P3L;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = PiaSample/Info.plist;
@@ -938,7 +846,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = Nets_PiA_Sample_Development;
 				PROVISIONING_PROFILE_SPECIFIER = "Nets PiA SDK Development";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -956,7 +864,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = eu.nets.mcommerce.PiaSampleTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PiaSample.app/PiaSample";
 			};
@@ -974,7 +882,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = eu.nets.mcommerce.PiaSampleTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PiaSample.app/PiaSample";
 			};
@@ -991,7 +899,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = eu.nets.mcommerce.PiaSampleUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = PiaSample;
 			};
@@ -1008,7 +916,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = eu.nets.mcommerce.PiaSampleUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = PiaSample;
 			};
