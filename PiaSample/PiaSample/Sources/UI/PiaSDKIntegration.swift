@@ -12,16 +12,83 @@ import Pia
 // MARK: - 1 Present Pia SDK
 
 extension AppNavigation {
+    
+    // MARK: Tokenized Card
+    
     func openTokenizedCardPayment(sender: PaymentSelectionController, card: TokenizedCard, cvcRequired: Bool) {
         orderDetails.method = .easyPay
         orderDetails.cardId = card.tokenId
-        present(PiaSDKController(
-            tokenCardInfo: card.npiTokenCardInfo(cvcRequired: cvcRequired),
-            merchantInfo: api.merchant.npiInfo(cvcRequired: cvcRequired),
-            orderInfo: orderDetails.npiOrderInfo)
-        )
+        
+        let cardConfirmationType = CardConfirmationType(rawValue: Settings.selectedCardConfirmationType)!
+        
+        switch cardConfirmationType {
+        case .skipAndShowTransparentTransition:
+            /// If cvc is required, the confirmation type is ignored
+            /// and user should be requested to enter CVC
+            guard !cvcRequired else { fallthrough }
+            
+            /// Show transparent transition UI while loading 3DS authentication
+            openTokenizedCardPayment(from: sender)
+        case .skipAndShowCardViewTransition:
+            /// Show card-view transition UI while loading 3DS authentication
+            present(
+                PiaSDKController(
+                    tokenCardInfo: card.npiTokenCardInfo(cvcRequired: cvcRequired),
+                    merchantInfo: api.merchant.npiInfo(cvcRequired: cvcRequired),
+                    orderInfo: orderDetails.npiOrderInfo
+                )
+            )
+        case .requireConfirmation:
+            /// Require user to confirm the payment
+            present(
+                PiaSDKController(
+                    testMode: isTestMode,
+                    tokenCardInfo: card.npiTokenCardInfo(cvcRequired: cvcRequired),
+                    merchantID: api.merchant.id,
+                    orderInfo: orderDetails.npiOrderInfo,
+                    requireCardConfirmation: true
+                )
+            )
+        }
     }
+    
+    private func openTokenizedCardPayment(from sender: UIViewController) {
 
+        /// Blocks user-interaction (inside given `view`) and animates
+        /// activity indicator while registration is in-progress
+        PiaSDK.addTransitionView(in: UIApplication.shared.keyWindow!.rootViewController!.view)
+        
+        api.registerCardPay(for: orderDetails, storeCard: false) { result in
+            self.completeRegistration(result: result) { [weak self] transaction in
+                guard let transaction = transaction, let self = self else {
+                    return
+                }
+                
+                let success = {
+                    self.commitTransaction(transactionID: transaction.transactionId, completion: self.presentResult(_:))
+                }
+                
+                let failure: (NPIError) -> Void = { error in
+                    self.presentResult(.error(error, nil))
+                }
+                
+                PiaSDK.initiateTokenizedCardPay(
+                    from: sender,
+                    testMode: self.isTestMode,
+                    showsActivityIndicator: true,
+                    merchantID: self.api.merchant.id,
+                    redirectURL: transaction.redirectOK,
+                    transactionID: transaction.transactionId,
+                    success: success,
+                    cancellation: { self.presentResult(.cancelled) },
+                    failure: failure
+                )
+            }
+        }
+    }
+    
+    // MARK: New Card
+    
     func openCardPayment(sender: PaymentSelectionController) {
         orderDetails.method = nil // new card payment has `nil` method id
         present(PiaSDKController(
@@ -29,7 +96,9 @@ extension AppNavigation {
             merchantInfo: api.merchant.npiInfo(cvcRequired: true))
         )
     }
-
+    
+    // MARK: PayPal
+    
     func openPayPalPayment(sender: PaymentSelectionController, methodID: PaymentMethodID) {
         orderDetails.method = methodID
         present(PiaSDKController(
@@ -37,30 +106,9 @@ extension AppNavigation {
             payWithPayPal: true)
         )
     }
-
-    func presentPiaForApplePayPayment(_ orderDetails: Order, expressCheckout: Bool) {
-        guard PKPaymentAuthorizationViewController.canMakePayments(
-            usingNetworks: supportedApplePayNetworks) else {
-                presentAppleWalletSetupEnquiry()
-                return
-        }
-
-        let itemCost = NSDecimalNumber(value: orderDetails.amount.inNotes - Float(orderDetails.shippingCost))
-        let shippingCost = NSDecimalNumber(value: orderDetails.shippingCost)
         
-        present(PiaSDKController(applePayInfo: NPIApplePayInfo(
-            applePayMerchantID: api.merchant.applePayMerchantID,
-            applePayItemDisplayName: orderDetails.displayName,
-            applePayMerchantDisplayName: api.merchant.applePayMerchantDisplayName,
-            applePayItemCost: itemCost,
-            applePayItemShippingCost: shippingCost,
-            currencyCode: orderDetails.amount.currencyCode,
-            applePayShippingInfo: shippingDetails.npiApplePayShippingInfo,
-            usingExpressCheckout: expressCheckout,
-            supportedPaymentNetworks: supportedApplePayNetworks))
-        )
-    }
-
+    // MARK: Vipps
+    
     func openVippsPayment(sender: PaymentSelectionController, methodID: PaymentMethodID, phoneNumber: PhoneNumber) {
         orderDetails.method = methodID
         self.phoneNumber = phoneNumber
@@ -69,7 +117,9 @@ extension AppNavigation {
             return
         }
     }
-
+    
+    // MARK: Swish
+    
     func openSwishPayment(sender: PaymentSelectionController, methodID: PaymentMethodID) {
         orderDetails.method = methodID
         guard PiaSDK.initiateSwish(fromSender: sender, delegate: self) else {
@@ -77,7 +127,9 @@ extension AppNavigation {
             return
         }
     }
-
+    
+    // MARK: Store Card
+    
     func registerNewCard(_ sender: SettingsViewController) {
         /// merchant BE expects order with a zero amount when saving a card
         orderDetails = SampleOrderDetails.make(with: Amount.zero)
@@ -94,32 +146,32 @@ extension AppNavigation {
 
 // TODO: Log
 extension AppNavigation: PiaSDKDelegate {
-
+    
     // MARK: PiaSDKDelegate (callbacks)
-
+    
     /// Called after user has submitted **Card** details in SDK UI.
     /// Obtain _transaction_ details from **Merchant** BE and call `completionHandler`
     func doInitialAPICall(
         _ piaController: PiaSDKController,
         storeCard: Bool,
         withCompletion completionHandler: @escaping (NPITransactionInfo?) -> Void) {
-
+        
         api.registerCardPay(for: orderDetails, storeCard: storeCard) { result in
             self.completeRegistration(piaController: piaController, result: result) { transaction in
                 completionHandler(transaction?.npiTransaction)
             }
         }
     }
-
+    
     /// Completes registration
     /// - Grabs `transaction` object (if successful)
     /// - Notifies Pia SDK
     /// - Presents result screen
-     func completeRegistration(
-        piaController: PiaSDKController?,
+    func completeRegistration(
+        piaController: PiaSDKController? = nil,
         result: Result<Transaction, RegisterError>,
         notifyPia: @escaping (Transaction?) -> Void) {
-
+        
         defer {
             notifyPia(transaction)
         }
@@ -129,28 +181,18 @@ extension AppNavigation: PiaSDKDelegate {
             self.transaction = transaction
         case .failure(let error):
             self.transaction = nil
-            presentResult(sender: piaController, .resultsViewController(for: .error(nil, error.errorMessage)))
-        }
-    }
-
-    func registerPayment(
-        withApplePayData piaController: PiaSDKController,
-        paymentData: PKPaymentToken,
-        newShippingContact: PKContact?,
-        withCompletion completionHandler: @escaping (NPITransactionInfo?) -> Void) {
-
-        shippingDetails.latestShippingContact = newShippingContact
-        api.registerApplePay(for: orderDetails, token: paymentData) { result in
-            self.completeRegistration(piaController: piaController, result: result) { transaction in
-                completionHandler(transaction?.npiTransaction)
+            if let piaController = piaController {
+                presentResult(sender: piaController, .error(nil, error.errorMessage))
+            } else {
+                presentResult(.error(nil, error.errorMessage))
             }
         }
     }
-
+    
     func registerPayment(
         withPayPal piaController: PiaSDKController,
         withCompletion completionHandler: @escaping (NPITransactionInfo?) -> Void) {
-
+        
         api.registerPayPal(for: orderDetails) { result in
             self.completeRegistration(piaController: piaController, result: result) { transaction in
                 completionHandler(transaction?.npiTransaction)
@@ -169,22 +211,22 @@ extension AppNavigation: VippsPaymentDelegate {
             }
         }
     }
-
+    
     func vippsPaymentDidFail(with error: NPIError, vippsStatusCode: VippsStatusCode?) {
-        presentResult(sender: nil, .resultsViewController(for: .error(error, "Vipps Code: \(vippsStatusCode?.description ?? "…")")))
+        presentResult(.error(error, "Vipps Code: \(vippsStatusCode?.description ?? "…")"))
     }
-
+    
     func walletPaymentDidSucceed(_ transitionIndicatorView: UIView?) {
         guard let transactionID = transaction?.transactionId else {
-            presentResult(sender: nil, .resultsViewController(for: .error(nil, "Missing transaction ID")))
+            presentResult(.error(nil, "Missing transaction ID"))
             return
         }
-        commitTransaction(andDismiss: nil, transitionView: transitionIndicatorView, transactionID: transactionID)
+        commitTransaction(transitionView: transitionIndicatorView, transactionID: transactionID, completion: presentResult(_:))
     }
-
+    
     func walletPaymentInterrupted(_ transitionIndicatorView: UIView?) {
         transitionIndicatorView?.removeFromSuperview()
-        presentResult(sender: nil, .resultsViewController(for: .cancelled))
+        presentResult(.cancelled)
     }
 }
 
@@ -198,18 +240,18 @@ extension AppNavigation: SwishPaymentDelegate {
             }
         }
     }
-
+    
     func swishPaymentDidFail(with error: NPIError) {
-        presentResult(sender: nil, .resultsViewController(for: .error(error, "Swish payment failed")))
+        presentResult(.error(error, "Swish payment failed"))
     }
-
+    
     func swishDidRedirect(_ transitionIndicatorView: UIView?) {
         guard let transactionID = transaction?.transactionId else {
             transitionIndicatorView?.removeFromSuperview()
-            presentResult(sender: nil, .resultsViewController(for: .error(nil, "Missing transaction ID")))
+            presentResult(.error(nil, "Missing transaction ID"))
             return
         }
-        commitTransaction(andDismiss: nil, transactionID: transactionID)
+        commitTransaction(transactionID: transactionID, completion: presentResult(_:))
     }
 }
 
@@ -225,46 +267,48 @@ extension AppNavigation {
     /// _Commit_ the _transaction_ to confirm payment.
     func piaSDKDidComplete(withSuccess piaController: PiaSDKController) {
         guard let transactionID = transaction?.transactionId else {
-            presentResult(sender: piaController, .resultsViewController(for: .error(nil, "Missing transaction ID")))
+            presentResult(sender: piaController, .error(nil, "Missing transaction ID"))
             return
         }
-        commitTransaction(andDismiss: piaController, transactionID: transactionID)
+        commitTransaction(transactionID: transactionID) { result in
+            self.presentResult(sender: piaController, result)
+        }
     }
-
+    
     func piaSDKDidCompleteSaveCard(withSuccess piaController: PiaSDKController) {
         guard let transactionID = transaction?.transactionId else {
-            presentResult(sender: piaController, .resultsViewController(for: .error(nil, "Missing transaction ID")))
+            presentResult(sender: piaController, .error(nil, "Missing transaction ID"))
             return
         }
-        commitTransaction(andDismiss: piaController, transactionID: transactionID, commitType: .verifyNewCard)
+        commitTransaction(transactionID: transactionID, commitType: .verifyNewCard) { result in
+            self.presentResult(sender: piaController, result)
+        }
     }
-
+    
     /// Called when user cancels the transaction.
     func piaSDKDidCancel(_ piaController: PiaSDKController) {
-        presentResult(sender: piaController, .resultsViewController(for: .cancelled))
+        presentResult(sender: piaController, .cancelled)
     }
-
+    
     func piaSDK(_ piaController: PiaSDKController, didFailWithError error: NPIError) {
-        presentResult(sender: piaController, .resultsViewController(for: .error(error, "Payment Failed")))
+        presentResult(sender: piaController, .error(error, "Payment Failed"))
     }
-
+    
     // MARK: 3.1 Commit Transaction
-
+    
     func commitTransaction(
-        andDismiss: PiaSDKController?,
         transitionView: UIView? = nil,
         transactionID: String,
-        commitType: MerchantAPI.CommitType = .payment) {
-
+        commitType: MerchantAPI.CommitType = .payment,
+        completion: @escaping (PiaResult) -> Void) {
+        
         api.commitTransaction(transactionID, commitType: commitType) { result in
             transitionView?.removeFromSuperview()
             var piaResult: PiaResult
             switch result {
             case .success(let response):
                 switch response.responseCode {
-                case "OK":
-                    let message = commitType == .payment ? "payment" : "card"
-                    piaResult = .response(true, message)
+                case "OK": piaResult = .response(true, commitType.rawValue)
                 case "CANCELED": piaResult = .cancelled
                 case "ERROR": fallthrough
                 default: piaResult = .error(nil, "Response: \(response)")
@@ -278,7 +322,7 @@ extension AppNavigation {
                         message: error.errorMessage)
                 }
             }
-            self.presentResult(sender: andDismiss, .resultsViewController(for: piaResult))
+            completion(piaResult)
         }
     }
 }
@@ -339,43 +383,53 @@ extension TokenizedCard {
     }
 }
 
-extension UserShippingDetails {
-    /// Retruns `NPIApplePayShippingInfo` mapping `self`.
-    var npiApplePayShippingInfo: NPIApplePayShippingInfo {
-        return NPIApplePayShippingInfo(
-            shippingAddress: shippingAddress,
-            fullName: fullName,
-            email: email,
-            phoneNumber: phone)
-    }
-}
-
 // MARK: - Result Presentation
 
 extension AppNavigation {
-    func presentResult(sender: PiaSDKController?, _ resultController: ResultViewController) {
+    func presentResult(sender: PiaSDKController, _ result: PiaResult) {
         let showAndDismissResult: (ResultViewController) -> Void = { resultController in
+            PiaSDK.removeTransitionView()
             self.navigationController.present(resultController, animated: true, completion: nil)
-            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                self.navigationController.dismiss(animated: true, completion: nil)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3) { [weak resultController] in
+                if let presented = self.navigationController.presentedViewController,
+                    presented === resultController {
+                    self.navigationController.dismiss(animated: true, completion: nil)
+                }
             }
         }
         
         while !(navigationController.topViewController is CheckoutController) {
             navigationController.popViewController(animated: false)
         }
-
-        guard let piaController = sender else {
-            showAndDismissResult(resultController)
-            return
-        }
-
+        
+        let piaController = sender
+        
         if let presenter = piaController.presentingViewController {
             presenter.dismiss(animated: true) {
-                showAndDismissResult(resultController)
+                showAndDismissResult(.resultsViewController(for: result))
             }
         } else {
-            showAndDismissResult(resultController)
+            showAndDismissResult(.resultsViewController(for: result))
         }
     }
+    
+    func presentResult(_ result: PiaResult) {
+        let showAndDismissResult: (ResultViewController) -> Void = { resultController in
+            PiaSDK.removeTransitionView()
+            self.navigationController.present(resultController, animated: true, completion: nil)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3) { [weak resultController] in
+                if let presented = self.navigationController.presentedViewController,
+                    presented === resultController {
+                    self.navigationController.dismiss(animated: true, completion: nil)
+                }
+            }
+        }
+
+        while !(navigationController.topViewController is CheckoutController) {
+            navigationController.popViewController(animated: false)
+        }
+
+        showAndDismissResult(.resultsViewController(for: result))
+    }
+    
 }

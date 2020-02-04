@@ -68,7 +68,7 @@ class ResultViewController: UIViewController {
         switch transactionResult! {
         case .response(let result, let type):
             if result {
-                if type == "card" {
+                if type == MerchantAPI.CommitType.verifyNewCard.rawValue {
                     self.navItem.title = NSLocalizedString("Card saved", comment: "Navigation bar title after the card was saved")
                     self.resultLabel.text = NSLocalizedString("Your card has been saved", comment:"Successful case message after the card was saved")
                 }else {

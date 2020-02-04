@@ -40,34 +40,6 @@ struct SampleOrderDetails: OrderDetails, ApplePayOrderDetails {
     }
 }
 
-// MARK: Shipping details (required for ApplePay)
-
-struct UserShippingDetails {
-    let fullName: PersonNameComponents
-    let phone: CNPhoneNumber
-    let email: String
-    let shippingAddress: CNPostalAddress
-
-    var latestShippingContact: PKContact? = nil
-
-    init() {
-        phone = CNPhoneNumber(stringValue: "0500000000")
-        email = "piasdk@nets.eu"
-        var name = PersonNameComponents()
-        name.givenName = "PiA"
-        name.familyName = "SDK"
-        fullName = name
-        let address = CNMutablePostalAddress()
-        address.city = "Helsinki"
-        address.country = "Finland"
-        address.state = "Uusimaa"
-        address.postalCode = "00510"
-        address.street = "Teollisuuskatu 21"
-        address.isoCountryCode = "FI"
-        shippingAddress = address
-    }
-}
-
 // MARK:  Merchant BE constants
 
 extension PaymentMethodID {
@@ -75,4 +47,31 @@ extension PaymentMethodID {
     static let easyPay = PaymentMethodID(id: "EasyPayment", displayName: "Easy Payment", fee: 0)
     /// Method ID of ApplePay payment method (defined in sample merchant BE)
     static let applePay = PaymentMethodID(id: "ApplePay", displayName: "Apple Pay", fee: 0)
+}
+
+// MARK: ApplePay Shipping Contact
+
+extension PKContact {
+    static var applePayShippingContact: PKContact {
+        let contact = PKContact()
+        
+        contact.phoneNumber = CNPhoneNumber(stringValue: "0500000000")
+        contact.emailAddress = "piasdk@nets.eu"
+        
+        var nameComponents = PersonNameComponents()
+        nameComponents.givenName = "Pia"
+        nameComponents.familyName = "SDK"
+        contact.name = nameComponents
+        
+        let address = CNMutablePostalAddress()
+        address.city = "Helsinki"
+        address.country = "Finland"
+        address.state = "Uusimaa"
+        address.postalCode = "00510"
+        address.street = "Teollisuuskatu 21"
+        address.isoCountryCode = "FI"
+        contact.postalAddress = address
+        
+        return contact
+    }
 }

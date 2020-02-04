@@ -94,6 +94,8 @@ public class SelectionView: UIView {
         buttons[selected].backgroundColor = selectedButtonBackgroundColor
         buttons.forEach(addSubview(_:))
         NSLayoutConstraint.activate(constraints, for: buttons)
+        
+        setHidden(true)
     }
 
     required init?(coder: NSCoder) {

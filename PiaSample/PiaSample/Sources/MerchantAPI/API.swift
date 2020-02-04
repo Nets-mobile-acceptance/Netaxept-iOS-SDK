@@ -40,19 +40,17 @@ extension MerchantAPI {
     public func registerPayPal(for order: OrderDetails, callback: @escaping (Result<Transaction, RegisterError>) -> Void) {
         registerCardPay(for: order, storeCard: false, callback: callback)
     }
-
+    
     // MARK: Register ApplePay payment
     
-    /// Register ApplePay payment (with merchant BE) for given `order`. Callback with `Transaction`.
-    /// Should be called _after_ user has chosen **ApplePay** payment in Pia SDK UI.
     public func registerApplePay(
         for order: OrderDetails,
-        token: PKPaymentToken,
+        token: String,
         callback: @escaping (Result<Transaction, RegisterError>) -> Void) {
         
         let request = URLRequest(for: registerURL, method: .post, headers: headers)
         execute(request, callback: callback) { () -> Data in
-            try self.encodeApplePay(order: order, token: token)
+            try self.encode(order: order, storeCard: false, applePayToken: token)
         }
     }
 
@@ -145,7 +143,7 @@ extension MerchantAPI {
     }
 
     private var registerURL: URL {
-        baseURL.appending(path: "v2/payment/\(customerID)/register")!
+        baseURL.appending(path: "v2/payment/\(merchant.id)/register")!
     }
 
     // MARK: Headers

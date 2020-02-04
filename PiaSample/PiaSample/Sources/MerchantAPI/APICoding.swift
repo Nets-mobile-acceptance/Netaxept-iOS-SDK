@@ -56,46 +56,17 @@ extension MerchantAPI {
     }
     
     // MARK: - Encoding
-    
-    /// Encode ApplePay payment _registration_
-    public func encodeApplePay(order: OrderDetails, token: PKPaymentToken) throws -> Data {
-        struct TokenWrapper: Encodable {
-            let paymentMethod: PaymentMethod
-            let paymentData: String
-            let transactionIdentifier: String
-            
-            struct PaymentMethod: Encodable {
-                let network: String?
-                let type: String
-                let displayName: String?
-            }
-        }
-        
-        let paymentMethod = TokenWrapper.PaymentMethod(
-            network: token.paymentMethod.network?.rawValue,
-            type: "\(token.paymentMethod.type)", // NOTE: might need to filter some payment types
-            displayName: token.paymentMethod.displayName)
-        
-        let wrappedToken = TokenWrapper(
-            paymentMethod: paymentMethod,
-            paymentData: "",
-            transactionIdentifier: token.transactionIdentifier)
-        
-        let paymentData = String(data: try jsonEncoder.encode(wrappedToken), encoding: .utf8)
-        
-        return try encode(order: order, storeCard: false, paymentData: paymentData)
-    }
         
     /// Encode payment _registration_ for given `order`
     /// - Parameter order: Order details
     /// - Parameter storeCard: Should it store the card?
-    /// - Parameter paymentData: Data required for ApplePay
+    /// - Parameter applePayToken: Toke required for ApplePay payments
     /// - Parameter phoneNumber: User phone number required for Vipps & Swish
     /// - Parameter redirectUrl: Redirect URL required for Vipps & Swish
     public func encode(
         order: OrderDetails,
         storeCard: Bool,
-        paymentData: String? = nil,
+        applePayToken: String? = nil,
         phoneNumber: String? = nil,
         redirectUrl: String? = nil) throws -> Data {
 
@@ -120,7 +91,7 @@ extension MerchantAPI {
             method: order.method,
             cardId: order.cardId,
             items: order.lineItems,
-            paymentData: paymentData,
+            paymentData: applePayToken,
             phoneNumber: phoneNumber,
             redirectUrl: redirectUrl
         )
@@ -135,14 +106,4 @@ extension MerchantAPI {
     }
 }
 
-extension PKPaymentMethodType: CustomStringConvertible {
-    public var description: String {
-        switch self {
-        case .credit: return "credit"
-        case .debit: return "debit"
-        case .prepaid: return "prepaid"
-        case .store: return "store"
-        default: return "unknown"
-        }
-    }
-}
+

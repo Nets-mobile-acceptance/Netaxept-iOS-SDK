@@ -136,7 +136,7 @@ public extension JSONDecoder {
             callback(.success(decoded))
         } catch let error {
             let decodeError = Error(badRequest: .decode(error), rawResponse: response)
-            errorLog(.jsonDecoder, decodeError.errorMessage)
+            errorLog(.jsonDecoder, "\(error)")
             callback(.failure(decodeError))
         }
     }
@@ -288,6 +288,6 @@ public enum Log {
 
 @inline(__always) public func errorLog(_ log: Log, _ message: String) {
     if #available(iOS 10.0, *) {
-        os_log("%{public}s", log: log.osLog, type: .error, "❌ \(message)")
+        os_log("%{public}s", log: log.osLog, type: .error, "❌ \(message)\n\n")
     }
 }

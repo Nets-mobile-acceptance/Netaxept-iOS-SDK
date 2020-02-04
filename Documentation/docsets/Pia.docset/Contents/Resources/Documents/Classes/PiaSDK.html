@@ -54,7 +54,7 @@
                 <a class="nav-group-task-link" href="../11-basic-payment-flow.html">1.1. Basic payment flow</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../12-easy-one-click-payment-flow.html">1.2. Easy (one click) payment flow</a>
+                <a class="nav-group-task-link" href="../12-new--easy-one-click-payment-flow.html">1.2. [New !] Easy (one click) payment flow</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../13-recurring-payments.html">1.3. Recurring payments</a>
@@ -210,7 +210,7 @@
 
 <span class="cp">#pragma - mark Initiate Wallet Payment
 </span>
-<span class="c1">/// Attempts to initiate Vipps payment and returns true if sucessful.
+<span class="c1">/// Attempts to initiate Vipps payment and returns true if successful.
 /// Returns false if Vipps is not installed or the URL scheme is missing under
 /// `LSApplicationQueriesSchemes` in info.plist.
 ///
@@ -222,11 +222,11 @@
 ///
 /// @param sender The sender view controller. Used to present activity indicator during app switch
 /// @param delegate The delegate responsible for handling the payment process.
-/// @return True if Vipps app can be openned
+/// @return True if Vipps app can be opened
 ///
 </span><span class="k">+</span> <span class="p">(</span><span class="n">BOOL</span><span class="p">)</span><span class="nf">initiateVippsFromSender</span><span class="p">:(</span><span class="n">UIViewController</span> <span class="o">*</span> <span class="n">_Nullable</span><span class="p">)</span><span class="nv">sender</span> <span class="nf">delegate</span><span class="p">:(</span><span class="n">id</span><span class="o">&lt;</span><span class="n"><a href="../Protocols/VippsPaymentDelegate.html">VippsPaymentDelegate</a></span><span class="o">&gt;</span><span class="p">)</span><span class="nv">delegate</span><span class="p">;</span>
 
-<span class="c1">/// Attempts to initiate Swish payment and returns true if sucessful.
+<span class="c1">/// Attempts to initiate Swish payment and returns true if successful.
 /// Returns false if Swish is not installed or the URL scheme is missing under
 /// `LSApplicationQueriesSchemes` in info.plist.
 ///
@@ -238,9 +238,37 @@
 ///
 /// @param sender The sender view controller. Used to present activity indicator during app switch
 /// @param delegate The delegate responsible for handling the payment process.
-/// @return True if Swish app can be openned
+/// @return True if Swish app can be opened
 ///
 </span><span class="k">+</span> <span class="p">(</span><span class="n">BOOL</span><span class="p">)</span><span class="nf">initiateSwishFromSender</span><span class="p">:(</span><span class="n">UIViewController</span> <span class="o">*</span> <span class="n">_Nullable</span><span class="p">)</span><span class="nv">sender</span> <span class="nf">delegate</span><span class="p">:(</span><span class="n">id</span><span class="o">&lt;</span><span class="n"><a href="../Protocols/SwishPaymentDelegate.html">SwishPaymentDelegate</a></span><span class="o">&gt;</span><span class="p">)</span><span class="nv">delegate</span><span class="p">;</span>
+
+<span class="c1">/// Initiate payment with a stored card. If the payment requires 3DS authentication,
+/// a webpage will be presented on the sender view controller.
+///
+/// It is recommended to show an activity indicator by passing `true` for `showsActivityIndicator`.
+/// The same activity indicator can be presented using the API `showActivityIndicator(in:)`
+/// while obtaining transaction ID from customer's merchant backend. The activity indicator will be
+/// removed by the SDK before executing any of the completion blocks.
+///
+/// @param sender The `viewController` in which 3DS authentication is presented (if necessary)
+/// @param isTestMode Is transaction to Netaxept test backend
+/// @param showsActivityIndicator Show PiaSDK's standard activity indicator
+/// @param merchantID Netaxept provided merchant ID
+/// @param redirectURL Redirect URL used by 3DS to redirect user to the app
+/// @param transactionID Transaction ID
+/// @param success Success handler
+/// @param cancellation Cancellation handler
+/// @param failure Failure handler
+///
+</span><span class="k">+</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">initiateTokenizedCardPayFrom</span><span class="p">:(</span><span class="n">UIViewController</span> <span class="o">*</span><span class="p">)</span><span class="nv">sender</span>
+                            <span class="nf">testMode</span><span class="p">:(</span><span class="n">BOOL</span><span class="p">)</span><span class="nv">isTestMode</span>
+              <span class="nf">showsActivityIndicator</span><span class="p">:(</span><span class="n">BOOL</span><span class="p">)</span><span class="nv">showsActivityIndicator</span>
+                          <span class="nf">merchantID</span><span class="p">:(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">merchantID</span>
+                         <span class="nf">redirectURL</span><span class="p">:(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">redirectURL</span>
+                       <span class="nf">transactionID</span><span class="p">:(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">transactionID</span>
+                             <span class="nf">success</span><span class="p">:(</span><span class="kt">void</span><span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="kt">void</span><span class="p">))</span><span class="nv">success</span>
+                        <span class="nf">cancellation</span><span class="p">:(</span><span class="kt">void</span><span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="kt">void</span><span class="p">))</span><span class="nv">cancellation</span>
+                             <span class="nf">failure</span><span class="p">:(</span><span class="kt">void</span><span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="n"><a href="../Classes/NPIError.html">NPIError</a></span> <span class="o">*</span> <span class="n">_Nonnull</span><span class="p">))</span><span class="nv">failure</span><span class="p">;</span>
 
 <span class="cp">#pragma - mark Redirect From Wallet App
 </span>
@@ -250,6 +278,32 @@
 /// @return True if a redirect observer is registered with the SDK
 ///
 </span><span class="k">+</span> <span class="p">(</span><span class="n">BOOL</span><span class="p">)</span><span class="nf">applicationDidOpenFromRedirectWith</span><span class="p">:(</span><span class="n">NSURL</span> <span class="o">*</span><span class="p">)</span><span class="nv">redirectURL</span> <span class="nf">andOptions</span><span class="p">:(</span><span class="n">NSDictionary</span> <span class="o">*</span><span class="p">)</span><span class="nv">options</span><span class="p">;</span>
+
+<span class="c1">/// Show PiaSDK's standard transition view. User interaction within the bounds of
+/// the transition view is absorbed.
+/// Pass `UIApplication.shared.keyWindow.rootViewController` in order to block user-
+/// interaction even in navigation bar button items.
+/// @param viewController The view controller where transition view is added
+///
+</span><span class="k">+</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">showActivityIndicatorIn</span><span class="p">:(</span><span class="n">UIViewController</span> <span class="o">*</span><span class="p">)</span><span class="nv">viewController</span>
+<span class="n">__deprecated_msg</span><span class="p">(</span><span class="s">"Use `addTransitionViewIn:` instead"</span><span class="p">);</span>
+
+<span class="c1">/// Remove PiaSDK's standard activity indicator. User interaction in the
+/// given `viewController` will be enabled and the activity indicator removed
+///
+</span><span class="k">+</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">removeActivityIndicatorFrom</span><span class="p">:(</span><span class="n">UIViewController</span> <span class="o">*</span> <span class="n">_Nullable</span><span class="p">)</span><span class="nv">viewController</span>
+<span class="n">__deprecated_msg</span><span class="p">(</span><span class="s">"Use `removeTransitionView` instead"</span><span class="p">);</span>
+
+<span class="c1">/// Show PiaSDK's standard transition view. User interaction within the bounds of
+/// the transition view is absorbed.
+/// Pass `UIApplication.shared.keyWindow.rootViewController` in order to block user-
+/// interaction even in navigation bar button items.
+/// @param superView Super view for SDK's standard transition view with activity indicator.
+///
+</span><span class="k">+</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">addTransitionViewIn</span><span class="p">:(</span><span class="n">UIView</span> <span class="o">*</span><span class="p">)</span><span class="nv">superView</span><span class="p">;</span>
+
+<span class="c1">/// Removes PiaSDK's standard transition view (if found).
+</span><span class="k">+</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">removeTransitionView</span><span class="p">;</span>
 
 <span class="k">@end</span></code></pre>
 
@@ -277,7 +331,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Attempts to initiate Vipps payment and returns true if sucessful.
+                        <p>Attempts to initiate Vipps payment and returns true if successful.
 Returns false if Vipps is not installed or the URL scheme is missing under
 <code>LSApplicationQueriesSchemes</code> in info.plist.</p>
 
@@ -335,7 +389,7 @@ the <code>sender</code> view controller parameter and manage presentation of cus
                       </div>
                       <div>
                         <h4>Return Value</h4>
-                        <p>True if Vipps app can be openned</p>
+                        <p>True if Vipps app can be opened</p>
                       </div>
                     </section>
                   </div>
@@ -353,7 +407,7 @@ the <code>sender</code> view controller parameter and manage presentation of cus
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Attempts to initiate Swish payment and returns true if sucessful.
+                        <p>Attempts to initiate Swish payment and returns true if successful.
 Returns false if Swish is not installed or the URL scheme is missing under
 <code>LSApplicationQueriesSchemes</code> in info.plist.</p>
 
@@ -411,7 +465,169 @@ the <code>sender</code> view controller parameter and manage presentation of cus
                       </div>
                       <div>
                         <h4>Return Value</h4>
-                        <p>True if Swish app can be openned</p>
+                        <p>True if Swish app can be opened</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)PiaSDK(cm)initiateTokenizedCardPayFrom:testMode:showsActivityIndicator:merchantID:redirectURL:transactionID:success:cancellation:failure:"></a>
+                    <a name="//apple_ref/objc/Method/+initiateTokenizedCardPayFrom:testMode:showsActivityIndicator:merchantID:redirectURL:transactionID:success:cancellation:failure:" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)PiaSDK(cm)initiateTokenizedCardPayFrom:testMode:showsActivityIndicator:merchantID:redirectURL:transactionID:success:cancellation:failure:">+initiateTokenizedCardPayFrom:testMode:showsActivityIndicator:merchantID:redirectURL:transactionID:success:cancellation:failure:</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Initiate payment with a stored card. If the payment requires 3DS authentication,
+a webpage will be presented on the sender view controller.</p>
+
+<p>It is recommended to show an activity indicator by passing <code>true</code> for <code>showsActivityIndicator</code>.
+The same activity indicator can be presented using the API <code>showActivityIndicator(in:)</code>
+while obtaining transaction ID from customer&rsquo;s merchant backend. The activity indicator will be
+removed by the SDK before executing any of the completion blocks.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight"><code><span class="k">+</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">initiateTokenizedCardPayFrom</span><span class="p">:(</span><span class="n">nonnull</span> <span class="n">UIViewController</span> <span class="o">*</span><span class="p">)</span><span class="nv">sender</span>
+                            <span class="nf">testMode</span><span class="p">:(</span><span class="n">BOOL</span><span class="p">)</span><span class="nv">isTestMode</span>
+              <span class="nf">showsActivityIndicator</span><span class="p">:(</span><span class="n">BOOL</span><span class="p">)</span><span class="nv">showsActivityIndicator</span>
+                          <span class="nf">merchantID</span><span class="p">:(</span><span class="n">nonnull</span> <span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">merchantID</span>
+                         <span class="nf">redirectURL</span><span class="p">:(</span><span class="n">nonnull</span> <span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">redirectURL</span>
+                       <span class="nf">transactionID</span><span class="p">:(</span><span class="n">nonnull</span> <span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">transactionID</span>
+                             <span class="nf">success</span><span class="p">:(</span><span class="n">nonnull</span> <span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="kt">void</span><span class="p">))</span><span class="nv">success</span>
+                        <span class="nf">cancellation</span><span class="p">:(</span><span class="n">nonnull</span> <span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="kt">void</span><span class="p">))</span><span class="nv">cancellation</span>
+                             <span class="nf">failure</span><span class="p">:</span>
+                                 <span class="p">(</span><span class="n">nonnull</span> <span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="n"><a href="../Classes/NPIError.html">NPIError</a></span> <span class="o">*</span><span class="n">_Nonnull</span><span class="p">))</span><span class="nv">failure</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">class</span> <span class="kd">func</span> <span class="nf">initiateTokenizedCardPay</span><span class="p">(</span><span class="n">from</span> <span class="nv">sender</span><span class="p">:</span> <span class="kt">UIViewController</span><span class="p">,</span> <span class="n">testMode</span> <span class="nv">isTestMode</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">,</span> <span class="nv">showsActivityIndicator</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">,</span> <span class="nv">merchantID</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">redirectURL</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">transactionID</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">success</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">,</span> <span class="nv">cancellation</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">,</span> <span class="nv">failure</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt"><a href="../Classes/NPIError.html">NPIError</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>sender</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The <code>viewController</code> in which 3DS authentication is presented (if necessary)</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>isTestMode</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Is transaction to Netaxept test backend</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>showsActivityIndicator</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Show PiaSDK&rsquo;s standard activity indicator</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>merchantID</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Netaxept provided merchant ID</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>redirectURL</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Redirect URL used by 3DS to redirect user to the app</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>transactionID</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Transaction ID</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>success</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Success handler</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>cancellation</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Cancellation handler</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>failure</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Failure handler</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
                     </section>
                   </div>
@@ -484,6 +700,284 @@ the <code>sender</code> view controller parameter and manage presentation of cus
                     </section>
                   </div>
                 </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)PiaSDK(cm)showActivityIndicatorIn:"></a>
+                    <a name="//apple_ref/objc/Method/+showActivityIndicatorIn:" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)PiaSDK(cm)showActivityIndicatorIn:">+showActivityIndicatorIn:</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Show PiaSDK&rsquo;s standard transition view. User interaction within the bounds of
+the transition view is absorbed.
+Pass <code>UIApplication.shared.keyWindow.rootViewController</code> in order to block user-
+interaction even in navigation bar button items.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight"><code><span class="k">+</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">showActivityIndicatorIn</span><span class="p">:(</span><span class="n">nonnull</span> <span class="n">UIViewController</span> <span class="o">*</span><span class="p">)</span><span class="nv">viewController</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">class</span> <span class="kd">func</span> <span class="nf">showActivityIndicator</span><span class="p">(</span><span class="k">in</span> <span class="nv">viewController</span><span class="p">:</span> <span class="kt">UIViewController</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>viewController</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The view controller where transition view is added</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)PiaSDK(cm)removeActivityIndicatorFrom:"></a>
+                    <a name="//apple_ref/objc/Method/+removeActivityIndicatorFrom:" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)PiaSDK(cm)removeActivityIndicatorFrom:">+removeActivityIndicatorFrom:</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Remove PiaSDK&rsquo;s standard activity indicator. User interaction in the
+given <code>viewController</code> will be enabled and the activity indicator removed</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight"><code><span class="k">+</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">removeActivityIndicatorFrom</span><span class="p">:(</span><span class="n">UIViewController</span> <span class="o">*</span><span class="n">_Nullable</span><span class="p">)</span><span class="nv">viewController</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">class</span> <span class="kd">func</span> <span class="nf">removeActivityIndicator</span><span class="p">(</span><span class="n">from</span> <span class="nv">viewController</span><span class="p">:</span> <span class="kt">UIViewController</span><span class="p">?)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)PiaSDK(cm)addTransitionViewIn:"></a>
+                    <a name="//apple_ref/objc/Method/+addTransitionViewIn:" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)PiaSDK(cm)addTransitionViewIn:">+addTransitionViewIn:</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Show PiaSDK&rsquo;s standard transition view. User interaction within the bounds of
+the transition view is absorbed.
+Pass <code>UIApplication.shared.keyWindow.rootViewController</code> in order to block user-
+interaction even in navigation bar button items.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight"><code><span class="k">+</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">addTransitionViewIn</span><span class="p">:(</span><span class="n">nonnull</span> <span class="n">UIView</span> <span class="o">*</span><span class="p">)</span><span class="nv">superView</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">class</span> <span class="kd">func</span> <span class="nf">addTransitionView</span><span class="p">(</span><span class="k">in</span> <span class="nv">superView</span><span class="p">:</span> <span class="kt">UIView</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>superView</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Super view for SDK&rsquo;s standard transition view with activity indicator.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)PiaSDK(cm)removeTransitionView"></a>
+                    <a name="//apple_ref/objc/Method/+removeTransitionView" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)PiaSDK(cm)removeTransitionView">+removeTransitionView</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Removes PiaSDK&rsquo;s standard transition view (if found).</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight"><code><span class="k">+</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">removeTransitionView</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">class</span> <span class="kd">func</span> <span class="nf">removeTransitionView</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/ApplePay"></a>
+                <a name="//apple_ref/objc/Section/ApplePay" class="dashAnchor"></a>
+                <a href="#/ApplePay">
+                  <h3 class="section-name">ApplePay</h3>
+                </a>
+              </div>
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)PiaSDK(cm)makeApplePayPaymentRequestFor:countryCode:applePayMerchantID:merchantCapabilities:currencyCode:summeryItems:"></a>
+                    <a name="//apple_ref/objc/Method/+makeApplePayPaymentRequestFor:countryCode:applePayMerchantID:merchantCapabilities:currencyCode:summeryItems:" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)PiaSDK(cm)makeApplePayPaymentRequestFor:countryCode:applePayMerchantID:merchantCapabilities:currencyCode:summeryItems:">+makeApplePayPaymentRequestFor:countryCode:applePayMerchantID:merchantCapabilities:currencyCode:summeryItems:</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns a <code>PKPaymentRequest</code> with all the obligatory fields set from the arguments.
+This helper ensures the request contains all the necessary fields.
+Mutate the request to add custom requirements (e.g. shipping contact) if necessary.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight"><code><span class="k">+</span> <span class="p">(</span><span class="n">nonnull</span> <span class="n">PKPaymentRequest</span> <span class="o">*</span><span class="p">)</span>
+    <span class="nf">makeApplePayPaymentRequestFor</span><span class="p">:(</span><span class="n">nonnull</span> <span class="n">NSArray</span><span class="o">&lt;</span><span class="n">PKPaymentNetwork</span><span class="o">&gt;</span> <span class="o">*</span><span class="p">)</span><span class="nv">networks</span>
+                      <span class="nf">countryCode</span><span class="p">:(</span><span class="n">nonnull</span> <span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">countryCode</span>
+               <span class="nf">applePayMerchantID</span><span class="p">:(</span><span class="n">nonnull</span> <span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">applePayMerchantID</span>
+             <span class="nf">merchantCapabilities</span><span class="p">:(</span><span class="n">PKMerchantCapability</span><span class="p">)</span><span class="nv">merchantCapabilities</span>
+                     <span class="nf">currencyCode</span><span class="p">:(</span><span class="n">nonnull</span> <span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">currencyCode</span>
+                     <span class="nf">summeryItems</span><span class="p">:(</span><span class="n">nonnull</span> <span class="n">NSArray</span><span class="o">&lt;</span><span class="n">PKPaymentSummaryItem</span> <span class="o">*&gt;</span> <span class="o">*</span><span class="p">)</span>
+                                      <span class="n">summeryItems</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">class</span> <span class="kd">func</span> <span class="nf">makeApplePayPaymentRequest</span><span class="p">(</span><span class="k">for</span> <span class="nv">networks</span><span class="p">:</span> <span class="p">[</span><span class="kt">PKPaymentNetwork</span><span class="p">],</span> <span class="nv">countryCode</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">applePayMerchantID</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">merchantCapabilities</span><span class="p">:</span> <span class="kt">PKMerchantCapability</span><span class="p">,</span> <span class="nv">currencyCode</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">summeryItems</span><span class="p">:</span> <span class="p">[</span><span class="kt">PKPaymentSummaryItem</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kt">PKPaymentRequest</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)PiaSDK(cm)netaxeptSOAPPaymentDataFrom:"></a>
+                    <a name="//apple_ref/objc/Method/+netaxeptSOAPPaymentDataFrom:" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)PiaSDK(cm)netaxeptSOAPPaymentDataFrom:">+netaxeptSOAPPaymentDataFrom:</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns UTF-8 encoded string of <code>self</code> that&rsquo;s formatted to fit in Netaxept&rsquo;s (SOAP) Apple Pay API.
+The value can be passed in the payment-data field to Netaxept directly without further manipulation.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight"><code><span class="k">+</span> <span class="p">(</span><span class="n">nonnull</span> <span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nf">netaxeptSOAPPaymentDataFrom</span><span class="p">:</span>
+    <span class="p">(</span><span class="n">nonnull</span> <span class="n">PKPaymentToken</span> <span class="o">*</span><span class="p">)</span><span class="nv">token</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">class</span> <span class="kd">func</span> <span class="nf">netaxeptSOAPPaymentData</span><span class="p">(</span><span class="n">from</span> <span class="nv">token</span><span class="p">:</span> <span class="kt">PKPaymentToken</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">String</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>token</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>PKPaymentToken generated in <code>PassKit</code> payment authorisation delegate</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
               </ul>
             </div>
           </div>
@@ -492,7 +986,7 @@ the <code>sender</code> view controller parameter and manage presentation of cus
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2019 <a class="link" href="https://nets.eu" target="_blank" rel="external">Nets</a>. All rights reserved. (Last updated: 2019-12-02)</p>
+      <p>&copy; 2020 <a class="link" href="https://nets.eu" target="_blank" rel="external">Nets</a>. All rights reserved. (Last updated: 2020-02-04)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.0</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

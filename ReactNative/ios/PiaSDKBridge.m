@@ -32,7 +32,11 @@ enum : NSUInteger {
 } MobileWallet;
 
 @interface PiaSDKBridge()
+{
+  BOOL _isPayingWithToken;
+}
 @property (strong, nonatomic) NPITransactionInfo *_Nullable transactionInfo;
+
 @end
 
 @implementation PiaSDKBridge
@@ -45,11 +49,42 @@ RCT_EXPORT_MODULE()
 RCT_EXPORT_METHOD(callPia) {
   
    NSString *merchantId = @"YOUR MERCHANT ID HERE";
-  
+  _isPayingWithToken = false;
   NPIMerchantInfo *merchantInfo = [[NPIMerchantInfo alloc] initWithIdentifier:merchantId testMode:TRUE];
   NSNumber *amount = [[NSNumber alloc] initWithInt:10];
   NPIOrderInfo *orderInfo = [[NPIOrderInfo alloc] initWithAmount:amount currencyCode:@"EUR"];
   PiaSDKController *controller = [[PiaSDKController alloc] initWithOrderInfo:orderInfo merchantInfo:merchantInfo];
+  controller.PiaDelegate = self;
+  dispatch_async(dispatch_get_main_queue(), ^{
+    [[UIApplication sharedApplication].delegate.window.rootViewController presentViewController:controller animated:YES completion:^{
+    }];
+  });
+}
+
+RCT_EXPORT_METHOD(callPiaSavedCard) {
+  
+   NSString *merchantId = @"YOUR MERCHANT ID HERE";
+  _isPayingWithToken = true;
+  NSNumber *amount = [[NSNumber alloc] initWithInt:10];
+  NPIOrderInfo *orderInfo = [[NPIOrderInfo alloc] initWithAmount:amount currencyCode:@"EUR"];
+  NPITokenCardInfo *tokenCardInfo = [[NPITokenCardInfo alloc] initWithTokenId:@"492500******0004" schemeType:0 expiryDate:@"08/22" cvcRequired:FALSE];
+    PiaSDKController *controller = [[PiaSDKController alloc] initWithTestMode:TRUE tokenCardInfo:tokenCardInfo merchantID:merchantId orderInfo:orderInfo requireCardConfirmation:TRUE];
+  controller.PiaDelegate = self;
+  dispatch_async(dispatch_get_main_queue(), ^{
+    [[UIApplication sharedApplication].delegate.window.rootViewController presentViewController:controller animated:YES completion:^{
+    }];
+  });
+}
+
+RCT_EXPORT_METHOD(callPiaSavedCardSkipConfirmation) {
+  
+   NSString *merchantId = @"YOUR MERCHANT ID HERE";
+  _isPayingWithToken = true;
+  NPIMerchantInfo *merchantInfo = [[NPIMerchantInfo alloc] initWithIdentifier:merchantId testMode:TRUE cvcRequired:FALSE];
+  NSNumber *amount = [[NSNumber alloc] initWithInt:10];
+  NPIOrderInfo *orderInfo = [[NPIOrderInfo alloc] initWithAmount:amount currencyCode:@"EUR"];
+  NPITokenCardInfo *tokenCardInfo = [[NPITokenCardInfo alloc] initWithTokenId:@"492500******0004" schemeType:0 expiryDate:@"08/22" cvcRequired:FALSE];
+  PiaSDKController *controller = [[PiaSDKController alloc] initWithTokenCardInfo:tokenCardInfo merchantInfo:merchantInfo orderInfo:orderInfo];
   controller.PiaDelegate = self;
   dispatch_async(dispatch_get_main_queue(), ^{
     [[UIApplication sharedApplication].delegate.window.rootViewController presentViewController:controller animated:YES completion:^{
@@ -130,11 +165,13 @@ RCT_EXPORT_METHOD(callPiaWithSwish){
 
 - (void)walletPaymentDidSucceed:(UIView *)transitionIndicatorView{
   [transitionIndicatorView removeFromSuperview];
+  [self enableUserInteraction];
   [self sendEventWithName:@"PiaSDKResult" body:@{@"name": @"success"}];
 }
 
 - (void)walletPaymentInterrupted:(UIView *)transitionIndicatorView {
   [transitionIndicatorView removeFromSuperview];
+  [self enableUserInteraction];
   [self sendEventWithName:@"PiaSDKResult" body:@{@"name": @"Interrupted"}];
 }
 
@@ -151,6 +188,7 @@ RCT_EXPORT_METHOD(callPiaWithSwish){
 
 - (void)swishDidRedirect:(nullable UIView *)transitionIndicatorView {
   [transitionIndicatorView removeFromSuperview];
+  [self enableUserInteraction];
   [self sendEventWithName:@"PiaSDKResult" body:@{@"name": @"success"}];
 }
 
@@ -266,6 +304,16 @@ RCT_EXPORT_METHOD(callPiaWithSwish){
   [jsonDictionary setValue:amount forKey:@"amount"];
   [jsonDictionary setValue:false forKey:@"storeCard"];
   
+  if (_isPayingWithToken) {
+      NSMutableDictionary *method = [[NSMutableDictionary alloc] init];
+      [method setValue:@"EasyPayment" forKey:@"id"];
+      [method setValue:@"Easy Payment" forKey:@"displayName"];
+      [method setValue:[NSNumber numberWithInt:0] forKey:@"fee"];
+      [jsonDictionary setValue:method forKey:@"method"];
+      [jsonDictionary setValue:@"492500******0004" forKey:@"cardId"];
+  }
+  
+  
   if ([NSJSONSerialization isValidJSONObject:jsonDictionary]) {//validate it
     NSError* error;
     NSData* jsonData = [NSJSONSerialization dataWithJSONObject:jsonDictionary options:NSJSONWritingPrettyPrinted error: &error];
@@ -302,4 +350,8 @@ RCT_EXPORT_METHOD(callPiaWithSwish){
   }
 }
 
+-(void)enableUserInteraction
+{
+  [[UIApplication sharedApplication].delegate.window.rootViewController.view setUserInteractionEnabled:YES];
+}
 @end

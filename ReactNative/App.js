@@ -63,6 +63,12 @@ export default class App extends Component<Props> {
           <Button onPress={this._handlePress} title="Call Pia SDK" color="#FFFFFF" accessibilityLabel="Tap on Me"/>
         </View>
         <View style={styles.buttonContainer}>
+            <Button onPress={this._handlePressSavedCard} title="Call Pia SDK Saved Card" color="#FFFFFF" accessibilityLabel="Tap on Me savedCard"/>
+          </View>
+        <View style={styles.buttonContainer}>
+          <Button onPress={this._handlePressSavedCardSkipConfirmation} title="Call Pia SDK Saved Card - Skip Confirmation" color="#FFFFFF" accessibilityLabel="Tap on Me savedCardSkipConfirmation"/>
+        </View>
+        <View style={styles.buttonContainer}>
           <Button onPress={this._handlePressPayPal} title="Call Pia SDK PayPal" color="#FFFFFF" accessibilityLabel="Tap on Me PayPal"/>
             </View>
         <View style={styles.buttonContainer}>
@@ -77,6 +83,14 @@ export default class App extends Component<Props> {
 
   _handlePress(event) {
     _PiaSDK.callPia();
+  }
+    
+  _handlePressSavedCard(event) {
+    _PiaSDK.callPiaSavedCard();
+  }
+    
+  _handlePressSavedCardSkipConfirmation(event) {
+    _PiaSDK.callPiaSavedCardSkipConfirmation();
   }
 
   _handlePressPayPal(event) {

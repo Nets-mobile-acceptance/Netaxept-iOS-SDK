@@ -1,4 +1,4 @@
-# PiA - Netaxept iOS SDK v1.5.1
+# PiA - Netaxept iOS SDK v1.6.0
 
 ![](./Resources/NetsLogo.jpg)
 
@@ -8,8 +8,8 @@ PiA Netaxept iOS SDK is a library that provides the native in-app interactions t
 
 PiA - Netaxept Mobile SDK Android can be found [here](https://github.com/Nets-mobile-acceptance/Netaxept-Android-SDK).
 
-| ![](./Resources/pia-demo.gif)  | ![](./Resources/Express.gif) |
-| --- | --- |
+| ![](./Resources/pia-demo.gif)  | 
+| --- |
 
 ## Sample Project
 

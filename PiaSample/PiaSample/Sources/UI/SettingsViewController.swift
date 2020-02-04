@@ -46,6 +46,16 @@ enum Language: String, CaseIterable {
     }
 }
 
+enum CardConfirmationType: String, CaseIterable {
+    case skipAndShowTransparentTransition = "Skip - Show Transparent Transition"
+    case skipAndShowCardViewTransition = "Skip - Show Card View Transition"
+    case requireConfirmation = "Require Card Confirmation"
+    
+    // Note: SDK supports an additional option to skip confirmation
+    // and let customer handle the transition UI. This option is ignored
+    // by the sample app for simplicity.
+}
+
 enum Settings {
     static var selectedLanguage: Language = Language(withCode: Locale.preferredLanguages.first ?? "en") {
         didSet {
@@ -60,6 +70,9 @@ enum Settings {
             }()
         }
     }
+    
+    @Persisted(.selectedCardConfirmationType, defaultValue: CardConfirmationType.skipAndShowTransparentTransition.rawValue)
+    static var selectedCardConfirmationType: String
 
     @Persisted(.shouldUseSystemAuthentication, defaultValue: false)
     static var shouldUseSystemAuthentication: Bool // TODO: Should this be removed?
@@ -97,6 +110,7 @@ class SettingsViewController: UIViewController {
     weak var delegate: SettingsDelegate!
 
     @IBOutlet weak var languageButton: UIButton!
+    @IBOutlet weak var cardConfirmationTypeButton: UIButton!
     @IBOutlet weak var applicationVersionLabel: UILabel!
     @IBOutlet weak var customerIDLabel: UILabel!
     @IBOutlet weak var customerIDTextField: UITextField!
@@ -121,13 +135,34 @@ class SettingsViewController: UIViewController {
         NSLayoutConstraint.activate(constraints, for: picker)
         return picker
     }()
+    
+    lazy var cardConfirmationTypePicker: SelectionView = {
+        let (picker, constraints) = SelectionView.makeWithConstraints(
+            triggerView: cardConfirmationTypeButton,
+            titles: CardConfirmationType.allCases.map { $0.rawValue },
+            selected: CardConfirmationType.allCases
+                .firstIndex(of: CardConfirmationType(rawValue: selectedCardConfirmationType)!)!,
+            didSelectIndex: selectCardConfirmationType(at:)
+        )
+        view.addSubview(picker)
+        NSLayoutConstraint.activate(constraints, for: picker)
+        return picker
+    }()
 
     var selectedLanguage: Language {
         Settings.selectedLanguage
     }
+    
+    var selectedCardConfirmationType: CardConfirmationType.RawValue {
+        Settings.selectedCardConfirmationType
+    }
 
     @objc private func showLanguageSelection(_: UIButton) {
         languagePicker.setHidden(false)
+    }
+    
+    @objc private func showCardConfirmationTypeSelection(_: UIButton) {
+        cardConfirmationTypePicker.setHidden(false)
     }
 
     override func viewDidLoad() {
@@ -138,6 +173,8 @@ class SettingsViewController: UIViewController {
         customerIDTextField.inputAccessoryView = UIToolbar.doneKeyboardButton(target: self, action: #selector(saveCustomerID))
         languageButton.setTitle(selectedLanguage.rawValue, for: .normal)
         languageButton.addTarget(self, action: #selector(showLanguageSelection(_:)), for: .touchUpInside)
+        cardConfirmationTypeButton.addTarget(self, action: #selector(showCardConfirmationTypeSelection(_:)), for: .touchUpInside)
+        
         view.addGestureRecognizer(
             UITapGestureRecognizer(target: self, action: #selector(resignFirstResponders(_:)))
         )
@@ -145,6 +182,7 @@ class SettingsViewController: UIViewController {
         customerIDLabel.text = String(format: "%06d", delegate.customerID)
         phoneNumberLabel.text = delegate.phoneNumber ?? "Not Configured"
         selectLanguage(at: Language.allCases.firstIndex(of: selectedLanguage)!)
+        selectCardConfirmationType(at: CardConfirmationType.allCases.firstIndex(of: CardConfirmationType(rawValue: selectedCardConfirmationType)!)!)
         applicationVersionLabel.text = NPIPiaSemanticVersionString
 
         testModeSwitch.isOn = Merchant.isTestMode
@@ -181,9 +219,16 @@ class SettingsViewController: UIViewController {
         languageButton.setTitle(selectedLanguage.rawValue, for: .normal)
         languagePicker.setHidden(true)
     }
+    
+    private func selectCardConfirmationType(at index: Int) {
+        Settings.selectedCardConfirmationType = CardConfirmationType.allCases[index].rawValue
+        cardConfirmationTypeButton.setTitle(selectedCardConfirmationType, for: .normal)
+        cardConfirmationTypePicker.setHidden(true)
+    }
 
     @objc private func resignFirstResponders(_: UITapGestureRecognizer) {
-        languagePicker.setHidden(true)
+        [languagePicker, cardConfirmationTypePicker]
+            .forEach { $0.setHidden(true) }
     }
 
     @IBAction func didPressChangeCustomerID(_ sender: UIButton) {

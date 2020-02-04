@@ -16,6 +16,7 @@ enum PersistanceKey: String {
     case shouldUseSystemAuthentication = "com.piaSample.shouldSystemAuthentication"
     case isCardIOEnabled = "com.piaSample.isCardIOEnabled"
     case shouldDisableSavingCard = "com.piaSample.shouldDisableSavingCard"
+    case selectedCardConfirmationType = "com.piaSample.selectedCardConfirmationType"
 
     case customerID = "com.piaSample.customerID"
     case phoneNumber = "com.piaSample.phoneNumber"

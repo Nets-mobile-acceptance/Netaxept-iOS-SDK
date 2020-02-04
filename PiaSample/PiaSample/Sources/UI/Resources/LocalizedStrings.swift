@@ -38,6 +38,7 @@ extension String {
     static let messageOpenAppleWalletApp = "Please set up Apple Pay in the Wallet application"
     static let titleCannotOpenAppleWallet = "Can not open Apple Wallet"
     static let messageManuallyOpenAppleWallet = "Try manually opening the Wallet app"
+    static let titleApplePayShipping = "Shipping"
 
     static let actionCancel = "Cancel"
     static let actionSetup = "Set up"

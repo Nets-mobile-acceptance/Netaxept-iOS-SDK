@@ -53,7 +53,7 @@
                 <a class="nav-group-task-link" href="11-basic-payment-flow.html">1.1. Basic payment flow</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="12-easy-one-click-payment-flow.html">1.2. Easy (one click) payment flow</a>
+                <a class="nav-group-task-link" href="12-new--easy-one-click-payment-flow.html">1.2. [New !] Easy (one click) payment flow</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="13-recurring-payments.html">1.3. Recurring payments</a>
@@ -207,214 +207,154 @@
 <h2 id='prerequisite' class='heading'>Prerequisite</h2>
 
 <ul>
-<li>Get Apple Pay certificate with Netaxept CSR file</li>
-<li>Merchant account can make payment with Apple Pay</li>
-<li>Get merchant ID from Apple for Apple Pay</li>
+<li>Create Apple Pay merchant ID.</li>
+<li>Create a Payment Processing certificate.</li>
+<li>Enable Apple Pay in Xcode.</li>
 </ul>
 
-<p>For further information about getting Netaxept CSR certificate, please refer to the below files:</p>
+<p>For instructions on these Apple Pay setups, see: </p>
+
+<ul>
+<li><a href="https://developer.apple.com/documentation/passkit/apple_pay/setting_up_apple_pay_requirements">Apple&rsquo;s documentation</a></li>
+<li><a href="https://developer.apple.com/videos/play/tutorials/configuring-your-developer-account-for-apple-pay/">Video instructions by Apple</a></li>
+<li><a href="https://developer.apple.com/apple-pay/sandbox-testing/">Apple Pay Sandbox Testing</a></li>
+</ul>
+
+<p>Apple servers use the certificate to encrypt payment data and Netaxept to decrypt and process payment.<br>
+For further information about getting Netaxept CSR certificate, please refer to files below:</p>
 
 <p><a href="Resources/ApplePayFlow.pptx">Netaxept - Apple Pay Payment Flow</a></p>
 
-<p><a href="Resources/Netaxept_ApplePay_GetStartedGuide_EN_V0.45.pdf">Netaxept - Apple Pay Integration doc</a></p>
+<p><a href="Resources/Netaxept_ApplePay_GetStartedGuide_EN_V0.45_Modified.pdf">Netaxept - Apple Pay Integration doc</a></p>
 <h2 id='step-by-step-process' class='heading'>Step-by-step process</h2>
 
 <ol>
 <li>In your <a href="http://developer.apple.com/">Apple Developer Account</a> site,  get your Merchant ID (not your Netaxept Merchant ID).</li>
-<li>In your <a href="https://epayment.nets.eu/admin">Netaxept ADMIN</a> site, get Apple Pay certificate by following instructions there.</li>
+<li>In your <a href="https://epayment.nets.eu/admin">Netaxept ADMIN</a> site, get Apple Pay certificate following the instructions given.</li>
 <li>In your project, enable Apple Pay capability with the correct Apple Pay Merchant ID you just created.</li>
-<li>Navigate to where you store Apple Pay certificate gotten from 1st step, double click to enable your keychain.</li>
-<li>Getting started with below instructions.</li>
+<li>Navigate to your Apple Pay certificate obtained in step 1 and add the certificate to KeyChain (e.g. by double-clicking the file).</li>
+<li>Use Pia SDK for Apple Pay according to the development guide shown below and in the PiaSample project.</li>
 </ol>
-<h2 id='apple-pay-normal-checkout-and-express-checkout-overview' class='heading'>Apple Pay - Normal Checkout and Express Checkout overview</h2>
+<h2 id='apple-pay-checkout-overview' class='heading'>Apple Pay - Checkout Overview</h2>
 
-<table><thead>
-<tr>
-<th style="text-align: center">Normal Checkout</th>
-<th style="text-align: center">Express Checkout</th>
-</tr>
-</thead><tbody>
-<tr>
-<td style="text-align: center"><img src="./Resources/Normal.gif" alt=""></td>
-<td style="text-align: center"><img src="./Resources/Express.gif" alt=""></td>
-</tr>
-</tbody></table>
-<h2 id='apple-pay-normal-checkout-with-pia-sdk' class='heading'>Apple Pay (Normal Checkout) with PiA SDK</h2>
+<p><img src="./Resources/ApplePay.gif" alt="">  </p>
+<h2 id='apple-pay-with-pia-sdk' class='heading'>Apple Pay with PiA SDK</h2>
+<h3 id='step-1-check-apple-pay-support' class='heading'>Step 1: Check Apple Pay Support</h3>
 
-<p>Apple Pay transaction flow is similar to other card schemes&rsquo; flows with <strong>PiA SDK</strong>. Thus, in order to initialize Apple Pay transaction <code><a href="Classes/PiaSDKController.html">PiaSDKController</a></code> should be instantiated with the following parameters:</p>
+<p>First, check if Apple Pay is supported by the device or that user is not restricted to use Apple Pay due to e.g. Parental control settings. 
+The app should also check supported networks which user can make payments through. </p>
+<pre class="highlight swift"><code><span class="c1">/// Apple's UI design guidelines encourage checking this condition </span>
+<span class="c1">/// before displaying 'Buy with  Pay' button. </span>
+<span class="k">guard</span> <span class="kt">PKPaymentAuthorizationViewController</span><span class="o">.</span><span class="nf">canMakePayments</span><span class="p">()</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="c1">// Not supported on device / User is restricted</span>
+<span class="p">}</span>
 
-<ul>
-<li><code><a href="Classes/NPIApplePayInfo.html">NPIApplePayInfo</a></code> - Required information for Apple Pay transaction</li>
-</ul>
-
-<p>The code snippet below is the minimum requirement for Apple Pay:</p>
-<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">applePayMerchantID</span> <span class="o">=</span> <span class="s">"YOUR APPLE PAY MERCHANT ID"</span>
-<span class="k">let</span> <span class="nv">applePayItemDisplayName</span> <span class="o">=</span> <span class="s">"YOUR ITEM/ORDER NAME"</span>
-<span class="k">let</span> <span class="nv">applePayMerchantDisplayName</span> <span class="o">=</span> <span class="s">"YOUR MERCHANT DISPLAY NAME"</span>
-<span class="k">let</span> <span class="nv">applePayItemCost</span> <span class="o">=</span> <span class="kt">NSDecimalNumber</span><span class="p">(</span><span class="nv">value</span><span class="p">:</span> <span class="mi">8</span><span class="p">)</span>
-<span class="k">let</span> <span class="nv">applePayItemShippingCost</span> <span class="o">=</span> <span class="kt">NSDecimalNumber</span><span class="p">(</span><span class="nv">value</span><span class="p">:</span> <span class="mi">2</span><span class="p">)</span>
-<span class="k">let</span> <span class="nv">currencyCode</span> <span class="o">=</span> <span class="s">"EUR"</span>
-<span class="k">let</span> <span class="nv">supportedPaymentNetworks</span> <span class="p">:[</span><span class="kt">PKPaymentNetwork</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="o">.</span><span class="n">visa</span><span class="p">,</span> <span class="o">.</span><span class="n">masterCard</span><span class="p">,</span> <span class="o">.</span><span class="n">discover</span><span class="p">,</span> <span class="o">.</span><span class="n">amex</span><span class="p">]</span>
-
-
-<span class="k">let</span> <span class="nv">applePayInfo</span> <span class="o">=</span> <span class="kt">NPIApplePayInfo</span><span class="p">(</span><span class="nv">applePayMerchantID</span><span class="p">:</span> <span class="n">applePayMerchantID</span><span class="p">,</span> <span class="nv">applePayItemDisplayName</span><span class="p">:</span> <span class="n">applePayItemDisplayName</span><span class="p">,</span> <span class="nv">applePayMerchantDisplayName</span><span class="p">:</span> <span class="n">applePayMerchantDisplayName</span><span class="p">,</span> <span class="nv">applePayItemCost</span><span class="p">:</span> <span class="n">applePayItemCost</span><span class="p">,</span> <span class="nv">applePayItemShippingCost</span><span class="p">:</span> <span class="n">applePayItemShippingCost</span><span class="p">,</span> <span class="nv">currencyCode</span><span class="p">:</span> <span class="n">currencyCode</span><span class="p">,</span> <span class="nv">applePayShippingInfo</span><span class="p">:</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">usingExpressCheckout</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span> <span class="nv">supportedPaymentNetworks</span><span class="p">:</span> <span class="n">supportedPaymentNetworks</span><span class="p">)</span>
-
-<span class="k">let</span> <span class="nv">piaSDK</span> <span class="o">=</span> <span class="kt">PiaSDKController</span><span class="p">(</span><span class="nv">merchantInfo</span><span class="p">:</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">orderInfo</span><span class="p">:</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">tokenCardInfo</span><span class="p">:</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">applePayInfo</span><span class="p">:</span> <span class="n">applePayInfo</span><span class="p">)</span>
-<span class="n">piaSDK</span><span class="o">.</span><span class="n">piaDelegate</span> <span class="o">=</span> <span class="k">self</span>
-
-<span class="k">self</span><span class="o">.</span><span class="nf">present</span><span class="p">(</span><span class="n">piaSDK</span><span class="p">,</span> <span class="nv">animated</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nv">completion</span><span class="p">:</span> <span class="kc">nil</span><span class="p">)</span>
+<span class="k">guard</span> <span class="kt">PKPaymentAuthorizationViewController</span><span class="o">.</span><span class="nf">canMakePayments</span><span class="p">(</span>
+    <span class="nv">usingNetworks</span><span class="p">:</span> <span class="n">supportedApplePayNetworks</span><span class="p">)</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="nf">presentAppleWalletSetupEnquiry</span><span class="p">()</span>
+        <span class="k">return</span>
+<span class="p">}</span>
 </code></pre>
 
-<p>Besides, <strong>PiA SDK</strong> can support shipping information <code><a href="Classes/NPIApplePayShippingInfo.html">NPIApplePayShippingInfo</a></code> if your order needs shipping information from users.</p>
-<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">shippingAddress</span> <span class="o">=</span> <span class="kt">CNMutablePostalAddress</span><span class="p">()</span>
-<span class="n">shippingAddress</span><span class="o">.</span><span class="n">city</span> <span class="o">=</span> <span class="s">"YOUR CITY"</span>
-<span class="n">shippingAddress</span><span class="o">.</span><span class="n">country</span> <span class="o">=</span> <span class="s">"YOUR COUNTRY"</span>
-<span class="n">shippingAddress</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="s">"YOUR STATE"</span>
-<span class="n">shippingAddress</span><span class="o">.</span><span class="n">postalCode</span> <span class="o">=</span> <span class="s">"YOUR POSTAL CODE"</span>
-<span class="n">shippingAddress</span><span class="o">.</span><span class="n">street</span> <span class="o">=</span> <span class="s">"YOUR STREET ADDRESS"</span>
-
-<span class="k">let</span> <span class="nv">fullName</span> <span class="o">=</span> <span class="kt">NSPersonNameComponents</span><span class="p">()</span>
-<span class="n">fullName</span><span class="o">.</span><span class="n">familyName</span> <span class="o">=</span> <span class="s">"YOUR FAMILY NAME"</span>
-<span class="n">fullName</span><span class="o">.</span><span class="n">givenName</span> <span class="o">=</span> <span class="s">"YOUR FIRST NAME"</span>
-
-<span class="k">let</span> <span class="nv">phoneNumber</span> <span class="o">=</span> <span class="kt">CNPhoneNumber</span><span class="p">(</span><span class="nv">stringValue</span><span class="p">:</span> <span class="s">"YOUR PHONE NUMBER"</span><span class="p">)</span>
-
-<span class="k">let</span> <span class="nv">email</span> <span class="o">=</span> <span class="s">"YOUR EMAIL"</span>
-
-<span class="k">let</span> <span class="nv">applePayShippingInfo</span> <span class="o">=</span> <span class="kt">NPIApplePayShippingInfo</span><span class="p">(</span><span class="nv">shippingAddress</span><span class="p">:</span> <span class="n">shippingAddress</span><span class="p">,</span> <span class="nv">fullName</span><span class="p">:</span> <span class="n">fullName</span> <span class="k">as</span> <span class="kt">PersonNameComponents</span><span class="p">,</span> <span class="nv">email</span><span class="p">:</span> <span class="n">email</span><span class="p">,</span> <span class="nv">phoneNumber</span><span class="p">:</span> <span class="n">phoneNumber</span><span class="p">)</span>
-
-<span class="k">let</span> <span class="nv">applePayMerchantID</span> <span class="o">=</span> <span class="s">"YOUR APPLE PAY MERCHANT ID"</span>
-<span class="k">let</span> <span class="nv">applePayItemDisplayName</span> <span class="o">=</span> <span class="s">"YOUR ITEM/ORDER NAME"</span>
-<span class="k">let</span> <span class="nv">applePayMerchantDisplayName</span> <span class="o">=</span> <span class="s">"YOUR MERCHANT DISPLAY NAME"</span>
-<span class="k">let</span> <span class="nv">applePayItemCost</span> <span class="o">=</span> <span class="kt">NSDecimalNumber</span><span class="p">(</span><span class="nv">value</span><span class="p">:</span> <span class="mi">8</span><span class="p">)</span>
-<span class="k">let</span> <span class="nv">applePayItemShippingCost</span> <span class="o">=</span> <span class="kt">NSDecimalNumber</span><span class="p">(</span><span class="nv">value</span><span class="p">:</span> <span class="mi">2</span><span class="p">)</span>
-<span class="k">let</span> <span class="nv">currencyCode</span> <span class="o">=</span> <span class="s">"EUR"</span>
-<span class="k">let</span> <span class="nv">supportedPaymentNetworks</span> <span class="p">:[</span><span class="kt">PKPaymentNetwork</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="o">.</span><span class="n">visa</span><span class="p">,</span> <span class="o">.</span><span class="n">masterCard</span><span class="p">,</span> <span class="o">.</span><span class="n">discover</span><span class="p">,</span> <span class="o">.</span><span class="n">amex</span><span class="p">]</span>               
-
-<span class="k">let</span> <span class="nv">applePayInfo</span> <span class="o">=</span> <span class="kt">NPIApplePayInfo</span><span class="p">(</span><span class="nv">applePayMerchantID</span><span class="p">:</span> <span class="n">applePayMerchantID</span><span class="p">,</span> <span class="nv">applePayItemDisplayName</span><span class="p">:</span> <span class="n">applePayItemDisplayName</span><span class="p">,</span> <span class="nv">applePayMerchantDisplayName</span><span class="p">:</span> <span class="n">applePayMerchantDisplayName</span><span class="p">,</span> <span class="nv">applePayItemCost</span><span class="p">:</span> <span class="n">applePayItemCost</span><span class="p">,</span> <span class="nv">applePayItemShippingCost</span><span class="p">:</span> <span class="n">applePayItemShippingCost</span><span class="p">,</span> <span class="nv">currencyCode</span><span class="p">:</span> <span class="n">currencyCode</span><span class="p">,</span> <span class="nv">applePayShippingInfo</span><span class="p">:</span> <span class="n">applePayShippingInfo</span><span class="p">,</span> <span class="nv">usingExpressCheckout</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span> <span class="nv">supportedPaymentNetworks</span><span class="p">:</span> <span class="n">supportedPaymentNetworks</span><span class="p">)</span>
-
-<span class="k">let</span> <span class="nv">piaSDK</span> <span class="o">=</span> <span class="kt">PiaSDKController</span><span class="p">(</span><span class="nv">merchantInfo</span><span class="p">:</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">orderInfo</span><span class="p">:</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">tokenCardInfo</span><span class="p">:</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">applePayInfo</span><span class="p">:</span> <span class="n">applePayInfo</span><span class="p">)</span>
-<span class="n">piaSDK</span><span class="o">.</span><span class="n">piaDelegate</span> <span class="o">=</span> <span class="k">self</span>
-
-<span class="k">self</span><span class="o">.</span><span class="nf">present</span><span class="p">(</span><span class="n">piaSDK</span><span class="p">,</span> <span class="nv">animated</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nv">completion</span><span class="p">:</span> <span class="kc">nil</span><span class="p">)</span>
-</code></pre>
-<h2 id='apple-pay-express-checkout-with-pia-sdk' class='heading'>Apple Pay (Express Checkout) with PiA SDK</h2>
-
-<p>The mentioned above flow is the <strong>Normal Checkout</strong> with Apple Pay provided by <strong>PiA SDK</strong>. However, <strong>PiA SDK</strong> also provides one extra fast checkout flow, <strong>Express Checkout</strong>. If you wish to use the Express Checkout for Apple Pay, set this variable <code>usingExpressCheckout</code> to <strong>true</strong>.</p>
-<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">applePayInfo</span> <span class="o">=</span> <span class="kt">NPIApplePayInfo</span><span class="p">(</span><span class="nv">applePayMerchantID</span><span class="p">:</span> <span class="n">applePayMerchantID</span><span class="p">,</span> <span class="nv">applePayItemDisplayName</span><span class="p">:</span> <span class="n">applePayItemDisplayName</span><span class="p">,</span> <span class="nv">applePayMerchantDisplayName</span><span class="p">:</span> <span class="n">applePayMerchantDisplayName</span><span class="p">,</span> <span class="nv">applePayItemCost</span><span class="p">:</span> <span class="n">applePayItemCost</span><span class="p">,</span> <span class="nv">applePayItemShippingCost</span><span class="p">:</span> <span class="n">applePayItemShippingCost</span><span class="p">,</span> <span class="nv">currencyCode</span><span class="p">:</span> <span class="n">currencyCode</span><span class="p">,</span> <span class="nv">applePayShippingInfo</span><span class="p">:</span> <span class="n">applePayShippingInfo</span><span class="p">,</span> <span class="nv">usingExpressCheckout</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nv">supportedPaymentNetworks</span><span class="p">:</span> <span class="n">supportedPaymentNetworks</span><span class="p">)</span>
-</code></pre>
-<h2 id='delegation' class='heading'>Delegation</h2>
-
-<p>As mentioned above, Apple Pay transaction will be handled as other cards&rsquo; transaction. The below list is the delegations you need to conform for Apple Pay transaction:</p>
-<pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">registerPayment</span><span class="p">(</span><span class="n">withApplePayData</span> <span class="kt">PiaSDKController</span><span class="p">:</span> <span class="kt">PiaSDKController</span><span class="p">,</span> <span class="nv">paymentData</span><span class="p">:</span> <span class="kt">PKPaymentToken</span><span class="p">,</span> <span class="nv">newShippingContact</span><span class="p">:</span> <span class="kt">PKContact</span><span class="p">?,</span> <span class="n">withCompletion</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">NPITransactionInfo</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span>
-
-<span class="kd">func</span> <span class="nf">piaSDK</span><span class="p">(</span><span class="n">_</span> <span class="kt">PiaSDK</span><span class="p">:</span> <span class="kt">PiaSDKController</span><span class="p">,</span> <span class="n">didFailWithError</span> <span class="nv">error</span><span class="p">:</span> <span class="kt">NPIError</span><span class="p">)</span>
-
-<span class="kd">func</span> <span class="nf">piaSDKDidComplete</span><span class="p">(</span><span class="n">withSuccess</span> <span class="kt">PiaSDK</span><span class="p">:</span> <span class="kt">PiaSDKController</span><span class="p">)</span>
-
-<span class="kd">func</span> <span class="nf">piaSDKDidCancel</span><span class="p">(</span><span class="n">_</span> <span class="kt">PiaSDK</span><span class="p">:</span> <span class="kt">PiaSDKController</span><span class="p">)</span>
-</code></pre>
-
-<p><strong>NOTE:</strong> If you wish to support Shipping Address with Apple Pay, remember to conform to this (optional) delegate.</p>
-<pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">piaSDK</span><span class="p">(</span><span class="n">_</span> <span class="kt">PiaSDKController</span><span class="p">:</span> <span class="kt">PiaSDKController</span><span class="p">,</span> <span class="n">didChangeApplePayShippingContact</span> <span class="nv">contact</span><span class="p">:</span> <span class="kt">PKContact</span><span class="p">,</span> <span class="n">withCompletion</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Bool</span><span class="p">,</span> <span class="kt">NSDecimalNumber</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span>
-</code></pre>
-
-<p>Besides, if you allow the changes for Shipping Address from users, the new full address of users will be returned in <strong>registerPayment delegate</strong> <em>ONLY IF users authorized themselves with Apple Pay</em>.</p>
-<h2 id='processing-apple-pay-payment-token-example' class='heading'>Processing Apple Pay Payment Token (example)</h2>
-
-<p>Apple Pay payment registration with merchant backend is very similar to card payment registration. The sample backend expects the same <code>RegistrationRequest</code> http request body. 
-In addition to order details, ApplePay registration requires a token <code>PKPaymentToken</code> which the sample backend expects under  <code>paymentData</code> field of the request body.  </p>
-
-<p>The following example shows handling of the registration request followed by conversion of <code>PKPaymentToken</code> to merchant-expected format below. </p>
+<p>If the user does not have a supported card for the payment, the application may lead user to a different payment method or
+open <em>Wallet</em> app so that the user can add a card in <em>Wallet</em> as follows:</p>
 <pre class="highlight swift"><code>
-<span class="c1">// MARK: PiaSDK Delegate - ApplePay registration</span>
+<span class="c1">//  MARK: Apple Wallet Setup</span>
 
-<span class="kd">func</span> <span class="nf">registerPayment</span><span class="p">(</span>
-    <span class="n">withApplePayData</span> <span class="nv">piaController</span><span class="p">:</span> <span class="kt">PiaSDKController</span><span class="p">,</span>
-    <span class="nv">paymentData</span><span class="p">:</span> <span class="kt">PKPaymentToken</span><span class="p">,</span>
-    <span class="nv">newShippingContact</span><span class="p">:</span> <span class="kt">PKContact</span><span class="p">?,</span>
-    <span class="n">withCompletion</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">NPITransactionInfo</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span> <span class="p">{</span>
-
-    <span class="c1">// Update shipping details (incase user has changed it)</span>
-    <span class="n">shippingDetails</span><span class="o">.</span><span class="n">latestShippingContact</span> <span class="o">=</span> <span class="n">newShippingContact</span>
-
-    <span class="c1">// Create a registration request body with order and payment details</span>
-    <span class="c1">// The sample backend identifies ApplePay with its method ID:</span>
-    <span class="c1">// `PaymentMethodID(id: "ApplePay", displayName: "Apple Pay", fee: 0)`</span>
-    <span class="k">var</span> <span class="nv">requestBody</span><span class="p">:</span> <span class="kt">RegistrationRequest</span> <span class="c1">// see section: Backend Models (1.1)</span>
-
-    <span class="c1">// Set the token in the merchant-expected format</span>
-    <span class="n">requestBody</span><span class="o">.</span><span class="n">paymentData</span> <span class="o">=</span> <span class="n">paymentData</span><span class="o">.</span><span class="n">merchantBackendFormat</span>
-
-    <span class="kt">URLSession</span><span class="o">.</span><span class="n">shared</span><span class="o">.</span><span class="nf">makeRegisterRequest</span><span class="p">(</span><span class="nv">with</span><span class="p">:</span> <span class="n">requestBody</span><span class="p">)</span> <span class="p">{</span> <span class="n">transaction</span> <span class="k">in</span>
-        <span class="k">guard</span> <span class="k">let</span> <span class="nv">transaction</span> <span class="o">=</span> <span class="n">transaction</span> <span class="k">else</span> <span class="p">{</span>
-            <span class="k">return</span> <span class="c1">// handle error</span>
+<span class="kd">func</span> <span class="nf">presentAppleWalletSetupEnquiry</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="nv">alert</span> <span class="o">=</span> <span class="kt">UIAlertController</span><span class="p">(</span>
+        <span class="nv">title</span><span class="p">:</span> <span class="o">.</span><span class="n">titleAppleWalletNotSetup</span><span class="p">,</span>
+        <span class="nv">message</span><span class="p">:</span> <span class="o">.</span><span class="n">messageOpenAppleWalletApp</span><span class="p">,</span>
+        <span class="nv">preferredStyle</span><span class="p">:</span> <span class="o">.</span><span class="n">alert</span><span class="p">)</span>
+    <span class="k">let</span> <span class="nv">cancel</span> <span class="o">=</span> <span class="kt">UIAlertAction</span><span class="p">(</span><span class="nv">title</span><span class="p">:</span> <span class="o">.</span><span class="n">actionCancel</span><span class="p">,</span> <span class="nv">style</span><span class="p">:</span> <span class="o">.</span><span class="n">cancel</span><span class="p">,</span> <span class="nv">handler</span><span class="p">:</span> <span class="kc">nil</span><span class="p">)</span>
+    <span class="k">let</span> <span class="nv">openWalletsApp</span> <span class="o">=</span> <span class="kt">UIAlertAction</span><span class="p">(</span><span class="nv">title</span><span class="p">:</span> <span class="o">.</span><span class="n">actionSetup</span><span class="p">,</span> <span class="nv">style</span><span class="p">:</span> <span class="o">.</span><span class="k">default</span><span class="p">)</span> <span class="p">{</span> <span class="n">_</span> <span class="k">in</span>
+        <span class="k">if</span> <span class="k">let</span> <span class="nv">walletAppURL</span> <span class="o">=</span> <span class="kt">URL</span><span class="p">(</span><span class="nv">string</span><span class="p">:</span> <span class="s">"shoebox://url-scheme"</span><span class="p">),</span>
+            <span class="kt">UIApplication</span><span class="o">.</span><span class="n">shared</span><span class="o">.</span><span class="nf">canOpenURL</span><span class="p">(</span><span class="n">walletAppURL</span><span class="p">)</span> <span class="p">{</span>
+            <span class="kt">UIApplication</span><span class="o">.</span><span class="n">shared</span><span class="o">.</span><span class="nf">openURL</span><span class="p">(</span><span class="n">walletAppURL</span><span class="p">)</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="k">self</span><span class="o">.</span><span class="n">navigationController</span><span class="o">.</span><span class="nf">showAlert</span><span class="p">(</span>
+                <span class="nv">title</span><span class="p">:</span> <span class="o">.</span><span class="n">titleCannotOpenAppleWallet</span><span class="p">,</span>
+                <span class="nv">message</span><span class="p">:</span> <span class="o">.</span><span class="n">messageManuallyOpenAppleWallet</span><span class="p">)</span>
         <span class="p">}</span>
-
-        <span class="c1">// Grab the transaction ID, its used to later commit/rollback the registration</span>
-        <span class="c1">// The SDK will callback the delegate with success/error result</span>
-        <span class="c1">// Customer app is responsible for displaying the result to user</span>
-        <span class="k">self</span><span class="o">.</span><span class="n">transaction</span> <span class="o">=</span> <span class="n">transaction</span>
-
-        <span class="c1">// Notify Pia SDK with registration result</span>
-        <span class="nf">completionHandler</span><span class="p">(</span><span class="kt">NPITransactionInfo</span><span class="p">(</span>
-            <span class="nv">transactionID</span><span class="p">:</span> <span class="n">transaction</span><span class="o">.</span><span class="n">transactionId</span><span class="p">,</span>
-            <span class="nv">redirectUrl</span><span class="p">:</span> <span class="n">transaction</span><span class="o">.</span><span class="n">redirectOK</span><span class="p">))</span>
     <span class="p">}</span>
+    <span class="p">[</span><span class="n">cancel</span><span class="p">,</span> <span class="n">openWalletsApp</span><span class="p">]</span><span class="o">.</span><span class="nf">forEach</span><span class="p">(</span><span class="n">alert</span><span class="o">.</span><span class="nf">addAction</span><span class="p">(</span><span class="nv">_</span><span class="p">:))</span>
+    <span class="k">self</span><span class="o">.</span><span class="n">navigationController</span><span class="o">.</span><span class="nf">present</span><span class="p">(</span><span class="n">alert</span><span class="p">,</span> <span class="nv">animated</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nv">completion</span><span class="p">:</span> <span class="kc">nil</span><span class="p">)</span>
 <span class="p">}</span>
-
 </code></pre>
+<h3 id='step-2-present-apple-pay-payment-authorization-sheet' class='heading'>Step 2: Present Apple Pay Payment Authorization Sheet</h3>
 
-<p>Net&rsquo;s sample backend expects the <code>PKPaymentToken</code> converted to string under <code>paymentData</code> field in the registration request. 
-The following example shows converting a <code>PKPaymentToken</code> object to a string token which is passed to the sample merchant backend in registration request:</p>
-<pre class="highlight swift"><code>
-<span class="c1">// Converting `PKPaymentToken` to a `String` formatted for </span>
-<span class="c1">// Net's sample merchant backend. (reference on encoding `PKPaymentToken`)</span>
+<p>Start by creating a payment request (an instance of <code>PKPaymentRequest</code> from Apple&rsquo;s PassKit framework) using PiaSDK&rsquo;s helper. 
+The helper covers all the mandatory parameters for a valid payment request. Based on the requirements of an application, 
+the request can be modified to include more information. e.g. The sample app further modifies the request by including 
+shipping address in the payment request. </p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">request</span> <span class="o">=</span> <span class="kt">PiaSDK</span><span class="o">.</span><span class="nf">makeApplePayPaymentRequest</span><span class="p">(</span>
+    <span class="nv">for</span><span class="p">:</span> <span class="n">supportedApplePayNetworks</span><span class="p">,</span>
+    <span class="nv">countryCode</span><span class="p">:</span> <span class="s">"NO"</span><span class="p">,</span> <span class="c1">// Norway</span>
+    <span class="nv">applePayMerchantID</span><span class="p">:</span> <span class="s">"ApplePay merchant ID"</span><span class="p">,</span>
+    <span class="nv">merchantCapabilities</span><span class="p">:</span> <span class="o">.</span><span class="n">capability3DS</span><span class="p">,</span>
+    <span class="nv">currencyCode</span><span class="p">:</span> <span class="s">"EUR"</span><span class="p">,</span>
+    <span class="nv">summeryItems</span><span class="p">:</span> <span class="p">[</span>
+        <span class="kt">PKPaymentSummaryItem</span><span class="p">(</span><span class="nv">label</span><span class="p">:</span> <span class="s">"Item name"</span><span class="p">,</span> <span class="nv">amount</span><span class="p">:</span> <span class="n">itemCost</span><span class="p">)</span>
+    <span class="p">]</span>
+<span class="p">)</span>
 
-<span class="kd">extension</span> <span class="kt">PKPaymentToken</span> <span class="p">{</span>
-    <span class="c1">/// Returns a string representation of the token formatted to fit </span>
-    <span class="c1">/// Net's sample merchant backend expectation.</span>
-    <span class="c1">/// This token is set in the registration request: `RegistrationRequest.paymentData`</span>
-    <span class="c1">/// and encoded in the URL request http body. </span>
-    <span class="k">var</span> <span class="nv">merchantBackendFormat</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span>
-        <span class="kd">struct</span> <span class="kt">TokenWrapper</span><span class="p">:</span> <span class="kt">Encodable</span> <span class="p">{</span>
-            <span class="k">let</span> <span class="nv">paymentMethod</span><span class="p">:</span> <span class="kt">PaymentMethod</span>
-            <span class="k">let</span> <span class="nv">paymentData</span><span class="p">:</span> <span class="kt">String</span>
-            <span class="k">let</span> <span class="nv">transactionIdentifier</span><span class="p">:</span> <span class="kt">String</span>
-        <span class="p">}</span>
-
-        <span class="kd">struct</span> <span class="kt">PaymentMethod</span><span class="p">:</span> <span class="kt">Encodable</span> <span class="p">{</span>
-            <span class="k">let</span> <span class="nv">network</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span>
-            <span class="k">let</span> <span class="nv">type</span><span class="p">:</span> <span class="kt">String</span>
-            <span class="k">let</span> <span class="nv">displayName</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span>
-        <span class="p">}</span>
-
-        <span class="k">let</span> <span class="nv">method</span> <span class="o">=</span> <span class="kt">PaymentMethod</span><span class="p">(</span>
-            <span class="nv">network</span><span class="p">:</span> <span class="n">paymentMethod</span><span class="o">.</span><span class="n">network</span><span class="p">?</span><span class="o">.</span><span class="n">rawValue</span><span class="p">,</span>
-            <span class="nv">type</span><span class="p">:</span> <span class="s">"</span><span class="se">\(</span><span class="n">paymentMethod</span><span class="o">.</span><span class="n">type</span><span class="se">)</span><span class="s">"</span><span class="p">,</span>
-            <span class="nv">displayName</span><span class="p">:</span> <span class="n">paymentMethod</span><span class="o">.</span><span class="n">displayName</span><span class="p">)</span>
-
-        <span class="k">let</span> <span class="nv">wrappedToken</span> <span class="o">=</span> <span class="kt">TokenWrapper</span><span class="p">(</span>
-            <span class="nv">paymentMethod</span><span class="p">:</span> <span class="n">method</span><span class="p">,</span>
-            <span class="nv">paymentData</span><span class="p">:</span> <span class="s">""</span><span class="p">,</span>
-            <span class="nv">transactionIdentifier</span><span class="p">:</span> <span class="n">transactionIdentifier</span><span class="p">)</span>
-
-        <span class="k">return</span> <span class="kt">String</span><span class="p">(</span><span class="nv">data</span><span class="p">:</span> <span class="k">try!</span> <span class="kt">JSONEncoder</span><span class="p">()</span><span class="o">.</span><span class="nf">encode</span><span class="p">(</span><span class="n">wrappedToken</span><span class="p">),</span> <span class="nv">encoding</span><span class="p">:</span> <span class="o">.</span><span class="n">utf8</span><span class="p">)</span><span class="o">!</span>
-    <span class="p">}</span>
+<span class="k">guard</span> <span class="k">let</span> <span class="nv">controller</span> <span class="o">=</span> <span class="kt">PKPaymentAuthorizationViewController</span><span class="p">(</span><span class="nv">paymentRequest</span><span class="p">:</span> <span class="n">request</span><span class="p">)</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="k">return</span>
 <span class="p">}</span>
 
-<span class="kd">extension</span> <span class="kt">PKPaymentMethodType</span><span class="p">:</span> <span class="kt">CustomStringConvertible</span> <span class="p">{</span>
-    <span class="kd">public</span> <span class="k">var</span> <span class="nv">description</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span>
-        <span class="k">switch</span> <span class="k">self</span> <span class="p">{</span>
-        <span class="k">case</span> <span class="o">.</span><span class="nv">credit</span><span class="p">:</span> <span class="k">return</span> <span class="s">"credit"</span>
-        <span class="k">case</span> <span class="o">.</span><span class="nv">debit</span><span class="p">:</span> <span class="k">return</span> <span class="s">"debit"</span>
-        <span class="k">case</span> <span class="o">.</span><span class="nv">prepaid</span><span class="p">:</span> <span class="k">return</span> <span class="s">"prepaid"</span>
-        <span class="k">case</span> <span class="o">.</span><span class="nv">store</span><span class="p">:</span> <span class="k">return</span> <span class="s">"store"</span>
-        <span class="k">default</span><span class="p">:</span> <span class="k">return</span> <span class="s">"unknown"</span>
+<span class="n">controller</span><span class="o">.</span><span class="n">delegate</span> <span class="o">=</span> <span class="k">self</span> 
+<span class="nf">present</span><span class="p">(</span><span class="n">controller</span><span class="p">,</span> <span class="nv">animated</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nv">completion</span><span class="p">:</span> <span class="kc">nil</span><span class="p">)</span>
+</code></pre>
+<h3 id='step-3-implement-the-payment-authorization-delegate' class='heading'>Step 3: Implement The Payment Authorization Delegate</h3>
+
+<p>The next step is to implement the two required delegate methods in <code>PKPaymentAuthorizationViewControllerDelegate</code>. 
+Following user&rsquo;s approval to proceed with the payment, <code>didAuthorizePayment</code> delegate method is called with the payment 
+object (an instance of <code>PKPayment</code>). Pia SDK provides a helper to obtain a token (UTF-8 string) parsing this object into the accepted 
+format by Netaxept SOAP API. Pass this payment data to your merchant backend and essentially to Netaxept. </p>
+
+<p>The sample app implements the delegate method as follows: </p>
+<pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">paymentAuthorizationViewController</span><span class="p">(</span>
+    <span class="n">_</span> <span class="nv">controller</span><span class="p">:</span> <span class="kt">PKPaymentAuthorizationViewController</span><span class="p">,</span>
+    <span class="n">didAuthorizePayment</span> <span class="nv">payment</span><span class="p">:</span> <span class="kt">PKPayment</span><span class="p">,</span>
+    <span class="nv">completion</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">PKPaymentAuthorizationStatus</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span> <span class="p">{</span>
+
+    <span class="k">let</span> <span class="nv">token</span> <span class="o">=</span> <span class="kt">PiaSDK</span><span class="o">.</span><span class="nf">netaxeptSOAPPaymentData</span><span class="p">(</span><span class="nv">from</span><span class="p">:</span> <span class="n">payment</span><span class="o">.</span><span class="n">token</span><span class="p">)</span>
+
+    <span class="n">api</span><span class="o">.</span><span class="nf">registerApplePay</span><span class="p">(</span><span class="nv">for</span><span class="p">:</span> <span class="n">orderDetails</span><span class="p">,</span> <span class="nv">token</span><span class="p">:</span> <span class="n">token</span><span class="p">)</span> <span class="p">{</span> <span class="p">[</span><span class="k">weak</span> <span class="k">self</span><span class="p">]</span> <span class="n">result</span> <span class="k">in</span>
+        <span class="k">guard</span> <span class="k">case</span> <span class="o">.</span><span class="nf">success</span><span class="p">(</span><span class="k">let</span> <span class="nv">transaction</span><span class="p">)</span> <span class="o">=</span> <span class="n">result</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="k">self</span><span class="p">?</span><span class="o">.</span><span class="n">transaction</span> <span class="o">=</span> <span class="kc">nil</span>
+            <span class="nf">completion</span><span class="p">(</span><span class="kt">PKPaymentAuthorizationStatus</span><span class="o">.</span><span class="n">failure</span><span class="p">)</span>
+            <span class="k">return</span>
+        <span class="p">}</span>
+
+        <span class="k">self</span><span class="p">?</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="nf">commitTransaction</span><span class="p">(</span><span class="n">transaction</span><span class="o">.</span><span class="n">transactionId</span> <span class="p">,</span> <span class="nv">commitType</span><span class="p">:</span> <span class="o">.</span><span class="n">payment</span><span class="p">)</span> <span class="p">{</span> <span class="n">result</span> <span class="k">in</span>
+            <span class="k">switch</span> <span class="n">result</span> <span class="p">{</span>
+            <span class="k">case</span> <span class="o">.</span><span class="nf">success</span><span class="p">(</span><span class="n">_</span><span class="p">):</span>
+                <span class="k">self</span><span class="p">?</span><span class="o">.</span><span class="n">transaction</span> <span class="o">=</span> <span class="n">transaction</span>
+                <span class="nf">completion</span><span class="p">(</span><span class="o">.</span><span class="n">success</span><span class="p">)</span>
+            <span class="k">case</span> <span class="o">.</span><span class="nf">failure</span><span class="p">(</span><span class="n">_</span><span class="p">):</span>
+                <span class="k">self</span><span class="p">?</span><span class="o">.</span><span class="n">transaction</span> <span class="o">=</span> <span class="kc">nil</span>
+                <span class="nf">completion</span><span class="p">(</span><span class="o">.</span><span class="n">failure</span><span class="p">)</span>
+            <span class="p">}</span>
         <span class="p">}</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre>
+
+<p>Following invoking of the completion block in <code>didAuthorizePayment</code> delegate method, <code>PassKit</code> notifies completion 
+via <code>paymentAuthorizationViewControllerDidFinish</code> delegate call. The authorization payment sheet should be 
+dismissed in this delegate call. </p>
+<pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">paymentAuthorizationViewControllerDidFinish</span><span class="p">(</span><span class="n">_</span> <span class="nv">controller</span><span class="p">:</span> <span class="kt">PKPaymentAuthorizationViewController</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">defer</span> <span class="p">{</span> <span class="k">self</span><span class="o">.</span><span class="n">transaction</span> <span class="o">=</span> <span class="kc">nil</span> <span class="p">}</span>
+    <span class="n">controller</span><span class="o">.</span><span class="n">presentingViewController</span><span class="p">?</span><span class="o">.</span><span class="nf">dismiss</span><span class="p">(</span><span class="nv">animated</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nv">completion</span><span class="p">:</span> <span class="kc">nil</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>Note: This delegate is called directly (without <code>didAuthorizePayment</code> preceding delegate call) if user <em>cancels</em> payment
+in the payment authorization sheet. </p>
+
+<p>(If the payment process contains shipping contact address, its necessary to implement the associated delegate methods 
+in the protocol in order to adjust shipping cost accordingly)</p>
 
 <p>Note: Netaxept backend integration tips can be found in <em>5.4 Backend Tips</em>,  <em>Request body - Apple Pay payment registration</em> <a href="./54-backend-tips.html#request-body-apple-pay-payment-registration">section</a></p>
 
@@ -425,7 +365,7 @@ The following example shows converting a <code>PKPaymentToken</code> object to a
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2019 <a class="link" href="https://nets.eu" target="_blank" rel="external">Nets</a>. All rights reserved. (Last updated: 2019-12-02)</p>
+      <p>&copy; 2020 <a class="link" href="https://nets.eu" target="_blank" rel="external">Nets</a>. All rights reserved. (Last updated: 2020-02-04)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.0</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

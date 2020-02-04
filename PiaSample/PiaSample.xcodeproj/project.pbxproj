@@ -17,7 +17,7 @@
 		7547DB7F204FDF8000C280AC /* PiaSampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7547DB7E204FDF8000C280AC /* PiaSampleTests.swift */; };
 		7547DB8A204FDF8000C280AC /* PiaSampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7547DB89204FDF8000C280AC /* PiaSampleUITests.swift */; };
 		7554A34D2056BF7100773403 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		922283F814248F0C9C895DEE /* Pia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8E4D3E813C3F203EB583B5E /* Pia.framework */; };
+		8F70920321A0B2026BC3F3E2 /* Pia.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CD29178FC8E5E15AF8ABDC6D /* Pia.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A30AC93D237AC11E00B8FF62 /* SampleOrderDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30AC922237AC11E00B8FF62 /* SampleOrderDetails.swift */; };
 		A30AC93E237AC11E00B8FF62 /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30AC924237AC11E00B8FF62 /* SignupViewController.swift */; };
 		A30AC93F237AC11E00B8FF62 /* CheckoutController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30AC925237AC11E00B8FF62 /* CheckoutController.swift */; };
@@ -42,7 +42,8 @@
 		A30AC952237AC11E00B8FF62 /* APICoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30AC93B237AC11E00B8FF62 /* APICoding.swift */; };
 		A30AC953237AC11E00B8FF62 /* MerchantDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30AC93C237AC11E00B8FF62 /* MerchantDefaults.swift */; };
 		A30AC99A238D2C2B00B8FF62 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30AC999238D2C2B00B8FF62 /* Colors.swift */; };
-		C0668560C80D647B03090103 /* Pia.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C8E4D3E813C3F203EB583B5E /* Pia.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		A377E3D523CCA4990026F112 /* ApplePayIntegration.swift in Sources */ = {isa = PBXBuildFile; fileRef = A377E3D423CCA4990026F112 /* ApplePayIntegration.swift */; };
+		BAF0E66AAF8CF9EA86FD9540 /* Pia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD29178FC8E5E15AF8ABDC6D /* Pia.framework */; };
 		E5F4F8AE27E06C9EA567BCB2 /* Pods_PiaSampleUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EF911800CEB5C1F14FC0BF7 /* Pods_PiaSampleUITests.framework */; };
 		FB8389986800864C6F045126 /* Pods_PiaSampleTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F856BF6102DF1DFD0EC41584 /* Pods_PiaSampleTests.framework */; };
 /* End PBXBuildFile section */
@@ -71,7 +72,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				C0668560C80D647B03090103 /* Pia.framework in Embed Frameworks */,
+				8F70920321A0B2026BC3F3E2 /* Pia.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -142,7 +143,9 @@
 		A30AC93B237AC11E00B8FF62 /* APICoding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APICoding.swift; sourceTree = "<group>"; };
 		A30AC93C237AC11E00B8FF62 /* MerchantDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MerchantDefaults.swift; sourceTree = "<group>"; };
 		A30AC999238D2C2B00B8FF62 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
-		C8E4D3E813C3F203EB583B5E /* Pia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pia.framework; path = ../libs/Pia.framework; sourceTree = "<group>"; };
+		A377E3D423CCA4990026F112 /* ApplePayIntegration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplePayIntegration.swift; sourceTree = "<group>"; };
+		A377E41623DF2AAD0026F112 /* LICENSE.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = LICENSE.md; sourceTree = "<group>"; };
+		CD29178FC8E5E15AF8ABDC6D /* Pia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pia.framework; path = ../libs/Pia.framework; sourceTree = "<group>"; };
 		CFB2A9B99C45792A2B128C82 /* Pods-PiaSample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PiaSample.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PiaSample/Pods-PiaSample.debug.xcconfig"; sourceTree = "<group>"; };
 		F856BF6102DF1DFD0EC41584 /* Pods_PiaSampleTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PiaSampleTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -154,7 +157,7 @@
 			files = (
 				0B9C4518689FADE7C6CD9679 /* Pods_PiaSample.framework in Frameworks */,
 				7554A34D2056BF7100773403 /* BuildFile in Frameworks */,
-				922283F814248F0C9C895DEE /* Pia.framework in Frameworks */,
+				BAF0E66AAF8CF9EA86FD9540 /* Pia.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -190,7 +193,7 @@
 		6EA791B6237979AC0019757B /* libs */ = {
 			isa = PBXGroup;
 			children = (
-				C8E4D3E813C3F203EB583B5E /* Pia.framework */,
+				CD29178FC8E5E15AF8ABDC6D /* Pia.framework */,
 			);
 			name = libs;
 			path = ../../libs;
@@ -223,6 +226,7 @@
 			children = (
 				35FF4008213EA8D30095BB88 /* PiaSample.entitlements */,
 				7547DB69204FDF8000C280AC /* AppDelegate.swift */,
+				A377E41623DF2AAD0026F112 /* LICENSE.md */,
 				A30AC921237AC11E00B8FF62 /* Sources */,
 				5F338EA320E13B1D00B3E608 /* InfoPlist.strings */,
 				5F338E9E20E13B1C00B3E608 /* Localizable.strings */,
@@ -268,6 +272,7 @@
 				A30AC924237AC11E00B8FF62 /* SignupViewController.swift */,
 				A30AC92E237AC11E00B8FF62 /* AppNavigation.swift */,
 				A30AC935237AC11E00B8FF62 /* PiaSDKIntegration.swift */,
+				A377E3D423CCA4990026F112 /* ApplePayIntegration.swift */,
 				A30AC925237AC11E00B8FF62 /* CheckoutController.swift */,
 				A30AC92B237AC11E00B8FF62 /* PaymentSelectionController.swift */,
 				A30AC936237AC11E00B8FF62 /* SettingsViewController.swift */,
@@ -572,6 +577,7 @@
 				A30AC952237AC11E00B8FF62 /* APICoding.swift in Sources */,
 				A30AC945237AC11E00B8FF62 /* UICustomizationController.swift in Sources */,
 				A30AC99A238D2C2B00B8FF62 /* Colors.swift in Sources */,
+				A377E3D523CCA4990026F112 /* ApplePayIntegration.swift in Sources */,
 				A30AC947237AC11E00B8FF62 /* AppNavigation.swift in Sources */,
 				A30AC94D237AC11E00B8FF62 /* PiaSDKIntegration.swift in Sources */,
 				A30AC94E237AC11E00B8FF62 /* SettingsViewController.swift in Sources */,
@@ -711,7 +717,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 149;
+				CURRENT_PROJECT_VERSION = 153;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -775,7 +781,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 149;
+				CURRENT_PROJECT_VERSION = 153;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -809,7 +815,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 149;
+				CURRENT_PROJECT_VERSION = 153;
 				DEVELOPMENT_TEAM = EGNFYS6P3L;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = PiaSample/Info.plist;
@@ -836,7 +842,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 149;
+				CURRENT_PROJECT_VERSION = 153;
 				DEVELOPMENT_TEAM = EGNFYS6P3L;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = PiaSample/Info.plist;

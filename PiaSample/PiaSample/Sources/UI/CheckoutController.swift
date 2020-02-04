@@ -9,6 +9,8 @@
 import UIKit
 
 protocol CheckoutControllerDelegate: AnyObject {
+    var canPayWithApplePay: Bool { get }
+
     func checkoutController(_ sender: CheckoutController, didSelectApplePayFor: Order)
     func checkoutController(_ sender: CheckoutController, openPaymentSelectionFor: Order)
     func openSettings(sender: CheckoutController)
@@ -138,13 +140,18 @@ class CheckoutController: UIViewController, KeyboardFrameObserving, UITextFieldD
             )
         )
 
+        var applePayButton: UIButton? {
+            guard delegate.canPayWithApplePay else { return nil }
+            let button = makeButton(title: .buttonBuyWithApplePay, backgroundColor: .black)
+            button.addTarget(self, action: #selector(payWithApplePay(_:)), for: .touchUpInside)
+            return button
+        }
+
         view.addSubview(
             buttonsHStack.addArranged {
-                let buy = makeButton(title: .buttonBuy, backgroundColor: .darkGray)
-                let applePay = makeButton(title: .buttonBuyWithApplePay, backgroundColor: .black)
-                buy.addTarget(self, action: #selector(openPaymentMethodSelection(_:)), for: .touchUpInside)
-                applePay.addTarget(self, action: #selector(payWithApplePay(_:)), for: .touchUpInside)
-                return [buy, applePay]
+                let buyButton = makeButton(title: .buttonBuy, backgroundColor: .darkGray)
+                buyButton.addTarget(self, action: #selector(openPaymentMethodSelection(_:)), for: .touchUpInside)
+                return [buyButton, applePayButton].compactMap { $0 }
             }
         )
         

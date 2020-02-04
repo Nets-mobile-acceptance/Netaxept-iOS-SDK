@@ -97,7 +97,7 @@ namespace XamarinPia
         [Export ("walletUrl", ArgumentSemantic.Strong)]
         string WalletUrl { get; }
 
-    // -(instancetype _Nonnull)initWithTransactionID:(NSString * _Nonnull)transactionId okRedirectUrl:(NSString * _Nonnull)okRedirectUrl cancelRedirectUrl:(NSString * _Nonnull)cancelRedirectUrl __attribute__((deprecated("Use init(transactionID:redirectUrl:)")));
+        // -(instancetype _Nonnull)initWithTransactionID:(NSString * _Nonnull)transactionId okRedirectUrl:(NSString * _Nonnull)okRedirectUrl cancelRedirectUrl:(NSString * _Nonnull)cancelRedirectUrl __attribute__((deprecated("Use init(transactionID:redirectUrl:)")));
         [Export ("initWithTransactionID:okRedirectUrl:cancelRedirectUrl:")]
         IntPtr Constructor (string transactionId, string okRedirectUrl, string cancelRedirectUrl);
 
@@ -136,10 +136,12 @@ namespace XamarinPia
         SchemeType SchemeType { get; set; }
 
         // -(instancetype _Nonnull)initWithTokenId:(NSString * _Nonnull)tokenId schemeType:(SchemeType)schemeType expiryDate:(NSString * _Nonnull)expiryDate cvcRequired:(BOOL)cvcRequired systemAuthenticationRequired:(BOOL)systemAuthenticationRequired __attribute__((deprecated("System authentication becomes obsolete due to PSD2/SCA regulation.
+        //Replaced with `init(tokenId:schemeType:expiryDate:cvcRequired:);
         [Export ("initWithTokenId:schemeType:expiryDate:cvcRequired:systemAuthenticationRequired:")]
         IntPtr Constructor (string tokenId, SchemeType schemeType, string expiryDate, bool cvcRequired, bool systemAuthenticationRequired);
         
         // -(instancetype _Nonnull)initWithTokenId:(NSString * _Nonnull)tokenId schemeType:(SchemeType)schemeType expiryDate:(NSString * _Nonnull)expiryDate cvcRequired:(BOOL)cvcRequired;
+        
         [Export ("initWithTokenId:schemeType:expiryDate:cvcRequired:")]
         IntPtr Constructor (string tokenId, SchemeType schemeType, string expiryDate, bool cvcRequired);
     }
@@ -239,7 +241,7 @@ namespace XamarinPia
         [Export ("supportedPaymentNetworks", ArgumentSemantic.Strong)]
         string[] SupportedPaymentNetworks { get; }
 
-        // -(instancetype _Nonnull)initWithApplePayMerchantID:(NSString * _Nonnull)applePayMerchantID applePayItemDisplayName:(NSString * _Nonnull)applePayItemDisplayName applePayMerchantDisplayName:(NSString * _Nonnull)applePayMerchantDisplayName applePayItemCost:(NSDecimalNumber * _Nonnull)applePayItemCost applePayItemShippingCost:(NSDecimalNumber * _Nonnull)applePayItemShippingCost currencyCode:(NSString * _Nonnull)currencyCode applePayShippingInfo:(NPIApplePayShippingInfo * _Nullable)applePayShippingInfo usingExpressCheckout:(BOOL)usingExpressCheckout supportedPaymentNetworks:(NSArray<PKPaymentNetwork> * _Nonnull)supportedPaymentNetworks;
+        // -(instancetype _Nonnull)initWithApplePayMerchantID:(NSString * _Nonnull)applePayMerchantID applePayItemDisplayName:(NSString * _Nonnull)applePayItemDisplayName applePayMerchantDisplayName:(NSString * _Nonnull)applePayMerchantDisplayName applePayItemCost:(NSDecimalNumber * _Nonnull)applePayItemCost applePayItemShippingCost:(NSDecimalNumber * _Nonnull)applePayItemShippingCost currencyCode:(NSString * _Nonnull)currencyCode applePayShippingInfo:(NPIApplePayShippingInfo * _Nullable)applePayShippingInfo usingExpressCheckout:(BOOL)usingExpressCheckout supportedPaymentNetworks:(NSArray<PKPaymentNetwork> * _Nonnull)supportedPaymentNetworks __attribute__((deprecated("Deprecated! Present PKPaymentAuthorizationViewController and use PiaSDK helpers")));
         [Export ("initWithApplePayMerchantID:applePayItemDisplayName:applePayMerchantDisplayName:applePayItemCost:applePayItemShippingCost:currencyCode:applePayShippingInfo:usingExpressCheckout:supportedPaymentNetworks:")]
         IntPtr Constructor (string applePayMerchantID, string applePayItemDisplayName, string applePayMerchantDisplayName, NSDecimalNumber applePayItemCost, NSDecimalNumber applePayItemShippingCost, string currencyCode, [NullAllowed] NPIApplePayShippingInfo applePayShippingInfo, bool usingExpressCheckout, string[] supportedPaymentNetworks);
     }
@@ -253,11 +255,6 @@ namespace XamarinPia
         [Abstract]
         [Export("doInitialAPICall:storeCard:withCompletion:")]
         void DoInitialAPICall(PiaSDKController PiaSDKController, bool storeCard, Action<NPITransactionInfo> completionHandler);
-
-        // @required -(void)registerPaymentWithApplePayData:(PiaSDKController * _Nonnull)PiaSDKController paymentData:(PKPaymentToken * _Nonnull)paymentData newShippingContact:(PKContact * _Nullable)newShippingContact withCompletion:(void (^ _Nonnull)(NPITransactionInfo * _Nullable))completionHandler;
-        [Abstract]
-        [Export("registerPaymentWithApplePayData:paymentData:newShippingContact:withCompletion:")]
-        void RegisterPaymentWithApplePayData(PiaSDKController PiaSDKController, PKPaymentToken paymentData, [NullAllowed] PKContact newShippingContact, Action<NPITransactionInfo> completionHandler);
 
         // @required -(void)registerPaymentWithPayPal:(PiaSDKController * _Nonnull)PiaSDKController withCompletion:(void (^ _Nonnull)(NPITransactionInfo * _Nullable))completionHandler;
         [Abstract]
@@ -301,7 +298,7 @@ namespace XamarinPia
         [NullAllowed, Export("PiaDelegate", ArgumentSemantic.Weak)]
         NSObject WeakPiaDelegate { get; set; }
 
-        // -(instancetype _Nonnull)init:(NPIMerchantInfo * _Nullable)merchantInfo orderInfo:(NPIOrderInfo * _Nullable)orderInfo tokenCardInfo:(NPITokenCardInfo * _Nullable)tokenCardInfo applePayInfo:(NPIApplePayInfo * _Nullable)applePayInfo performingPayPalPurchase:(BOOL)performingPayPalPurchase;
+        // -(instancetype _Nonnull)init:(NPIMerchantInfo * _Nullable)merchantInfo orderInfo:(NPIOrderInfo * _Nullable)orderInfo tokenCardInfo:(NPITokenCardInfo * _Nullable)tokenCardInfo applePayInfo:(NPIApplePayInfo * _Nullable)applePayInfo performingPayPalPurchase:(BOOL)performingPayPalPurchase __attribute__((deprecated("NPIApplePayInfo is deprecated!")));
         [Export("init:orderInfo:tokenCardInfo:applePayInfo:performingPayPalPurchase:")]
         IntPtr Constructor([NullAllowed] NPIMerchantInfo merchantInfo, [NullAllowed] NPIOrderInfo orderInfo, [NullAllowed] NPITokenCardInfo tokenCardInfo, [NullAllowed] NPIApplePayInfo applePayInfo, bool performingPayPalPurchase);
 
@@ -313,6 +310,10 @@ namespace XamarinPia
         [Export("initWithTokenCardInfo:merchantInfo:orderInfo:")]
         IntPtr Constructor(NPITokenCardInfo tokenCardInfo, NPIMerchantInfo merchantInfo, NPIOrderInfo orderInfo);
 
+        // -(instancetype _Nonnull)initWithTestMode:(BOOL)testMode tokenCardInfo:(NPITokenCardInfo * _Nonnull)tokenCardInfo merchantID:(NSString * _Nonnull)merchantID orderInfo:(NPIOrderInfo * _Nonnull)orderInfo requireCardConfirmation:(BOOL)requireCardConfirmation;
+        [Export ("initWithTestMode:tokenCardInfo:merchantID:orderInfo:requireCardConfirmation:")]
+        IntPtr Constructor (bool testMode, NPITokenCardInfo tokenCardInfo, string merchantID, NPIOrderInfo orderInfo, bool requireCardConfirmation);
+        
         // -(instancetype _Nonnull)initWithOrderInfo:(NPIOrderInfo * _Nonnull)orderInfo merchantInfo:(NPIMerchantInfo * _Nonnull)merchantInfo;
         [Export("initWithOrderInfo:merchantInfo:")]
         IntPtr Constructor(NPIOrderInfo orderInfo, NPIMerchantInfo merchantInfo);
@@ -321,7 +322,7 @@ namespace XamarinPia
         [Export("initWithMerchantInfo:payWithPayPal:")]
         IntPtr Constructor(NPIMerchantInfo merchantInfo, bool payWithPayPal);
 
-        // -(instancetype _Nonnull)initWithApplePayInfo:(NPIApplePayInfo * _Nonnull)applePayInfo;
+        // -(instancetype _Nonnull)initWithApplePayInfo:(NPIApplePayInfo * _Nonnull)applePayInfo __attribute__((deprecated("Deprecated! Present PKPaymentAuthorizationViewController and use PiaSDK helpers")));
         [Export("initWithApplePayInfo:")]
         IntPtr Constructor(NPIApplePayInfo applePayInfo);
 
@@ -451,20 +452,20 @@ namespace XamarinPia
         bool UseStatusBarLightContent { get; set; }
 
         // @property (readwrite, nonatomic) UIViewContentMode logoImageContentMode;
-	    [Export ("logoImageContentMode", ArgumentSemantic.Assign)]
-	    UIViewContentMode LogoImageContentMode { get; set; }
+        [Export ("logoImageContentMode", ArgumentSemantic.Assign)]
+        UIViewContentMode LogoImageContentMode { get; set; }
 
-	    // @property (readwrite, nonatomic) BOOL disableSaveCardOption;
-	    [Export ("disableSaveCardOption")]
-	    bool DisableSaveCardOption { get; set; }
+        // @property (readwrite, nonatomic) BOOL disableSaveCardOption;
+        [Export ("disableSaveCardOption")]
+        bool DisableSaveCardOption { get; set; }
 
-	    // @property (nonatomic, strong) UIColor * fieldBackgroundColor;
-	    [Export ("fieldBackgroundColor", ArgumentSemantic.Strong)]
-	    UIColor FieldBackgroundColor { get; set; }
+        // @property (nonatomic, strong) UIColor * fieldBackgroundColor;
+        [Export ("fieldBackgroundColor", ArgumentSemantic.Strong)]
+        UIColor FieldBackgroundColor { get; set; }
 
-	    // @property (nonatomic) PiALanguage language;
-	    [Export ("language", ArgumentSemantic.Assign)]
-	    PiALanguage Language { get; set; }
+        // @property (nonatomic) PiALanguage language;
+        [Export ("language", ArgumentSemantic.Assign)]
+        PiALanguage Language { get; set; }
         
         // @property (nonatomic, strong) UIColor * textFieldPlaceholderColor;
         [Export ("textFieldPlaceholderColor", ArgumentSemantic.Strong)]
@@ -503,7 +504,7 @@ namespace XamarinPia
         [Export("sharedInstance")]
         NPIInterfaceConfiguration SharedInstance();
     }
-    
+
     // @interface PiaSDK : NSObject
     [BaseType (typeof(NSObject))]
     interface PiaSDK
@@ -518,12 +519,37 @@ namespace XamarinPia
         [Export ("initiateSwishFromSender:delegate:")]
         bool InitiateSwishFromSender ([NullAllowed] UIViewController sender, SwishPaymentDelegate @delegate);
         
+        // +(void)initiateTokenizedCardPayFrom:(UIViewController * _Nonnull)sender testMode:(BOOL)isTestMode showsActivityIndicator:(BOOL)showsActivityIndicator merchantID:(NSString * _Nonnull)merchantID redirectURL:(NSString * _Nonnull)redirectURL transactionID:(NSString * _Nonnull)transactionID success:(void (^ _Nonnull)(void))success cancellation:(void (^ _Nonnull)(void))cancellation failure:(void (^ _Nonnull)(NPIError * _Nonnull))failure;
+        [Static]
+        [Export ("initiateTokenizedCardPayFrom:testMode:showsActivityIndicator:merchantID:redirectURL:transactionID:success:cancellation:failure:")]
+        void InitiateTokenizedCardPayFrom (UIViewController sender, bool isTestMode, bool showsActivityIndicator, string merchantID, string redirectURL, string transactionID, Action success, Action cancellation, Action<NPIError> failure);
+
         // +(BOOL)applicationDidOpenFromRedirectWith:(NSURL * _Nonnull)redirectURL andOptions:(NSDictionary * _Nonnull)options;
         [Static]
-        [Export ("applicationDidOpenFromRedirectWith:andOptions:")]
-        bool ApplicationDidOpenFromRedirectWith (NSUrl redirectURL, NSDictionary options);
+        [Export("applicationDidOpenFromRedirectWith:andOptions:")]
+        bool ApplicationDidOpenFromRedirectWith(NSUrl redirectURL, NSDictionary options);
+
+        // +(void)showActivityIndicatorIn:(UIViewController * _Nonnull)viewController __attribute__((deprecated("Use `addTransitionViewIn:` instead")));
+        [Static]
+        [Export("showActivityIndicatorIn:")]
+        void ShowActivityIndicatorIn(UIViewController viewController);
+
+        // +(void)removeActivityIndicatorFrom:(UIViewController * _Nullable)viewController __attribute__((deprecated("Use `removeTransitionView` instead")));
+        [Static]
+        [Export("removeActivityIndicatorFrom:")]
+        void RemoveActivityIndicatorFrom([NullAllowed] UIViewController viewController);
+
+        // +(void)addTransitionViewIn:(UIView * _Nonnull)superView;
+        [Static]
+        [Export("addTransitionViewIn:")]
+        void AddTransitionViewIn(UIView superView);
+
+        // +(void)removeTransitionView;
+        [Static]
+        [Export("removeTransitionView")]
+        void RemoveTransitionView();
     }
-    
+
     // @protocol WalletPaymentDelegate <NSObject>
     [Model]
     [BaseType (typeof(NSObject))]
@@ -559,7 +585,7 @@ namespace XamarinPia
         [Export ("vippsDidRedirectWith:")]
         void VippsDidRedirectWith (NSNumber statusCode);
     }
-    
+
     // @protocol SwishPaymentDelegate <WalletPaymentDelegate>
     [BaseType(typeof(NSObject))]
     [Model]
@@ -583,5 +609,21 @@ namespace XamarinPia
         // @optional -(void)swishDidRedirect;
         [Export ("swishDidRedirect")]
         void SwishDidRedirect ();
+    }
+
+    // @interface ApplePay (PiaSDK)
+    [Category]
+    [BaseType(typeof(PiaSDK))]
+    interface PiaSDK_ApplePay
+    {
+        // +(PKPaymentRequest * _Nonnull)makeApplePayPaymentRequestFor:(NSArray<PKPaymentNetwork> * _Nonnull)networks countryCode:(NSString * _Nonnull)countryCode applePayMerchantID:(NSString * _Nonnull)applePayMerchantID merchantCapabilities:(PKMerchantCapability)merchantCapabilities currencyCode:(NSString * _Nonnull)currencyCode summeryItems:(NSArray<PKPaymentSummaryItem *> * _Nonnull)summeryItems;
+        [Static]
+        [Export("makeApplePayPaymentRequestFor:countryCode:applePayMerchantID:merchantCapabilities:currencyCode:summeryItems:")]
+        PKPaymentRequest MakeApplePayPaymentRequestFor(string[] networks, string countryCode, string applePayMerchantID, PKMerchantCapability merchantCapabilities, string currencyCode, PKPaymentSummaryItem[] summeryItems);
+
+        // +(NSString * _Nonnull)netaxeptSOAPPaymentDataFrom:(PKPaymentToken * _Nonnull)token;
+        [Static]
+        [Export("netaxeptSOAPPaymentDataFrom:")]
+        string NetaxeptSOAPPaymentDataFrom(PKPaymentToken token);
     }
 }

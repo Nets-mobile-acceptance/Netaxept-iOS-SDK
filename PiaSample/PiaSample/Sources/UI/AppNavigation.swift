@@ -28,7 +28,6 @@ class AppNavigation: NSObject, CheckoutControllerDelegate, PaymentSelectionContr
     lazy var api: MerchantAPI = MerchantAPI(customerID: customerID, merchant: .current)
 
     var orderDetails: Order = SampleOrderDetails.make()
-    var shippingDetails = UserShippingDetails()
     var transaction: Transaction?
 
     func launch(in window: UIWindow) {
@@ -55,7 +54,7 @@ class AppNavigation: NSObject, CheckoutControllerDelegate, PaymentSelectionContr
     func checkoutController(_: CheckoutController, didSelectApplePayFor order: Order) {
         orderDetails = order
         orderDetails.method = .applePay
-        presentPiaForApplePayPayment(orderDetails, expressCheckout: true)
+        presentPiaForApplePayPayment(orderDetails)
     }
 
     func openSettings(sender: CheckoutController) {
@@ -78,7 +77,7 @@ class AppNavigation: NSObject, CheckoutControllerDelegate, PaymentSelectionContr
 
     func openApplePayment(sender: PaymentSelectionController, methodID: PaymentMethodID) {
         orderDetails.method = methodID
-        presentPiaForApplePayPayment(orderDetails, expressCheckout: false)
+        presentPiaForApplePayPayment(orderDetails)
     }
 
     //  MARK: Apple Wallets Setup

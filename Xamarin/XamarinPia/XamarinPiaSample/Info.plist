@@ -36,6 +36,19 @@
 	<string>Assets.xcassets/AppIcon.appiconset</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Use camera to scan credit card</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>com.Pia.XamarinPiaSample</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>eu.nets.pia.xamarin</string>
+			</array>
+		</dict>
+	</array>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>bankid</string>
