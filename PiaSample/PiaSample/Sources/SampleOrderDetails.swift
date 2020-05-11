@@ -22,9 +22,10 @@ let supportedApplePayNetworks: [PKPaymentNetwork] = [
 ]
 
 typealias Order = (OrderDetails & ApplePayOrderDetails)
+typealias Customer = (CustomerDetails)
 
 struct SampleOrderDetails: OrderDetails, ApplePayOrderDetails {
-    let orderNumber: String = "PiaSDK-iOS"
+    var orderNumber: String = "PiaSDK-iOS"
     var amount: Amount
     let lineItems: LineItem? = nil
     var method: PaymentMethodID? = nil
@@ -37,6 +38,20 @@ struct SampleOrderDetails: OrderDetails, ApplePayOrderDetails {
 
     static func make(withName name: String = "", with amount: Amount = .zero) -> Order {
         return SampleOrderDetails(amount: amount, displayName: name)
+    }
+}
+
+struct SampleCustomerDetails: CustomerDetails {
+    let customerEmail: String = "bill.buyer@test.eu"
+    let customerFirstName: String = "Bill"
+    let customerLastName: String = "Buyer"
+    let customerAddress1: String = "Testaddress"
+    let customerPostcode: String = "00510"
+    let customerTown: String = "Helsinki"
+    let customerCountry: String = "FI"
+    
+    static func make() -> Customer {
+        return SampleCustomerDetails()
     }
 }
 

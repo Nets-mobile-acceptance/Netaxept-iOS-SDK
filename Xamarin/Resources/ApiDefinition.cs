@@ -329,6 +329,10 @@ namespace XamarinPia
         // -(instancetype _Nonnull)initWithMerchantInfo:(NPIMerchantInfo * _Nonnull)merchantInfo;
         [Export("initWithMerchantInfo:")]
         IntPtr Constructor(NPIMerchantInfo merchantInfo);
+
+        // -(instancetype _Nonnull)initPaytrailBankPaymentWithMerchantID:(NSString * _Nonnull)merchantID transactionInfo:(NPITransactionInfo * _Nullable)transactionInfo testMode:(BOOL)testMode;
+        [Export("initPaytrailBankPaymentWithMerchantID:transactionInfo:testMode:")]
+        IntPtr Constructor(string merchantID, [NullAllowed] NPITransactionInfo transactionInfo, bool testMode);
     }
 
     // @interface NPIInterfaceConfiguration : NSObject

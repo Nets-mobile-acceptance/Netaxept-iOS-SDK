@@ -28,7 +28,7 @@
 #import "Pia.framework/Headers/Pia.h"
 #import <React/RCTEventEmitter.h>
 
-@interface PiaSDKBridge : RCTEventEmitter <RCTBridgeModule, PiaSDKDelegate,VippsPaymentDelegate, SwishPaymentDelegate>
+@interface PiaSDKBridge : RCTEventEmitter <RCTBridgeModule, PiaSDKDelegate,VippsPaymentDelegate, SwishPaymentDelegate,WalletPaymentDelegate>
 
 @end
 

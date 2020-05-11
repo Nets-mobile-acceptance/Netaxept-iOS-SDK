@@ -22,6 +22,7 @@ protocol PaymentSelectionControllerDelegate: AnyObject {
     func openPayPalPayment(sender: PaymentSelectionController, methodID: PaymentMethodID)
     func openVippsPayment(sender: PaymentSelectionController, methodID: PaymentMethodID, phoneNumber: PhoneNumber)
     func openSwishPayment(sender: PaymentSelectionController, methodID: PaymentMethodID)
+    func openFinnishBankPayment(sender: PaymentSelectionController, bankName: PaymentMethodID)
 }
 
 class PaymentSelectionController: UIViewController, UITableViewDataSource, UITableViewDelegate {
@@ -61,6 +62,8 @@ class PaymentSelectionController: UIViewController, UITableViewDataSource, UITab
             delegate.openCardPayment(sender: self)
         case .mobileWallets:
             didSelectMobileWallet(withID: mobileWallets[indexPath.row])
+        case .finnishBanks:
+            delegate.openFinnishBankPayment(sender: self, bankName: finnishBanks[indexPath.row])
         }
     }
 
@@ -129,6 +132,8 @@ class PaymentSelectionController: UIViewController, UITableViewDataSource, UITab
     private var cvcRequired: Bool = true
     private var tokenizedCards: [TokenizedCard] = []
     private var mobileWallets: [PaymentMethodID] = []
+    private var finnishBanks: [PaymentMethodID] = []
+
 
     // MARK: Update UI
     
@@ -140,16 +145,22 @@ class PaymentSelectionController: UIViewController, UITableViewDataSource, UITab
             .filter { $0.id != PaymentMethodID.easyPay.id }
             .sorted { $0.id < $1.id }
 
-        (mobileWallets, newCardCell.iconNames) = mixedPaymentTypes.reduce(([], [])) {
-            var (paymentMethods, cards) = ($0.0, $0.1)
+        (mobileWallets,finnishBanks,newCardCell.iconNames) = mixedPaymentTypes.reduce(([], [], [])) {
+            var (mobileWallets,finnishBanks, cards) = ($0.0, $0.1, $0.2)
             let wallets = MobileWallet.allCases.map { $0.rawValue }
-            wallets.contains($1.id) ? paymentMethods.append($1) : cards.append($1.id.lowercased())
-            return (paymentMethods, cards)
+            if ($1.id).localizedCaseInsensitiveContains("paytrail") {
+                finnishBanks.append($1)
+            } else if wallets.contains($1.id) {
+                mobileWallets.append($1)
+            } else {
+                cards.append($1.id.lowercased())
+            }
+            return (mobileWallets,finnishBanks, cards)
         }
 
         tableView.performBatchUpdate {
             let newContent: [(section: TableViewSection, data: [Any])] = [
-                (.tokenizedCards, tokenizedCards), (.mobileWallets, mobileWallets)
+                (.tokenizedCards, tokenizedCards), (.mobileWallets, mobileWallets), (.finnishBanks, finnishBanks)
             ]
             newContent.forEach { new in
                 let section = new.section.rawValue
@@ -182,7 +193,7 @@ class PaymentSelectionController: UIViewController, UITableViewDataSource, UITab
     // MARK: UITableViewDataSource
 
     private enum TableViewSection: Int, CaseIterable {
-        case tokenizedCards, addNewCardButton, mobileWallets
+        case tokenizedCards, addNewCardButton, mobileWallets, finnishBanks
     }
 
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -194,6 +205,7 @@ class PaymentSelectionController: UIViewController, UITableViewDataSource, UITab
         case .tokenizedCards: return tokenizedCards.count
         case .addNewCardButton: return [newCardCell].count
         case .mobileWallets: return mobileWallets.count
+        case .finnishBanks: return finnishBanks.count
         }
     }
 
@@ -211,6 +223,10 @@ class PaymentSelectionController: UIViewController, UITableViewDataSource, UITab
             let walletID = mobileWallets[indexPath.row].id
             cellValues = (UIImage(named: walletID.lowercased()), "")
             accessibilityLabel = walletID
+        case .finnishBanks:
+            let bankID = finnishBanks[indexPath.row].id
+            cellValues = (UIImage(named: bankID), "")
+            accessibilityLabel = bankID
         }
         let cell = tableView.dequeueReusableCell(withIdentifier: CommonCell.className, for: indexPath)
         cell.imageView?.contentMode = .scaleAspectFit
@@ -227,6 +243,7 @@ class PaymentSelectionController: UIViewController, UITableViewDataSource, UITab
         case .tokenizedCards: return tokenizedCards.isEmpty ? "" : .titleStoredCards
         case .addNewCardButton: return .titleAddCard
         case .mobileWallets: return .titleMobileWallets
+        case .finnishBanks: return .titleFinnishBanks
         }
     }
 

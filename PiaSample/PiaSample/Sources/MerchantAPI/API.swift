@@ -80,6 +80,19 @@ extension MerchantAPI {
             try self.encode(order: order, storeCard: false, redirectUrl: appRedirect)
         }
     }
+    
+    // MARK: Register Paytrail bank payment
+    
+    public func registerPaytrailBankPayment(
+        for order: OrderDetails,
+        for customer: CustomerDetails,
+        callback: @escaping (Result<Transaction, RegisterError>) -> Void) {
+        
+        let request = URLRequest(for: registerURL, method: .post, headers: headers)
+        execute(request, callback: callback) { () -> Data in
+            try self.encode(order: order, storeCard: false,customer: customer)
+        }
+    }
 
     // MARK: Commit Transaction
 
@@ -231,7 +244,7 @@ public enum Currency: String, CaseIterable {
 /// Sample merchant BE model of order details.
 /// Contains order information along with associated payment method.
 public protocol OrderDetails {
-    var orderNumber: String { get }
+    var orderNumber: String { get set}
     var amount: Amount { get }
     var method: PaymentMethodID? { get set }
     var cardId: String? { get set }
@@ -256,4 +269,16 @@ public struct LineItem: Encodable {
     var articleNumber: String
     var amount: Amount
     var quantity: Int64
+}
+
+/// Sample merchant BE model of customer details.
+/// Contains customer information for paytrail.
+public protocol CustomerDetails {
+    var customerEmail: String { get }
+    var customerFirstName: String { get }
+    var customerLastName: String { get }
+    var customerAddress1: String { get }
+    var customerPostcode: String { get }
+    var customerTown: String { get }
+    var customerCountry: String { get }
 }

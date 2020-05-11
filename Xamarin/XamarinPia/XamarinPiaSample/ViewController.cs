@@ -30,6 +30,7 @@ using Foundation;
 using ObjCRuntime;
 using PassKit;
 using CoreGraphics;
+using System.Linq;
 
 namespace XamarinPiaSample
 {
@@ -44,6 +45,8 @@ namespace XamarinPiaSample
         public NPITransactionInfo transactionInfo;
 
         bool isPayingWithToken = false;
+
+        bool isPaytrail = false;
 
         public ViewController(IntPtr handle) : base(handle)
         {
@@ -62,20 +65,14 @@ namespace XamarinPiaSample
 
             payWithCard.TouchUpInside += (sender, e) =>
             {
-                //#internal_code_section_start
-                var merchantInfo = new NPIMerchantInfo("12002835", true);
-                //#internal_code_section_end
 
-                /*#external_code_section_start
                 var merchantInfo = new NPIMerchantInfo("YOUR_MERCHANT_ID", true);
-                #external_code_section_end*/
                 var amount = new NSNumber(10);
                 var orderInfo = new NPIOrderInfo(amount, "EUR");
                 var controller = new PiaSDKController(orderInfo, merchantInfo);
                 PiaDelegate newDelegate = new PiaDelegate();
                 newDelegate.vc = this;
                 controller.PiaDelegate = newDelegate;
-                isPayingWithToken = false;
                 this.PresentViewController(controller, true, null);
             };
 
@@ -86,13 +83,8 @@ namespace XamarinPiaSample
 
             payWithSavedCard.TouchUpInside += (sender, e) =>
             {
-                //#internal_code_section_start
-                var merchantId = "12002835";
-                //#internal_code_section_end
 
-                /*#external_code_section_start
                 var merchantId = "YOUR_MERCHANT_ID";
-                #external_code_section_end*/
 
                 var amount = new NSNumber(10);
                 var orderInfo = new NPIOrderInfo(amount, "EUR");
@@ -113,13 +105,8 @@ namespace XamarinPiaSample
 
             payWithSavedCardSkipConfirmation.TouchUpInside += (sender, e) =>
             {
-                //#internal_code_section_start
-                var merchantInfo = new NPIMerchantInfo("12002835", true, false);
-                //#internal_code_section_end
 
-                /*#external_code_section_start
                 var merchantInfo = new NPIMerchantInfo("YOUR_MERCHANT_ID", true, true);
-                #external_code_section_end*/
 
                 var amount = new NSNumber(10);
                 var orderInfo = new NPIOrderInfo(amount, "EUR");
@@ -160,33 +147,46 @@ namespace XamarinPiaSample
                 }
             };
 
+            UIButton payWithPaytrail = new UIButton();
+            payWithPaytrail.Frame = new CGRect(40f, 480f, buttonWidth, 40f);
+            payWithPaytrail.SetTitle("Pay 10 EUR with Paytrail", UIControlState.Normal);
+            payWithPaytrail.BackgroundColor = UIColor.LightGray;
+            payWithPaytrail.TouchUpInside += (sender, e) =>
+            {
+
+                var merchantId = "YOUR_MERCHANT_ID"
+                isPaytrail = true;
+
+                PiaSDK.AddTransitionViewIn(this.View);
+
+                getTransactionInfo(false, completionHandler: () =>
+                {
+                    var controller = new PiaSDKController(merchantId, transactionInfo, true);
+                    PiaDelegate newDelegate = new PiaDelegate();
+                    controller.PiaDelegate = newDelegate;
+                    newDelegate.vc = this;
+                    InvokeOnMainThread(() => {
+                        PiaSDK.RemoveTransitionView();
+                        this.PresentViewController(controller, true, null);
+                    });
+                    
+                });
+            };
+
             this.View.AddSubview(payWithCard);
             this.View.AddSubview(payWithSavedCard);
             this.View.AddSubview(payWithSavedCardSkipConfirmation);
             this.View.AddSubview(payWithVipps);
             this.View.AddSubview(payWithSwish);
+            this.View.AddSubview(payWithPaytrail);
+
 
         }
 
         public void getTransactionInfo(bool payWithPayPal, Action completionHandler)
         {
-            //#internal_code_section_start
-            var merchantURL = new String(@"");
 
-            if (payWithPayPal)
-            {
-                merchantURL = @"https://api-gateway-pp.nets.eu/pia/merchantdemo/v2/payment/493809/register";
-            }
-            else
-            {
-                merchantURL = @"https://api-gateway-pp.nets.eu/pia/test/merchantdemo/v2/payment/12002835/register";
-            }
-
-            //#internal_code_section_end
-
-            /*#external_code_section_start
             var merchantURL = @"YOUR MERCHANT BACKEND URL HERE";
-            #external_code_section_end*/
 
             NSMutableDictionary jsonDictionary = new NSMutableDictionary();
 
@@ -194,7 +194,7 @@ namespace XamarinPiaSample
             {
                 NSMutableDictionary amount = new NSMutableDictionary();
                 amount.SetValueForKey(new NSNumber(1000), new NSString(@"totalAmount"));
-                amount.SetValueForKey(new NSNumber(200), new NSString(@"vatAmount"));
+                amount.SetValueForKey(new NSNumber(0), new NSString(@"vatAmount"));
                 amount.SetValueForKey(new NSString(@"EUR"), new NSString(@"currencyCode"));
 
                 jsonDictionary.SetValueForKey(amount, new NSString(@"amount"));
@@ -225,6 +225,7 @@ namespace XamarinPiaSample
 
             if (isPayingWithToken)
             {
+                isPayingWithToken = false;
                 // Make sure you have a saved card in your backend.
                 NSMutableDictionary method = new NSMutableDictionary();
                 method.SetValueForKey(new NSString(@"EasyPayment"), new NSString(@"id"));
@@ -232,6 +233,25 @@ namespace XamarinPiaSample
                 method.SetValueForKey(new NSNumber(0), new NSString(@"fee"));
                 jsonDictionary.SetValueForKey(method, new NSString(@"method"));
                 jsonDictionary.SetValueForKey(new NSString(@"492500******0004"), new NSString(@"cardId"));
+            }
+
+            if (isPaytrail)
+            {
+                isPaytrail = false;
+                NSMutableDictionary method = new NSMutableDictionary();
+                method.SetValueForKey(new NSString(@"PaytrailNordea"), new NSString(@"id"));
+                jsonDictionary.SetValueForKey(method, new NSString(@"method"));
+
+                // dummy customer details
+                jsonDictionary.SetValueForKey(new NSString(getPaytrailOrderNumber()), new NSString(@"orderNumber"));
+                jsonDictionary.SetValueForKey(new NSString(@"bill.buyer@test.eu"), new NSString(@"customerEmail"));
+                jsonDictionary.SetValueForKey(new NSString(@"Bill"), new NSString(@"customerFirstName"));
+                jsonDictionary.SetValueForKey(new NSString(@"Buyer"), new NSString(@"customerLastName"));
+                jsonDictionary.SetValueForKey(new NSString(@"Testaddress"), new NSString(@"customerAddress1"));
+                jsonDictionary.SetValueForKey(new NSString(@"00510"), new NSString(@"customerPostCode"));
+                jsonDictionary.SetValueForKey(new NSString(@"Helsinki"), new NSString(@"customerTown"));
+                jsonDictionary.SetValueForKey(new NSString(@"FI"), new NSString(@"customerCountry"));
+                jsonDictionary.Remove(new NSString(@"storeCard"));
             }
 
             if (NSJsonSerialization.IsValidJSONObject(jsonDictionary))
@@ -281,13 +301,8 @@ namespace XamarinPiaSample
 
         public void registerCallForWallets(int wallet, Action completionHandler)
         {
-            //#internal_code_section_start
-            var merchantURL = new String(@"https://api-gateway-pp.nets.eu/pia/test/merchantdemo/v2/payment/12002835/register");
-            //#internal_code_section_end
 
-            /*#external_code_section_start
             var merchantURL = @"YOUR MERCHANT BACKEND URL HERE";
-            #external_code_section_end*/
 
             NSMutableDictionary jsonDictionary = new NSMutableDictionary();
             NSMutableDictionary amount = new NSMutableDictionary();
@@ -302,12 +317,7 @@ namespace XamarinPiaSample
                     amount.SetValueForKey(new NSString(@"NOK"), new NSString(@"currencyCode"));
                     method.SetValueForKey(new NSString(@"Vipps"), new NSString(@"id"));
                     method.SetValueForKey(new NSString(@"Vipps"), new NSString(@"displayName"));
-                    //#internal_code_section_start
-                    jsonDictionary.SetValueForKey(new NSString(@"+4748059560"), new NSString(@"phoneNumber"));
-                    //#internal_code_section_end
-                    /*#external_code_section_start
                     jsonDictionary.SetValueForKey(new NSString(@"+471111..."), new NSString(@"phoneNumber"));
-                    #external_code_section_end*/
                     break;
                 }
                 case (int)MobileWallet.Swish:
@@ -328,13 +338,8 @@ namespace XamarinPiaSample
             jsonDictionary.SetValueForKey(new NSNumber(false), new NSString(@"storeCard"));
 
 
-            //#internal_code_section_start
-            jsonDictionary.SetValueForKey(new NSString("eu.nets.pia.xamarin://piasdk"), new NSString(@"redirectUrl"));
-            //#internal_code_section_end
 
-            /*#external_code_section_start
              jsonDictionary.SetValueForKey(new NSString("YOUR_APP_SCHEME_URL://piasdk"), new NSString(@"redirectUrl"));
-             #external_code_section_end*/
 
 
 
@@ -395,6 +400,40 @@ namespace XamarinPiaSample
             }));
             // Present Alert
             this.PresentViewController(okAlertController, true, null);
+        }
+
+        public string getPaytrailOrderNumber()
+        {
+            var dateFormatter = new NSDateFormatter();
+            dateFormatter.DateFormat = "yyMMddHHmmssSSS";
+
+            // Adding prefix to uniquely identify iOS transaction - you can avoid this
+            var strDate = "0" + dateFormatter.ToString(new NSDate());
+            var timeStamp = strDate.Select(ch => ch - '0').ToArray();
+            var checkDigit = -1;
+            var multipliers = new int[3] { 7, 3, 1 };
+            var multiplierIndex = 0;
+            var sum = 0;
+
+            for (var i = timeStamp.Length - 1; i >= 0; i--)
+            {
+                if (multiplierIndex == 3){
+                    multiplierIndex = 0;
+                }
+                var value = (int)timeStamp[i];
+                var mul = multipliers[multiplierIndex];
+                sum += value * mul;
+                multiplierIndex++;
+            }
+
+            checkDigit = 10 - sum % 10;
+
+            if (checkDigit == 10)
+            {
+                checkDigit = 0;
+            }
+
+            return String.Join("", timeStamp.Select(p => p.ToString()).ToArray()) + checkDigit.ToString();
         }
     }
 

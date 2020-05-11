@@ -53,7 +53,7 @@
                 <a class="nav-group-task-link" href="11-basic-payment-flow.html">1.1. Basic payment flow</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="12-new--easy-one-click-payment-flow.html">1.2. [New !] Easy (one click) payment flow</a>
+                <a class="nav-group-task-link" href="12-easy-one-click-payment-flow.html">1.2. Easy (one click) payment flow</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="13-recurring-payments.html">1.3. Recurring payments</a>
@@ -72,6 +72,9 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="34-swish-m-commerce-integration.html">3.4. Swish m-commerce Integration</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="35-new--finland---direct-bank-payment-via-paytrail.html">3.5. [NEW !] Finland - Direct bank payment (via Paytrail)</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="4-ui-customization.html">4. UI Customization</a>
@@ -392,6 +395,27 @@ Method: <strong><em>POST</em></strong></p>
     </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
+<h5 id='request-body-paytrail-payment-registration' class='heading'>Request body - Paytrail payment registration:</h5>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"merchantId"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"integer"</span><span class="p">,</span><span class="w"> 
+    </span><span class="nt">"token"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"orderNumber"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"amount"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"integer"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"currencyCode"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">  
+    </span><span class="nt">"redirectUrl"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"serviceType"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"B"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"paymentMethodActionList"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> 
+        </span><span class="nt">"PaymentMethod"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"bank selected by the customer, example PaytrailOP or PaytrailAktia"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"customerEmail"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"customerFirstName"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"customerLastName"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"customerAddress1"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"customerPostCode"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"customerTown"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"customerCountry"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+</span><span class="err">}</span><span class="w">
+</span></code></pre>
 <h4 id='payment-authorization-with-netaxept' class='heading'>Payment authorization with Netaxept</h4>
 
 <p>Send authorization of payment to Netaxept following user&rsquo;s action (handled by the client Pia SDK)</p>
@@ -457,7 +481,7 @@ Method: <strong><em>POST</em></strong></p>
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2020 <a class="link" href="https://nets.eu" target="_blank" rel="external">Nets</a>. All rights reserved. (Last updated: 2020-02-04)</p>
+      <p>&copy; 2020 <a class="link" href="https://nets.eu" target="_blank" rel="external">Nets</a>. All rights reserved. (Last updated: 2020-05-08)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.0</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

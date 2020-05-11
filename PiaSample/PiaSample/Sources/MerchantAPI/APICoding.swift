@@ -63,12 +63,14 @@ extension MerchantAPI {
     /// - Parameter applePayToken: Toke required for ApplePay payments
     /// - Parameter phoneNumber: User phone number required for Vipps & Swish
     /// - Parameter redirectUrl: Redirect URL required for Vipps & Swish
+    /// - Parameter customer: customer details for paytrail
     public func encode(
         order: OrderDetails,
         storeCard: Bool,
         applePayToken: String? = nil,
         phoneNumber: String? = nil,
-        redirectUrl: String? = nil) throws -> Data {
+        redirectUrl: String? = nil,
+        customer: CustomerDetails? = nil) throws -> Data {
 
         struct RegistrationRequest: Encodable {
             let customerId: String
@@ -81,6 +83,13 @@ extension MerchantAPI {
             let paymentData: String?
             let phoneNumber: String?
             let redirectUrl: String?
+            let customerEmail: String?
+            let customerFirstName: String?
+            let customerLastName: String?
+            let customerAddress1: String?
+            let customerPostCode: String?
+            let customerTown: String?
+            let customerCountry: String?
         }
 
         let request = RegistrationRequest(
@@ -93,7 +102,14 @@ extension MerchantAPI {
             items: order.lineItems,
             paymentData: applePayToken,
             phoneNumber: phoneNumber,
-            redirectUrl: redirectUrl
+            redirectUrl: redirectUrl,
+            customerEmail: customer?.customerEmail,
+            customerFirstName: customer?.customerFirstName,
+            customerLastName: customer?.customerLastName,
+            customerAddress1: customer?.customerAddress1,
+            customerPostCode: customer?.customerPostcode,
+            customerTown: customer?.customerTown,
+            customerCountry: customer?.customerCountry
         )
 
         return try jsonEncoder.encode(request)

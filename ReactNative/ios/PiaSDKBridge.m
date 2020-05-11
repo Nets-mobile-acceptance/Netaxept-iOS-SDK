@@ -33,9 +33,15 @@ enum : NSUInteger {
 
 @interface PiaSDKBridge()
 {
-  BOOL _isPayingWithToken;
+  RCTResponseSenderBlock registerPaymentCallback;
+  
 }
 @property (strong, nonatomic) NPITransactionInfo *_Nullable transactionInfo;
+@property (strong, nonatomic) NPIOrderInfo *_Nullable orderInfo;
+@property (strong, nonatomic) NPIMerchantInfo *_Nullable merchantInfo;
+@property (strong, nonatomic) NPITokenCardInfo *_Nullable tokenCardInfo;
+@property (nonatomic, nullable) void (^completionHandler)(NPITransactionInfo*);
+@property (nonatomic, nullable) void (^completionWithWalletURL)(NSString*);
 
 @end
 
@@ -46,82 +52,116 @@ RCT_EXPORT_MODULE()
   return @[@"PiaSDKResult"];
 }
 
-RCT_EXPORT_METHOD(callPia) {
+RCT_EXPORT_METHOD(buildOrderInfo:(int)amount currencyCode:(NSString*)currencyCode) {
+  _orderInfo = [[NPIOrderInfo alloc] initWithAmount:[[NSNumber alloc] initWithInt:amount] currencyCode:currencyCode];
+}
+
+RCT_EXPORT_METHOD(buildMerchantInfo:(NSString*)merchantId testMode:(BOOL)testMode cvcRequired:(BOOL)cvcRequired) {
+  _merchantInfo = [[NPIMerchantInfo alloc] initWithIdentifier:merchantId testMode:testMode cvcRequired:cvcRequired];
+}
+RCT_EXPORT_METHOD(buildTokenCardInfo:(NSString*)tokenId schemeId:(NSString*)schemeId expiryDate:(NSString*)expiryDate cvcRequired:(BOOL)cvcRequired) {
+  _tokenCardInfo = [[NPITokenCardInfo alloc] initWithTokenId:tokenId schemeType:[self mapCardScheme:schemeId] expiryDate:expiryDate cvcRequired:(BOOL)cvcRequired];
+}
+
+RCT_EXPORT_METHOD(buildTransactionInfo:(NSString*)transactionID redirectUrl:(NSString*)redirectUrl walleturl:(NSString*)walleturl) {
   
-   NSString *merchantId = @"YOUR MERCHANT ID HERE";
-  _isPayingWithToken = false;
-  NPIMerchantInfo *merchantInfo = [[NPIMerchantInfo alloc] initWithIdentifier:merchantId testMode:TRUE];
-  NSNumber *amount = [[NSNumber alloc] initWithInt:10];
-  NPIOrderInfo *orderInfo = [[NPIOrderInfo alloc] initWithAmount:amount currencyCode:@"EUR"];
-  PiaSDKController *controller = [[PiaSDKController alloc] initWithOrderInfo:orderInfo merchantInfo:merchantInfo];
-  controller.PiaDelegate = self;
-  dispatch_async(dispatch_get_main_queue(), ^{
-    [[UIApplication sharedApplication].delegate.window.rootViewController presentViewController:controller animated:YES completion:^{
-    }];
-  });
-}
-
-RCT_EXPORT_METHOD(callPiaSavedCard) {
+  if(transactionID == nil) {
+    [self sendEventWithName:@"PiaSDKResult" body:@{@"name": @"Register call failed"}];
+  }
   
-   NSString *merchantId = @"YOUR MERCHANT ID HERE";
-  _isPayingWithToken = true;
-  NSNumber *amount = [[NSNumber alloc] initWithInt:10];
-  NPIOrderInfo *orderInfo = [[NPIOrderInfo alloc] initWithAmount:amount currencyCode:@"EUR"];
-  NPITokenCardInfo *tokenCardInfo = [[NPITokenCardInfo alloc] initWithTokenId:@"492500******0004" schemeType:0 expiryDate:@"08/22" cvcRequired:FALSE];
-    PiaSDKController *controller = [[PiaSDKController alloc] initWithTestMode:TRUE tokenCardInfo:tokenCardInfo merchantID:merchantId orderInfo:orderInfo requireCardConfirmation:TRUE];
-  controller.PiaDelegate = self;
+  if(walleturl == nil) {
+    _transactionInfo = [[NPITransactionInfo alloc] initWithTransactionID:transactionID redirectUrl:redirectUrl];
+    dispatch_async(dispatch_get_main_queue(), ^{
+      if(self.completionHandler){
+        self.completionHandler(self.transactionInfo);
+      }
+    });
+  } else {
+    _transactionInfo = [[NPITransactionInfo alloc] initWithWalletUrl:walleturl];
+    dispatch_async(dispatch_get_main_queue(), ^{
+      if(self.completionWithWalletURL){
+        self.completionWithWalletURL(self.transactionInfo.walletUrl);
+      }
+    });
+    
+  }
+    
+}
+
+RCT_EXPORT_METHOD(start:(RCTResponseSenderBlock)callback) {
+  registerPaymentCallback = callback;
   dispatch_async(dispatch_get_main_queue(), ^{
-    [[UIApplication sharedApplication].delegate.window.rootViewController presentViewController:controller animated:YES completion:^{
-    }];
+    PiaSDKController *controller = [[PiaSDKController alloc] initWithOrderInfo:self.orderInfo merchantInfo:self.merchantInfo];
+    controller.PiaDelegate = self;
+    [[UIApplication sharedApplication].delegate.window.rootViewController presentViewController:controller animated:YES completion:nil];
   });
 }
 
-RCT_EXPORT_METHOD(callPiaSavedCardSkipConfirmation) {
-  
-   NSString *merchantId = @"YOUR MERCHANT ID HERE";
-  _isPayingWithToken = true;
-  NPIMerchantInfo *merchantInfo = [[NPIMerchantInfo alloc] initWithIdentifier:merchantId testMode:TRUE cvcRequired:FALSE];
-  NSNumber *amount = [[NSNumber alloc] initWithInt:10];
-  NPIOrderInfo *orderInfo = [[NPIOrderInfo alloc] initWithAmount:amount currencyCode:@"EUR"];
-  NPITokenCardInfo *tokenCardInfo = [[NPITokenCardInfo alloc] initWithTokenId:@"492500******0004" schemeType:0 expiryDate:@"08/22" cvcRequired:FALSE];
-  PiaSDKController *controller = [[PiaSDKController alloc] initWithTokenCardInfo:tokenCardInfo merchantInfo:merchantInfo orderInfo:orderInfo];
-  controller.PiaDelegate = self;
+RCT_EXPORT_METHOD(saveCard:(RCTResponseSenderBlock)callback) {
+  registerPaymentCallback = callback;
   dispatch_async(dispatch_get_main_queue(), ^{
-    [[UIApplication sharedApplication].delegate.window.rootViewController presentViewController:controller animated:YES completion:^{
-    }];
+    PiaSDKController *controller = [[PiaSDKController alloc] initWithMerchantInfo:self.merchantInfo];
+    controller.PiaDelegate = self;
+    [[UIApplication sharedApplication].delegate.window.rootViewController presentViewController:controller animated:YES completion:nil];
   });
 }
 
-RCT_EXPORT_METHOD(callPiaWithPayPal:(RCTResponseSenderBlock)callback) {
-  NPIMerchantInfo *merchantInfo = [[NPIMerchantInfo alloc] initWithIdentifier:@"12002835"];
-  PiaSDKController *controller = [[PiaSDKController alloc] initForPayPalPurchaseWithMerchantInfo:merchantInfo];
-  controller.PiaDelegate = self;
+RCT_EXPORT_METHOD(startPayPalProcess:(RCTResponseSenderBlock)callback) {
+  registerPaymentCallback = callback;
   dispatch_async(dispatch_get_main_queue(), ^{
-    [[UIApplication sharedApplication].delegate.window.rootViewController presentViewController:controller animated:YES completion:^{
-      callback(@[[NSNull null], @"Yes"]);
-    }];
+    PiaSDKController *controller = [[PiaSDKController alloc] initForPayPalPurchaseWithMerchantInfo:self.merchantInfo];
+    controller.PiaDelegate = self;
+    [[UIApplication sharedApplication].delegate.window.rootViewController presentViewController:controller animated:YES completion:nil];
   });
 }
 
-RCT_EXPORT_METHOD(callPiaWithVipps){
+RCT_EXPORT_METHOD(startVippsProcess:(RCTResponseSenderBlock)callback) {
+  registerPaymentCallback = callback;
   dispatch_async(dispatch_get_main_queue(), ^{
     UIViewController *vc = [UIApplication sharedApplication].delegate.window.rootViewController;
-    
-    if(![PiaSDK initiateVippsFromSender:vc delegate:self]) {
-      [self sendEventWithName:@"PiaSDKResult" body:@{@"name": @"Vipps not installed"}];
+    if(![PiaSDK initiateVippsFromSender:vc delegate:self]){
+        [self sendEventWithName:@"PiaSDKResult" body:@{@"name": @"Vipps not installed"}];
     }
   });
 }
 
-RCT_EXPORT_METHOD(callPiaWithSwish){
+RCT_EXPORT_METHOD(startSwishProcess:(RCTResponseSenderBlock)callback) {
+  registerPaymentCallback = callback;
   dispatch_async(dispatch_get_main_queue(), ^{
     UIViewController *vc = [UIApplication sharedApplication].delegate.window.rootViewController;
-    
-    if(![PiaSDK initiateSwishFromSender:vc delegate:self]) {
-      [self sendEventWithName:@"PiaSDKResult" body:@{@"name": @"Swish not installed"}];
+    if(![PiaSDK initiateSwishFromSender:vc delegate:self]){
+        [self sendEventWithName:@"PiaSDKResult" body:@{@"name": @"Swish not installed"}];
     }
   });
 }
+
+RCT_EXPORT_METHOD(startSkipConfirmation:(RCTResponseSenderBlock)callback) {
+  registerPaymentCallback = callback;
+  dispatch_async(dispatch_get_main_queue(), ^{
+    PiaSDKController *controller = [[PiaSDKController alloc] initWithTokenCardInfo:self.tokenCardInfo merchantInfo:self.merchantInfo orderInfo:self.orderInfo];
+    controller.PiaDelegate = self;
+    [[UIApplication sharedApplication].delegate.window.rootViewController presentViewController:controller animated:YES completion:nil];
+  });
+}
+
+RCT_EXPORT_METHOD(startShowConfirmation:(RCTResponseSenderBlock)callback) {
+  registerPaymentCallback = callback;
+  dispatch_async(dispatch_get_main_queue(), ^{
+    PiaSDKController *controller = [[PiaSDKController alloc] initWithTestMode:TRUE tokenCardInfo:self.tokenCardInfo merchantID:self.merchantInfo.identifier orderInfo:self.orderInfo requireCardConfirmation:TRUE];
+    controller.PiaDelegate = self;
+    [[UIApplication sharedApplication].delegate.window.rootViewController presentViewController:controller animated:YES completion:nil];
+  });
+}
+
+RCT_EXPORT_METHOD(startPaytrailProcess:(NSString*)merchantId testMode:(BOOL)testMode) {
+  dispatch_async(dispatch_get_main_queue(), ^{
+    PiaSDKController *controller = [[PiaSDKController alloc] initPaytrailBankPaymentWithMerchantID:merchantId transactionInfo:self.transactionInfo testMode:testMode];
+    controller.PiaDelegate = self;
+    [[UIApplication sharedApplication].delegate.window.rootViewController presentViewController:controller animated:YES completion:nil];
+  });
+}
+
+#pragma mark - PiaSDKDelegate
 
 - (void)PiaSDK:(PiaSDKController * _Nonnull)PiaSDKController didFailWithError:(NPIError * _Nonnull)error {
   [[UIApplication sharedApplication].delegate.window.rootViewController dismissViewControllerAnimated:TRUE completion:^{
@@ -136,6 +176,9 @@ RCT_EXPORT_METHOD(callPiaWithSwish){
 }
 
 - (void)PiaSDKDidCompleteSaveCardWithSuccess:(PiaSDKController * _Nonnull)PiaSDKController {
+  [[UIApplication sharedApplication].delegate.window.rootViewController dismissViewControllerAnimated:TRUE completion:^{
+    [self sendEventWithName:@"PiaSDKResult" body:@{@"name": @"success"}];
+  }];
 }
 
 - (void)PiaSDKDidCompleteWithSuccess:(PiaSDKController * _Nonnull)PiaSDKController {
@@ -146,32 +189,37 @@ RCT_EXPORT_METHOD(callPiaWithSwish){
 }
 
 - (void)doInitialAPICall:(PiaSDKController * _Nonnull)PiaSDKController storeCard:(BOOL)storeCard withCompletion:(void (^ _Nonnull)(NPITransactionInfo * _Nullable))completionHandler {
-  [self getTransactionInfo:^{
-    completionHandler(self.transactionInfo);
-  }];
+    _completionHandler = completionHandler;
+    registerPaymentCallback(@[]);
 }
 
 - (void)registerPaymentWithApplePayData:(PiaSDKController * _Nonnull)PiaSDKController paymentData:(PKPaymentToken * _Nonnull)paymentData newShippingContact:(PKContact * _Nullable)newShippingContact withCompletion:(void (^ _Nonnull)(NPITransactionInfo * _Nullable))completionHandler {
 }
 
 - (void)registerPaymentWithPayPal:(PiaSDKController * _Nonnull)PiaSDKController withCompletion:(void (^ _Nonnull)(NPITransactionInfo * _Nullable))completionHandler {
+  _completionHandler = completionHandler;
+  registerPaymentCallback(@[]);
 }
 
 - (void)registerVippsPayment:(void (^)(NSString * _Nullable))completionWithWalletURL{
-  [self getTransactionInfoForVippsWithcallback:^{
-    completionWithWalletURL(self.transactionInfo.walletUrl);
-  }];
+  _completionWithWalletURL = completionWithWalletURL;
+  registerPaymentCallback(@[]);
 }
+
+- (void)registerSwishPayment:(void (^)(NSString * _Nullable))completionWithWalletURL {
+  _completionWithWalletURL = completionWithWalletURL;
+  registerPaymentCallback(@[]);
+}
+
+#pragma mark - WalletPaymentDelegate
 
 - (void)walletPaymentDidSucceed:(UIView *)transitionIndicatorView{
   [transitionIndicatorView removeFromSuperview];
-  [self enableUserInteraction];
   [self sendEventWithName:@"PiaSDKResult" body:@{@"name": @"success"}];
 }
 
 - (void)walletPaymentInterrupted:(UIView *)transitionIndicatorView {
   [transitionIndicatorView removeFromSuperview];
-  [self enableUserInteraction];
   [self sendEventWithName:@"PiaSDKResult" body:@{@"name": @"Interrupted"}];
 }
 
@@ -179,179 +227,30 @@ RCT_EXPORT_METHOD(callPiaWithSwish){
   [self sendEventWithName:@"PiaSDKResult" body:@{@"name": error.localizedDescription}];
 }
 
-
-- (void)registerSwishPayment:(void (^)(NSString * _Nullable))completionWithWalletURL {
-    [self getTransactionInfoForSwishWithcallback:^{
-        completionWithWalletURL(self.transactionInfo.walletUrl);
-    }];
-}
-
 - (void)swishDidRedirect:(nullable UIView *)transitionIndicatorView {
   [transitionIndicatorView removeFromSuperview];
-  [self enableUserInteraction];
   [self sendEventWithName:@"PiaSDKResult" body:@{@"name": @"success"}];
 }
-
 
 - (void)swishPaymentDidFailWith:(nonnull NPIError *)error {
   [self sendEventWithName:@"PiaSDKResult" body:@{@"name": error.localizedDescription}];
 }
 
-
-
--(void)getTransactionInfoForVippsWithcallback:(void (^)(void))callbackBlock {
-    
-    [self registerCallForWallets:Vipps callback:callbackBlock];
-}
-
--(void)getTransactionInfoForSwishWithcallback:(void (^)(void))callbackBlock {
-    
-    [self registerCallForWallets:Swish callback:callbackBlock];
-}
-
--(void)registerCallForWallets:(int)wallet callback:(void (^)(void))callbackBlock
-{
-    
-     NSString *merchantURL = @"YOUR MERCHANT BACKEND URL HERE";
-    
-    __block NSMutableDictionary *resultsDictionary;
-    
-    NSMutableDictionary *jsonDictionary = [[NSMutableDictionary alloc] init];
-    NSMutableDictionary *amount = [[NSMutableDictionary alloc] init];
-    NSMutableDictionary *method = [[NSMutableDictionary alloc] init];
-    
-    switch (wallet) {
-        case Vipps:
-            [amount setValue:[NSNumber numberWithInt:1000] forKey:@"totalAmount"];
-            [amount setValue:[NSNumber numberWithInt:200] forKey:@"vatAmount"];
-            [amount setValue:@"NOK" forKey:@"currencyCode"];
-            [method setValue:@"Vipps" forKey:@"id"];
-            [method setValue:@"Vipps" forKey:@"displayName"];
-            [method setValue:[NSNumber numberWithInt:0] forKey:@"fee"];
-            [jsonDictionary setValue:@"+471111..." forKey:@"phoneNumber"];
-            break;
-        case Swish:
-            [amount setValue:[NSNumber numberWithInt:1000] forKey:@"totalAmount"];
-            [amount setValue:[NSNumber numberWithInt:200] forKey:@"vatAmount"];
-            [amount setValue:@"SEK" forKey:@"currencyCode"];
-            [method setValue:@"SwishM" forKey:@"id"];
-            [method setValue:@"Swish" forKey:@"displayName"];
-            [method setValue:[NSNumber numberWithInt:0] forKey:@"fee"];
-            break;
-        default:
-            break;
-    }
-    [jsonDictionary setValue:amount forKey:@"amount"];
-    [jsonDictionary setValue:method forKey:@"method"];
-    
-    [jsonDictionary setValue:@"000012" forKey:@"customerId"];
-    [jsonDictionary setValue:@"PiaSDK-iOS" forKey:@"orderNumber"];
-    [jsonDictionary setValue:false forKey:@"storeCard"];
-    
-    
-     [jsonDictionary setValue:@"YOUR_APP_SCHEME_URL://piasdk" forKey:@"redirectURL"];
-    
-    if ([NSJSONSerialization isValidJSONObject:jsonDictionary]) {//validate it
-      NSError* error;
-      NSData* jsonData = [NSJSONSerialization dataWithJSONObject:jsonDictionary options:NSJSONWritingPrettyPrinted error: &error];
-      NSURL* url = [NSURL URLWithString:merchantURL];
-      NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:30.0];
-      [request setHTTPMethod:@"POST"];//use POST
-      [request setValue:@"application/json;charset=utf-8;version=2.0" forHTTPHeaderField:@"Accept"];
-      [request setValue:@"application/json;charset=utf-8;version=2.0" forHTTPHeaderField:@"Content-Type"];
-      [request setHTTPBody:jsonData];//set data
-      __block NSError *error1 = [[NSError alloc] init];
-      
-      NSURLSession *session = [NSURLSession sharedSession];
-      NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        if ([data length]>0 && error == nil) {
-          resultsDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:&error1];
-          NSLog(@"resultsDictionary is %@",resultsDictionary);
-          
-          NSString *transactionId = resultsDictionary[@"transactionId"];
-          NSString *walletURL = resultsDictionary[@"walletUrl"];
-          self.transactionInfo = [[NPITransactionInfo alloc] initWithTransactionID:transactionId walletUrl:walletURL];
-          callbackBlock();
-        } else if ([data length]==0 && error ==nil) {
-          NSLog(@" download data is null");
-          self.transactionInfo = nil;
-          callbackBlock();
-        } else if( error!=nil) {
-          NSLog(@" error is %@",error);
-          self.transactionInfo = nil;
-          callbackBlock();
-        }
-      }];
-      [dataTask resume];
-    }
-}
-
-
-- (void)getTransactionInfo:(void (^)(void))callbackBlock {
+-(SchemeType)mapCardScheme:(NSString*)issuer {
   
-   NSString *merchantURL = @"YOUR MERCHANT BACKEND URL HERE";
-  
-  __block NSMutableDictionary *resultsDictionary;
-  
-  NSMutableDictionary *amount = [[NSMutableDictionary alloc] init];
-  [amount setValue:[NSNumber numberWithInt:1000] forKey:@"totalAmount"];
-  [amount setValue:[NSNumber numberWithInt:200] forKey:@"vatAmount"];
-  [amount setValue:@"EUR" forKey:@"currencyCode"];
-  
-  NSMutableDictionary *jsonDictionary = [[NSMutableDictionary alloc] init];
-  [jsonDictionary setValue:@"000012" forKey:@"customerId"];
-  [jsonDictionary setValue:@"PiaSDK-iOS" forKey:@"orderNumber"];
-  [jsonDictionary setValue:amount forKey:@"amount"];
-  [jsonDictionary setValue:false forKey:@"storeCard"];
-  
-  if (_isPayingWithToken) {
-      NSMutableDictionary *method = [[NSMutableDictionary alloc] init];
-      [method setValue:@"EasyPayment" forKey:@"id"];
-      [method setValue:@"Easy Payment" forKey:@"displayName"];
-      [method setValue:[NSNumber numberWithInt:0] forKey:@"fee"];
-      [jsonDictionary setValue:method forKey:@"method"];
-      [jsonDictionary setValue:@"492500******0004" forKey:@"cardId"];
+  if([issuer isEqualToString:@"visa"]){
+    return VISA;
+  } else if ([issuer isEqualToString:@"mastercard"]) {
+    return MASTER_CARD;
+  }else if ([issuer isEqualToString:@"dankort"]) {
+    return DANKORT;
+  }else if ([issuer isEqualToString:@"dinersclubinternational"]) {
+    return DINERS_CLUB_INTERNATIONAL;
+  }else if ([issuer isEqualToString:@"amex"] || [issuer isEqualToString:@"americanexpress"]) {
+    return AMEX;
   }
   
-  
-  if ([NSJSONSerialization isValidJSONObject:jsonDictionary]) {//validate it
-    NSError* error;
-    NSData* jsonData = [NSJSONSerialization dataWithJSONObject:jsonDictionary options:NSJSONWritingPrettyPrinted error: &error];
-    NSURL* url = [NSURL URLWithString:merchantURL];
-    NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:30.0];
-    [request setHTTPMethod:@"POST"];//use POST
-    [request setValue:@"application/json;charset=utf-8;version=2.0" forHTTPHeaderField:@"Accept"];
-    [request setValue:@"application/json;charset=utf-8;version=2.0" forHTTPHeaderField:@"Content-Type"];
-    [request setHTTPBody:jsonData];//set data
-    __block NSError *error1 = [[NSError alloc] init];
-    
-    NSURLSession *session = [NSURLSession sharedSession];
-    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-      if ([data length]>0 && error == nil) {
-        resultsDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:&error1];
-        NSLog(@"resultsDictionary is %@",resultsDictionary);
-        
-        NSString *transactionId = resultsDictionary[@"transactionId"];
-        NSString *redirectOK = resultsDictionary[@"redirectOK"];
-        
-        self.transactionInfo = [[NPITransactionInfo alloc] initWithTransactionID:transactionId okRedirectUrl:redirectOK];
-        callbackBlock();
-      } else if ([data length]==0 && error ==nil) {
-        NSLog(@" download data is null");
-        self.transactionInfo = nil;
-        callbackBlock();
-      } else if( error!=nil) {
-        NSLog(@" error is %@",error);
-        self.transactionInfo = nil;
-        callbackBlock();
-      }
-    }];
-    [dataTask resume];
-  }
+  return OTHER;
 }
 
--(void)enableUserInteraction
-{
-  [[UIApplication sharedApplication].delegate.window.rootViewController.view setUserInteractionEnabled:YES];
-}
 @end

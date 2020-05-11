@@ -96,7 +96,7 @@ extension AppNavigation {
             merchantInfo: api.merchant.npiInfo(cvcRequired: true))
         )
     }
-    
+        
     // MARK: PayPal
     
     func openPayPalPayment(sender: PaymentSelectionController, methodID: PaymentMethodID) {
@@ -134,6 +134,17 @@ extension AppNavigation {
         /// merchant BE expects order with a zero amount when saving a card
         orderDetails = SampleOrderDetails.make(with: Amount.zero)
         present(PiaSDKController(merchantInfo: api.merchant.npiInfo(cvcRequired: true)))
+    }
+    
+    // MARK: Paytrail Finnish Bank Payments
+
+    func openFinnishBankPayment(sender: PaymentSelectionController, bankName: PaymentMethodID) {
+        PiaSDK.addTransitionView(in: UIApplication.shared.keyWindow!.rootViewController!.view)
+        orderDetails.method = bankName
+        orderDetails.orderNumber =  Utils.shared.getPaytrailOrderNumber()
+        self.registerPayment{ (transactionInfo) in
+            self.present(PiaSDKController(paytrailBankPaymentWithMerchantID: self.api.merchant.id, transactionInfo: transactionInfo, testMode: self.isTestMode))
+        }
     }
     
     func present(_ piaController: PiaSDKController) {
@@ -195,6 +206,15 @@ extension AppNavigation: PiaSDKDelegate {
         
         api.registerPayPal(for: orderDetails) { result in
             self.completeRegistration(piaController: piaController, result: result) { transaction in
+                completionHandler(transaction?.npiTransaction)
+            }
+        }
+    }
+    
+    func registerPayment(
+        withPaytrailWithCompletion completionHandler: @escaping (NPITransactionInfo?) -> Void) {
+        api.registerPaytrailBankPayment(for: orderDetails, for: customerDetails){ result in
+            self.completeRegistration(piaController: nil, result: result) { transaction in
                 completionHandler(transaction?.npiTransaction)
             }
         }

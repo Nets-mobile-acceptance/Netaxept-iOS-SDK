@@ -28,6 +28,8 @@ class AppNavigation: NSObject, CheckoutControllerDelegate, PaymentSelectionContr
     lazy var api: MerchantAPI = MerchantAPI(customerID: customerID, merchant: .current)
 
     var orderDetails: Order = SampleOrderDetails.make()
+    var customerDetails: Customer = SampleCustomerDetails.make()
+
     var transaction: Transaction?
 
     func launch(in window: UIWindow) {

@@ -20,7 +20,8 @@ extension String {
     static let titleStoredCards = "Stored Cards"
     static let titleAddCard = "Add Card"
     static let titleMobileWallets = "Mobile Wallets"
-    
+    static let titleFinnishBanks = "Finnish bank payment"
+
     static let titlePurchaseSuccessful = "Purchase successful\t✅\n"
     static let titlePurchaseFailed = "Purchase failed\t❌\n"
     static let buttonContinueShopping = "Continue Shopping"

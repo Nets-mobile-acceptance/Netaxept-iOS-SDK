@@ -53,7 +53,7 @@
                 <a class="nav-group-task-link" href="11-basic-payment-flow.html">1.1. Basic payment flow</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="12-new--easy-one-click-payment-flow.html">1.2. [New !] Easy (one click) payment flow</a>
+                <a class="nav-group-task-link" href="12-easy-one-click-payment-flow.html">1.2. Easy (one click) payment flow</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="13-recurring-payments.html">1.3. Recurring payments</a>
@@ -72,6 +72,9 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="34-swish-m-commerce-integration.html">3.4. Swish m-commerce Integration</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="35-new--finland---direct-bank-payment-via-paytrail.html">3.5. [NEW !] Finland - Direct bank payment (via Paytrail)</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="4-ui-customization.html">4. UI Customization</a>
@@ -203,7 +206,7 @@
         <section class="section">
           <div class="section-content">
             
-            <h1 id='pia-netaxept-ios-sdk-v1-6-0' class='heading'>PiA - Netaxept iOS SDK v1.6.0</h1>
+            <h1 id='pia-netaxept-ios-sdk-v1-7-0' class='heading'>PiA - Netaxept iOS SDK v1.7.0</h1>
 
 <p><img src="./Resources/NetsLogo.jpg" alt=""></p>
 <h2 id='getting-started' class='heading'>Getting started</h2>
@@ -231,6 +234,7 @@
 <li>PayPal</li>
 <li>Vipps</li>
 <li>Swish</li>
+<li>Paytrail direct bank payments</li>
 <li>Nordic mobile wallets (MobilePay, etc) – <em>available soon</em></li>
 </ul>
 <h2 id='requirements' class='heading'>Requirements</h2>
@@ -332,6 +336,39 @@ Value  :  $(PRODUCT_NAME) camera us
 <p><strong>NOTE:</strong> If you wish to support Shipping Address with Apple Pay, remember to conform to this (optional) delegate.</p>
 <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">piaSDK</span><span class="p">(</span><span class="n">_</span> <span class="kt">PiaSDKController</span><span class="p">:</span> <span class="kt">PiaSDKController</span><span class="p">,</span> <span class="n">didChangeApplePayShippingContact</span> <span class="nv">contact</span><span class="p">:</span> <span class="kt">PKContact</span><span class="p">,</span> <span class="n">withCompletion</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Bool</span><span class="p">,</span> <span class="kt">NSDecimalNumber</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span>
 </code></pre>
+<h2 id='integration-run-script' class='heading'>Integration - Run Script</h2>
+
+<p>To assist integration of <code>Pia.framework</code> in your project, navigate to the project&rsquo;s target (under TARGETS) in Xcode and add the following <em>Run Script</em> in <em>Build Phases</em> section. If you want to avoid the error when running on simulator, please also check the box for this. Note: Run script only when installing!</p>
+
+<p>Note: Make sure the run script is added after the <code>Embedded Framewoks</code> phase</p>
+<pre class="highlight plaintext"><code>APP_PATH="${TARGET_BUILD_DIR}/${WRAPPER_NAME}" 
+# This script loops through the frameworks embedded in the application and 
+# removes unused architectures. 
+find "$APP_PATH" -name 'Pia.framework' -type d | while read -r FRAMEWORK 
+do 
+FRAMEWORK_EXECUTABLE_NAME=$(defaults read "$FRAMEWORK/Info.plist" CFBundleExecutable) 
+FRAMEWORK_EXECUTABLE_PATH="$FRAMEWORK/$FRAMEWORK_EXECUTABLE_NAME" 
+echo "Executable is $FRAMEWORK_EXECUTABLE_PATH" 
+
+EXTRACTED_ARCHS=() 
+
+for ARCH in $ARCHS 
+do 
+echo "Extracting $ARCH from $FRAMEWORK_EXECUTABLE_NAME" 
+lipo -extract "$ARCH" "$FRAMEWORK_EXECUTABLE_PATH" -o "$FRAMEWORK_EXECUTABLE_PATH-$ARCH" 
+EXTRACTED_ARCHS+=("$FRAMEWORK_EXECUTABLE_PATH-$ARCH") 
+done 
+
+echo "Merging extracted architectures: ${ARCHS}" 
+lipo -o "$FRAMEWORK_EXECUTABLE_PATH-merged" -create "${EXTRACTED_ARCHS[@]}" 
+rm "${EXTRACTED_ARCHS[@]}" 
+
+echo "Replacing original executable with thinned version" 
+rm "$FRAMEWORK_EXECUTABLE_PATH" 
+mv "$FRAMEWORK_EXECUTABLE_PATH-merged" "$FRAMEWORK_EXECUTABLE_PATH" 
+
+done 
+</code></pre>
 <h2 id='contact' class='heading'>Contact</h2>
 
 <p>If you have any question or feedback, please contact us via email: <a href="mailto:mobile-acceptance@nets.eu">mobile-acceptance@nets.eu</a>.</p>
@@ -360,7 +397,7 @@ Value  :  $(PRODUCT_NAME) camera us
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2020 <a class="link" href="https://nets.eu" target="_blank" rel="external">Nets</a>. All rights reserved. (Last updated: 2020-02-04)</p>
+      <p>&copy; 2020 <a class="link" href="https://nets.eu" target="_blank" rel="external">Nets</a>. All rights reserved. (Last updated: 2020-05-08)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.0</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>
