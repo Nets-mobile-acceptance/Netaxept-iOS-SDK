@@ -29,6 +29,7 @@ import Pia
 
 enum PiaResult {
     case cancelled
+    case detail(title: String, message: String)
     case response(Bool,String)
     case error(NPIError?, String?)
 }
@@ -94,6 +95,12 @@ class ResultViewController: UIViewController {
             self.resultView.backgroundColor = self.hexStringToUIColor(hex: "#ffae42")
             self.resultImage.image = #imageLiteral(resourceName: "WarningIcon")
             self.resultLabel.text = NSLocalizedString("Process is cancelled", comment: "Canceled transaction message")
+
+        case .detail(title: let title, message: let message):
+            self.navItem.title = title
+            self.resultView.backgroundColor = self.hexStringToUIColor(hex: "#ffae42")
+            self.resultImage.image = #imageLiteral(resourceName: "WarningIcon")
+            self.resultLabel.text = message
 
         case .error(let error, let message):
             self.navItem.title = NSLocalizedString("Failed", comment: "Failed transaction navigation title")

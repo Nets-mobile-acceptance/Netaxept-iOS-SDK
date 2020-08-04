@@ -113,7 +113,7 @@ extension AppNavigation {
         orderDetails.method = methodID
         self.phoneNumber = phoneNumber
         guard PiaSDK.initiateVipps(fromSender: sender, delegate: self) else {
-            navigationController.showAlert(title: .titleCannotPayWithVipps, message: .messageVippsIsNotInstalled)
+            navigationController.showAlert(title: .titleCannotPayWith(.vipps), message: .messageAppIsNotInstalled(.vipps))
             return
         }
     }
@@ -123,7 +123,7 @@ extension AppNavigation {
     func openSwishPayment(sender: PaymentSelectionController, methodID: PaymentMethodID) {
         orderDetails.method = methodID
         guard PiaSDK.initiateSwish(fromSender: sender, delegate: self) else {
-            navigationController.showAlert(title: .titleCannotPayWithSwish, message: .messageSwishIsNotInstalled)
+            navigationController.showAlert(title: .titleCannotPayWith(.swish), message: .messageAppIsNotInstalled(.swish))
             return
         }
     }
@@ -144,6 +144,16 @@ extension AppNavigation {
         orderDetails.orderNumber =  Utils.shared.getPaytrailOrderNumber()
         self.registerPayment{ (transactionInfo) in
             self.present(PiaSDKController(paytrailBankPaymentWithMerchantID: self.api.merchant.id, transactionInfo: transactionInfo, testMode: self.isTestMode))
+        }
+    }
+
+    // MARK: MobilePay
+
+    func openMobilePayPayment(sender: PaymentSelectionController, methodID: PaymentMethodID) {
+        orderDetails.method = methodID
+        guard PiaSDK.initiateMobilePay(fromSender: sender, delegate: self, isTest: isTestMode) else {
+            navigationController.showAlert(title: .titleCannotPayWith(.mobilePay), message: .messageAppIsNotInstalled(.mobilePay))
+            return
         }
     }
     
@@ -225,7 +235,8 @@ extension AppNavigation: PiaSDKDelegate {
 
 extension AppNavigation: VippsPaymentDelegate {
     func registerVippsPayment(_ completionWithWalletURL: @escaping (String?) -> Void) {
-        api.registerVipps(for: orderDetails, phoneNumber: phoneNumber!, appRedirect: .appURLScheme) { result in
+        let redirect = URL.redirectURL(forWallet: "vipps")
+        api.registerVipps(for: orderDetails, phoneNumber: phoneNumber!, appRedirect: redirect) { result in
             self.completeRegistration(piaController: nil, result: result) { transaction in
                 completionWithWalletURL(transaction?.walletUrl)
             }
@@ -245,8 +256,12 @@ extension AppNavigation: VippsPaymentDelegate {
     }
     
     func walletPaymentInterrupted(_ transitionIndicatorView: UIView?) {
-        transitionIndicatorView?.removeFromSuperview()
-        presentResult(.cancelled)
+        guard let transactionID = transaction?.transactionId else {
+            transitionIndicatorView?.removeFromSuperview()
+            presentResult(.error(nil, "Missing transaction ID"))
+            return
+        }
+        commitTransaction(transactionID: transactionID, isQueryFollowingInterruption: true, completion: presentResult(_:))
     }
 }
 
@@ -254,7 +269,8 @@ extension AppNavigation: VippsPaymentDelegate {
 
 extension AppNavigation: SwishPaymentDelegate {
     func registerSwishPayment(_ completionWithWalletURL: @escaping (String?) -> Void) {
-        api.registerSwish(for: orderDetails, appRedirect: .appURLScheme) { result in
+        let redirect = URL.redirectURL(forWallet: "swish")
+        api.registerSwish(for: orderDetails, appRedirect: redirect) { result in
             self.completeRegistration(piaController: nil, result: result) { transaction in
                 completionWithWalletURL(transaction?.walletUrl)
             }
@@ -271,13 +287,47 @@ extension AppNavigation: SwishPaymentDelegate {
             presentResult(.error(nil, "Missing transaction ID"))
             return
         }
+        PiaSDK.addTransitionView(in: navigationController.view)
         commitTransaction(transactionID: transactionID, completion: presentResult(_:))
     }
 }
 
-fileprivate extension String {
-    /// URL scheme defined in info.plist for app-switch redirects
-    static let appURLScheme = "eu.nets.pia.sample://piasdk"
+// MARK: - 2.3 MobilePay
+
+extension AppNavigation: MobilePayDelegate {
+    func registerMobilePay(_ completionWithWalletURL: @escaping (String?) -> Void) {
+        let redirect = URL.redirectURL(forWallet: "mobilepay")
+        api.registerMobilePay(for: orderDetails, appRedirect: redirect) { result in
+            self.completeRegistration(piaController: nil, result: result) { transaction in
+                completionWithWalletURL(transaction?.walletUrl)
+            }
+        }
+    }
+
+    func mobilePayDidFail(with error: NPIError) {
+        presentResult(.error(error, "MobilePay payment failed"))
+    }
+
+    func mobilePayDidRedirect(_ transitionIndicatorView: UIView?) {
+        guard let transactionID = transaction?.transactionId else {
+            transitionIndicatorView?.removeFromSuperview()
+            presentResult(.error(nil, "Missing transaction ID"))
+            return
+        }
+        PiaSDK.addTransitionView(in: navigationController.view)
+        commitTransaction(transactionID: transactionID, completion: presentResult(_:))
+    }
+}
+
+fileprivate extension URL {
+    /// URL scheme defined in project settings under URL-Types for app-switch redirects
+    private static let appRedirectScheme = "eu.nets.pia.sample://piasdk"
+
+    static func redirectURL(forWallet walletName: String) -> URL {
+        var redirect = URLComponents(string: appRedirectScheme)!
+        redirect.queryItems = [ URLQueryItem(name: "wallet", value: walletName) ]
+        return redirect.url!
+    }
 }
 
 // MARK: - 3 Completion
@@ -319,6 +369,7 @@ extension AppNavigation {
     func commitTransaction(
         transitionView: UIView? = nil,
         transactionID: String,
+        isQueryFollowingInterruption: Bool = false,
         commitType: MerchantAPI.CommitType = .payment,
         completion: @escaping (PiaResult) -> Void) {
         
@@ -335,6 +386,10 @@ extension AppNavigation {
                 }
             case .failure(let error):
                 piaResult = .error(nil, error.errorMessage)
+                guard !isQueryFollowingInterruption else {
+                    piaResult = .detail(title: "Interrupted", message: "Transaction was interrupted")
+                    break
+                }
                 self.api.rollbackTransaction(transactionID) { error in
                     guard let error = error else { return }
                     self.navigationController.showAlert(

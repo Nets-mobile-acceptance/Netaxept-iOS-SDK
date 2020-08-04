@@ -30,10 +30,8 @@ extension String {
     static let titleError = "Error"
     static let titleRollbackFailed = "Rollback Failed!"
     static let titleVippsRequiresPhoneNumber = "Vipps requires phone number"
-    static let titleCannotPayWithVipps = "Cannot Pay with Vipps"
-    static let messageVippsIsNotInstalled = "Vipps is not installed on the device"
-    static let titleCannotPayWithSwish = "Cannot Pay with Swish"
-    static let messageSwishIsNotInstalled = "Swish is not installed on the device"
+    static func titleCannotPayWith(_ app: PaymentApp) -> String { "Cannot Pay with \(app.rawValue)" }
+    static func messageAppIsNotInstalled(_ app: PaymentApp) -> String { "\(app.rawValue) is not installed on the device" }
 
     static let titleAppleWalletNotSetup = "Apple Pay is not set up in this device"
     static let messageOpenAppleWalletApp = "Please set up Apple Pay in the Wallet application"
@@ -43,4 +41,8 @@ extension String {
 
     static let actionCancel = "Cancel"
     static let actionSetup = "Set up"
+}
+
+enum PaymentApp: String {
+    case vipps = "Vipps", swish = "Swish", mobilePay = "MobilePay"
 }

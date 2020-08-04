@@ -92,7 +92,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
-        return PiaSDK.applicationDidOpenFromRedirect(with: url, andOptions: options)
+        if !PiaSDK.willHandleRedirect(with: url, andOptions: options) {
+            // This was not PiaSDK redirect, handle accordingly
+        }
+        return true
     }
 }
 

@@ -69,7 +69,7 @@ extension MerchantAPI {
         storeCard: Bool,
         applePayToken: String? = nil,
         phoneNumber: String? = nil,
-        redirectUrl: String? = nil,
+        redirectUrl: URL? = nil,
         customer: CustomerDetails? = nil) throws -> Data {
 
         struct RegistrationRequest: Encodable {
@@ -82,7 +82,7 @@ extension MerchantAPI {
             let items: LineItem?
             let paymentData: String?
             let phoneNumber: String?
-            let redirectUrl: String?
+            let redirectUrl: URL?
             let customerEmail: String?
             let customerFirstName: String?
             let customerLastName: String?

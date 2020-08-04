@@ -523,15 +523,25 @@ namespace XamarinPia
         [Export ("initiateSwishFromSender:delegate:")]
         bool InitiateSwishFromSender ([NullAllowed] UIViewController sender, SwishPaymentDelegate @delegate);
         
+        // +(BOOL)initiateMobilePayFromSender:(UIViewController * _Nullable)sender delegate:(id<MobilePayDelegate> _Nonnull)delegate isTest:(BOOL)isTest;
+        [Static]
+        [Export ("initiateMobilePayFromSender:delegate:isTest:")]
+        bool InitiateMobilePayFromSender ([NullAllowed] UIViewController sender, MobilePayDelegate @delegate, bool isTest);
+        
         // +(void)initiateTokenizedCardPayFrom:(UIViewController * _Nonnull)sender testMode:(BOOL)isTestMode showsActivityIndicator:(BOOL)showsActivityIndicator merchantID:(NSString * _Nonnull)merchantID redirectURL:(NSString * _Nonnull)redirectURL transactionID:(NSString * _Nonnull)transactionID success:(void (^ _Nonnull)(void))success cancellation:(void (^ _Nonnull)(void))cancellation failure:(void (^ _Nonnull)(NPIError * _Nonnull))failure;
         [Static]
         [Export ("initiateTokenizedCardPayFrom:testMode:showsActivityIndicator:merchantID:redirectURL:transactionID:success:cancellation:failure:")]
         void InitiateTokenizedCardPayFrom (UIViewController sender, bool isTestMode, bool showsActivityIndicator, string merchantID, string redirectURL, string transactionID, Action success, Action cancellation, Action<NPIError> failure);
 
-        // +(BOOL)applicationDidOpenFromRedirectWith:(NSURL * _Nonnull)redirectURL andOptions:(NSDictionary * _Nonnull)options;
+        // +(BOOL)applicationDidOpenFromRedirectWith:(NSURL * _Nonnull)redirectURL andOptions:(NSDictionary * _Nonnull)options __attribute__((deprecated("Use `willHandleRedirectWith:` instead. Make sure to add the wallet name during registration - `…//piasdk?wallet=walletName`")));
         [Static]
-        [Export("applicationDidOpenFromRedirectWith:andOptions:")]
-        bool ApplicationDidOpenFromRedirectWith(NSUrl redirectURL, NSDictionary options);
+        [Export ("applicationDidOpenFromRedirectWith:andOptions:")]
+        bool ApplicationDidOpenFromRedirectWith (NSUrl redirectURL, NSDictionary options);
+
+        // +(BOOL)willHandleRedirectWith:(NSURL * _Nonnull)redirectURL andOptions:(NSDictionary * _Nonnull)options;
+        [Static]
+        [Export ("willHandleRedirectWith:andOptions:")]
+        bool WillHandleRedirectWith (NSUrl redirectURL, NSDictionary options);
 
         // +(void)showActivityIndicatorIn:(UIViewController * _Nonnull)viewController __attribute__((deprecated("Use `addTransitionViewIn:` instead")));
         [Static]
@@ -613,6 +623,31 @@ namespace XamarinPia
         // @optional -(void)swishDidRedirect;
         [Export ("swishDidRedirect")]
         void SwishDidRedirect ();
+    }
+    
+    // @protocol MobilePayDelegate <WalletPaymentDelegate>
+    [BaseType(typeof(NSObject))]
+    [Model]
+    interface MobilePayDelegate : WalletPaymentDelegate
+    {
+        // @required -(void)registerMobilePay:(void (^ _Nonnull)(NSString * _Nullable))completionWithWalletURL;
+        [Abstract]
+        [Export ("registerMobilePay:")]
+        void RegisterMobilePay (Action<NSString> completionWithWalletURL);
+
+        // @required -(void)mobilePayDidFailWith:(NPIError * _Nonnull)error;
+        [Abstract]
+        [Export ("mobilePayDidFailWith:")]
+        void MobilePayDidFailWith (NPIError error);
+
+        // @required -(void)mobilePayDidRedirect:(UIView * _Nullable)transitionIndicatorView;
+        [Abstract]
+        [Export ("mobilePayDidRedirect:")]
+        void MobilePayDidRedirect ([NullAllowed] UIView transitionIndicatorView);
+
+        // @optional -(void)mobilePayDidRedirect;
+        [Export ("mobilePayDidRedirect")]
+        void MobilePayDidRedirect ();
     }
 
     // @interface ApplePay (PiaSDK)

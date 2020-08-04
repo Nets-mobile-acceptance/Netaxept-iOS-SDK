@@ -248,8 +248,7 @@ public enum AnyFetchError: DataTaskError, CustomStringConvertible {
         case .badRequest(let error):
             return error.description
         case let .statusCode(code, rawResponse: response):
-            return (response.data?.htmlString ??
-                "\(code) \(response.error?.localizedDescription ?? "(no message)")") + "\n\nRaw: \(response.urlResponse?.description ?? "…")"
+            return (response.data?.htmlString ?? "\(code) \(response.error?.localizedDescription ?? "(no message)")")
         }
     }
 

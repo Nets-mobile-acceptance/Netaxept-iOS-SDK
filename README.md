@@ -1,4 +1,4 @@
-# PiA - Netaxept iOS SDK v1.7.0
+# PiA - Netaxept iOS SDK v1.8.0
 
 ![](./Resources/NetsLogo.jpg)
 
@@ -23,7 +23,7 @@ Supported payment methods:
 * Vipps
 * Swish
 * Paytrail direct bank payments
-* Nordic mobile wallets (MobilePay, etc) – *available soon*
+* MobilePay
 
 ## Requirements
 * PiA iOS SDK requires iOS 9 or above.

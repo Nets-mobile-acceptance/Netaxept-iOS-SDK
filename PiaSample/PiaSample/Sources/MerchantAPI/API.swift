@@ -59,7 +59,7 @@ extension MerchantAPI {
     public func registerVipps(
         for order: OrderDetails,
         phoneNumber: String,
-        appRedirect: String,
+        appRedirect: URL,
         callback: @escaping (Result<Transaction, RegisterError>) -> Void) {
         
         let request = URLRequest(for: registerURL, method: .post, headers: headers)
@@ -72,7 +72,7 @@ extension MerchantAPI {
 
     public func registerSwish(
         for order: OrderDetails,
-        appRedirect: String,
+        appRedirect: URL,
         callback: @escaping (Result<Transaction, RegisterError>) -> Void) {
 
         let request = URLRequest(for: registerURL, method: .post, headers: headers)
@@ -91,6 +91,19 @@ extension MerchantAPI {
         let request = URLRequest(for: registerURL, method: .post, headers: headers)
         execute(request, callback: callback) { () -> Data in
             try self.encode(order: order, storeCard: false,customer: customer)
+        }
+    }
+
+    // MARK: Register MobilePay payment
+
+    public func registerMobilePay(
+        for order: OrderDetails,
+        appRedirect: URL,
+        callback: @escaping (Result<Transaction, RegisterError>) -> Void) {
+
+        let request = URLRequest(for: registerURL, method: .post, headers: headers)
+        execute(request, callback: callback) { () -> Data in
+            try self.encode(order: order, storeCard: false, redirectUrl: appRedirect)
         }
     }
 

@@ -74,7 +74,10 @@
                 <a class="nav-group-task-link" href="34-swish-m-commerce-integration.html">3.4. Swish m-commerce Integration</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="35-new--finland---direct-bank-payment-via-paytrail.html">3.5. [NEW !] Finland - Direct bank payment (via Paytrail)</a>
+                <a class="nav-group-task-link" href="35-finland---direct-bank-payment-via-paytrail.html">3.5. Finland - Direct bank payment (via Paytrail)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="36-new--mobilepay-integration.html">3.6 [NEW !] MobilePay Integration</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="4-ui-customization.html">4. UI Customization</a>
@@ -168,6 +171,9 @@
           <li class="nav-group-name">
             <a class="nav-group-name-link" href="Protocols.html">Protocols</a>
             <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Protocols/MobilePayDelegate.html">MobilePayDelegate</a>
+              </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Protocols/PiaSDKDelegate.html">PiaSDKDelegate</a>
               </li>
@@ -595,7 +601,7 @@ Includes a domain, a domain-specific error code, and localized information.</p>
 /// `LSApplicationQueriesSchemes` in info.plist.
 ///
 /// Payment flow including app-switch to and from Swish is handled internally.
-/// The default behaviour presents a transition view on `sender` during this transition.
+/// The default flow presents a transition view on `sender` during this transition.
 /// To customize UI handling of app transition (to and from Swish app), pass `nil` in
 /// the `sender` view controller parameter and manage presentation of custom UI
 /// (e.g. custom activity indicator) using the delegate calls.
@@ -605,6 +611,21 @@ Includes a domain, a domain-specific error code, and localized information.</p>
 /// @return True if Swish app can be opened
 ///
 </span><span class="k">+</span> <span class="p">(</span><span class="n">BOOL</span><span class="p">)</span><span class="nf">initiateSwishFromSender</span><span class="p">:(</span><span class="n">UIViewController</span> <span class="o">*</span> <span class="n">_Nullable</span><span class="p">)</span><span class="nv">sender</span> <span class="nf">delegate</span><span class="p">:(</span><span class="n">id</span><span class="o">&lt;</span><span class="n"><a href="Protocols/SwishPaymentDelegate.html">SwishPaymentDelegate</a></span><span class="o">&gt;</span><span class="p">)</span><span class="nv">delegate</span><span class="p">;</span>
+
+<span class="c1">/// Attempts to initiate MobilePay payment and returns true if successful.
+/// Returns false if MobilePay is not installed.
+///
+/// The default flow presents a transition view on `sender` during this transition.
+/// To customize UI handling of app transition (to and from MobilePay app), pass `nil` in
+/// the `sender` view controller parameter and manage presentation of custom UI
+/// (e.g. custom activity indicator) using the delegate calls.
+///
+/// @param sender The sender view controller. Used to present activity indicator during app switch
+/// @param delegate The delegate responsible for handling the payment process.
+/// @param isTest Is the payment in test mode
+/// @return True if MobilePay app can be opened
+///
+</span><span class="k">+</span> <span class="p">(</span><span class="n">BOOL</span><span class="p">)</span><span class="nf">initiateMobilePayFromSender</span><span class="p">:(</span><span class="n">UIViewController</span> <span class="o">*</span> <span class="n">_Nullable</span><span class="p">)</span><span class="nv">sender</span> <span class="nf">delegate</span><span class="p">:(</span><span class="n">id</span><span class="o">&lt;</span><span class="n"><a href="Protocols/MobilePayDelegate.html">MobilePayDelegate</a></span><span class="o">&gt;</span><span class="p">)</span><span class="nv">delegate</span> <span class="nf">isTest</span><span class="p">:(</span><span class="n">BOOL</span><span class="p">)</span><span class="nv">isTest</span><span class="p">;</span>
 
 <span class="c1">/// Initiate payment with a stored card. If the payment requires 3DS authentication,
 /// a webpage will be presented on the sender view controller.
@@ -641,7 +662,22 @@ Includes a domain, a domain-specific error code, and localized information.</p>
 /// @param options The options dictionary received in `UIApplication:open url:options:`
 /// @return True if a redirect observer is registered with the SDK
 ///
-</span><span class="k">+</span> <span class="p">(</span><span class="n">BOOL</span><span class="p">)</span><span class="nf">applicationDidOpenFromRedirectWith</span><span class="p">:(</span><span class="n">NSURL</span> <span class="o">*</span><span class="p">)</span><span class="nv">redirectURL</span> <span class="nf">andOptions</span><span class="p">:(</span><span class="n">NSDictionary</span> <span class="o">*</span><span class="p">)</span><span class="nv">options</span><span class="p">;</span>
+/// @warning This API returns true as long as the SDK is expecting redirect. In the corner case where
+///     the redirect URL is unrecognized (unknown to the SDK) while the SDK is waiting for
+///     redirect from a wallet app, the API will return true and attempts to handle the redirect.
+///     Use the new API `willHandleRedirectWith:(NSURL *)redirectURL andOptions:(NSDictionary *)options`
+///     along with the correct "customer.redirect.scheme//piasdk?wallet=walletName" query during payment registration.
+///
+</span><span class="k">+</span> <span class="p">(</span><span class="n">BOOL</span><span class="p">)</span><span class="nf">applicationDidOpenFromRedirectWith</span><span class="p">:(</span><span class="n">NSURL</span> <span class="o">*</span><span class="p">)</span><span class="nv">redirectURL</span> <span class="nf">andOptions</span><span class="p">:(</span><span class="n">NSDictionary</span> <span class="o">*</span><span class="p">)</span><span class="nv">options</span>
+<span class="n">__deprecated_msg</span><span class="p">(</span><span class="s">"Use `willHandleRedirectWith:` instead. Make sure to add the wallet name during registration - `…//piasdk?wallet=walletName`"</span><span class="p">);</span>
+
+<span class="c1">/// Notify SDK that app is opened from wallet app redirect.
+/// @param redirectURL The redirect url received in `UIApplication:open url:options:`
+/// @param options The options dictionary received in `UIApplication:open url:options:`
+/// @return True if a redirect observer is registered with the SDK for the given `redirectURL`.
+///     Returns `false` if URL query "wallet" in `redirectURL` does not match expected wallet name.
+///
+</span><span class="k">+</span> <span class="p">(</span><span class="n">BOOL</span><span class="p">)</span><span class="nf">willHandleRedirectWith</span><span class="p">:(</span><span class="n">NSURL</span> <span class="o">*</span><span class="p">)</span><span class="nv">redirectURL</span> <span class="nf">andOptions</span><span class="p">:(</span><span class="n">NSDictionary</span> <span class="o">*</span><span class="p">)</span><span class="nv">options</span><span class="p">;</span>
 
 <span class="c1">/// Show PiaSDK's standard transition view. User interaction within the bounds of
 /// the transition view is absorbed.
@@ -689,7 +725,7 @@ Includes a domain, a domain-specific error code, and localized information.</p>
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2020 <a class="link" href="https://nets.eu" target="_blank" rel="external">Nets</a>. All rights reserved. (Last updated: 2020-05-08)</p>
+      <p>&copy; 2020 <a class="link" href="https://nets.eu" target="_blank" rel="external">Nets</a>. All rights reserved. (Last updated: 2020-07-21)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.0</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

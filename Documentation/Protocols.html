@@ -74,7 +74,10 @@
                 <a class="nav-group-task-link" href="34-swish-m-commerce-integration.html">3.4. Swish m-commerce Integration</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="35-new--finland---direct-bank-payment-via-paytrail.html">3.5. [NEW !] Finland - Direct bank payment (via Paytrail)</a>
+                <a class="nav-group-task-link" href="35-finland---direct-bank-payment-via-paytrail.html">3.5. Finland - Direct bank payment (via Paytrail)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="36-new--mobilepay-integration.html">3.6 [NEW !] MobilePay Integration</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="4-ui-customization.html">4. UI Customization</a>
@@ -168,6 +171,9 @@
           <li class="nav-group-name">
             <a class="nav-group-name-link" href="Protocols.html">Protocols</a>
             <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Protocols/MobilePayDelegate.html">MobilePayDelegate</a>
+              </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Protocols/PiaSDKDelegate.html">PiaSDKDelegate</a>
               </li>
@@ -347,6 +353,8 @@ to obtain wallet URL from merchant BE and report payment status from Vipps app.<
 <span class="c1">/// Register Swish payment with merchant backend. Callback with wallet URL
 /// following successful registration.
 /// @param completionWithWalletURL callback with retrieved wallet URL
+/// @note Add "swish" for query name "wallet" in the redirect URL passed to merchant backend.
+///     e.g. "customer.redirect.scheme//piasdk?wallet=swish"
 ///
 </span><span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">registerSwishPayment</span><span class="o">:</span><span class="p">(</span><span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="n">NSString</span> <span class="o">*</span> <span class="n">_Nullable</span><span class="p">))</span><span class="n">completionWithWalletURL</span><span class="p">;</span>
 
@@ -394,6 +402,81 @@ to obtain wallet URL from merchant BE and report payment status from Vipps app.<
                     </section>
                   </div>
                 </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(pl)MobilePayDelegate"></a>
+                    <a name="//apple_ref/objc/Protocol/MobilePayDelegate" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(pl)MobilePayDelegate">MobilePayDelegate</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                        <a href="Protocols/MobilePayDelegate.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight"><code><span class="k">@protocol</span> <span class="nc">MobilePayDelegate</span><span class="o">&lt;</span><span class="n"><a href="Protocols/WalletPaymentDelegate.html">WalletPaymentDelegate</a></span><span class="o">&gt;</span>
+
+<span class="c1">/// Register MobilePay payment with merchant backend. Callback with wallet URL
+/// following successful registration.
+/// @param completionWithWalletURL callback with retrieved wallet URL
+/// @note Add "mobilePay" for query name "wallet" in the redirect URL passed to merchant backend.
+///     e.g. "customer.redirect.scheme//piasdk?wallet=mobilepay"
+///
+</span><span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">registerMobilePay</span><span class="o">:</span><span class="p">(</span><span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="n">NSString</span> <span class="o">*</span> <span class="n">_Nullable</span><span class="p">))</span><span class="n">completionWithWalletURL</span><span class="p">;</span>
+
+<span class="c1">/// Wallet payment failed with internal error. Reasons for internal error include:
+///
+/// - Failure to open wallet app: wallet app uninstalled by user.
+///
+/// - Invalid wallet URL (from payment registration response)
+///
+/// - Unknown redirect URL (UIApplication open:url redirect URL)
+///
+/// @param error NPIError object with the specific error code.
+///
+</span><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">mobilePayDidFailWith</span><span class="p">:(</span><span class="n"><a href="Classes/NPIError.html">NPIError</a></span> <span class="o">*</span><span class="p">)</span><span class="nv">error</span><span class="p">;</span>
+
+<span class="c1">/// Notifies redirect from MobilePay.
+/// Commit the payment to obtain payment status and finalize purchase.
+///
+/// Default behavior keeps the transitionIndicatorView (activity indicator) animating.
+/// @param transitionIndicatorView An activity indicator view (or nil) shown during transition.
+///
+</span><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">mobilePayDidRedirect</span><span class="p">:(</span><span class="n">nullable</span> <span class="n">UIView</span> <span class="o">*</span><span class="p">)</span><span class="nv">transitionIndicatorView</span><span class="p">;</span>
+
+<span class="k">@optional</span>
+
+<span class="c1">/// Notifies redirect from MobilePay.
+/// Note: This delegate method is invoked while application is `inactive`.
+/// Its followed by `mobilePayDidRedirect:(UIView *)transitionIndicatorView`
+/// after application state has changed to `active`.
+///
+/// This optional method is intended to support custom transition UI needs
+/// during app switch transitions.
+///
+</span><span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">mobilePayDidRedirect</span><span class="p">;</span>
+
+<span class="k">@end</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">protocol</span> <span class="kt">MobilePayDelegate</span> <span class="p">:</span> <span class="kt"><a href="Protocols/WalletPaymentDelegate.html">WalletPaymentDelegate</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
               </ul>
             </div>
           </div>
@@ -402,7 +485,7 @@ to obtain wallet URL from merchant BE and report payment status from Vipps app.<
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2020 <a class="link" href="https://nets.eu" target="_blank" rel="external">Nets</a>. All rights reserved. (Last updated: 2020-05-08)</p>
+      <p>&copy; 2020 <a class="link" href="https://nets.eu" target="_blank" rel="external">Nets</a>. All rights reserved. (Last updated: 2020-07-21)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.0</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

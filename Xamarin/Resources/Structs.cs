@@ -62,7 +62,7 @@ namespace XamarinPia
         WalletURLInvalid = 304,
         WalletRedirectURLUnknown = 305,
         VippsErrorStatusCode = 302,
-		TransactionInfoNull = 306
+        TransactionInfoNull = 306
 	}
 
     public enum PiALanguage

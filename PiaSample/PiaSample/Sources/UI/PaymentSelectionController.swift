@@ -23,6 +23,7 @@ protocol PaymentSelectionControllerDelegate: AnyObject {
     func openVippsPayment(sender: PaymentSelectionController, methodID: PaymentMethodID, phoneNumber: PhoneNumber)
     func openSwishPayment(sender: PaymentSelectionController, methodID: PaymentMethodID)
     func openFinnishBankPayment(sender: PaymentSelectionController, bankName: PaymentMethodID)
+    func openMobilePayPayment(sender: PaymentSelectionController, methodID: PaymentMethodID)
 }
 
 class PaymentSelectionController: UIViewController, UITableViewDataSource, UITableViewDelegate {
@@ -42,6 +43,7 @@ class PaymentSelectionController: UIViewController, UITableViewDataSource, UITab
         case payPal = "PayPal"
         case vipps = "Vipps"
         case swish = "SwishM"
+        case mobilePay = "MobilePay"
     }
 
     // MARK: Actions
@@ -73,16 +75,19 @@ class PaymentSelectionController: UIViewController, UITableViewDataSource, UITab
             return
         }
         switch mobileWallet {
-        case .applePay:
-            delegate.openApplePayment(sender: self, methodID: methodID)
-        case .payPal:
-            delegate.openPayPalPayment(sender: self, methodID: methodID)
-        case .swish:
-            delegate.openSwishPayment(sender: self, methodID: methodID)
-        case .vipps:
-            obtainPhoneNumber {
-                self.delegate.openVippsPayment(sender: self, methodID: methodID, phoneNumber: $0)
-            }
+            case .applePay:
+                delegate.openApplePayment(sender: self, methodID: methodID)
+            case .payPal:
+                delegate.openPayPalPayment(sender: self, methodID: methodID)
+            case .swish:
+                delegate.openSwishPayment(sender: self, methodID: methodID)
+            case .vipps:
+                obtainPhoneNumber {
+                    self.delegate.openVippsPayment(sender: self, methodID: methodID, phoneNumber: $0)
+                }
+            case .mobilePay:
+                delegate.openMobilePayPayment(sender: self, methodID: methodID)
+                
         }
     }
 
@@ -146,7 +151,7 @@ class PaymentSelectionController: UIViewController, UITableViewDataSource, UITab
             .sorted { $0.id < $1.id }
 
         (mobileWallets,finnishBanks,newCardCell.iconNames) = mixedPaymentTypes.reduce(([], [], [])) {
-            var (mobileWallets,finnishBanks, cards) = ($0.0, $0.1, $0.2)
+            var (mobileWallets, finnishBanks, cards) = ($0.0, $0.1, $0.2)
             let wallets = MobileWallet.allCases.map { $0.rawValue }
             if ($1.id).localizedCaseInsensitiveContains("paytrail") {
                 finnishBanks.append($1)
