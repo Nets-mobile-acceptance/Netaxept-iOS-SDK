@@ -23,7 +23,7 @@
     },
     {
       "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/Models/Error/NPIError.h",
-      "line": 146,
+      "line": 149,
       "symbol": "NPIError.-initWithIntCode:userInfo:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
@@ -65,14 +65,14 @@
     },
     {
       "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/PiaSDK.h",
-      "line": 241,
+      "line": 251,
       "symbol": "SwishPaymentDelegate",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.protocol",
       "warning": "undocumented"
     },
     {
       "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/PiaSDK.h",
-      "line": 287,
+      "line": 297,
       "symbol": "MobilePayDelegate",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.protocol",
       "warning": "undocumented"

@@ -513,10 +513,15 @@ namespace XamarinPia
     [BaseType (typeof(NSObject))]
     interface PiaSDK
     {
-        // +(BOOL)initiateVippsFromSender:(UIViewController * _Nullable)sender delegate:(id<VippsPaymentDelegate> _Nonnull)delegate;
+        // +(BOOL)initiateVippsFromSender:(UIViewController * _Nullable)sender delegate:(id<VippsPaymentDelegate> _Nonnull)delegate __attribute__((deprecated("Use `initiateVippsFromSender: delegate: isTest:` instead.")));
         [Static]
         [Export ("initiateVippsFromSender:delegate:")]
         bool InitiateVippsFromSender ([NullAllowed] UIViewController sender, VippsPaymentDelegate @delegate);
+
+        // +(BOOL)initiateVippsFromSender:(UIViewController * _Nullable)sender delegate:(id<VippsPaymentDelegate> _Nonnull)delegate isTest:(BOOL)isTest;
+        [Static]
+        [Export ("initiateVippsFromSender:delegate:isTest:")]
+        bool InitiateVippsFromSender ([NullAllowed] UIViewController sender, VippsPaymentDelegate @delegate, bool isTest);
         
         // +(BOOL)initiateSwishFromSender:(UIViewController * _Nullable)sender delegate:(id<SwishPaymentDelegate> _Nonnull)delegate;
         [Static]

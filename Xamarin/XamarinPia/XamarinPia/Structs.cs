@@ -1,4 +1,4 @@
-﻿//
+//
 //  MIT License
 //
 //  Copyright (c) 2019 Nets Denmark A/S
@@ -62,7 +62,8 @@ namespace XamarinPia
         WalletURLInvalid = 304,
         WalletRedirectURLUnknown = 305,
         VippsErrorStatusCode = 302,
-        TransactionInfoNull = 306
+        TransactionInfoNull = 306,
+	RedirectURLNull = 307
 	}
 
     public enum PiALanguage

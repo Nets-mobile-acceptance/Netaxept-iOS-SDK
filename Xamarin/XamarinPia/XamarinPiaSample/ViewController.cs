@@ -154,7 +154,7 @@ namespace XamarinPiaSample
             payWithPaytrail.TouchUpInside += (sender, e) =>
             {
 
-                var merchantId = "YOUR_MERCHANT_ID"
+                var merchantId = "YOUR_MERCHANT_ID";
                 isPaytrail = true;
 
                 PiaSDK.AddTransitionViewIn(this.View);

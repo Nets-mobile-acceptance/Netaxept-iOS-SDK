@@ -112,7 +112,7 @@ extension AppNavigation {
     func openVippsPayment(sender: PaymentSelectionController, methodID: PaymentMethodID, phoneNumber: PhoneNumber) {
         orderDetails.method = methodID
         self.phoneNumber = phoneNumber
-        guard PiaSDK.initiateVipps(fromSender: sender, delegate: self) else {
+        guard PiaSDK.initiateVipps(fromSender: sender, delegate: self, isTest: isTestMode) else {
             navigationController.showAlert(title: .titleCannotPayWith(.vipps), message: .messageAppIsNotInstalled(.vipps))
             return
         }
