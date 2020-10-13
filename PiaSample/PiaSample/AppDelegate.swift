@@ -37,9 +37,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
         if window == nil { window = UIWindow() }
-        if #available(iOS 13.0, *) {
-            window!.overrideUserInterfaceStyle = .light
-        }
         appNavigation.launch(in: window!)
                 
         
@@ -52,37 +49,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
          Customise any of the properties of NPIInterfaceConfiguration.sharedInstance
          The uncustomised ones will just use the default value.
          */
-//        NPIInterfaceConfiguration.sharedInstance().barTitleColor = UIColor.blue
-//        NPIInterfaceConfiguration.sharedInstance().barItemsColor = UIColor.red
-//        NPIInterfaceConfiguration.sharedInstance().barColor = .yellow
-//        NPIInterfaceConfiguration.sharedInstance().backgroundColor = .red
-//        NPIInterfaceConfiguration.sharedInstance().buttonTextColor = UIColor.yellow
-//        NPIInterfaceConfiguration.sharedInstance().labelTextColor = UIColor.magenta
-//        NPIInterfaceConfiguration.sharedInstance().fieldTextColor = UIColor.brown
-//        NPIInterfaceConfiguration.sharedInstance().switchThumbColor = UIColor.red
-//        NPIInterfaceConfiguration.sharedInstance().errorLabelTextColor = UIColor.magenta
 //        NPIInterfaceConfiguration.sharedInstance().labelFont = UIFont(name: "AmericanTypewriter-CondensedBold", size: 10)
 //        NPIInterfaceConfiguration.sharedInstance().buttonFont = UIFont(name: "AvenirNext-HeavyItalic", size: 10)
 //        NPIInterfaceConfiguration.sharedInstance().saveCardOn = true
 //        NPIInterfaceConfiguration.sharedInstance().logoImage = UIImage(named: "bikbok")
         
-//        NPIInterfaceConfiguration.sharedInstance()?.statusBarColor = .blue
 //        NPIInterfaceConfiguration.sharedInstance()?.useStatusBarLightContent = false
 //        NPIInterfaceConfiguration.sharedInstance()?.logoImageContentMode = .scaleAspectFit
 //        NPIInterfaceConfiguration.sharedInstance()?.disableSaveCardOption = true
 //        NPIInterfaceConfiguration.sharedInstance()?.saveCardOn = true
-//        NPIInterfaceConfiguration.sharedInstance()?.fieldBackgroundColor = .magenta
 //        NPIInterfaceConfiguration.sharedInstance()?.language = Finnish
-//        NPIInterfaceConfiguration.sharedInstance()?.textFieldPlaceholderColor = .red
-//        NPIInterfaceConfiguration.sharedInstance()?.switchOffTintColor = .red
-//        NPIInterfaceConfiguration.sharedInstance()?.switchOnTintColor = .blue
-//        NPIInterfaceConfiguration.sharedInstance()?.activeFieldBorderColor = .magenta
 //        NPIInterfaceConfiguration.sharedInstance()?.buttonRightMargin = 50
 //        NPIInterfaceConfiguration.sharedInstance()?.buttonLeftMargin = 50
 //        NPIInterfaceConfiguration.sharedInstance()?.buttonBottomMargin = 50
 //        NPIInterfaceConfiguration.sharedInstance()?.textFieldCornerRadius = 0.5
 //        NPIInterfaceConfiguration.sharedInstance()?.buttonCornerRadius = 0.5
-
 
           /* You will need to give the localized text as and when user changes the language */
 //        NPIInterfaceConfiguration.sharedInstance()?.attributedSaveCardText = NSAttributedString(string: "THIS IS AN ATTRIBUTED TEXT")

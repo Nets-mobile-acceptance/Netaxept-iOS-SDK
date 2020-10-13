@@ -23,7 +23,7 @@ extension AppNavigation: PKPaymentAuthorizationViewControllerDelegate {
                 return
         }
                 
-        let itemCost = NSDecimalNumber(value: orderDetails.amount.inNotes - Float(orderDetails.shippingCost))
+        let itemCost = NSDecimalNumber(value: orderDetails.amount.inNotes - Double(orderDetails.shippingCost))
         
         let request = PiaSDK.makeApplePayPaymentRequest(
             for: supportedApplePayNetworks,

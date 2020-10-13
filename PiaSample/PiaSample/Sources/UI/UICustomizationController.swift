@@ -22,7 +22,7 @@
 //  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
 //  ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 //  OTHER DEALINGS IN THE SOFTWARE.
-//
+
 
 import UIKit
 import Pia
@@ -32,10 +32,13 @@ import Pia
  */
 class UICustomizationController: UIViewController {
 
-    // IBOutlets
+    //IBOutlets
     @IBOutlet weak var navBarColorLabel: UILabel!
-    @IBOutlet weak var navBarItemColorLabel: UILabel!
+    @IBOutlet weak var navBarLeftItemColorLabel: UILabel!
+    @IBOutlet weak var navBarRightItemColorLabel: UILabel!
     @IBOutlet weak var navBarTitleColorLabel: UILabel!
+    @IBOutlet weak var webViewToolbarColorLabel: UILabel!
+    @IBOutlet weak var webViewToolbarItemsColorLabel: UILabel!
     @IBOutlet weak var backgroundColorLabel: UILabel!
     @IBOutlet weak var buttonTextColorLabel: UILabel!
     @IBOutlet weak var labelTextColorLabel: UILabel!
@@ -49,7 +52,7 @@ class UICustomizationController: UIViewController {
     @IBOutlet weak var switchOffTintColor: UILabel!
     @IBOutlet weak var tokenCardCVCColor: UILabel!
 
-    @IBOutlet weak var mainButtonBackgroundColorLabel: UILabel!
+    @IBOutlet weak var actionButtonBackgroundColorLabel: UILabel!
     @IBOutlet weak var useSampleImagesLabel: UILabel!
     @IBOutlet weak var useSampleFontLabel: UILabel!
     @IBOutlet weak var useSampleFontSwitch: UISwitch!
@@ -74,7 +77,7 @@ class UICustomizationController: UIViewController {
     @IBOutlet weak var roundedCornerForButton: UISwitch!
 
 
-    // Card IO IBOutlets
+    //Card IO IBOutlets
     @IBOutlet weak var cardIOBackgroundColor: UILabel!
     @IBOutlet weak var cardIOTextColor: UILabel!
     @IBOutlet weak var cardIOFrameColor: UILabel!
@@ -93,11 +96,14 @@ class UICustomizationController: UIViewController {
 
     // properties to be saved later
     fileprivate var navBarColor: UIColor? = nil
-    fileprivate var navBarItemColor: UIColor? = nil
+    fileprivate var navBarLeftItemColor: UIColor? = nil
+    fileprivate var navBarRightItemColor: UIColor? = nil
+    fileprivate var webViewToolbarColor: UIColor? = nil
+    fileprivate var webViewToolbarItemColor: UIColor? = nil
     fileprivate var navBarTitleColor: UIColor? = nil
     fileprivate var backgroundColor: UIColor? = nil
     fileprivate var buttonTextColor: UIColor? = nil
-    fileprivate var mainButtonBackgroundColor: UIColor? = nil
+    fileprivate var actionButtonBackgroundColor: UIColor? = nil
     fileprivate var labelTextColor: UIColor? = nil
     fileprivate var textFieldColor: UIColor? = nil
     fileprivate var textFielSuccess: UIColor? = nil
@@ -141,7 +147,6 @@ class UICustomizationController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.updateColor()
     }
 
     // IBActions
@@ -155,9 +160,14 @@ class UICustomizationController: UIViewController {
         self.navBarColor = sender.backgroundColor
     }
 
-    @IBAction func changeNavBarItemColor(_ sender: UIButton) {
-        self.navBarItemColorLabel.textColor = sender.backgroundColor
-        self.navBarItemColor = sender.backgroundColor
+    @IBAction func changeNavBarLeftItemColor(_ sender: UIButton) {
+        self.navBarLeftItemColorLabel.textColor = sender.backgroundColor
+        self.navBarLeftItemColor = sender.backgroundColor
+    }
+    
+    @IBAction func changeNavBarRightItemColor(_ sender: UIButton) {
+        self.navBarRightItemColorLabel.textColor = sender.backgroundColor
+        self.navBarRightItemColor = sender.backgroundColor
     }
 
     @IBAction func changeNavBarTitleColor(_ sender: UIButton) {
@@ -165,6 +175,16 @@ class UICustomizationController: UIViewController {
         self.navBarTitleColor = sender.backgroundColor
     }
 
+    @IBAction func changeWebViewToolbarColor(_ sender: UIButton) {
+        self.webViewToolbarColorLabel.textColor = sender.backgroundColor
+        self.webViewToolbarColor = sender.backgroundColor
+    }
+    
+    @IBAction func changeWebViewToolbarItemsColor(_ sender: UIButton) {
+        self.webViewToolbarItemsColorLabel.textColor = sender.backgroundColor
+        self.webViewToolbarItemColor = sender.backgroundColor
+    }
+    
     @IBAction func changeBackgroundColor(_ sender: UIButton) {
         self.backgroundColorLabel.textColor = sender.backgroundColor
         self.backgroundColor = sender.backgroundColor
@@ -220,9 +240,9 @@ class UICustomizationController: UIViewController {
         self.switchOffTint = sender.backgroundColor
     }
 
-    @IBAction func changeMainButtonBackgroundColor(_ sender: UIButton) {
-        self.mainButtonBackgroundColorLabel.textColor = sender.backgroundColor
-        self.mainButtonBackgroundColor = sender.backgroundColor
+    @IBAction func changeActionButtonBackgroundColor(_ sender: UIButton) {
+        self.actionButtonBackgroundColorLabel.textColor = sender.backgroundColor
+        self.actionButtonBackgroundColor = sender.backgroundColor
     }
 
     @IBAction func changeTextFieldActiveColor(_ sender: UIButton) {
@@ -230,7 +250,7 @@ class UICustomizationController: UIViewController {
         self.textFieldActiveColor = sender.backgroundColor
     }
 
-    // Card IO IBAction
+    //Card IO IBAction
     @IBAction func changeCardIOBackground(_ sender: UIButton) {
         self.cardIOBackgroundColor.textColor  = sender.backgroundColor
         self.cardIOBackgroundColorVar = sender.backgroundColor
@@ -264,80 +284,112 @@ class UICustomizationController: UIViewController {
     // This function gives a hint how you can set your own customization.
     // Bar item actions
     @IBAction func saveChanges(_ sender: UIBarButtonItem) {
+        
+        let theme = PiaSDK.netsThemeCopy()
+        
         if let temp = self.navBarColor {
-            NPIInterfaceConfiguration.sharedInstance()?.barColor = temp
+            theme.navigationBarColor = temp
         }
 
-        if let temp = self.navBarItemColor {
-            NPIInterfaceConfiguration.sharedInstance()?.barItemsColor = temp
+        if let temp = self.navBarLeftItemColor {
+            theme.leftNavigationBarItemsColor = temp
+        }
+        
+        if let temp = self.navBarRightItemColor {
+            theme.rightNavigationBarItemsColor = temp
+        }
+        
+        if let temp = self.webViewToolbarColor {
+            theme.webViewToolbarColor = temp
+        }
+        
+        if let temp = self.webViewToolbarItemColor {
+            theme.webViewToolbarItemsColor = temp
         }
 
         if let temp = self.navBarTitleColor {
-            NPIInterfaceConfiguration.sharedInstance()?.barTitleColor = temp
+            theme.navigationBarTitleColor = temp
         }
 
         if let temp = self.backgroundColor {
-            NPIInterfaceConfiguration.sharedInstance()?.backgroundColor = temp
+            theme.backgroundColor = temp
         }
 
         if let temp = self.buttonTextColor {
-            NPIInterfaceConfiguration.sharedInstance()?.buttonTextColor = temp
+            theme.buttonTextColor = temp
         }
 
         if let temp = self.labelTextColor {
-            NPIInterfaceConfiguration.sharedInstance()?.labelTextColor = temp
+            theme.labelTextColor = temp
         }
 
         if let temp = self.textFieldColor {
-            NPIInterfaceConfiguration.sharedInstance()?.fieldTextColor = temp
+            theme.textFieldTextColor = temp
         }
 
         if let temp = self.textFieldBackgroundColor {
-            NPIInterfaceConfiguration.sharedInstance()?.fieldBackgroundColor = temp
+            theme.textFieldBackgroundColor = temp
         }
 
         if let temp = self.textFieldPlaceholderColor {
-            NPIInterfaceConfiguration.sharedInstance()?.textFieldPlaceholderColor = temp
+            theme.textFieldPlaceholderColor = temp
         }
 
         if let temp = self.textFieldErrorMessageColor {
-            NPIInterfaceConfiguration.sharedInstance()?.errorFieldColor = temp
+            theme.textFieldErrorColor = temp
         }
 
         if let temp = self.textFielSuccess {
-            NPIInterfaceConfiguration.sharedInstance()?.successFieldColor = temp
+            theme.textFieldSuccessColor = temp
+        }
+        
+        if let temp = self.textFieldActiveColor {
+            theme.activeTextFieldBorderColor = temp
         }
 
         if let temp = self.switchThumbColor {
-            NPIInterfaceConfiguration.sharedInstance()?.switchThumbColor = temp
+            theme.switchThumbColor = temp
         }
 
         if let temp = self.switchOnTint {
-            NPIInterfaceConfiguration.sharedInstance()?.switchOnTintColor = temp
+            theme.switchOnTintColor = temp
         }
 
         if let temp = self.switchOffTint {
-            NPIInterfaceConfiguration.sharedInstance()?.switchOffTintColor = temp
-        }
-
-        if let temp = self.sampleFont {
-            NPIInterfaceConfiguration.sharedInstance()?.labelFont = temp
-        }
-
-        if let temp = self.sampleImage {
-            NPIInterfaceConfiguration.sharedInstance()?.logoImage = temp
+            theme.switchOffTintColor = temp
         }
 
         if let temp = self.tokenCardCVCColorVar {
-            NPIInterfaceConfiguration.sharedInstance()?.tokenCardCVCViewBackgroundColor = temp
+            theme.tokenCardCVCViewBackgroundColor = temp
         }
 
-        if let temp = self.mainButtonBackgroundColor {
-            NPIInterfaceConfiguration.sharedInstance()?.mainButtonBackgroundColor = temp
+        if let temp = self.actionButtonBackgroundColor {
+            theme.actionButtonBackgroundColor = temp
         }
 
         if let temp = self.statusBarColor {
-            NPIInterfaceConfiguration.sharedInstance()?.statusBarColor = temp
+            theme.statusBarColor = temp
+        }
+        
+        // Card IO
+        if let temp = self.cardIOBackgroundColorVar {
+            theme.cardIOBackgroundColor = temp
+        }
+
+        if let temp = self.cardIOTextColorVar {
+            theme.cardIOTextColor = temp
+        }
+
+        if let temp = self.cardIOFrameColorVar {
+            theme.cardIOPreviewFrameColor = temp
+        }
+
+        if let temp = self.cardIOButtonBackgroundVar {
+            theme.cardIOButtonBackgroundColor = temp
+        }
+
+        if let temp = self.cardIOButtonTextColorVar {
+            theme.cardIOButtonTextColor = temp
         }
 
         NPIInterfaceConfiguration.sharedInstance()?.attributedSaveCardText = NSAttributedString(string: saveCardText.text! ,attributes:[NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17)])
@@ -372,27 +424,6 @@ class UICustomizationController: UIViewController {
             NPIInterfaceConfiguration.sharedInstance().buttonCornerRadius = 0
         }
 
-        // Card IO
-        if let temp = self.cardIOBackgroundColorVar {
-            NPIInterfaceConfiguration.sharedInstance()?.cardIOBackgroundColor = temp
-        }
-
-        if let temp = self.cardIOTextColorVar {
-            NPIInterfaceConfiguration.sharedInstance()?.cardIOTextColor = temp
-        }
-
-        if let temp = self.cardIOFrameColorVar {
-            NPIInterfaceConfiguration.sharedInstance()?.cardIOPreviewFrameColor = temp
-        }
-
-        if let temp = self.cardIOButtonBackgroundVar {
-            NPIInterfaceConfiguration.sharedInstance()?.cardIOButtonBackgroundColor = temp
-        }
-
-        if let temp = self.cardIOButtonTextColorVar {
-            NPIInterfaceConfiguration.sharedInstance()?.cardIOButtonTextColor = temp
-        }
-
         if let temp = self.cardIOTextFontVar {
             NPIInterfaceConfiguration.sharedInstance()?.cardIOTextFont = temp
         }
@@ -404,10 +435,21 @@ class UICustomizationController: UIViewController {
         if let temp = self.cardIOTextFontVar {
             NPIInterfaceConfiguration.sharedInstance()?.cardIOTextFont = temp
         }
-
-        if let temp = self.textFieldActiveColor {
-            NPIInterfaceConfiguration.sharedInstance()?.activeFieldBorderColor = temp
+        
+        if let temp = self.sampleFont {
+            NPIInterfaceConfiguration.sharedInstance()?.labelFont = temp
         }
+
+        if let temp = self.sampleImage {
+            NPIInterfaceConfiguration.sharedInstance()?.logoImage = temp
+        }
+        
+        if #available(iOS 13.0, *) {
+            PiaSDK.setTheme(theme, for: UIScreen.main.traitCollection.userInterfaceStyle)
+        } else {
+            PiaSDK.setTheme(theme)
+        }
+        
 
         self.navigationController?.popViewController(animated: true)
     }
@@ -429,159 +471,6 @@ extension UICustomizationController {
         // Card IO
         self.cardIOTextFontSwitch.addTarget(self, action: #selector(useSampleFontForCardIOText(_:)), for: .valueChanged)
         self.cardIOButtonTextFontSwitch.addTarget(self, action: #selector(useSampleFontForCardIOButtonText(_:)), for: .valueChanged)
-    }
-
-    fileprivate func updateColor() {
-        if NPIInterfaceConfiguration.sharedInstance()?.barColor != nil {
-            self.navBarColorLabel.textColor = NPIInterfaceConfiguration.sharedInstance()?.barColor
-        }
-
-        if NPIInterfaceConfiguration.sharedInstance()?.barItemsColor != nil {
-            self.navBarItemColorLabel.textColor = NPIInterfaceConfiguration.sharedInstance()?.barItemsColor
-        }
-
-        if NPIInterfaceConfiguration.sharedInstance()?.barTitleColor != nil {
-            self.navBarTitleColorLabel.textColor = NPIInterfaceConfiguration.sharedInstance()?.barTitleColor
-        }
-
-        if NPIInterfaceConfiguration.sharedInstance()?.backgroundColor != nil {
-            self.backgroundColorLabel.textColor = NPIInterfaceConfiguration.sharedInstance()?.backgroundColor
-        }
-
-        if NPIInterfaceConfiguration.sharedInstance()?.buttonTextColor != nil {
-            self.buttonTextColorLabel.textColor = NPIInterfaceConfiguration.sharedInstance()?.buttonTextColor
-        }
-
-        if NPIInterfaceConfiguration.sharedInstance()?.labelTextColor != nil {
-            self.labelTextColorLabel.textColor = NPIInterfaceConfiguration.sharedInstance()?.labelTextColor
-        }
-
-        if NPIInterfaceConfiguration.sharedInstance()?.fieldTextColor != nil {
-            self.textFieldColorLabel.textColor = NPIInterfaceConfiguration.sharedInstance()?.fieldTextColor
-        }
-
-        if NPIInterfaceConfiguration.sharedInstance()?.fieldBackgroundColor != nil {
-            self.textFieldBackgroundColorLabel.textColor = NPIInterfaceConfiguration.sharedInstance()?.fieldBackgroundColor
-        }
-
-        if NPIInterfaceConfiguration.sharedInstance()?.textFieldPlaceholderColor != nil {
-            self.textFieldPlaceholderColorLabel.textColor = NPIInterfaceConfiguration.sharedInstance()?.textFieldPlaceholderColor
-        }
-
-        if NPIInterfaceConfiguration.sharedInstance()?.successFieldColor != nil {
-            self.textFieldSuccessColor.textColor = NPIInterfaceConfiguration.sharedInstance()?.successFieldColor
-        }
-
-        if NPIInterfaceConfiguration.sharedInstance()?.errorFieldColor != nil {
-            self.textFieldErrorMessageColorLabel.textColor = NPIInterfaceConfiguration.sharedInstance()?.errorFieldColor
-        }
-
-        if NPIInterfaceConfiguration.sharedInstance()?.switchThumbColor != nil {
-            self.switchThumbColorLabel.textColor = NPIInterfaceConfiguration.sharedInstance()?.switchThumbColor
-        }
-
-        if NPIInterfaceConfiguration.sharedInstance()?.switchOnTintColor != nil {
-            self.switchOnTintColor.textColor = NPIInterfaceConfiguration.sharedInstance()?.switchOnTintColor
-        }
-
-        if NPIInterfaceConfiguration.sharedInstance()?.switchOffTintColor != nil {
-            self.switchOffTintColor.textColor = NPIInterfaceConfiguration.sharedInstance()?.switchOffTintColor
-        }
-
-        if NPIInterfaceConfiguration.sharedInstance()?.labelFont != nil {
-            self.useSampleFontLabel.font = NPIInterfaceConfiguration.sharedInstance()?.labelFont
-            self.useSampleFontSwitch.isOn = true
-        }
-
-        if NPIInterfaceConfiguration.sharedInstance()?.logoImage != nil {
-            self.useSampleImagesLabel.font = UIFont.boldSystemFont(ofSize: 18)
-            self.useSampleImagesSwitch.isOn = true
-        }
-
-        if NPIInterfaceConfiguration.sharedInstance()?.tokenCardCVCViewBackgroundColor != nil {
-            self.tokenCardCVCColor.textColor = NPIInterfaceConfiguration.sharedInstance()?.tokenCardCVCViewBackgroundColor
-        }
-
-        if NPIInterfaceConfiguration.sharedInstance()?.mainButtonBackgroundColor != nil {
-            self.mainButtonBackgroundColorLabel.textColor = NPIInterfaceConfiguration.sharedInstance()?.mainButtonBackgroundColor
-        }
-
-        if (NPIInterfaceConfiguration.sharedInstance()?.attributedSaveCardText) != nil {
-            self.saveCardText.attributedText = NPIInterfaceConfiguration.sharedInstance()?.attributedSaveCardText
-        }
-
-        if NPIInterfaceConfiguration.sharedInstance()?.activeFieldBorderColor != nil {
-            self.textFieldActiveBorderColorLabel.textColor = NPIInterfaceConfiguration.sharedInstance()?.activeFieldBorderColor
-        }
-
-        if NPIInterfaceConfiguration.sharedInstance().buttonLeftMargin == 50 {
-            sampleButtonLeftMarginSwitch.isOn = true
-        }
-
-        if NPIInterfaceConfiguration.sharedInstance().buttonRightMargin == 50 {
-            sampleButtonRightMarginSwitch.isOn = true
-        }
-
-        if NPIInterfaceConfiguration.sharedInstance().buttonBottomMargin == 50 {
-            sampleButtonBottomMarginSwitch.isOn = true
-        }
-
-        if(NPIInterfaceConfiguration.sharedInstance().textFieldCornerRadius == 0.5) {
-            roundedCornerField.isOn = true
-        }
-
-        if(NPIInterfaceConfiguration.sharedInstance().buttonCornerRadius == 0.5) {
-            roundedCornerForButton.isOn = true
-        }
-
-        // Card IO
-        if NPIInterfaceConfiguration.sharedInstance()?.cardIOBackgroundColor != nil {
-            self.cardIOBackgroundColor.textColor = NPIInterfaceConfiguration.sharedInstance()?.cardIOBackgroundColor
-        }
-
-        if NPIInterfaceConfiguration.sharedInstance()?.cardIOTextColor != nil {
-            self.cardIOTextColor.textColor = NPIInterfaceConfiguration.sharedInstance()?.cardIOTextColor
-        }
-
-        if NPIInterfaceConfiguration.sharedInstance()?.cardIOPreviewFrameColor != nil {
-            self.cardIOFrameColor.textColor = NPIInterfaceConfiguration.sharedInstance()?.cardIOPreviewFrameColor
-        }
-
-        if NPIInterfaceConfiguration.sharedInstance()?.cardIOButtonBackgroundColor != nil {
-            self.cardIOButtonBackground.textColor = NPIInterfaceConfiguration.sharedInstance()?.cardIOButtonBackgroundColor
-        }
-
-        if NPIInterfaceConfiguration.sharedInstance()?.cardIOButtonTextColor != nil {
-            self.cardIOButtonTextColor.textColor = NPIInterfaceConfiguration.sharedInstance()?.cardIOButtonTextColor
-        }
-
-        if NPIInterfaceConfiguration.sharedInstance()?.cardIOTextFont != nil {
-            self.cardIOTextFont.font = NPIInterfaceConfiguration.sharedInstance()?.cardIOTextFont
-            self.cardIOTextFontSwitch.isOn = true
-        }
-
-        if NPIInterfaceConfiguration.sharedInstance()?.cardIOButtonTextFont != nil {
-            self.cardIOButtonTextFont.font = NPIInterfaceConfiguration.sharedInstance()?.cardIOButtonTextFont
-            self.cardIOButtonTextFontSwitch.isOn = true
-        }
-
-        if NPIInterfaceConfiguration.sharedInstance()?.statusBarColor != nil {
-            self.statusBarColorLabel.textColor = NPIInterfaceConfiguration.sharedInstance()?.statusBarColor
-        }
-
-        if NPIInterfaceConfiguration.sharedInstance()?.useStatusBarLightContent == true {
-            self.useStatusBarLightContentLabel.textColor = .white
-            self.useStatusBarLightContentSwitch.isOn = true
-        }
-
-        disableSaveCardSwitch.isOn = Settings.shouldDisableSavingCard
-        disableSaveCardLabel.textColor = Settings.shouldDisableSavingCard ? .white : .black
-
-        if NPIInterfaceConfiguration.sharedInstance()?.saveCardOn == true {
-            self.turnOnSaveCardSwitchLabel.textColor = .white
-            self.turnOnSaveCardSwitch.isOn = true
-        }
-
     }
 
     @objc fileprivate func useSampleFontAndFontWeight(_ sampleSwitch: UISwitch) {

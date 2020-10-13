@@ -32,6 +32,7 @@ enum PiaResult {
     case detail(title: String, message: String)
     case response(Bool,String)
     case error(NPIError?, String?)
+    case walletError(Error, message: String) // TODO: temporary, fix result controller
 }
 
 /**
@@ -129,6 +130,14 @@ class ResultViewController: UIViewController {
             self.resultImage.image = tempImage
             self.errorLabel.text = tempResultString
             self.resultLabel.text = error?.localizedDescription ?? "Error"
+
+        case .walletError(let error, let message):
+            self.navItem.title = NSLocalizedString("Failed", comment: "Failed transaction navigation title")
+            self.timeInterval = 6
+            self.resultView.backgroundColor = self.hexStringToUIColor(hex: "#ff0040")
+            self.errorLabel.isHidden = false
+            self.errorLabel.text = message
+            self.resultLabel.text = error.localizedDescription
         }
     }
 

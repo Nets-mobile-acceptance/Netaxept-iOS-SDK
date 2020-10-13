@@ -1,0 +1,1143 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>PiaSDKTheme Protocol Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset="utf-8">
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+    <script src="../js/lunr.min.js" defer></script>
+    <script src="../js/typeahead.jquery.js" defer></script>
+    <script src="../js/jazzy.search.js" defer></script>
+  </head>
+  <body>
+
+    <a name="//apple_ref/objc/Protocol/PiaSDKTheme" class="dashAnchor"></a>
+
+    <a title="PiaSDKTheme Protocol Reference"></a>
+
+    <header class="header">
+      <p class="header-col header-col--primary">
+        <a class="header-link" href="../index.html">
+          Pia Docs
+        </a>
+         (81% documented)
+      </p>
+    
+      <p class="header-col--secondary">
+        <form role="search" action="../search.json">
+          <input type="text" placeholder="Search documentation" data-typeahead>
+        </form>
+      </p>
+    
+    
+    </header>
+
+    <p class="breadcrumbs">
+      <a class="breadcrumb" href="../index.html">Pia Reference</a>
+      <img class="carat" src="../img/carat.png" />
+      PiaSDKTheme Protocol Reference
+    </p>
+
+    <div class="content-wrapper">
+      <nav class="navigation">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Guides.html">Guides</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../0-getting-started.html">0. Getting started</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../11-basic-payment-flow.html">1.1. Basic payment flow</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../12-easy-one-click-payment-flow.html">1.2. Easy (one click) payment flow</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../13-recurring-payments.html">1.3. Recurring payments</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../2-register-flow.html">2. Register flow</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../31-apple-pay-integration.html">3.1. Apple Pay Integration</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../32-paypal-integration.html">3.2. PayPal Integration</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../33-vipps-swish-mobilepay-integration.html">3.3. Vipps, Swish, MobilePay Integration</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../34-finland---direct-bank-payment-via-paytrail.html">3.4. Finland - Direct bank payment (via Paytrail)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../4-ui-customization.html">4. UI Customization</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../51-error-codes-handling.html">5.1. Error Codes Handling</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../52-terminology.html">5.2. Terminology</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../53-faqs.html">5.3. FAQs</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../54-backend-tips.html">5.4. Backend Tips</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../6-licenses.html">6. Licenses</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../7-changelog.html">7. Changelog</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../8-get-in-touch.html">8. Get in touch</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Categories.html">Categories</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Categories/NSError_28Wallets_29.html">NSError(Wallets)</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/CardPayment.html">CardPayment</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/CardPaymentProcess.html">CardPaymentProcess</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/CardRegistrationResponse.html">CardRegistrationResponse</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes.html#/c:objc(cs)CardStorage">CardStorage</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/MerchantDetails.html">MerchantDetails</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/NPIApplePayInfo.html">NPIApplePayInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/NPIApplePayShippingInfo.html">NPIApplePayShippingInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/NPIError.html">NPIError</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/NPIInterfaceConfiguration.html">NPIInterfaceConfiguration</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/NPIMerchantInfo.html">NPIMerchantInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/NPIOrderInfo.html">NPIOrderInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/NPITokenCardInfo.html">NPITokenCardInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/NPITransactionInfo.html">NPITransactionInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/PaymentProcess.html">PaymentProcess</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/PiaSDK.html">PiaSDK</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/PiaSDKController.html">PiaSDKController</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/RegistrationResponse.html">RegistrationResponse</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/WalletPaymentProcess.html">WalletPaymentProcess</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/WalletRegistrationResponse.html">WalletRegistrationResponse</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Constants.html">Constants</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Constants.html#/c:@NPIPiaSemanticVersionString">NPIPiaSemanticVersionString</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Constants.html#/c:@NPIPiaTechnicalVersionString">NPIPiaTechnicalVersionString</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Constants.html#/c:@PiaVersionNumber">PiaVersionNumber</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Constants.html#/c:@PiaVersionString">PiaVersionString</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/PiALanguage.html">PiALanguage</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/SchemeType.html">SchemeType</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/Wallet.html">Wallet</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/WalletErrorCode.html">WalletErrorCode</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/PiaSDKDelegate.html">PiaSDKDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/PiaSDKTheme.html">PiaSDKTheme</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/WalletPaymentDelegate.html">WalletPaymentDelegate</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Type Definitions.html">Type Definitions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Type Definitions.html#/c:PaymentRegistration.h@T@CardError">CardError</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Type Definitions.html#/c:PaymentRegistration.h@T@CompletionCallback">CompletionCallback</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Type Definitions.html#/c:PaymentProcess.h@T@Currency">Currency</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Type Definitions.html#/c:PaymentRegistration.h@T@FailureCompletionCallback">FailureCompletionCallback</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Type Definitions/NPIErrorCode.html">NPIErrorCode</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Type Definitions.html#/c:PaymentRegistration.h@T@RedirectURL">RedirectURL</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Type Definitions.html#/c:PaymentRegistration.h@T@TransactionCallback">TransactionCallback</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Type Definitions.html#/c:PaymentRegistration.h@T@TransactionID">TransactionID</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Type Definitions.html#/c:NSError+Wallets.h@T@WalletError">WalletError</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Type Definitions.html#/c:PaymentRegistration.h@T@WalletFailureWithError">WalletFailureWithError</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Type Definitions.html#/c:PaymentRegistration.h@T@WalletRedirectWithoutInterruption">WalletRedirectWithoutInterruption</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Type Definitions.html#/c:PaymentRegistration.h@T@WalletURL">WalletURL</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Type Definitions.html#/c:PaymentRegistration.h@T@WalletURLCallback">WalletURLCallback</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+
+        <section class="section">
+          <div class="section-content">
+            <h1>PiaSDKTheme</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight"><code><span class="k">@protocol</span> <span class="nc">PiaSDKTheme</span></code></pre>
+
+                </div>
+              </div>
+            <p>A set of colors used in the SDK&rsquo;s views.</p>
+
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-content">
+            <div class="task-group">
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(pl)PiaSDKTheme(py)statusBarColor"></a>
+                    <a name="//apple_ref/objc/Property/statusBarColor" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(pl)PiaSDKTheme(py)statusBarColor">statusBarColor</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Color to be used for status bar.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight"><code><span class="k">@property</span> <span class="p">(</span><span class="n">assign</span><span class="p">,</span> <span class="n">readwrite</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">,</span> <span class="n">nonnull</span><span class="p">)</span> <span class="n">UIColor</span> <span class="o">*</span><span class="n">statusBarColor</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="k">var</span> <span class="nv">statusBarColor</span><span class="p">:</span> <span class="kt">UIColor</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(pl)PiaSDKTheme(py)navigationBarColor"></a>
+                    <a name="//apple_ref/objc/Property/navigationBarColor" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(pl)PiaSDKTheme(py)navigationBarColor">navigationBarColor</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Color to be used for all navigation bars.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight"><code><span class="k">@property</span> <span class="p">(</span><span class="n">assign</span><span class="p">,</span> <span class="n">readwrite</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">,</span> <span class="n">nonnull</span><span class="p">)</span> <span class="n">UIColor</span> <span class="o">*</span><span class="n">navigationBarColor</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="k">var</span> <span class="nv">navigationBarColor</span><span class="p">:</span> <span class="kt">UIColor</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(pl)PiaSDKTheme(py)navigationBarTitleColor"></a>
+                    <a name="//apple_ref/objc/Property/navigationBarTitleColor" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(pl)PiaSDKTheme(py)navigationBarTitleColor">navigationBarTitleColor</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Color to be used for all navigation bars titles.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight"><code><span class="k">@property</span> <span class="p">(</span><span class="n">assign</span><span class="p">,</span> <span class="n">readwrite</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">,</span> <span class="n">nonnull</span><span class="p">)</span>
+    <span class="n">UIColor</span> <span class="o">*</span><span class="n">navigationBarTitleColor</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="k">var</span> <span class="nv">navigationBarTitleColor</span><span class="p">:</span> <span class="kt">UIColor</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(pl)PiaSDKTheme(py)leftNavigationBarItemsColor"></a>
+                    <a name="//apple_ref/objc/Property/leftNavigationBarItemsColor" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(pl)PiaSDKTheme(py)leftNavigationBarItemsColor">leftNavigationBarItemsColor</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Color to be used for all navigation bars left action items.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight"><code><span class="k">@property</span> <span class="p">(</span><span class="n">assign</span><span class="p">,</span> <span class="n">readwrite</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">,</span> <span class="n">nonnull</span><span class="p">)</span>
+    <span class="n">UIColor</span> <span class="o">*</span><span class="n">leftNavigationBarItemsColor</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="k">var</span> <span class="nv">leftNavigationBarItemsColor</span><span class="p">:</span> <span class="kt">UIColor</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(pl)PiaSDKTheme(py)rightNavigationBarItemsColor"></a>
+                    <a name="//apple_ref/objc/Property/rightNavigationBarItemsColor" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(pl)PiaSDKTheme(py)rightNavigationBarItemsColor">rightNavigationBarItemsColor</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Color to be used for all navigation bars right action items.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight"><code><span class="k">@property</span> <span class="p">(</span><span class="n">assign</span><span class="p">,</span> <span class="n">readwrite</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">,</span> <span class="n">nonnull</span><span class="p">)</span>
+    <span class="n">UIColor</span> <span class="o">*</span><span class="n">rightNavigationBarItemsColor</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="k">var</span> <span class="nv">rightNavigationBarItemsColor</span><span class="p">:</span> <span class="kt">UIColor</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(pl)PiaSDKTheme(py)webViewToolbarColor"></a>
+                    <a name="//apple_ref/objc/Property/webViewToolbarColor" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(pl)PiaSDKTheme(py)webViewToolbarColor">webViewToolbarColor</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Color to be used for webview navigation toolbar.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight"><code><span class="k">@property</span> <span class="p">(</span><span class="n">assign</span><span class="p">,</span> <span class="n">readwrite</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">,</span> <span class="n">nonnull</span><span class="p">)</span> <span class="n">UIColor</span> <span class="o">*</span><span class="n">webViewToolbarColor</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="k">var</span> <span class="nv">webViewToolbarColor</span><span class="p">:</span> <span class="kt">UIColor</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(pl)PiaSDKTheme(py)webViewToolbarItemsColor"></a>
+                    <a name="//apple_ref/objc/Property/webViewToolbarItemsColor" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(pl)PiaSDKTheme(py)webViewToolbarItemsColor">webViewToolbarItemsColor</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Color to be used for webview navigation toolbar items.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight"><code><span class="k">@property</span> <span class="p">(</span><span class="n">assign</span><span class="p">,</span> <span class="n">readwrite</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">,</span> <span class="n">nonnull</span><span class="p">)</span>
+    <span class="n">UIColor</span> <span class="o">*</span><span class="n">webViewToolbarItemsColor</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="k">var</span> <span class="nv">webViewToolbarItemsColor</span><span class="p">:</span> <span class="kt">UIColor</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(pl)PiaSDKTheme(py)backgroundColor"></a>
+                    <a name="//apple_ref/objc/Property/backgroundColor" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(pl)PiaSDKTheme(py)backgroundColor">backgroundColor</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Color to be used for all UIViews that don&rsquo;t fit in any of the special cases below (navBar, label, field, switch, etc).</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight"><code><span class="k">@property</span> <span class="p">(</span><span class="n">assign</span><span class="p">,</span> <span class="n">readwrite</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">,</span> <span class="n">nonnull</span><span class="p">)</span> <span class="n">UIColor</span> <span class="o">*</span><span class="n">backgroundColor</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="k">var</span> <span class="nv">backgroundColor</span><span class="p">:</span> <span class="kt">UIColor</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(pl)PiaSDKTheme(py)buttonTextColor"></a>
+                    <a name="//apple_ref/objc/Property/buttonTextColor" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(pl)PiaSDKTheme(py)buttonTextColor">buttonTextColor</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Title color to be used for all the buttons in the SDK for the default state.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight"><code><span class="k">@property</span> <span class="p">(</span><span class="n">assign</span><span class="p">,</span> <span class="n">readwrite</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">,</span> <span class="n">nonnull</span><span class="p">)</span> <span class="n">UIColor</span> <span class="o">*</span><span class="n">buttonTextColor</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="k">var</span> <span class="nv">buttonTextColor</span><span class="p">:</span> <span class="kt">UIColor</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(pl)PiaSDKTheme(py)actionButtonBackgroundColor"></a>
+                    <a name="//apple_ref/objc/Property/actionButtonBackgroundColor" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(pl)PiaSDKTheme(py)actionButtonBackgroundColor">actionButtonBackgroundColor</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Background color to be used for the main action buttons in the SDK for the default state.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight"><code><span class="k">@property</span> <span class="p">(</span><span class="n">assign</span><span class="p">,</span> <span class="n">readwrite</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">,</span> <span class="n">nonnull</span><span class="p">)</span>
+    <span class="n">UIColor</span> <span class="o">*</span><span class="n">actionButtonBackgroundColor</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="k">var</span> <span class="nv">actionButtonBackgroundColor</span><span class="p">:</span> <span class="kt">UIColor</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(pl)PiaSDKTheme(py)switchThumbColor"></a>
+                    <a name="//apple_ref/objc/Property/switchThumbColor" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(pl)PiaSDKTheme(py)switchThumbColor">switchThumbColor</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Color for the switch thumbs.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight"><code><span class="k">@property</span> <span class="p">(</span><span class="n">assign</span><span class="p">,</span> <span class="n">readwrite</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">,</span> <span class="n">nonnull</span><span class="p">)</span> <span class="n">UIColor</span> <span class="o">*</span><span class="n">switchThumbColor</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="k">var</span> <span class="nv">switchThumbColor</span><span class="p">:</span> <span class="kt">UIColor</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(pl)PiaSDKTheme(py)switchOnTintColor"></a>
+                    <a name="//apple_ref/objc/Property/switchOnTintColor" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(pl)PiaSDKTheme(py)switchOnTintColor">switchOnTintColor</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Color for the switch color when switch is on.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight"><code><span class="k">@property</span> <span class="p">(</span><span class="n">assign</span><span class="p">,</span> <span class="n">readwrite</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">,</span> <span class="n">nonnull</span><span class="p">)</span> <span class="n">UIColor</span> <span class="o">*</span><span class="n">switchOnTintColor</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="k">var</span> <span class="nv">switchOnTintColor</span><span class="p">:</span> <span class="kt">UIColor</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(pl)PiaSDKTheme(py)switchOffTintColor"></a>
+                    <a name="//apple_ref/objc/Property/switchOffTintColor" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(pl)PiaSDKTheme(py)switchOffTintColor">switchOffTintColor</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Color for the switch color when switch is off.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight"><code><span class="k">@property</span> <span class="p">(</span><span class="n">assign</span><span class="p">,</span> <span class="n">readwrite</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">,</span> <span class="n">nonnull</span><span class="p">)</span> <span class="n">UIColor</span> <span class="o">*</span><span class="n">switchOffTintColor</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="k">var</span> <span class="nv">switchOffTintColor</span><span class="p">:</span> <span class="kt">UIColor</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(pl)PiaSDKTheme(py)labelTextColor"></a>
+                    <a name="//apple_ref/objc/Property/labelTextColor" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(pl)PiaSDKTheme(py)labelTextColor">labelTextColor</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Color to be used for all the labels in the SDK.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight"><code><span class="k">@property</span> <span class="p">(</span><span class="n">assign</span><span class="p">,</span> <span class="n">readwrite</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">,</span> <span class="n">nonnull</span><span class="p">)</span> <span class="n">UIColor</span> <span class="o">*</span><span class="n">labelTextColor</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="k">var</span> <span class="nv">labelTextColor</span><span class="p">:</span> <span class="kt">UIColor</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(pl)PiaSDKTheme(py)textFieldTextColor"></a>
+                    <a name="//apple_ref/objc/Property/textFieldTextColor" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(pl)PiaSDKTheme(py)textFieldTextColor">textFieldTextColor</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Color to be used for text in all textFields/textViews in the SDK.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight"><code><span class="k">@property</span> <span class="p">(</span><span class="n">assign</span><span class="p">,</span> <span class="n">readwrite</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">,</span> <span class="n">nonnull</span><span class="p">)</span> <span class="n">UIColor</span> <span class="o">*</span><span class="n">textFieldTextColor</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="k">var</span> <span class="nv">textFieldTextColor</span><span class="p">:</span> <span class="kt">UIColor</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(pl)PiaSDKTheme(py)textFieldErrorColor"></a>
+                    <a name="//apple_ref/objc/Property/textFieldErrorColor" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(pl)PiaSDKTheme(py)textFieldErrorColor">textFieldErrorColor</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Color to be used in the error messages, border color of error text field and color of attention button on the text field.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight"><code><span class="k">@property</span> <span class="p">(</span><span class="n">assign</span><span class="p">,</span> <span class="n">readwrite</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">,</span> <span class="n">nonnull</span><span class="p">)</span> <span class="n">UIColor</span> <span class="o">*</span><span class="n">textFieldErrorColor</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="k">var</span> <span class="nv">textFieldErrorColor</span><span class="p">:</span> <span class="kt">UIColor</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(pl)PiaSDKTheme(py)textFieldSuccessColor"></a>
+                    <a name="//apple_ref/objc/Property/textFieldSuccessColor" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(pl)PiaSDKTheme(py)textFieldSuccessColor">textFieldSuccessColor</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Color to be used in the successful validation case of card entry view.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight"><code><span class="k">@property</span> <span class="p">(</span><span class="n">assign</span><span class="p">,</span> <span class="n">readwrite</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">,</span> <span class="n">nonnull</span><span class="p">)</span> <span class="n">UIColor</span> <span class="o">*</span><span class="n">textFieldSuccessColor</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="k">var</span> <span class="nv">textFieldSuccessColor</span><span class="p">:</span> <span class="kt">UIColor</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(pl)PiaSDKTheme(py)textFieldBackgroundColor"></a>
+                    <a name="//apple_ref/objc/Property/textFieldBackgroundColor" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(pl)PiaSDKTheme(py)textFieldBackgroundColor">textFieldBackgroundColor</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Color to be used for all textfields background.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight"><code><span class="k">@property</span> <span class="p">(</span><span class="n">assign</span><span class="p">,</span> <span class="n">readwrite</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">,</span> <span class="n">nonnull</span><span class="p">)</span>
+    <span class="n">UIColor</span> <span class="o">*</span><span class="n">textFieldBackgroundColor</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="k">var</span> <span class="nv">textFieldBackgroundColor</span><span class="p">:</span> <span class="kt">UIColor</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(pl)PiaSDKTheme(py)textFieldPlaceholderColor"></a>
+                    <a name="//apple_ref/objc/Property/textFieldPlaceholderColor" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(pl)PiaSDKTheme(py)textFieldPlaceholderColor">textFieldPlaceholderColor</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Color to be used for placeholder in textfields.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight"><code><span class="k">@property</span> <span class="p">(</span><span class="n">assign</span><span class="p">,</span> <span class="n">readwrite</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">,</span> <span class="n">nonnull</span><span class="p">)</span>
+    <span class="n">UIColor</span> <span class="o">*</span><span class="n">textFieldPlaceholderColor</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="k">var</span> <span class="nv">textFieldPlaceholderColor</span><span class="p">:</span> <span class="kt">UIColor</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(pl)PiaSDKTheme(py)activeTextFieldBorderColor"></a>
+                    <a name="//apple_ref/objc/Property/activeTextFieldBorderColor" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(pl)PiaSDKTheme(py)activeTextFieldBorderColor">activeTextFieldBorderColor</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Color to be used to show active textfield while editing.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight"><code><span class="k">@property</span> <span class="p">(</span><span class="n">assign</span><span class="p">,</span> <span class="n">readwrite</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">,</span> <span class="n">nonnull</span><span class="p">)</span>
+    <span class="n">UIColor</span> <span class="o">*</span><span class="n">activeTextFieldBorderColor</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="k">var</span> <span class="nv">activeTextFieldBorderColor</span><span class="p">:</span> <span class="kt">UIColor</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(pl)PiaSDKTheme(py)tokenCardCVCViewBackgroundColor"></a>
+                    <a name="//apple_ref/objc/Property/tokenCardCVCViewBackgroundColor" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(pl)PiaSDKTheme(py)tokenCardCVCViewBackgroundColor">tokenCardCVCViewBackgroundColor</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Color to be used in CVC entry for Subsequent transaction view.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight"><code><span class="k">@property</span> <span class="p">(</span><span class="n">assign</span><span class="p">,</span> <span class="n">readwrite</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">,</span> <span class="n">nonnull</span><span class="p">)</span>
+    <span class="n">UIColor</span> <span class="o">*</span><span class="n">tokenCardCVCViewBackgroundColor</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="k">var</span> <span class="nv">tokenCardCVCViewBackgroundColor</span><span class="p">:</span> <span class="kt">UIColor</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(pl)PiaSDKTheme(py)cardIOBackgroundColor"></a>
+                    <a name="//apple_ref/objc/Property/cardIOBackgroundColor" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(pl)PiaSDKTheme(py)cardIOBackgroundColor">cardIOBackgroundColor</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Color to be used for Card IO&rsquo;s background.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight"><code><span class="k">@property</span> <span class="p">(</span><span class="n">assign</span><span class="p">,</span> <span class="n">readwrite</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">,</span> <span class="n">nonnull</span><span class="p">)</span> <span class="n">UIColor</span> <span class="o">*</span><span class="n">cardIOBackgroundColor</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="k">var</span> <span class="nv">cardIOBackgroundColor</span><span class="p">:</span> <span class="kt">UIColor</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(pl)PiaSDKTheme(py)cardIOButtonTextColor"></a>
+                    <a name="//apple_ref/objc/Property/cardIOButtonTextColor" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(pl)PiaSDKTheme(py)cardIOButtonTextColor">cardIOButtonTextColor</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Color to be used for Card IO&rsquo;s <q>Entry card manually</q> button text.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight"><code><span class="k">@property</span> <span class="p">(</span><span class="n">assign</span><span class="p">,</span> <span class="n">readwrite</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">,</span> <span class="n">nonnull</span><span class="p">)</span> <span class="n">UIColor</span> <span class="o">*</span><span class="n">cardIOButtonTextColor</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="k">var</span> <span class="nv">cardIOButtonTextColor</span><span class="p">:</span> <span class="kt">UIColor</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(pl)PiaSDKTheme(py)cardIOButtonBackgroundColor"></a>
+                    <a name="//apple_ref/objc/Property/cardIOButtonBackgroundColor" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(pl)PiaSDKTheme(py)cardIOButtonBackgroundColor">cardIOButtonBackgroundColor</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Color to be used for Card IO&rsquo;s <q>Entry card manually</q> button background color.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight"><code><span class="k">@property</span> <span class="p">(</span><span class="n">assign</span><span class="p">,</span> <span class="n">readwrite</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">,</span> <span class="n">nonnull</span><span class="p">)</span>
+    <span class="n">UIColor</span> <span class="o">*</span><span class="n">cardIOButtonBackgroundColor</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="k">var</span> <span class="nv">cardIOButtonBackgroundColor</span><span class="p">:</span> <span class="kt">UIColor</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(pl)PiaSDKTheme(py)cardIOPreviewFrameColor"></a>
+                    <a name="//apple_ref/objc/Property/cardIOPreviewFrameColor" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(pl)PiaSDKTheme(py)cardIOPreviewFrameColor">cardIOPreviewFrameColor</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Color to be used for Card IO preview frame.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight"><code><span class="k">@property</span> <span class="p">(</span><span class="n">assign</span><span class="p">,</span> <span class="n">readwrite</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">,</span> <span class="n">nonnull</span><span class="p">)</span>
+    <span class="n">UIColor</span> <span class="o">*</span><span class="n">cardIOPreviewFrameColor</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="k">var</span> <span class="nv">cardIOPreviewFrameColor</span><span class="p">:</span> <span class="kt">UIColor</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(pl)PiaSDKTheme(py)cardIOTextColor"></a>
+                    <a name="//apple_ref/objc/Property/cardIOTextColor" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(pl)PiaSDKTheme(py)cardIOTextColor">cardIOTextColor</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Color to be used for all the texts inside Card IO view.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight"><code><span class="k">@property</span> <span class="p">(</span><span class="n">assign</span><span class="p">,</span> <span class="n">readwrite</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">,</span> <span class="n">nonnull</span><span class="p">)</span> <span class="n">UIColor</span> <span class="o">*</span><span class="n">cardIOTextColor</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="k">var</span> <span class="nv">cardIOTextColor</span><span class="p">:</span> <span class="kt">UIColor</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+      </article>
+    </div>
+    <section class="footer">
+      <p>&copy; 2020 <a class="link" href="https://nets.eu" target="_blank" rel="external">Nets</a>. All rights reserved. (Last updated: 2020-10-09)</p>
+      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.0</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+    </section>
+  </body>
+</div>
+</html>

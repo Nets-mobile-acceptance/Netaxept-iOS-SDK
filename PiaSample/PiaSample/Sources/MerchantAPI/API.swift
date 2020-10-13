@@ -55,29 +55,26 @@ extension MerchantAPI {
     }
 
     // MARK: Register Vipps payment
-    
-    public func registerVipps(
-        for order: OrderDetails,
-        phoneNumber: String,
-        appRedirect: URL,
-        callback: @escaping (Result<Transaction, RegisterError>) -> Void) {
-        
-        let request = URLRequest(for: registerURL, method: .post, headers: headers)
-        execute(request, callback: callback) { () -> Data in
-            try self.encode(order: order, storeCard: false, phoneNumber: phoneNumber, redirectUrl: appRedirect)
+
+    public struct Wallet {
+        enum WalletType { case swish, mobilePay, vipps(phoneNumber: String) }
+
+        let redirect: URL
+        let wallet: WalletType
+        var phone: String? {
+            guard case WalletType.vipps(phoneNumber: let phone) = wallet else { return nil }
+            return phone
         }
     }
 
-    // MARK: Register Swish payment
-
-    public func registerSwish(
+    public func registerWallet(
         for order: OrderDetails,
-        appRedirect: URL,
-        callback: @escaping (Result<Transaction, RegisterError>) -> Void) {
+        wallet: Wallet,
+        callback: @escaping (Result<WalletTransaction, RegisterError>) -> Void) {
 
         let request = URLRequest(for: registerURL, method: .post, headers: headers)
         execute(request, callback: callback) { () -> Data in
-            try self.encode(order: order, storeCard: false, redirectUrl: appRedirect)
+            try self.encode(order: order, storeCard: false, phoneNumber: wallet.phone, redirectUrl: wallet.redirect)
         }
     }
     
@@ -91,19 +88,6 @@ extension MerchantAPI {
         let request = URLRequest(for: registerURL, method: .post, headers: headers)
         execute(request, callback: callback) { () -> Data in
             try self.encode(order: order, storeCard: false,customer: customer)
-        }
-    }
-
-    // MARK: Register MobilePay payment
-
-    public func registerMobilePay(
-        for order: OrderDetails,
-        appRedirect: URL,
-        callback: @escaping (Result<Transaction, RegisterError>) -> Void) {
-
-        let request = URLRequest(for: registerURL, method: .post, headers: headers)
-        execute(request, callback: callback) { () -> Data in
-            try self.encode(order: order, storeCard: false, redirectUrl: appRedirect)
         }
     }
 

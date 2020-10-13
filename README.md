@@ -1,4 +1,4 @@
-# PiA - Netaxept iOS SDK v1.8.1
+# PiA - Netaxept iOS SDK v2.0.0
 
 ![](./Resources/NetsLogo.jpg)
 
@@ -26,7 +26,7 @@ Supported payment methods:
 * MobilePay
 
 ## Requirements
-* PiA iOS SDK requires iOS 9 or above.
+* PiA iOS SDK requires iOS 10 or above.
 * Card scanning functionality requires *Camera Permission*, the camera usage must be added to *Info.plist* file in the host application.
 
 ```
@@ -73,64 +73,9 @@ Alternatively, if you wish to install the SDK manually, please refer to the foll
 If you encounter any blockers when integrating the `Netaxept - iOS SDK`, feel free to check the [Frequently Asked Questions](FAQs.md) page. If any of these answers does not fit your question, don't hesitate to [contact us](#contact).
 
 ## Usage
-After setup is ready, using PiA SDK is easy. For full references, please refer to **Documentation** folder.
+After setup is ready, using PiA SDK is easy. For full references, please download our [**Documentation**](https://github.com/Nets-mobile-acceptance/Netaxept-iOS-SDK/tree/master/Documentation) folder and access the `START - Overview of Netaxept iOS SDK.html`
 
-### Normal Payment Flow - Use this flow for card payments
 
-```swift
-let piaSDK = PiaSDKController(merchantInfo: merchantInfo, orderInfo:orderInfo)
-piaSDK.piaDelegate = self
-self.present(piaSDK, animated: true, completion: nil)
-```
-### Easy Payment Flow - Use this flow for returning users who previously saved their card information
-```swift
-let piaSDK = PiaSDKController(merchantInfo, orderInfo: orderInfo, tokenCardInfo: tokenCardInfo)
-piaSDK.piaDelegate = self
-self.present(piaSDK, animated: true, completion: nil)
-```
-### ApplePay flow - Use this flow to trigger Apple Pay payments
-```swift
-let applePayInfo = self.createApplePayInfo(amount: amount, currencyCode: currencyCode, usingExpressCheckout: true)
-let piaSDK = PiaSDKController(applePayInfo: applePayInfo)
-piaSDK.piaDelegate = self
-self.present(piaSDK, animated: true,  completion: nil)
-```
-
-### Vipps flow - Use this flow to trigger Vipps Pay payments 
-```swift
-guard PiaSDK.initiateVipps(fromSender: viewController, delegate: vippsPaymentDelegate) else {
-    return
-}
-```
-
-### Delegation
-```swift
-* func piaSDK(_ PiaSDK: PiaSDKController, didFailWithError error: NPIError)
-
-* func piaSDKDidComplete(withSuccess PiaSDK: PiaSDKController)
-
-* func piaSDKDidCompleteSaveCard(withSuccess PiaSDK: PiaSDKController)
-
-* func piaSDKDidCancel(_ PiaSDK: PiaSDKController)
-```
-
-### Mobile wallet payment delegates
-```swift
-* func walletPaymentDidSucceed(_ transitionIndicatorView: UIView?)
-* func walletPaymentInterrupted(_ transitionIndicatorView: UIView?)
-
-```
-#### Vipps delegates
-```swift
-* func registerVippsPayment(_ completionWithWalletURL: @escaping (String?) -> Void)
-* func vippsPaymentDidFail(with error: NPIError, vippsStatusCode: VippsStatusCode?)
-```
-
-**NOTE:** If you wish to support Shipping Address with Apple Pay, remember to conform to this (optional) delegate.
-
-```swift
-func piaSDK(_ PiaSDKController: PiaSDKController, didChangeApplePayShippingContact contact: PKContact, withCompletion completionHandler: @escaping (Bool, NSDecimalNumber?) -> Void)
-```
 ## Integration - Run Script
 
 To assist integration of `Pia.framework` in your project, navigate to the project's target (under TARGETS) in Xcode and add the following _Run Script_ in _Build Phases_ section. If you want to avoid the error when running on simulator, please also check the box for this. Note: Run script only when installing!

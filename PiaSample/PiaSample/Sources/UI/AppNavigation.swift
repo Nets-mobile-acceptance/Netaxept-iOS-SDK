@@ -93,7 +93,7 @@ class AppNavigation: NSObject, CheckoutControllerDelegate, PaymentSelectionContr
         let openWalletsApp = UIAlertAction(title: .actionSetup, style: .default) { _ in
             if let walletAppURL = URL(string: "shoebox://url-scheme"),
                 UIApplication.shared.canOpenURL(walletAppURL) {
-                UIApplication.shared.openURL(walletAppURL)
+                UIApplication.shared.open(walletAppURL, options:[:], completionHandler: nil)
             } else {
                 self.navigationController.showAlert(
                     title: .titleCannotOpenAppleWallet,

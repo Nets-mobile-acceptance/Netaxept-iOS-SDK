@@ -32,16 +32,16 @@ extension AppNavigation {
         case .skipAndShowCardViewTransition:
             /// Show card-view transition UI while loading 3DS authentication
             present(
-                PiaSDKController(
-                    tokenCardInfo: card.npiTokenCardInfo(cvcRequired: cvcRequired),
-                    merchantInfo: api.merchant.npiInfo(cvcRequired: cvcRequired),
+                PiaSDKController.init(
+                    tokenCardInfo: card.npiTokenCardInfo(cvcRequired: true),
+                    merchantInfo: api.merchant.npiInfo(cvcRequired: false),
                     orderInfo: orderDetails.npiOrderInfo
                 )
             )
         case .requireConfirmation:
             /// Require user to confirm the payment
             present(
-                PiaSDKController(
+                PiaSDKController.init(
                     testMode: isTestMode,
                     tokenCardInfo: card.npiTokenCardInfo(cvcRequired: cvcRequired),
                     merchantID: api.merchant.id,
@@ -86,22 +86,12 @@ extension AppNavigation {
             }
         }
     }
-    
-    // MARK: New Card
-    
-    func openCardPayment(sender: PaymentSelectionController) {
-        orderDetails.method = nil // new card payment has `nil` method id
-        present(PiaSDKController(
-            orderInfo: orderDetails.npiOrderInfo,
-            merchantInfo: api.merchant.npiInfo(cvcRequired: true))
-        )
-    }
         
     // MARK: PayPal
     
     func openPayPalPayment(sender: PaymentSelectionController, methodID: PaymentMethodID) {
         orderDetails.method = methodID
-        present(PiaSDKController(
+        present(PiaSDKController.init(
             merchantInfo: api.merchant.npiInfo(cvcRequired: true),
             payWithPayPal: true)
         )
@@ -112,9 +102,18 @@ extension AppNavigation {
     func openVippsPayment(sender: PaymentSelectionController, methodID: PaymentMethodID, phoneNumber: PhoneNumber) {
         orderDetails.method = methodID
         self.phoneNumber = phoneNumber
-        guard PiaSDK.initiateVipps(fromSender: sender, delegate: self, isTest: isTestMode) else {
-            navigationController.showAlert(title: .titleCannotPayWith(.vipps), message: .messageAppIsNotInstalled(.vipps))
-            return
+        let redirectURL: URL = .redirectURL(forWallet: "vipps")
+        let wallet: MerchantAPI.Wallet = .init(redirect: redirectURL, wallet: .vipps(phoneNumber: phoneNumber))
+
+        let canLaunch = PiaSDK.launchWalletApp(
+            for: .walletPayment(for: isTestMode ? .vippsTest : .vipps),
+            walletURLCallback: { callback in self.registerWallet(wallet, callback: callback) },
+            redirectWithoutInterruption: self.mobileWalletDidRedirectWithoutInterruption(_:)) {
+            error in self.presentResult(.walletError(error, message: "Vipps Failed"))
+        }
+
+        if !canLaunch {
+            navigationController.showAlert(title: "Cannot open Vipps", message: "Is not installed")
         }
     }
     
@@ -122,10 +121,59 @@ extension AppNavigation {
     
     func openSwishPayment(sender: PaymentSelectionController, methodID: PaymentMethodID) {
         orderDetails.method = methodID
-        guard PiaSDK.initiateSwish(fromSender: sender, delegate: self) else {
-            navigationController.showAlert(title: .titleCannotPayWith(.swish), message: .messageAppIsNotInstalled(.swish))
-            return
+        let redirectURL: URL = .redirectURL(forWallet: "swish")
+        let wallet: MerchantAPI.Wallet = .init(redirect: redirectURL, wallet: .swish)
+
+        let canLaunch = PiaSDK.launchWalletApp(
+            for: .walletPayment(for: .swish),
+            walletURLCallback: { callback in self.registerWallet(wallet, callback: callback) },
+            redirectWithoutInterruption: self.mobileWalletDidRedirectWithoutInterruption(_:)) {
+            error in self.presentResult(.walletError(error, message: "Swish Failed"))
         }
+
+        if !canLaunch {
+            navigationController.showAlert(title: "Cannot open Swish", message: "Is not installed")
+        }
+    }
+
+    // MARK: MobilePay
+
+    func openMobilePayPayment(sender: PaymentSelectionController, methodID: PaymentMethodID) {
+        orderDetails.method = methodID
+        let redirectURL: URL = .redirectURL(forWallet: "mobilepay")
+        let wallet: MerchantAPI.Wallet = .init(redirect: redirectURL, wallet: .mobilePay)
+
+        let canLaunch = PiaSDK.launchWalletApp(
+            for: .walletPayment(for: isTestMode ? .mobilePayTest : .mobilePay),
+            walletURLCallback: { callback in self.registerWallet(wallet ,callback: callback) },
+            redirectWithoutInterruption: mobileWalletDidRedirectWithoutInterruption(_:)) {
+            error in self.presentResult(.walletError(error, message: "MobilePay Failed"))
+        }
+
+        if !canLaunch {
+            navigationController.showAlert(title: "Cannot open MobilePay", message: "Is not installed")
+        }
+    }
+
+    func registerWallet(_ wallet: MerchantAPI.Wallet, callback: @escaping (WalletRegistrationResponse) -> Void) {
+        self.api.registerWallet(for: self.orderDetails, wallet: wallet) { response in
+            switch response {
+            case .success(let result):
+                self.transaction = Transaction(transactionId: result.transactionId, redirectOK: "", redirectCancel: "", walletUrl: result.walletUrl)
+                callback(.success(withWalletURL: URL(string: result.walletUrl)!))
+            case .failure(let error):
+                self.presentResult(.error(nil, error.errorMessage))
+                callback(.failure(error))
+            }
+        }
+    }
+
+    private func mobileWalletDidRedirectWithoutInterruption(_ success: Bool) {
+        self.commitTransaction(
+            transactionID: self.transaction!.transactionId,
+            isQueryFollowingInterruption: !success,
+            completion: self.presentResult(_:)
+        )
     }
     
     // MARK: Store Card
@@ -133,7 +181,49 @@ extension AppNavigation {
     func registerNewCard(_ sender: SettingsViewController) {
         /// merchant BE expects order with a zero amount when saving a card
         orderDetails = SampleOrderDetails.make(with: Amount.zero)
-        present(PiaSDKController(merchantInfo: api.merchant.npiInfo(cvcRequired: true)))
+        let cardStorage = PaymentProcess.cardStorage(withMerchant: .merchant(withID: api.merchant.id, inTest: isTestMode))
+        navigationController.present(piaController(forPaymentType: cardStorage), animated: true)
+    }
+
+    // MARK: New Card
+
+    func openCardPayment(sender: PaymentSelectionController) {
+        orderDetails.method = nil // new card payment has `nil` method id
+
+        let cardPayment = PaymentProcess.cardPayment(
+            withMerchant: .merchant(withID: api.merchant.id, inTest: isTestMode),
+            amount: UInt(orderDetails.amount.totalAmount),
+            currency: orderDetails.amount.currencyCode
+        )
+
+        navigationController.present(piaController(forPaymentType: cardPayment), animated: true)
+    }
+
+    private func piaController(forPaymentType cardPayment: CardPaymentProcess) -> UIViewController {
+        return PiaSDK.controller(
+            for: cardPayment,
+            isCVCRequired: true,
+            transactionCallback: { saveCard, callback in
+
+                self.api.registerCardPay(for: self.orderDetails, storeCard: saveCard) { response in
+                    switch response {
+                    case .success(let transaction):
+                        self.transaction = transaction
+                        callback(.success(withTransactionID: transaction.transactionId, redirectURL: transaction.redirectOK))
+                    case .failure(let error):
+                        callback(.failure(error))
+                    }
+                }
+
+        }, success: { piaController in
+            self.commitTransaction(transactionID: self.transaction!.transactionId, commitType: .verifyNewCard) { result in
+                self.presentResult(sender: piaController, result)
+            }
+        }, cancellation: { piaController in
+            self.presentResult(sender: piaController, .cancelled)
+        }) { piaController, error in
+            self.presentResult(sender: piaController, .error(error, "Failed to save card"))
+        }
     }
     
     // MARK: Paytrail Finnish Bank Payments
@@ -144,16 +234,6 @@ extension AppNavigation {
         orderDetails.orderNumber =  Utils.shared.getPaytrailOrderNumber()
         self.registerPayment{ (transactionInfo) in
             self.present(PiaSDKController(paytrailBankPaymentWithMerchantID: self.api.merchant.id, transactionInfo: transactionInfo, testMode: self.isTestMode))
-        }
-    }
-
-    // MARK: MobilePay
-
-    func openMobilePayPayment(sender: PaymentSelectionController, methodID: PaymentMethodID) {
-        orderDetails.method = methodID
-        guard PiaSDK.initiateMobilePay(fromSender: sender, delegate: self, isTest: isTestMode) else {
-            navigationController.showAlert(title: .titleCannotPayWith(.mobilePay), message: .messageAppIsNotInstalled(.mobilePay))
-            return
         }
     }
     
@@ -228,94 +308,6 @@ extension AppNavigation: PiaSDKDelegate {
                 completionHandler(transaction?.npiTransaction)
             }
         }
-    }
-}
-
-// MARK: - 2.1 Vipps Payment
-
-extension AppNavigation: VippsPaymentDelegate {
-    func registerVippsPayment(_ completionWithWalletURL: @escaping (String?) -> Void) {
-        let redirect = URL.redirectURL(forWallet: "vipps")
-        api.registerVipps(for: orderDetails, phoneNumber: phoneNumber!, appRedirect: redirect) { result in
-            self.completeRegistration(piaController: nil, result: result) { transaction in
-                completionWithWalletURL(transaction?.walletUrl)
-            }
-        }
-    }
-    
-    func vippsPaymentDidFail(with error: NPIError, vippsStatusCode: VippsStatusCode?) {
-        presentResult(.error(error, "Vipps Code: \(vippsStatusCode?.description ?? "…")"))
-    }
-    
-    func walletPaymentDidSucceed(_ transitionIndicatorView: UIView?) {
-        guard let transactionID = transaction?.transactionId else {
-            presentResult(.error(nil, "Missing transaction ID"))
-            return
-        }
-        commitTransaction(transitionView: transitionIndicatorView, transactionID: transactionID, completion: presentResult(_:))
-    }
-    
-    func walletPaymentInterrupted(_ transitionIndicatorView: UIView?) {
-        guard let transactionID = transaction?.transactionId else {
-            transitionIndicatorView?.removeFromSuperview()
-            presentResult(.error(nil, "Missing transaction ID"))
-            return
-        }
-        commitTransaction(transactionID: transactionID, isQueryFollowingInterruption: true, completion: presentResult(_:))
-    }
-}
-
-// MARK: - 2.2 Swish Payment
-
-extension AppNavigation: SwishPaymentDelegate {
-    func registerSwishPayment(_ completionWithWalletURL: @escaping (String?) -> Void) {
-        let redirect = URL.redirectURL(forWallet: "swish")
-        api.registerSwish(for: orderDetails, appRedirect: redirect) { result in
-            self.completeRegistration(piaController: nil, result: result) { transaction in
-                completionWithWalletURL(transaction?.walletUrl)
-            }
-        }
-    }
-    
-    func swishPaymentDidFail(with error: NPIError) {
-        presentResult(.error(error, "Swish payment failed"))
-    }
-    
-    func swishDidRedirect(_ transitionIndicatorView: UIView?) {
-        guard let transactionID = transaction?.transactionId else {
-            transitionIndicatorView?.removeFromSuperview()
-            presentResult(.error(nil, "Missing transaction ID"))
-            return
-        }
-        PiaSDK.addTransitionView(in: navigationController.view)
-        commitTransaction(transactionID: transactionID, completion: presentResult(_:))
-    }
-}
-
-// MARK: - 2.3 MobilePay
-
-extension AppNavigation: MobilePayDelegate {
-    func registerMobilePay(_ completionWithWalletURL: @escaping (String?) -> Void) {
-        let redirect = URL.redirectURL(forWallet: "mobilepay")
-        api.registerMobilePay(for: orderDetails, appRedirect: redirect) { result in
-            self.completeRegistration(piaController: nil, result: result) { transaction in
-                completionWithWalletURL(transaction?.walletUrl)
-            }
-        }
-    }
-
-    func mobilePayDidFail(with error: NPIError) {
-        presentResult(.error(error, "MobilePay payment failed"))
-    }
-
-    func mobilePayDidRedirect(_ transitionIndicatorView: UIView?) {
-        guard let transactionID = transaction?.transactionId else {
-            transitionIndicatorView?.removeFromSuperview()
-            presentResult(.error(nil, "Missing transaction ID"))
-            return
-        }
-        PiaSDK.addTransitionView(in: navigationController.view)
-        commitTransaction(transactionID: transactionID, completion: presentResult(_:))
     }
 }
 
@@ -421,8 +413,8 @@ extension OrderDetails {
 
 extension Amount {
     /// Returns `totalAmount + vatAmount` converted to notes
-    public var inNotes: Float {
-        Float(totalAmount + vatAmount) / 100
+    public var inNotes: Double {
+        Double(totalAmount + vatAmount) / 100
     }
 }
 
@@ -461,7 +453,7 @@ extension TokenizedCard {
 // MARK: - Result Presentation
 
 extension AppNavigation {
-    func presentResult(sender: PiaSDKController, _ result: PiaResult) {
+    func presentResult(sender: UIViewController, _ result: PiaResult) {
         let showAndDismissResult: (ResultViewController) -> Void = { resultController in
             PiaSDK.removeTransitionView()
             self.navigationController.present(resultController, animated: true, completion: nil)

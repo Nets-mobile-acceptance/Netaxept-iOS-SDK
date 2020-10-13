@@ -232,13 +232,13 @@ class SettingsViewController: UIViewController {
     }
 
     @IBAction func didPressChangeCustomerID(_ sender: UIButton) {
-        self.changeCustomerIDView.tag = 1
+        self.changeCustomerIDView.tag = 101
         var blurEffect:UIBlurEffect = UIBlurEffect()
         blurEffect = UIBlurEffect(style: UIBlurEffect.Style.light)
         let blurView = UIVisualEffectView(effect: blurEffect)
         blurView.frame = self.view.frame
         blurView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        blurView.tag = 2
+        blurView.tag = 201
         view.addSubview(blurView)
 
         changeCustomerIDView.center = self.view.center
@@ -278,13 +278,13 @@ class SettingsViewController: UIViewController {
         if let phoneNumber = delegate.phoneNumber {
             self.phoneNumberTextField.text = phoneNumber
         }
-        self.changePhoneNumberView.tag = 1
+        self.changePhoneNumberView.tag = 101
         var blurEffect:UIBlurEffect = UIBlurEffect()
         blurEffect = UIBlurEffect(style: UIBlurEffect.Style.light)
         let blurView = UIVisualEffectView(effect: blurEffect)
         blurView.frame = self.view.frame
         blurView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        blurView.tag = 2
+        blurView.tag = 201
         view.addSubview(blurView)
 
         changePhoneNumberView.center = self.view.center
@@ -341,10 +341,10 @@ class SettingsViewController: UIViewController {
 
 extension SettingsViewController {
     fileprivate func removeSubviews() {
-        if let viewWithTag = self.view.viewWithTag(1) {
+        if let viewWithTag = self.view.viewWithTag(101) {
             viewWithTag.removeFromSuperview()
         }
-        if let viewWithTag = self.view.viewWithTag(2) {
+        if let viewWithTag = self.view.viewWithTag(201) {
             viewWithTag.removeFromSuperview()
         }
     }

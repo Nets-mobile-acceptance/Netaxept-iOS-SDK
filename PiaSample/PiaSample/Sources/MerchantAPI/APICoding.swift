@@ -44,6 +44,13 @@ public struct Transaction: Decodable {
     let walletUrl: String?
 }
 
+/// Sample merchant BE model of transaction details
+/// response of a registration request
+public struct WalletTransaction: Decodable {
+    let transactionId: String
+    let walletUrl: String
+}
+
 extension MerchantAPI {
     /// Sample BE response of a commit request
     public struct CommitResponse: Decodable {

@@ -8,6 +8,13 @@
       "warning": "undocumented"
     },
     {
+      "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/Controllers/Pia SDK/PiaSDKController.h",
+      "line": 70,
+      "symbol": "PiaSDKController.strongPiaDelegate",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
+      "warning": "undocumented"
+    },
+    {
       "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/Models/Card/NPITokenCardInfo.h",
       "line": 14,
       "symbol": "SchemeType",
@@ -23,7 +30,7 @@
     },
     {
       "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/Models/Error/NPIError.h",
-      "line": 149,
+      "line": 162,
       "symbol": "NPIError.-initWithIntCode:userInfo:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
@@ -36,6 +43,342 @@
       "warning": "undocumented"
     },
     {
+      "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/NSError+Wallets.h",
+      "line": 13,
+      "symbol": "WalletError",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.typedef",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/NSError+Wallets.h",
+      "line": 15,
+      "symbol": "WalletErrorCode",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/NSError+Wallets.h",
+      "line": 15,
+      "symbol": "WalletErrorCode",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.typedef",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/NSError+Wallets.h",
+      "line": 16,
+      "symbol": "WalletErrorCode.WalletErrorCodeRegistrationFailure",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.enumcase",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/NSError+Wallets.h",
+      "line": 17,
+      "symbol": "WalletErrorCode.WalletErrorCodeNoNetwork",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.enumcase",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/NSError+Wallets.h",
+      "line": 18,
+      "symbol": "WalletErrorCode.WalletErrorCodeWalletAppNotFound",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.enumcase",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/NSError+Wallets.h",
+      "line": 21,
+      "symbol": "NSError(Wallets)",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/NSError+Wallets.h",
+      "line": 22,
+      "symbol": "NSError(Wallets).+walletErrorWith:underlyingError:",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.method.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/PaymentProcess.h",
+      "line": 17,
+      "symbol": "MerchantDetails.merchantID",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/PaymentProcess.h",
+      "line": 18,
+      "symbol": "MerchantDetails.isTest",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/PaymentProcess.h",
+      "line": 20,
+      "symbol": "MerchantDetails.-init",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/PaymentProcess.h",
+      "line": 21,
+      "symbol": "MerchantDetails.+merchantWithID:inTest:",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.method.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/PaymentProcess.h",
+      "line": 35,
+      "symbol": "CardPaymentProcess.merchant",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/PaymentProcess.h",
+      "line": 37,
+      "symbol": "CardPaymentProcess.-init",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/PaymentProcess.h",
+      "line": 48,
+      "symbol": "Currency",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.typedef",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/PaymentProcess.h",
+      "line": 52,
+      "symbol": "CardPayment.amount",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/PaymentProcess.h",
+      "line": 53,
+      "symbol": "CardPayment.currency",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/PaymentProcess.h",
+      "line": 58,
+      "symbol": "Wallet",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/PaymentProcess.h",
+      "line": 58,
+      "symbol": "Wallet",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.typedef",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/PaymentProcess.h",
+      "line": 59,
+      "symbol": "Wallet.WalletSwish",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.enumcase",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/PaymentProcess.h",
+      "line": 60,
+      "symbol": "Wallet.WalletVipps",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.enumcase",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/PaymentProcess.h",
+      "line": 60,
+      "symbol": "Wallet.WalletVippsTest",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.enumcase",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/PaymentProcess.h",
+      "line": 61,
+      "symbol": "Wallet.WalletMobilePay",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.enumcase",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/PaymentProcess.h",
+      "line": 61,
+      "symbol": "Wallet.WalletMobilePayTest",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.enumcase",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/PaymentProcess.h",
+      "line": 64,
+      "symbol": "WalletPaymentProcess",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/PaymentProcess.h",
+      "line": 65,
+      "symbol": "WalletPaymentProcess.wallet",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/PaymentProcess.h",
+      "line": 66,
+      "symbol": "WalletPaymentProcess.showActivityIndicator",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/PaymentProcess.h",
+      "line": 68,
+      "symbol": "WalletPaymentProcess.-init",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/PaymentProcess.h",
+      "line": 77,
+      "symbol": "PaymentProcess()",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/PaymentRegistration.h",
+      "line": 15,
+      "symbol": "WalletURL",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.typedef",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/PaymentRegistration.h",
+      "line": 16,
+      "symbol": "TransactionID",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.typedef",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/PaymentRegistration.h",
+      "line": 17,
+      "symbol": "RedirectURL",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.typedef",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/PaymentRegistration.h",
+      "line": 19,
+      "symbol": "CardError",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.typedef",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/PaymentRegistration.h",
+      "line": 23,
+      "symbol": "RegistrationResponse",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/PaymentRegistration.h",
+      "line": 24,
+      "symbol": "RegistrationResponse.error",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/PaymentRegistration.h",
+      "line": 25,
+      "symbol": "RegistrationResponse.-init",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/PaymentRegistration.h",
+      "line": 30,
+      "symbol": "WalletRegistrationResponse",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/PaymentRegistration.h",
+      "line": 31,
+      "symbol": "WalletRegistrationResponse.walletURL",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/PaymentRegistration.h",
+      "line": 33,
+      "symbol": "WalletRegistrationResponse.-copy",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/PaymentRegistration.h",
+      "line": 44,
+      "symbol": "CardRegistrationResponse",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/PaymentRegistration.h",
+      "line": 45,
+      "symbol": "CardRegistrationResponse.transactionID",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/PaymentRegistration.h",
+      "line": 46,
+      "symbol": "CardRegistrationResponse.redirectURL",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/PaymentRegistration.h",
+      "line": 59,
+      "symbol": "TransactionCallback",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.typedef",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/PaymentRegistration.h",
+      "line": 60,
+      "symbol": "WalletURLCallback",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.typedef",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/PaymentRegistration.h",
+      "line": 61,
+      "symbol": "WalletRedirectWithoutInterruption",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.typedef",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/PaymentRegistration.h",
+      "line": 62,
+      "symbol": "WalletFailureWithError",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.typedef",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/PaymentRegistration.h",
+      "line": 63,
+      "symbol": "CompletionCallback",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.typedef",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/PaymentRegistration.h",
+      "line": 64,
+      "symbol": "FailureCompletionCallback",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.typedef",
+      "warning": "undocumented"
+    },
+    {
       "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/PiaSDK+ApplePay.h",
       "line": 15,
       "symbol": "PiaSDK(ApplePay)",
@@ -44,37 +387,9 @@
     },
     {
       "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/PiaSDK.h",
-      "line": 21,
-      "symbol": "WalletURL",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.typedef",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/PiaSDK.h",
-      "line": 22,
-      "symbol": "URLScheme",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.typedef",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/PiaSDK.h",
-      "line": 24,
+      "line": 20,
       "symbol": "PiaSDK",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.class",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/PiaSDK.h",
-      "line": 251,
-      "symbol": "SwishPaymentDelegate",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.protocol",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/PiaSDK.h",
-      "line": 297,
-      "symbol": "MobilePayDelegate",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.protocol",
       "warning": "undocumented"
     }
   ],
