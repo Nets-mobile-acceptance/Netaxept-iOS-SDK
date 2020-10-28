@@ -51,8 +51,11 @@
 	</array>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
+		<string>mobilepayonline-test</string>
+		<string>mobilepayonline</string>
 		<string>bankid</string>
 		<string>vipps</string>
+		<string>vippsMT</string>
 		<string>swish</string>
 	</array>
 </dict>

@@ -33,7 +33,7 @@ extension AppNavigation {
             /// Show card-view transition UI while loading 3DS authentication
             present(
                 PiaSDKController.init(
-                    tokenCardInfo: card.npiTokenCardInfo(cvcRequired: true),
+                    tokenCardInfo: card.npiTokenCardInfo(cvcRequired: cvcRequired),
                     merchantInfo: api.merchant.npiInfo(cvcRequired: false),
                     orderInfo: orderDetails.npiOrderInfo
                 )

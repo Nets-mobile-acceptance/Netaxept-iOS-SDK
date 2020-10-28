@@ -290,13 +290,21 @@ namespace XamarinPia
     [BaseType(typeof(UINavigationController))]
     interface PiaSDKController
     {
-        [Wrap("WeakPiaDelegate")]
+        [Wrap ("WeakPiaDelegate")]
         [NullAllowed]
         PiaSDKDelegate PiaDelegate { get; set; }
 
         // @property (nonatomic, weak) id<PiaSDKDelegate> _Nullable PiaDelegate;
-        [NullAllowed, Export("PiaDelegate", ArgumentSemantic.Weak)]
+        [NullAllowed, Export ("PiaDelegate", ArgumentSemantic.Weak)]
         NSObject WeakPiaDelegate { get; set; }
+
+        [Wrap ("WeakStrongPiaDelegate")]
+        [NullAllowed]
+        PiaSDKDelegate StrongPiaDelegate { get; set; }
+
+        // @property (nonatomic, strong) id<PiaSDKDelegate> _Nullable strongPiaDelegate;
+        [NullAllowed, Export ("strongPiaDelegate", ArgumentSemantic.Strong)]
+        NSObject WeakStrongPiaDelegate { get; set; }
 
         // -(instancetype _Nonnull)init:(NPIMerchantInfo * _Nullable)merchantInfo orderInfo:(NPIOrderInfo * _Nullable)orderInfo tokenCardInfo:(NPITokenCardInfo * _Nullable)tokenCardInfo applePayInfo:(NPIApplePayInfo * _Nullable)applePayInfo performingPayPalPurchase:(BOOL)performingPayPalPurchase __attribute__((deprecated("NPIApplePayInfo is deprecated!")));
         [Export("init:orderInfo:tokenCardInfo:applePayInfo:performingPayPalPurchase:")]
@@ -339,120 +347,40 @@ namespace XamarinPia
     [BaseType(typeof(NSObject))]
     interface NPIInterfaceConfiguration
     {
-        // @property (nonatomic, strong) UIColor * barColor;
-        [Export("barColor", ArgumentSemantic.Strong)]
-        UIColor BarColor { get; set; }
-
-        // @property (nonatomic, strong) UIColor * barTitleColor;
-        [Export("barTitleColor", ArgumentSemantic.Strong)]
-        UIColor BarTitleColor { get; set; }
-
-        // @property (nonatomic, strong) UIColor * barItemsColor;
-        [Export("barItemsColor", ArgumentSemantic.Strong)]
-        UIColor BarItemsColor { get; set; }
-
-        // @property (nonatomic, strong) UIColor * backgroundColor;
-        [Export("backgroundColor", ArgumentSemantic.Strong)]
-        UIColor BackgroundColor { get; set; }
-
         // @property (nonatomic, strong) UIFont * buttonFont;
-        [Export("buttonFont", ArgumentSemantic.Strong)]
+        [Export ("buttonFont", ArgumentSemantic.Strong)]
         UIFont ButtonFont { get; set; }
 
-        // @property (nonatomic, strong) UIColor * buttonTextColor;
-        [Export("buttonTextColor", ArgumentSemantic.Strong)]
-        UIColor ButtonTextColor { get; set; }
-
-        // @property (nonatomic, strong) UIColor * mainButtonBackgroundColor;
-        [Export("mainButtonBackgroundColor", ArgumentSemantic.Strong)]
-        UIColor MainButtonBackgroundColor { get; set; }
-
-        // @property (nonatomic, strong) UIColor * switchThumbColor;
-        [Export("switchThumbColor", ArgumentSemantic.Strong)]
-        UIColor SwitchThumbColor { get; set; }
-
-        // @property (nonatomic, strong) UIColor * switchOnTintColor;
-        [Export("switchOnTintColor", ArgumentSemantic.Strong)]
-        UIColor SwitchOnTintColor { get; set; }
-        
-        // @property (nonatomic, strong) UIColor * switchOffTintColor;
-        [Export ("switchOffTintColor", ArgumentSemantic.Strong)]
-        UIColor SwitchOffTintColor { get; set; }
-
-        // @property (nonatomic, strong) UIColor * fieldTextColor;
-        [Export("fieldTextColor", ArgumentSemantic.Strong)]
-        UIColor FieldTextColor { get; set; }
-
-        // @property (nonatomic, strong) UIFont * fieldFont;
-        [Export("fieldFont", ArgumentSemantic.Strong)]
-        UIFont FieldFont { get; set; }
-
-        // @property (nonatomic, strong) UIColor * labelTextColor;
-        [Export("labelTextColor", ArgumentSemantic.Strong)]
-        UIColor LabelTextColor { get; set; }
-
-        // @property (nonatomic, strong) UIColor * errorFieldColor;
-        [Export("errorFieldColor", ArgumentSemantic.Strong)]
-        UIColor ErrorFieldColor { get; set; }
-
-        // @property (nonatomic, strong) UIColor * successFieldColor;
-        [Export("successFieldColor", ArgumentSemantic.Strong)]
-        UIColor SuccessFieldColor { get; set; }
-
-        // @property (nonatomic, strong) UIColor * tokenCardCVCViewBackgroundColor;
-        [Export("tokenCardCVCViewBackgroundColor", ArgumentSemantic.Strong)]
-        UIColor TokenCardCVCViewBackgroundColor { get; set; }
+        // @property (nonatomic, strong) UIFont * textFieldFont;
+        [Export ("textFieldFont", ArgumentSemantic.Strong)]
+        UIFont TextFieldFont { get; set; }
 
         // @property (nonatomic, strong) UIFont * labelFont;
-        [Export("labelFont", ArgumentSemantic.Strong)]
+        [Export ("labelFont", ArgumentSemantic.Strong)]
         UIFont LabelFont { get; set; }
 
         // @property (nonatomic, strong) UIImage * logoImage;
-        [Export("logoImage", ArgumentSemantic.Strong)]
+        [Export ("logoImage", ArgumentSemantic.Strong)]
         UIImage LogoImage { get; set; }
 
         // @property (readwrite, nonatomic) BOOL saveCardOn;
-        [Export("saveCardOn")]
+        [Export ("saveCardOn")]
         bool SaveCardOn { get; set; }
 
-        // @property (nonatomic, strong) UIColor * cardIOBackgroundColor;
-        [Export("cardIOBackgroundColor", ArgumentSemantic.Strong)]
-        UIColor CardIOBackgroundColor { get; set; }
-
-        // @property (nonatomic, strong) UIColor * cardIOButtonTextColor;
-        [Export("cardIOButtonTextColor", ArgumentSemantic.Strong)]
-        UIColor CardIOButtonTextColor { get; set; }
-
         // @property (nonatomic, strong) UIFont * cardIOButtonTextFont;
-        [Export("cardIOButtonTextFont", ArgumentSemantic.Strong)]
+        [Export ("cardIOButtonTextFont", ArgumentSemantic.Strong)]
         UIFont CardIOButtonTextFont { get; set; }
 
-        // @property (nonatomic, strong) UIColor * cardIOButtonBackgroundColor;
-        [Export("cardIOButtonBackgroundColor", ArgumentSemantic.Strong)]
-        UIColor CardIOButtonBackgroundColor { get; set; }
-
-        // @property (nonatomic, strong) UIColor * cardIOPreviewFrameColor;
-        [Export("cardIOPreviewFrameColor", ArgumentSemantic.Strong)]
-        UIColor CardIOPreviewFrameColor { get; set; }
-
-        // @property (nonatomic, strong) UIColor * cardIOTextColor;
-        [Export("cardIOTextColor", ArgumentSemantic.Strong)]
-        UIColor CardIOTextColor { get; set; }
-
         // @property (nonatomic, strong) UIFont * cardIOTextFont;
-        [Export("cardIOTextFont", ArgumentSemantic.Strong)]
+        [Export ("cardIOTextFont", ArgumentSemantic.Strong)]
         UIFont CardIOTextFont { get; set; }
 
         // @property (readwrite, nonatomic) BOOL disableCardIO;
-        [Export("disableCardIO")]
+        [Export ("disableCardIO")]
         bool DisableCardIO { get; set; }
 
-        // @property (nonatomic, strong) UIColor *statusBarColor;
-        [Export("statusBarColor", ArgumentSemantic.Strong)]
-        UIColor StatusBarColor { get; set; }
-
-        // @property (nonatomic, readwrite) BOOL useStatusBarLightContent;
-        [Export("useStatusBarLightContent")]
+        // @property (readwrite, nonatomic) BOOL useStatusBarLightContent;
+        [Export ("useStatusBarLightContent")]
         bool UseStatusBarLightContent { get; set; }
 
         // @property (readwrite, nonatomic) UIViewContentMode logoImageContentMode;
@@ -463,25 +391,13 @@ namespace XamarinPia
         [Export ("disableSaveCardOption")]
         bool DisableSaveCardOption { get; set; }
 
-        // @property (nonatomic, strong) UIColor * fieldBackgroundColor;
-        [Export ("fieldBackgroundColor", ArgumentSemantic.Strong)]
-        UIColor FieldBackgroundColor { get; set; }
-
         // @property (nonatomic) PiALanguage language;
         [Export ("language", ArgumentSemantic.Assign)]
         PiALanguage Language { get; set; }
-        
-        // @property (nonatomic, strong) UIColor * textFieldPlaceholderColor;
-        [Export ("textFieldPlaceholderColor", ArgumentSemantic.Strong)]
-        UIColor TextFieldPlaceholderColor { get; set; }
-        
+
         // @property (nonatomic, strong) NSAttributedString * attributedSaveCardText;
         [Export ("attributedSaveCardText", ArgumentSemantic.Strong)]
         NSAttributedString AttributedSaveCardText { get; set; }
-
-        // @property (nonatomic, strong) UIColor * activeFieldBorderColor;
-        [Export ("activeFieldBorderColor", ArgumentSemantic.Strong)]
-        UIColor ActiveFieldBorderColor { get; set; }
 
         // @property (nonatomic) CGFloat buttonLeftMargin;
         [Export ("buttonLeftMargin")]
@@ -498,40 +414,364 @@ namespace XamarinPia
         // @property (nonatomic) CGFloat textFieldCornerRadius;
         [Export ("textFieldCornerRadius")]
         nfloat TextFieldCornerRadius { get; set; }
-        
+
         // @property (nonatomic) CGFloat buttonCornerRadius;
         [Export ("buttonCornerRadius")]
         nfloat ButtonCornerRadius { get; set; }
 
         // +(instancetype)sharedInstance;
         [Static]
-        [Export("sharedInstance")]
-        NPIInterfaceConfiguration SharedInstance();
+        [Export ("sharedInstance")]
+        NPIInterfaceConfiguration SharedInstance ();
     }
+    
+    // @protocol PiaSDKTheme
+    [Model]
+    [BaseType(typeof(NSObject))]
+    interface PiaSDKTheme
+    {
+        // @required @property (nonatomic) UIColor * _Nonnull statusBarColor;
+        [Abstract]
+        [Export ("statusBarColor", ArgumentSemantic.Assign)]
+        UIColor StatusBarColor { get; set; }
+
+        // @required @property (nonatomic) UIColor * _Nonnull navigationBarColor;
+        [Abstract]
+        [Export ("navigationBarColor", ArgumentSemantic.Assign)]
+        UIColor NavigationBarColor { get; set; }
+
+        // @required @property (nonatomic) UIColor * _Nonnull navigationBarTitleColor;
+        [Abstract]
+        [Export ("navigationBarTitleColor", ArgumentSemantic.Assign)]
+        UIColor NavigationBarTitleColor { get; set; }
+
+        // @required @property (nonatomic) UIColor * _Nonnull leftNavigationBarItemsColor;
+        [Abstract]
+        [Export ("leftNavigationBarItemsColor", ArgumentSemantic.Assign)]
+        UIColor LeftNavigationBarItemsColor { get; set; }
+
+        // @required @property (nonatomic) UIColor * _Nonnull rightNavigationBarItemsColor;
+        [Abstract]
+        [Export ("rightNavigationBarItemsColor", ArgumentSemantic.Assign)]
+        UIColor RightNavigationBarItemsColor { get; set; }
+
+        // @required @property (nonatomic) UIColor * _Nonnull webViewToolbarColor;
+        [Abstract]
+        [Export ("webViewToolbarColor", ArgumentSemantic.Assign)]
+        UIColor WebViewToolbarColor { get; set; }
+
+        // @required @property (nonatomic) UIColor * _Nonnull webViewToolbarItemsColor;
+        [Abstract]
+        [Export ("webViewToolbarItemsColor", ArgumentSemantic.Assign)]
+        UIColor WebViewToolbarItemsColor { get; set; }
+
+        // @required @property (nonatomic) UIColor * _Nonnull backgroundColor;
+        [Abstract]
+        [Export ("backgroundColor", ArgumentSemantic.Assign)]
+        UIColor BackgroundColor { get; set; }
+
+        // @required @property (nonatomic) UIColor * _Nonnull buttonTextColor;
+        [Abstract]
+        [Export ("buttonTextColor", ArgumentSemantic.Assign)]
+        UIColor ButtonTextColor { get; set; }
+
+        // @required @property (nonatomic) UIColor * _Nonnull actionButtonBackgroundColor;
+        [Abstract]
+        [Export ("actionButtonBackgroundColor", ArgumentSemantic.Assign)]
+        UIColor ActionButtonBackgroundColor { get; set; }
+
+        // @required @property (nonatomic) UIColor * _Nonnull switchThumbColor;
+        [Abstract]
+        [Export ("switchThumbColor", ArgumentSemantic.Assign)]
+        UIColor SwitchThumbColor { get; set; }
+
+        // @required @property (nonatomic) UIColor * _Nonnull switchOnTintColor;
+        [Abstract]
+        [Export ("switchOnTintColor", ArgumentSemantic.Assign)]
+        UIColor SwitchOnTintColor { get; set; }
+
+        // @required @property (nonatomic) UIColor * _Nonnull switchOffTintColor;
+        [Abstract]
+        [Export ("switchOffTintColor", ArgumentSemantic.Assign)]
+        UIColor SwitchOffTintColor { get; set; }
+
+        // @required @property (nonatomic) UIColor * _Nonnull labelTextColor;
+        [Abstract]
+        [Export ("labelTextColor", ArgumentSemantic.Assign)]
+        UIColor LabelTextColor { get; set; }
+
+        // @required @property (nonatomic) UIColor * _Nonnull textFieldTextColor;
+        [Abstract]
+        [Export ("textFieldTextColor", ArgumentSemantic.Assign)]
+        UIColor TextFieldTextColor { get; set; }
+
+        // @required @property (nonatomic) UIColor * _Nonnull textFieldErrorColor;
+        [Abstract]
+        [Export ("textFieldErrorColor", ArgumentSemantic.Assign)]
+        UIColor TextFieldErrorColor { get; set; }
+
+        // @required @property (nonatomic) UIColor * _Nonnull textFieldSuccessColor;
+        [Abstract]
+        [Export ("textFieldSuccessColor", ArgumentSemantic.Assign)]
+        UIColor TextFieldSuccessColor { get; set; }
+
+        // @required @property (nonatomic) UIColor * _Nonnull textFieldBackgroundColor;
+        [Abstract]
+        [Export ("textFieldBackgroundColor", ArgumentSemantic.Assign)]
+        UIColor TextFieldBackgroundColor { get; set; }
+
+        // @required @property (nonatomic) UIColor * _Nonnull textFieldPlaceholderColor;
+        [Abstract]
+        [Export ("textFieldPlaceholderColor", ArgumentSemantic.Assign)]
+        UIColor TextFieldPlaceholderColor { get; set; }
+
+        // @required @property (nonatomic) UIColor * _Nonnull activeTextFieldBorderColor;
+        [Abstract]
+        [Export ("activeTextFieldBorderColor", ArgumentSemantic.Assign)]
+        UIColor ActiveTextFieldBorderColor { get; set; }
+
+        // @required @property (nonatomic) UIColor * _Nonnull tokenCardCVCViewBackgroundColor;
+        [Abstract]
+        [Export ("tokenCardCVCViewBackgroundColor", ArgumentSemantic.Assign)]
+        UIColor TokenCardCVCViewBackgroundColor { get; set; }
+
+        // @required @property (nonatomic) UIColor * _Nonnull cardIOBackgroundColor;
+        [Abstract]
+        [Export ("cardIOBackgroundColor", ArgumentSemantic.Assign)]
+        UIColor CardIOBackgroundColor { get; set; }
+
+        // @required @property (nonatomic) UIColor * _Nonnull cardIOButtonTextColor;
+        [Abstract]
+        [Export ("cardIOButtonTextColor", ArgumentSemantic.Assign)]
+        UIColor CardIOButtonTextColor { get; set; }
+
+        // @required @property (nonatomic) UIColor * _Nonnull cardIOButtonBackgroundColor;
+        [Abstract]
+        [Export ("cardIOButtonBackgroundColor", ArgumentSemantic.Assign)]
+        UIColor CardIOButtonBackgroundColor { get; set; }
+
+        // @required @property (nonatomic) UIColor * _Nonnull cardIOPreviewFrameColor;
+        [Abstract]
+        [Export ("cardIOPreviewFrameColor", ArgumentSemantic.Assign)]
+        UIColor CardIOPreviewFrameColor { get; set; }
+
+        // @required @property (nonatomic) UIColor * _Nonnull cardIOTextColor;
+        [Abstract]
+        [Export ("cardIOTextColor", ArgumentSemantic.Assign)]
+        UIColor CardIOTextColor { get; set; }
+    }
+    
+    // @interface MerchantDetails : NSObject
+    [BaseType (typeof(NSObject))]
+    [DisableDefaultCtor]
+    interface MerchantDetails
+    {
+        // @property (nonatomic) NSString * _Nonnull merchantID;
+        [Export ("merchantID")]
+        string MerchantID { get; set; }
+
+        // @property (nonatomic) BOOL isTest;
+        [Export ("isTest")]
+        bool IsTest { get; set; }
+
+        // +(MerchantDetails * _Nonnull)merchantWithID:(NSString * _Nonnull)merchantID inTest:(BOOL)isTest;
+        [Static]
+        [Export ("merchantWithID:inTest:")]
+        MerchantDetails MerchantWithID (string merchantID, bool isTest);
+    }
+
+    // @interface PaymentProcess : NSObject
+    [BaseType (typeof(NSObject))]
+    interface PaymentProcess
+    {
+        // +(CardStorage * _Nonnull)cardStorageWithMerchant:(MerchantDetails * _Nonnull)merchant;
+        [Static]
+        [Export("cardStorageWithMerchant:")]
+        CardStorage CardStorageWithMerchant(MerchantDetails merchant);
+
+        // +(CardPayment * _Nonnull)cardPaymentWithMerchant:(MerchantDetails * _Nonnull)merchant amount:(NSUInteger)amount currency:(Currency _Nonnull)currency;
+        [Static]
+        [Export("cardPaymentWithMerchant:amount:currency:")]
+        CardPayment CardPaymentWithMerchant(MerchantDetails merchant, nuint amount, string currency);
+
+        // +(WalletPaymentProcess * _Nonnull)walletPaymentForWallet:(Wallet)wallet;
+        [Static]
+        [Export("walletPaymentForWallet:")]
+        WalletPaymentProcess WalletPaymentForWallet(Wallet wallet);
+
+        // +(WalletPaymentProcess * _Nonnull)walletPaymentForWallet:(Wallet)wallet showActivityIndicator:(BOOL)showActivityIndicator;
+        [Static]
+        [Export("walletPaymentForWallet:showActivityIndicator:")]
+        WalletPaymentProcess WalletPaymentForWallet(Wallet wallet, bool showActivityIndicator);
+    }
+
+    // @interface CardPaymentProcess : PaymentProcess
+    [BaseType (typeof(PaymentProcess))]
+    [DisableDefaultCtor]
+    interface CardPaymentProcess
+    {
+        // @property (nonatomic) MerchantDetails * _Nonnull merchant;
+        [Export ("merchant", ArgumentSemantic.Assign)]
+        MerchantDetails Merchant { get; set; }
+    }
+
+    // @interface CardStorage : CardPaymentProcess
+    [BaseType (typeof(CardPaymentProcess))]
+    interface CardStorage
+    {
+    }
+
+    // @interface CardPayment : CardPaymentProcess
+    [BaseType (typeof(CardPaymentProcess))]
+    interface CardPayment
+    {
+        // @property (nonatomic) NSUInteger amount;
+        [Export ("amount")]
+        nuint Amount { get; set; }
+
+        // @property (nonatomic) Currency _Nonnull currency;
+        [Export ("currency")]
+        string Currency { get; set; }
+    }
+
+    // @interface WalletPaymentProcess : PaymentProcess
+    [BaseType (typeof(PaymentProcess))]
+    [DisableDefaultCtor]
+    interface WalletPaymentProcess
+    {
+        // @property (nonatomic) Wallet wallet;
+        [Export ("wallet", ArgumentSemantic.Assign)]
+        Wallet Wallet { get; set; }
+
+        // @property (nonatomic) BOOL showActivityIndicator;
+        [Export ("showActivityIndicator")]
+        bool ShowActivityIndicator { get; set; }
+    }
+
+    // @interface Wallets (NSError)
+    [Category]
+    [BaseType (typeof(NSError))]
+    interface NSError_Wallets
+    {
+        // +(WalletError _Nonnull)walletErrorWith:(WalletErrorCode)errorCode underlyingError:(NSObject * _Nonnull)underlyingError;
+        [Static]
+        [Export ("walletErrorWith:underlyingError:")]
+        NSError WalletErrorWith (WalletErrorCode errorCode, NSObject underlyingError);
+    }
+
+    // @interface RegistrationResponse : NSObject
+    [BaseType (typeof(NSObject))]
+    [DisableDefaultCtor]
+    interface RegistrationResponse
+    {
+        // @property (nonatomic) NSError * _Nullable error;
+        [NullAllowed, Export ("error", ArgumentSemantic.Assign)]
+        NSError Error { get; set; }
+    }
+
+    // @interface WalletRegistrationResponse : RegistrationResponse
+    [BaseType (typeof(RegistrationResponse))]
+    interface WalletRegistrationResponse
+    {
+        // @property (nonatomic) WalletURL _Nonnull walletURL;
+        [Export ("walletURL", ArgumentSemantic.Assign)]
+        NSUrl WalletURL { get; set; }
+
+        // -(instancetype _Nonnull)copy;
+        [Export ("copy")]
+        WalletRegistrationResponse Copy ();
+
+        // +(WalletRegistrationResponse * _Nonnull)successWithWalletURL:(WalletURL _Nonnull)walletURL;
+        [Static]
+        [Export ("successWithWalletURL:")]
+        WalletRegistrationResponse SuccessWithWalletURL (NSUrl walletURL);
+
+        // +(WalletRegistrationResponse * _Nonnull)failure:(NSError * _Nullable)error;
+        [Static]
+        [Export ("failure:")]
+        WalletRegistrationResponse Failure ([NullAllowed] NSError error);
+    }
+
+    // @interface CardRegistrationResponse : RegistrationResponse
+    [BaseType (typeof(RegistrationResponse))]
+    interface CardRegistrationResponse
+    {
+        // @property (nonatomic) TransactionID _Nullable transactionID;
+        [NullAllowed, Export ("transactionID")]
+        string TransactionID { get; set; }
+
+        // @property (nonatomic) RedirectURL _Nullable redirectURL;
+        [NullAllowed, Export ("redirectURL")]
+        string RedirectURL { get; set; }
+
+        // +(CardRegistrationResponse * _Nonnull)successWithTransactionID:(TransactionID _Nonnull)transactionID redirectURL:(RedirectURL _Nonnull)redirectURL;
+        [Static]
+        [Export ("successWithTransactionID:redirectURL:")]
+        CardRegistrationResponse SuccessWithTransactionID (string transactionID, string redirectURL);
+
+        // +(CardRegistrationResponse * _Nonnull)failure:(NSError * _Nonnull)error;
+        [Static]
+        [Export ("failure:")]
+        CardRegistrationResponse Failure (NSError error);
+    }
+
+    // typedef void (^TransactionCallback)(BOOL, void (^ _Nonnull)(CardRegistrationResponse * _Nonnull));
+    delegate void TransactionCallback (bool arg0, [BlockCallback] CardRegistrationResponseCallback completionHandler);
+    delegate void CardRegistrationResponseCallback(CardRegistrationResponse arg0);
+
+    // typedef void (^WalletURLCallback)(void (^ _Nonnull)(WalletRegistrationResponse * _Nonnull));
+    delegate void WalletURLCallback([BlockCallback] WalletCallbackCompletionHandler completionHandler);
+    delegate void WalletCallbackCompletionHandler(WalletRegistrationResponse arg0);
+
+
+    // typedef void (^WalletRedirectWithoutInterruption)(BOOL);
+    delegate void WalletRedirectWithoutInterruption (bool arg0);
+
+    // typedef void (^WalletFailureWithError)(WalletError _Nonnull);
+    delegate void WalletFailureWithError (NSError arg0);
+
+    // typedef void (^CompletionCallback)(UIViewController * _Nonnull);
+    delegate void CompletionCallback (UIViewController arg0);
+
+    // typedef void (^FailureCompletionCallback)(UIViewController * _Nonnull, CardError _Nonnull);
+    delegate void FailureCompletionCallback (UIViewController arg0, NPIError arg1);
 
     // @interface PiaSDK : NSObject
     [BaseType (typeof(NSObject))]
     interface PiaSDK
     {
-        // +(BOOL)initiateVippsFromSender:(UIViewController * _Nullable)sender delegate:(id<VippsPaymentDelegate> _Nonnull)delegate __attribute__((deprecated("Use `initiateVippsFromSender: delegate: isTest:` instead.")));
+        // +(void)setTheme:(id<PiaSDKTheme> _Nonnull)theme forInterfaceStyle:(UIUserInterfaceStyle)interfaceStyle __attribute__((availability(ios, introduced=13.0)));
+        [iOS(13, 0)]
         [Static]
-        [Export ("initiateVippsFromSender:delegate:")]
-        bool InitiateVippsFromSender ([NullAllowed] UIViewController sender, VippsPaymentDelegate @delegate);
+        [Export ("setTheme:forInterfaceStyle:")]
+        void SetTheme (PiaSDKTheme theme, UIUserInterfaceStyle interfaceStyle);
 
-        // +(BOOL)initiateVippsFromSender:(UIViewController * _Nullable)sender delegate:(id<VippsPaymentDelegate> _Nonnull)delegate isTest:(BOOL)isTest;
+        // +(void)setTheme:(id<PiaSDKTheme> _Nonnull)theme;
         [Static]
-        [Export ("initiateVippsFromSender:delegate:isTest:")]
-        bool InitiateVippsFromSender ([NullAllowed] UIViewController sender, VippsPaymentDelegate @delegate, bool isTest);
+        [Export ("setTheme:")]
+        void SetTheme (PiaSDKTheme theme);
+
+        // +(id<PiaSDKTheme> _Nonnull)netsThemeCopyForInterfaceStyle:(UIUserInterfaceStyle)interfaceStyle __attribute__((availability(ios, introduced=12.0)));
+        [iOS(12,0)]
+        [Static]
+        [Export ("netsThemeCopyForInterfaceStyle:")]
+        PiaSDKTheme NetsThemeCopyForInterfaceStyle (UIUserInterfaceStyle interfaceStyle);
+
+        // +(id<PiaSDKTheme> _Nonnull)netsThemeCopy;
+        [Static]
+        [Export ("netsThemeCopy")]
+        PiaSDKTheme NetsThemeCopy { get; }
         
-        // +(BOOL)initiateSwishFromSender:(UIViewController * _Nullable)sender delegate:(id<SwishPaymentDelegate> _Nonnull)delegate;
-        [Static]
-        [Export ("initiateSwishFromSender:delegate:")]
-        bool InitiateSwishFromSender ([NullAllowed] UIViewController sender, SwishPaymentDelegate @delegate);
         
-        // +(BOOL)initiateMobilePayFromSender:(UIViewController * _Nullable)sender delegate:(id<MobilePayDelegate> _Nonnull)delegate isTest:(BOOL)isTest;
+        // +(BOOL)launchWalletAppForWalletPaymentProcess:(WalletPaymentProcess * _Nonnull)walletPaymentProcess walletURLCallback:(WalletURLCallback _Nonnull)walletURLCallback redirectWithoutInterruption:(WalletRedirectWithoutInterruption _Nonnull)redirectWithoutInterruption failure:(WalletFailureWithError _Nonnull)failure;
         [Static]
-        [Export ("initiateMobilePayFromSender:delegate:isTest:")]
-        bool InitiateMobilePayFromSender ([NullAllowed] UIViewController sender, MobilePayDelegate @delegate, bool isTest);
+        [Export ("launchWalletAppForWalletPaymentProcess:walletURLCallback:redirectWithoutInterruption:failure:")]
+        bool LaunchWalletAppForWalletPaymentProcess (WalletPaymentProcess walletPaymentProcess, WalletURLCallback walletURLCallback, WalletRedirectWithoutInterruption redirectWithoutInterruption, WalletFailureWithError failure);
+        
+        // +(UIViewController * _Nonnull)controllerForCardPaymentProcess:(CardPaymentProcess * _Nonnull)paymentProcess isCVCRequired:(BOOL)isCVCRequired transactionCallback:(TransactionCallback _Nonnull)transactionCallback success:(CompletionCallback _Nonnull)success cancellation:(CompletionCallback _Nonnull)cancellation failure:(FailureCompletionCallback _Nonnull)failure;
+        [Static]
+        [Export ("controllerForCardPaymentProcess:isCVCRequired:transactionCallback:success:cancellation:failure:")]
+        UIViewController ControllerForCardPaymentProcess (CardPaymentProcess paymentProcess, bool isCVCRequired, TransactionCallback transactionCallback, CompletionCallback success, CompletionCallback cancellation, FailureCompletionCallback failure);
         
         // +(void)initiateTokenizedCardPayFrom:(UIViewController * _Nonnull)sender testMode:(BOOL)isTestMode showsActivityIndicator:(BOOL)showsActivityIndicator merchantID:(NSString * _Nonnull)merchantID redirectURL:(NSString * _Nonnull)redirectURL transactionID:(NSString * _Nonnull)transactionID success:(void (^ _Nonnull)(void))success cancellation:(void (^ _Nonnull)(void))cancellation failure:(void (^ _Nonnull)(NPIError * _Nonnull))failure;
         [Static]
@@ -567,92 +807,7 @@ namespace XamarinPia
         [Static]
         [Export("removeTransitionView")]
         void RemoveTransitionView();
-    }
 
-    // @protocol WalletPaymentDelegate <NSObject>
-    [Model]
-    [BaseType (typeof(NSObject))]
-    interface WalletPaymentDelegate
-    {
-        // @required -(void)walletPaymentDidSucceed:(UIView * _Nullable)transitionIndicatorView;
-        [Abstract]
-        [Export ("walletPaymentDidSucceed:")]
-        void WalletPaymentDidSucceed ([NullAllowed] UIView transitionIndicatorView);
-        
-        // @required -(void)walletPaymentInterrupted:(UIView * _Nullable)transitionIndicatorView;
-        [Abstract]
-        [Export ("walletPaymentInterrupted:")]
-        void WalletPaymentInterrupted ([NullAllowed] UIView transitionIndicatorView);
-    }
-
-    // @protocol VippsPaymentDelegate <WalletPaymentDelegate>
-    [BaseType(typeof(NSObject))]
-    [Model]
-    interface VippsPaymentDelegate : WalletPaymentDelegate
-    {
-        // @required -(void)registerVippsPayment:(void (^ _Nonnull)(NSString * _Nullable))completionWithWalletURL;
-        [Abstract]
-        [Export ("registerVippsPayment:")]
-        void RegisterVippsPayment (Action<NSString> completionWithWalletURL);
-        
-        // @required -(void)vippsPaymentDidFailWith:(NPIError * _Nonnull)error vippsStatusCode:(VippsStatusCode _Nullable)vippsStatusCode;
-        [Abstract]
-        [Export ("vippsPaymentDidFailWith:vippsStatusCode:")]
-        void VippsPaymentDidFailWith (NPIError error, [NullAllowed] NSNumber vippsStatusCode);
-        
-        // @optional -(void)vippsDidRedirectWith:(VippsStatusCode _Nonnull)statusCode;
-        [Export ("vippsDidRedirectWith:")]
-        void VippsDidRedirectWith (NSNumber statusCode);
-    }
-
-    // @protocol SwishPaymentDelegate <WalletPaymentDelegate>
-    [BaseType(typeof(NSObject))]
-    [Model]
-    interface SwishPaymentDelegate : WalletPaymentDelegate
-    {
-        // @required -(void)registerSwishPayment:(void (^ _Nonnull)(NSString * _Nullable))completionWithWalletURL;
-        [Abstract]
-        [Export ("registerSwishPayment:")]
-        void RegisterSwishPayment (Action<NSString> completionWithWalletURL);
-
-        // @required -(void)swishPaymentDidFailWith:(NPIError * _Nonnull)error;
-        [Abstract]
-        [Export ("swishPaymentDidFailWith:")]
-        void SwishPaymentDidFailWith (NPIError error);
-
-        // @required -(void)swishDidRedirect:(UIView * _Nullable)transitionIndicatorView;
-        [Abstract]
-        [Export ("swishDidRedirect:")]
-        void SwishDidRedirect ([NullAllowed] UIView transitionIndicatorView);
-
-        // @optional -(void)swishDidRedirect;
-        [Export ("swishDidRedirect")]
-        void SwishDidRedirect ();
-    }
-    
-    // @protocol MobilePayDelegate <WalletPaymentDelegate>
-    [BaseType(typeof(NSObject))]
-    [Model]
-    interface MobilePayDelegate : WalletPaymentDelegate
-    {
-        // @required -(void)registerMobilePay:(void (^ _Nonnull)(NSString * _Nullable))completionWithWalletURL;
-        [Abstract]
-        [Export ("registerMobilePay:")]
-        void RegisterMobilePay (Action<NSString> completionWithWalletURL);
-
-        // @required -(void)mobilePayDidFailWith:(NPIError * _Nonnull)error;
-        [Abstract]
-        [Export ("mobilePayDidFailWith:")]
-        void MobilePayDidFailWith (NPIError error);
-
-        // @required -(void)mobilePayDidRedirect:(UIView * _Nullable)transitionIndicatorView;
-        [Abstract]
-        [Export ("mobilePayDidRedirect:")]
-        void MobilePayDidRedirect ([NullAllowed] UIView transitionIndicatorView);
-
-        // @optional -(void)mobilePayDidRedirect;
-        [Export ("mobilePayDidRedirect")]
-        void MobilePayDidRedirect ();
     }
 
     // @interface ApplePay (PiaSDK)

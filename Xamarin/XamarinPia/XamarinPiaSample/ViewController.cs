@@ -34,10 +34,11 @@ using System.Linq;
 
 namespace XamarinPiaSample
 {
-    public enum MobileWallet
+    public enum MobileWallet : uint
     {
         Vipps = 0,
-        Swish
+        Swish,
+        MobilePay
     }
 
     public partial class ViewController : UIViewController
@@ -47,6 +48,8 @@ namespace XamarinPiaSample
         bool isPayingWithToken = false;
 
         bool isPaytrail = false;
+
+        public NSError registrationError;
 
         public ViewController(IntPtr handle) : base(handle)
         {
@@ -66,14 +69,45 @@ namespace XamarinPiaSample
             payWithCard.TouchUpInside += (sender, e) =>
             {
 
-                var merchantInfo = new NPIMerchantInfo("YOUR_MERCHANT_ID", true);
-                var amount = new NSNumber(10);
-                var orderInfo = new NPIOrderInfo(amount, "EUR");
-                var controller = new PiaSDKController(orderInfo, merchantInfo);
-                PiaDelegate newDelegate = new PiaDelegate();
-                newDelegate.vc = this;
-                controller.PiaDelegate = newDelegate;
+                var merchantInfo = MerchantDetails.MerchantWithID("YOUR_MERCHANT_ID", true);
+
+                CardPaymentProcess cardPayment = PaymentProcess.CardPaymentWithMerchant(merchantInfo, 1000, @"EUR");
+
+
+                var controller = PiaSDK.ControllerForCardPaymentProcess(cardPayment, true,
+                    transactionCallback:(savecard, callback) => {
+                        registerCardPaymnet(false, completionHandler: () => {
+                            if(transactionInfo != null){
+                                callback(CardRegistrationResponse.SuccessWithTransactionID(transactionInfo.TransactionID, transactionInfo.redirectUrl));
+                            } else {
+                                callback(CardRegistrationResponse.Failure(registrationError));
+                            }
+                        }); ;
+                    },
+                    success: (piaController) => {
+                        InvokeOnMainThread(() => {
+                            piaController.DismissViewController(true, completionHandler: () => {
+                                showAlert("Payment is successfull");
+                            });
+                        });
+                    },
+                    cancellation: (piaController) => {
+                        InvokeOnMainThread(() => {
+                            piaController.DismissViewController(true, completionHandler: () => {
+                                showAlert("transaction cancelled");
+                            });
+                        });
+                    },
+                    failure: (piaController, error) => {
+                        InvokeOnMainThread(() => {
+                            piaController.DismissViewController(true, completionHandler: () => {
+                                showAlert(error.LocalizedDescription);
+                            });
+                        });
+                    });
+
                 this.PresentViewController(controller, true, null);
+
             };
 
             UIButton payWithSavedCard = new UIButton();
@@ -82,7 +116,7 @@ namespace XamarinPiaSample
             payWithSavedCard.BackgroundColor = UIColor.LightGray;
 
             payWithSavedCard.TouchUpInside += (sender, e) =>
-            {
+            { 
 
                 var merchantId = "YOUR_MERCHANT_ID";
 
@@ -95,6 +129,7 @@ namespace XamarinPiaSample
                 isPayingWithToken = true;
                 controller.PiaDelegate = newDelegate;
                 this.PresentViewController(controller, true, null);
+
             };
 
             UIButton payWithSavedCardSkipConfirmation = new UIButton();
@@ -119,36 +154,41 @@ namespace XamarinPiaSample
                 this.PresentViewController(controller, true, null);
             };
 
-            UIButton payWithVipps = new UIButton();
-            payWithVipps.Frame = new CGRect(40f, 320f, buttonWidth, 40f);
-            payWithVipps.SetTitle("Pay 10 NOK with Vipps", UIControlState.Normal);
-            payWithVipps.BackgroundColor = UIColor.LightGray;
-            payWithVipps.TouchUpInside += (sender, e) =>
+            UIButton payWithMobilePay = new UIButton();
+            payWithMobilePay.Frame = new CGRect(40f, 320f, buttonWidth, 40f);
+            payWithMobilePay.SetTitle("Pay 10 EUR with MobilePay", UIControlState.Normal);
+            payWithMobilePay.BackgroundColor = UIColor.LightGray;
+            payWithMobilePay.TouchUpInside += (sender, e) =>
             {
-                WalletDelegate newDelegate = new WalletDelegate();
-                newDelegate.vc = this;
-                if (!PiaSDK.InitiateVippsFromSender(this, newDelegate))
+                if (!PiaSDK.LaunchWalletAppForWalletPaymentProcess(PaymentProcess.WalletPaymentForWallet(Wallet.MobilePayTest),
+                    (callback) => {
+                        registerCallForWallets(MobileWallet.MobilePay, callback);
+                    },
+                     (redirectWithoutInterruption) => {
+                         InvokeOnMainThread(() => {
+                             PiaSDK.RemoveTransitionView();
+                             if (redirectWithoutInterruption){
+                                 showAlert(@"Wallet redirected sucessfully, Please check transaction status from your backend");
+                             }
+                             else {
+                                 showAlert(@"wallet redirected interrupt");
+                             }
+                         });
+                         
+                    }, (error) => {
+                        InvokeOnMainThread(() =>
+                        {
+                            showAlert(error.LocalizedDescription);
+                        });
+                    }))
                 {
-                    showAlert("Vipps app not installed");
-                }
+                    showAlert(@"failed to launch wallet app");
+                };
             };
 
-            UIButton payWithSwish = new UIButton();
-            payWithSwish.Frame = new CGRect(40f, 400f, buttonWidth, 40f);
-            payWithSwish.SetTitle("Pay 10 SEK with Swish", UIControlState.Normal);
-            payWithSwish.BackgroundColor = UIColor.LightGray;
-            payWithSwish.TouchUpInside += (sender, e) =>
-            {
-                SwishDelegate newDelegate = new SwishDelegate();
-                newDelegate.vc = this;
-                if (!PiaSDK.InitiateSwishFromSender(this, newDelegate))
-                {
-                    showAlert("Swish app not installed");
-                }
-            };
 
             UIButton payWithPaytrail = new UIButton();
-            payWithPaytrail.Frame = new CGRect(40f, 480f, buttonWidth, 40f);
+            payWithPaytrail.Frame = new CGRect(40f, 400f, buttonWidth, 40f);
             payWithPaytrail.SetTitle("Pay 10 EUR with Paytrail", UIControlState.Normal);
             payWithPaytrail.BackgroundColor = UIColor.LightGray;
             payWithPaytrail.TouchUpInside += (sender, e) =>
@@ -159,7 +199,7 @@ namespace XamarinPiaSample
 
                 PiaSDK.AddTransitionViewIn(this.View);
 
-                getTransactionInfo(false, completionHandler: () =>
+                registerCardPaymnet(false, completionHandler: () =>
                 {
                     var controller = new PiaSDKController(merchantId, transactionInfo, true);
                     PiaDelegate newDelegate = new PiaDelegate();
@@ -176,14 +216,13 @@ namespace XamarinPiaSample
             this.View.AddSubview(payWithCard);
             this.View.AddSubview(payWithSavedCard);
             this.View.AddSubview(payWithSavedCardSkipConfirmation);
-            this.View.AddSubview(payWithVipps);
-            this.View.AddSubview(payWithSwish);
+            this.View.AddSubview(payWithMobilePay);
             this.View.AddSubview(payWithPaytrail);
 
 
         }
 
-        public void getTransactionInfo(bool payWithPayPal, Action completionHandler)
+        public void registerCardPaymnet(bool payWithPayPal, Action completionHandler)
         {
 
             var merchantURL = @"YOUR MERCHANT BACKEND URL HERE";
@@ -275,21 +314,24 @@ namespace XamarinPiaSample
                     if (data.Length > 0 && error == null)
                     {
                         NSDictionary resultsDictionary = (Foundation.NSDictionary)NSJsonSerialization.Deserialize(data, NSJsonReadingOptions.MutableLeaves, out error2);
-                        if(resultsDictionary[@"transactionId"] != null && resultsDictionary[@"redirectOK"] != null)
+                        if (resultsDictionary[@"transactionId"] != null && resultsDictionary[@"redirectOK"] != null)
                         {
                             NSString transactionId = (Foundation.NSString)resultsDictionary[@"transactionId"];
                             NSString redirectOK = (Foundation.NSString)resultsDictionary[@"redirectOK"];
                             transactionInfo = new NPITransactionInfo(transactionId, redirectOK);
+                            completionHandler();
                         }
                         else
                         {
                             transactionInfo = null;
+                            registrationError = error;
+                            completionHandler();
                         }
-                        completionHandler();
                     }
                     else
                     {
                         transactionInfo = null;
+                        registrationError = error;
                         completionHandler();
                     }
                 });
@@ -299,8 +341,9 @@ namespace XamarinPiaSample
             }
         }
 
-        public void registerCallForWallets(int wallet, Action completionHandler)
+        public void registerCallForWallets(MobileWallet wallet, WalletCallbackCompletionHandler callback)
         {
+
 
             var merchantURL = @"YOUR MERCHANT BACKEND URL HERE";
 
@@ -312,7 +355,7 @@ namespace XamarinPiaSample
             method.SetValueForKey(new NSNumber(0), new NSString(@"fee"));
             switch (wallet)
             {
-                case (int)MobileWallet.Vipps:
+                case MobileWallet.Vipps:
                 {
                     amount.SetValueForKey(new NSString(@"NOK"), new NSString(@"currencyCode"));
                     method.SetValueForKey(new NSString(@"Vipps"), new NSString(@"id"));
@@ -320,14 +363,21 @@ namespace XamarinPiaSample
                     jsonDictionary.SetValueForKey(new NSString(@"+471111..."), new NSString(@"phoneNumber"));
                     break;
                 }
-                case (int)MobileWallet.Swish:
+                case MobileWallet.Swish:
                 {
                     amount.SetValueForKey(new NSString(@"SEK"), new NSString(@"currencyCode"));
                     method.SetValueForKey(new NSString(@"SwishM"), new NSString(@"id"));
                     method.SetValueForKey(new NSString(@"Swish"), new NSString(@"displayName"));
                     break;
                 }
-                    
+                case MobileWallet.MobilePay:
+                {
+                    amount.SetValueForKey(new NSString(@"EUR"), new NSString(@"currencyCode"));
+                    method.SetValueForKey(new NSString(@"MobilePay"), new NSString(@"id"));
+                    method.SetValueForKey(new NSString(@"MobilePay"), new NSString(@"displayName"));
+                    break;
+                }
+
                 default:break;
             }
 
@@ -360,7 +410,6 @@ namespace XamarinPiaSample
                 NSUrlSession session = NSUrlSession.SharedSession;
                 NSUrlSessionTask task = session.CreateDataTask(request, (data, response, error) =>
                 {
-
                     if (data.Length > 0 && error == null)
                     {
                         NSDictionary resultsDictionary = (Foundation.NSDictionary)NSJsonSerialization.Deserialize(data, NSJsonReadingOptions.MutableLeaves, out error2);
@@ -369,17 +418,18 @@ namespace XamarinPiaSample
                             NSString transactionId = (Foundation.NSString)resultsDictionary[@"transactionId"];
                             NSString walletURL = (Foundation.NSString)resultsDictionary[@"walletUrl"];
                             transactionInfo = new NPITransactionInfo(walletURL);
+                            callback(WalletRegistrationResponse.SuccessWithWalletURL(NSUrl.FromString(transactionInfo.WalletUrl)));
                         }
                         else
                         {
                             transactionInfo = null;
+                            callback(WalletRegistrationResponse.Failure(error));
                         }
-                        completionHandler();
                     }
                     else
                     {
                         transactionInfo = null;
-                        completionHandler();
+                        callback(WalletRegistrationResponse.Failure(error));
                     }
                 });
 
@@ -443,7 +493,7 @@ namespace XamarinPiaSample
 
         public override void DoInitialAPICall(PiaSDKController PiaSDKController, bool storeCard, Action<NPITransactionInfo> completionHandler)
         {
-            vc.getTransactionInfo(false, completionHandler: () =>
+            vc.registerCardPaymnet(false, completionHandler: () =>
             {
                 completionHandler(vc.transactionInfo);
             });
@@ -493,67 +543,4 @@ namespace XamarinPiaSample
             throw new NotImplementedException();
         }
     }
-
-    public partial class WalletDelegate : VippsPaymentDelegate
-    {
-        public ViewController vc;
-
-        public override void WalletPaymentDidSucceed(UIView transitionIndicatorView)
-        {
-            transitionIndicatorView.RemoveFromSuperview();
-            vc.View.UserInteractionEnabled = true;
-            vc.showAlert("Payment is successfull");
-        }
-
-        public override void WalletPaymentInterrupted(UIView transitionIndicatorView)
-        {
-            vc.showAlert("Payment is interrupted");
-        }
-
-        public override void RegisterVippsPayment(Action<NSString> completionWithWalletURL)
-        {
-            vc.registerCallForWallets((int)MobileWallet.Vipps, completionHandler: () =>
-            {
-                completionWithWalletURL((Foundation.NSString)vc.transactionInfo.WalletUrl);
-            });
-        }
-
-        public override void VippsPaymentDidFailWith(NPIError error, NSNumber vippsStatusCode)
-        {
-            vc.showAlert("Payment Failed");
-        }
-    }
-
-    public partial class SwishDelegate : SwishPaymentDelegate
-    {
-        public ViewController vc;
-
-        public override void RegisterSwishPayment(Action<NSString> completionWithWalletURL)
-        {
-            vc.registerCallForWallets((int)MobileWallet.Swish, completionHandler: () =>
-            {
-                completionWithWalletURL((Foundation.NSString)vc.transactionInfo.WalletUrl);
-            });
-        }
-
-        public override void SwishDidRedirect(UIView transitionIndicatorView)
-        {
-            transitionIndicatorView.RemoveFromSuperview();
-            vc.View.UserInteractionEnabled = true;
-            vc.showAlert("Check payment status for scuccess");
-        }
-
-        public override void WalletPaymentInterrupted(UIView transitionIndicatorView)
-        {
-            transitionIndicatorView.RemoveFromSuperview();
-            vc.View.UserInteractionEnabled = true;
-            vc.showAlert("Payment is interrupted");
-        }
-
-        public override void SwishPaymentDidFailWith(NPIError error)
-        {
-            vc.showAlert("Payment Failed");
-        }
-    }
-
 }

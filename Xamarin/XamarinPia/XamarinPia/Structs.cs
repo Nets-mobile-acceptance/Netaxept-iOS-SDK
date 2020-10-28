@@ -58,13 +58,17 @@ namespace XamarinPia
         UnknownError = 99,
         DeniedBy3DS = 900,
         MerchantTimeout = 901,
+        VippsErrorStatusCode = 302,
         WalletAppNotInstalled = 303,
         WalletURLInvalid = 304,
         WalletRedirectURLUnknown = 305,
-        VippsErrorStatusCode = 302,
         TransactionInfoNull = 306,
-	RedirectURLNull = 307
-	}
+        RedirectURLNull = 307,
+        UnknownTerminalError = 308,
+        UnidentifiedWebViewRedirectURL = 309,
+        ThreeDSecurePageNotFound = 310,
+        InvalidWebViewURL = 311
+    }
 
     public enum PiALanguage
     {
@@ -74,5 +78,23 @@ namespace XamarinPia
         Danish,
         Norwegian,
         Finnish
+    }
+    
+    [Native]
+    public enum Wallet : long
+    {
+        Swish,
+        Vipps,
+        VippsTest,
+        MobilePay,
+        MobilePayTest
+    }
+
+    [Native]
+    public enum WalletErrorCode : long
+    {
+        RegistrationFailure,
+        NoNetwork,
+        WalletAppNotFound
     }
 }

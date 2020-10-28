@@ -115,22 +115,81 @@ RCT_EXPORT_METHOD(startPayPalProcess:(RCTResponseSenderBlock)callback) {
   });
 }
 
-RCT_EXPORT_METHOD(startVippsProcess:(RCTResponseSenderBlock)callback) {
-  registerPaymentCallback = callback;
-  dispatch_async(dispatch_get_main_queue(), ^{
-    UIViewController *vc = [UIApplication sharedApplication].delegate.window.rootViewController;
-    if(![PiaSDK initiateVippsFromSender:vc delegate:self]){
-        [self sendEventWithName:@"PiaSDKResult" body:@{@"name": @"Vipps not installed"}];
-    }
-  });
+- (WalletPaymentProcess * _Nullable)walletPaymentProcessForName:(NSString *)walletName {
+  NSArray * supportedWallets = @[@"swish", @"vipps", @"vippstest", @"mobilepay", @"mobilepaytest"];
+  NSUInteger index = [supportedWallets indexOfObject:walletName.lowercaseString];
+  switch (index) {
+    case 0: return [WalletPaymentProcess walletPaymentForWallet:WalletSwish];
+    case 1: return [WalletPaymentProcess walletPaymentForWallet:WalletVipps];
+    case 2: return [WalletPaymentProcess walletPaymentForWallet:WalletVippsTest];
+    case 3: return [WalletPaymentProcess walletPaymentForWallet:WalletMobilePay];
+    case 4: return [WalletPaymentProcess walletPaymentForWallet:WalletMobilePayTest];
+    default: return nil;
+  }
 }
 
-RCT_EXPORT_METHOD(startSwishProcess:(RCTResponseSenderBlock)callback) {
-  registerPaymentCallback = callback;
+RCT_EXPORT_METHOD(canOpenWallet:(NSString *)walletName callback:(RCTResponseSenderBlock)callback) {
+  BOOL canOpen = [self walletPaymentProcessForName:walletName] != nil;
+  callback(@[@(canOpen)]);
+}
+
+RCTResponseSenderBlock walletRedirectHandler = ^(NSArray * unused){};
+
+RCT_EXPORT_METHOD(setWalletRedirectHandler:(RCTResponseSenderBlock)redirectWithoutInterruption) {
+  walletRedirectHandler = redirectWithoutInterruption;
+}
+
+RCT_EXPORT_METHOD(launchWalletNamed:(NSString *)walletName
+                          walletURL:(NSString *)walletURLString
+        redirectWithoutInterruption:(RCTResponseSenderBlock)redirectWithoutInterruption
+                            failure:(RCTResponseSenderBlock)failure) {
+  
+  WalletPaymentProcess * wallet = [self walletPaymentProcessForName:walletName];
+  
+  if (wallet == nil) {
+    NSString * errorMessage = [[NSString alloc]initWithFormat:@"%@ is not installed", walletName];
+    failure(@[errorMessage]);
+    return;
+  }
+  
+  NSURL * walletURL = [NSURL URLWithString:walletURLString];;
+  
+  if (walletURL == nil) {
+    NSString * errorMessage = [[NSString alloc]initWithFormat:@"Invalid wallet URL: %@", walletURLString];
+    failure(@[errorMessage]);
+    return;
+  }
+  
+  walletRedirectHandler = redirectWithoutInterruption;
+  
   dispatch_async(dispatch_get_main_queue(), ^{
-    UIViewController *vc = [UIApplication sharedApplication].delegate.window.rootViewController;
-    if(![PiaSDK initiateSwishFromSender:vc delegate:self]){
-        [self sendEventWithName:@"PiaSDKResult" body:@{@"name": @"Swish not installed"}];
+    BOOL canLaunch = [PiaSDK launchWalletAppForWalletPaymentProcess:wallet walletURLCallback:^(void (^ _Nonnull walletURLCallback)(WalletRegistrationResponse * _Nonnull)) {
+      walletURLCallback([WalletRegistrationResponse successWithWalletURL:walletURL]);
+      } redirectWithoutInterruption:^(BOOL success) {
+        if (walletRedirectHandler) {
+          walletRedirectHandler(@[@(success)]);
+          walletRedirectHandler = nil;
+        } else {
+          NSLog(@"Callback for redirect is ignored. Reset callback using `setWalletRedirectHandler` if necessary");
+        }
+      } failure:^(WalletError _Nonnull error) {
+        failure(@[error.localizedDescription]);
+    }];
+    
+    if (!canLaunch) {
+      NSString * errorMessage = [[NSString alloc]initWithFormat:@"%@ is not installed", walletName];
+      failure(@[errorMessage]);
+    }
+  });
+  
+}
+
+RCT_EXPORT_METHOD(showTransitionActivityIndicator:(BOOL)shouldShow) {
+  dispatch_async(dispatch_get_main_queue(), ^{
+    if (shouldShow) {
+      [PiaSDK addTransitionViewIn:UIApplication.sharedApplication.keyWindow.rootViewController.view];
+    } else {
+      [PiaSDK removeTransitionView];
     }
   });
 }
@@ -221,10 +280,6 @@ RCT_EXPORT_METHOD(startPaytrailProcess:(NSString*)merchantId testMode:(BOOL)test
 - (void)walletPaymentInterrupted:(UIView *)transitionIndicatorView {
   [transitionIndicatorView removeFromSuperview];
   [self sendEventWithName:@"PiaSDKResult" body:@{@"name": @"Interrupted"}];
-}
-
-- (void)vippsPaymentDidFailWith:(NPIError *)error vippsStatusCode:(VippsStatusCode)vippsStatusCode {
-  [self sendEventWithName:@"PiaSDKResult" body:@{@"name": error.localizedDescription}];
 }
 
 - (void)swishDidRedirect:(nullable UIView *)transitionIndicatorView {

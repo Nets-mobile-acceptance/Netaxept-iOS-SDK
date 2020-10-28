@@ -56,7 +56,7 @@ RCT_EXPORT_METHOD(pushVC:(UIViewController *)vc){
 }
 
 -(BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
-  return [PiaSDK applicationDidOpenFromRedirectWith:url andOptions:options];
+  return [PiaSDK willHandleRedirectWith:url andOptions:options];
 }
 
 @end
