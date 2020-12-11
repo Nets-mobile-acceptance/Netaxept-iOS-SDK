@@ -424,9 +424,12 @@ namespace XamarinPia
         [Export ("sharedInstance")]
         NPIInterfaceConfiguration SharedInstance ();
     }
-    
+
+    // bare interface
+    interface IPiaSDKTheme { }
+
     // @protocol PiaSDKTheme
-    [Model]
+    [Protocol,Model]
     [BaseType(typeof(NSObject))]
     interface PiaSDKTheme
     {
@@ -744,23 +747,23 @@ namespace XamarinPia
         [iOS(13, 0)]
         [Static]
         [Export ("setTheme:forInterfaceStyle:")]
-        void SetTheme (PiaSDKTheme theme, UIUserInterfaceStyle interfaceStyle);
+        void SetTheme (IPiaSDKTheme theme, UIUserInterfaceStyle interfaceStyle);
 
         // +(void)setTheme:(id<PiaSDKTheme> _Nonnull)theme;
         [Static]
         [Export ("setTheme:")]
-        void SetTheme (PiaSDKTheme theme);
+        void SetTheme (IPiaSDKTheme theme);
 
         // +(id<PiaSDKTheme> _Nonnull)netsThemeCopyForInterfaceStyle:(UIUserInterfaceStyle)interfaceStyle __attribute__((availability(ios, introduced=12.0)));
         [iOS(12,0)]
         [Static]
         [Export ("netsThemeCopyForInterfaceStyle:")]
-        PiaSDKTheme NetsThemeCopyForInterfaceStyle (UIUserInterfaceStyle interfaceStyle);
+        IPiaSDKTheme NetsThemeCopyForInterfaceStyle (UIUserInterfaceStyle interfaceStyle);
 
         // +(id<PiaSDKTheme> _Nonnull)netsThemeCopy;
         [Static]
         [Export ("netsThemeCopy")]
-        PiaSDKTheme NetsThemeCopy { get; }
+        IPiaSDKTheme NetsThemeCopy { get; }
         
         
         // +(BOOL)launchWalletAppForWalletPaymentProcess:(WalletPaymentProcess * _Nonnull)walletPaymentProcess walletURLCallback:(WalletURLCallback _Nonnull)walletURLCallback redirectWithoutInterruption:(WalletRedirectWithoutInterruption _Nonnull)redirectWithoutInterruption failure:(WalletFailureWithError _Nonnull)failure;

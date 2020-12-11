@@ -20,9 +20,9 @@
     <header class="header">
       <p class="header-col header-col--primary">
         <a class="header-link" href="index.html">
-          Pia Docs
+          Pia 1.4.0 Docs
         </a>
-         (81% documented)
+         (82% documented)
       </p>
     
       <p class="header-col--secondary">
@@ -218,46 +218,46 @@
             </ul>
           </li>
           <li class="nav-group-name">
-            <a class="nav-group-name-link" href="Type Definitions.html">Type Definitions</a>
+            <a class="nav-group-name-link" href="Type%20Definitions.html">Type Definitions</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Type Definitions.html#/c:PaymentRegistration.h@T@CardError">CardError</a>
+                <a class="nav-group-task-link" href="Type%20Definitions.html#/c:PaymentRegistration.h@T@CardError">CardError</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Type Definitions.html#/c:PaymentRegistration.h@T@CompletionCallback">CompletionCallback</a>
+                <a class="nav-group-task-link" href="Type%20Definitions.html#/c:PaymentRegistration.h@T@CompletionCallback">CompletionCallback</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Type Definitions.html#/c:PaymentProcess.h@T@Currency">Currency</a>
+                <a class="nav-group-task-link" href="Type%20Definitions.html#/c:PaymentProcess.h@T@Currency">Currency</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Type Definitions.html#/c:PaymentRegistration.h@T@FailureCompletionCallback">FailureCompletionCallback</a>
+                <a class="nav-group-task-link" href="Type%20Definitions.html#/c:PaymentRegistration.h@T@FailureCompletionCallback">FailureCompletionCallback</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Type Definitions/NPIErrorCode.html">NPIErrorCode</a>
+                <a class="nav-group-task-link" href="Type%20Definitions/NPIErrorCode.html">NPIErrorCode</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Type Definitions.html#/c:PaymentRegistration.h@T@RedirectURL">RedirectURL</a>
+                <a class="nav-group-task-link" href="Type%20Definitions.html#/c:PaymentRegistration.h@T@RedirectURL">RedirectURL</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Type Definitions.html#/c:PaymentRegistration.h@T@TransactionCallback">TransactionCallback</a>
+                <a class="nav-group-task-link" href="Type%20Definitions.html#/c:PaymentRegistration.h@T@TransactionCallback">TransactionCallback</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Type Definitions.html#/c:PaymentRegistration.h@T@TransactionID">TransactionID</a>
+                <a class="nav-group-task-link" href="Type%20Definitions.html#/c:PaymentRegistration.h@T@TransactionID">TransactionID</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Type Definitions.html#/c:NSError+Wallets.h@T@WalletError">WalletError</a>
+                <a class="nav-group-task-link" href="Type%20Definitions.html#/c:NSError+Wallets.h@T@WalletError">WalletError</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Type Definitions.html#/c:PaymentRegistration.h@T@WalletFailureWithError">WalletFailureWithError</a>
+                <a class="nav-group-task-link" href="Type%20Definitions.html#/c:PaymentRegistration.h@T@WalletFailureWithError">WalletFailureWithError</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Type Definitions.html#/c:PaymentRegistration.h@T@WalletRedirectWithoutInterruption">WalletRedirectWithoutInterruption</a>
+                <a class="nav-group-task-link" href="Type%20Definitions.html#/c:PaymentRegistration.h@T@WalletRedirectWithoutInterruption">WalletRedirectWithoutInterruption</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Type Definitions.html#/c:PaymentRegistration.h@T@WalletURL">WalletURL</a>
+                <a class="nav-group-task-link" href="Type%20Definitions.html#/c:PaymentRegistration.h@T@WalletURL">WalletURL</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Type Definitions.html#/c:PaymentRegistration.h@T@WalletURLCallback">WalletURLCallback</a>
+                <a class="nav-group-task-link" href="Type%20Definitions.html#/c:PaymentRegistration.h@T@WalletURLCallback">WalletURLCallback</a>
               </li>
             </ul>
           </li>
@@ -266,7 +266,7 @@
       <article class="main-content">
 
         <section class="section">
-          <div class="section-content">
+          <div class="section-content top-matter">
             
             <h1 id='changelog' class='heading'>Changelog</h1>
 <h2 id='1-0-0' class='heading'>1.0.0</h2>
@@ -301,7 +301,7 @@
 <li>Improvements for UI Customization:
 
 <ul>
-<li>added new flag for hiding the <q>Save card for later use</q> functionality from payment screen</li>
+<li>added new flag for hiding the &ldquo;Save card for later use&rdquo; functionality from payment screen</li>
 <li>added new option for setting custom background color for input fields</li>
 <li>updated card logos</li>
 </ul></li>
@@ -394,8 +394,10 @@ Bugfix for 3DS authentication in Web-View.</p>
 </ul>
 
 <p><strong>One click payments:</strong></p>
+
+<ul>
 <li>Please make sure to use the Easy payment flow combined with 3D-Secure by adding the parameter recurringUse3DS=true in the register request from your backend.</li>
-<div class="aside aside-note">
+</ul><div class="aside aside-note">
     <p class="aside-title">Note</p>
     Note that system authentication for subsequent payment is now deprecated
 
@@ -427,14 +429,17 @@ Bugfix for 3DS authentication in Web-View.</p>
 <p><em>Released on 04-Feb-2020</em></p>
 
 <p><strong>Release notes:</strong></p>
+
+<ul>
 <li>The SDK now supports a faster flow for paying with already saved cards. It is possible to skip card confirmation for subsequent payments. Refer to our documentation and our native, Xamarin or ReactNative sample application for more information.</li>
-<div class="aside aside-note">
+</ul><div class="aside aside-note">
     <p class="aside-title">Note</p>
     Note that the user confirmation in the SDK’s UI for subsequent stored card payments is no longer mandatory and is skipped by default.
 
-</div>
+</div><ul>
 <li>New Apple Pay support with payment data format helpers to support correctly passing the payment data to Netaxept.</li>
 <li>Miscellaneous bug fixes.</li>
+</ul>
 <h2 id='1-7-0' class='heading'>1.7.0</h2>
 
 <p><em>Released on 11-May-2020</em></p>
@@ -459,9 +464,11 @@ The MobilePay flow enables an automated app-switch experience to MobilePay. Pre-
 <p><em>Released on 11-Sept-2020</em></p>
 
 <p><strong>Release notes:</strong></p>
+
+<ul>
 <li>Following updates from Vipps, the new integration allows better handling of the app switching between your app and Vipps Test app and the Vipps Prodcution app.</li>
 <li>For the test environment, you must add <code>vippsMT</code> under the <code>LSApplicationQueriesSchemes</code> key in your Info.plist file. For further details refer the Vipps section of our documentation.</li>
-<div class="aside aside-note">
+</ul><div class="aside aside-note">
     <p class="aside-title">Note</p>
     Note that submitting the phone number of the user for Vipps is optional in the REGISTER request.
 
@@ -490,6 +497,15 @@ The MobilePay flow enables an automated app-switch experience to MobilePay. Pre-
 <li>Added Xamarin support for new declarative APIs to initiate wallet payment, card payment and card storage processes as well as UI customization API to create or customize your theme for light and dark modes.</li>
 <li>Subsequent payment - Activity indicator opacity bug fix.</li>
 </ul>
+<h2 id='2-0-2' class='heading'>2.0.2</h2>
+
+<p><em>Released on 11-Dec-2020</em></p>
+
+<p><strong>Release notes:</strong></p>
+
+<ul>
+<li>Bugfix for UI customization API on Xamarin</li>
+</ul>
 
           </div>
         </section>
@@ -498,8 +514,8 @@ The MobilePay flow enables an automated app-switch experience to MobilePay. Pre-
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2020 <a class="link" href="https://nets.eu" target="_blank" rel="external">Nets</a>. All rights reserved. (Last updated: 2020-10-27)</p>
-      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.0</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+      <p>&copy; 2020 <a class="link" href="https://nets.eu" target="_blank" rel="external">Nets</a>. All rights reserved. (Last updated: 2020-12-10)</p>
+      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>
 </div>

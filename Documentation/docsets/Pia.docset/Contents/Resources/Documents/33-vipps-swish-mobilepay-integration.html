@@ -20,9 +20,9 @@
     <header class="header">
       <p class="header-col header-col--primary">
         <a class="header-link" href="index.html">
-          Pia Docs
+          Pia 1.4.0 Docs
         </a>
-         (81% documented)
+         (82% documented)
       </p>
     
       <p class="header-col--secondary">
@@ -218,46 +218,46 @@
             </ul>
           </li>
           <li class="nav-group-name">
-            <a class="nav-group-name-link" href="Type Definitions.html">Type Definitions</a>
+            <a class="nav-group-name-link" href="Type%20Definitions.html">Type Definitions</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Type Definitions.html#/c:PaymentRegistration.h@T@CardError">CardError</a>
+                <a class="nav-group-task-link" href="Type%20Definitions.html#/c:PaymentRegistration.h@T@CardError">CardError</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Type Definitions.html#/c:PaymentRegistration.h@T@CompletionCallback">CompletionCallback</a>
+                <a class="nav-group-task-link" href="Type%20Definitions.html#/c:PaymentRegistration.h@T@CompletionCallback">CompletionCallback</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Type Definitions.html#/c:PaymentProcess.h@T@Currency">Currency</a>
+                <a class="nav-group-task-link" href="Type%20Definitions.html#/c:PaymentProcess.h@T@Currency">Currency</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Type Definitions.html#/c:PaymentRegistration.h@T@FailureCompletionCallback">FailureCompletionCallback</a>
+                <a class="nav-group-task-link" href="Type%20Definitions.html#/c:PaymentRegistration.h@T@FailureCompletionCallback">FailureCompletionCallback</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Type Definitions/NPIErrorCode.html">NPIErrorCode</a>
+                <a class="nav-group-task-link" href="Type%20Definitions/NPIErrorCode.html">NPIErrorCode</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Type Definitions.html#/c:PaymentRegistration.h@T@RedirectURL">RedirectURL</a>
+                <a class="nav-group-task-link" href="Type%20Definitions.html#/c:PaymentRegistration.h@T@RedirectURL">RedirectURL</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Type Definitions.html#/c:PaymentRegistration.h@T@TransactionCallback">TransactionCallback</a>
+                <a class="nav-group-task-link" href="Type%20Definitions.html#/c:PaymentRegistration.h@T@TransactionCallback">TransactionCallback</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Type Definitions.html#/c:PaymentRegistration.h@T@TransactionID">TransactionID</a>
+                <a class="nav-group-task-link" href="Type%20Definitions.html#/c:PaymentRegistration.h@T@TransactionID">TransactionID</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Type Definitions.html#/c:NSError+Wallets.h@T@WalletError">WalletError</a>
+                <a class="nav-group-task-link" href="Type%20Definitions.html#/c:NSError+Wallets.h@T@WalletError">WalletError</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Type Definitions.html#/c:PaymentRegistration.h@T@WalletFailureWithError">WalletFailureWithError</a>
+                <a class="nav-group-task-link" href="Type%20Definitions.html#/c:PaymentRegistration.h@T@WalletFailureWithError">WalletFailureWithError</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Type Definitions.html#/c:PaymentRegistration.h@T@WalletRedirectWithoutInterruption">WalletRedirectWithoutInterruption</a>
+                <a class="nav-group-task-link" href="Type%20Definitions.html#/c:PaymentRegistration.h@T@WalletRedirectWithoutInterruption">WalletRedirectWithoutInterruption</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Type Definitions.html#/c:PaymentRegistration.h@T@WalletURL">WalletURL</a>
+                <a class="nav-group-task-link" href="Type%20Definitions.html#/c:PaymentRegistration.h@T@WalletURL">WalletURL</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Type Definitions.html#/c:PaymentRegistration.h@T@WalletURLCallback">WalletURLCallback</a>
+                <a class="nav-group-task-link" href="Type%20Definitions.html#/c:PaymentRegistration.h@T@WalletURLCallback">WalletURLCallback</a>
               </li>
             </ul>
           </li>
@@ -266,7 +266,7 @@
       <article class="main-content">
 
         <section class="section">
-          <div class="section-content">
+          <div class="section-content top-matter">
             
             <h1 id='wallets-vipps-swish-mobilepay-integration' class='heading'>Wallets (Vipps, Swish, MobilePay) Integration</h1>
 
@@ -332,14 +332,14 @@ On the other hand, the SDK returns <code>wallet app not installed</code> error i
 <span class="p">}</span>
 </code></pre>
 
-<p>Note : Vipps and Mobilepay support <strong>AUTH+CAPTURE</strong> process. If <strong>autoSale</strong> is set to <q>true</q>, Netaxept authorizes and immediately captures the amount set in the <strong>REGISTER</strong> call. It is optional and default value is false (authorization only and capture from the backend with additional process call).</p>
+<p>Note : Vipps and Mobilepay support <strong>AUTH+CAPTURE</strong> process. If <strong>autoSale</strong> is set to &ldquo;true&rdquo;, Netaxept authorizes and immediately captures the amount set in the <strong>REGISTER</strong> call. It is optional and default value is false (authorization only and capture from the backend with additional process call).</p>
 <h3 id='vipps-payment-registration' class='heading'>Vipps Payment Registration</h3>
 
 <p>In case of Vipps, user&rsquo;s phone number is an optional parameter. If you choose not to pass the phone number, you need to additionally pass the <code>isApp = true</code> parameter in the registration <em>request body</em>. If choosing to pass user&rsquo;s phone number, use the following format: (Norwegian prefix): <code>phoneNumber = +4711111111</code>. Netaxept REST API expects URL encoded phone number. The encoding can take place in the client or merchant backend.  </p>
 <h2 id='wallet-app-redirect' class='heading'>Wallet App Redirect</h2>
 
 <p>All redirects to your application are received in <code>AppDelegate</code> open URL delegate method. Notify the SDK of a wallet app redirect as follows:</p>
-<pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">application</span><span class="p">(</span><span class="n">_</span> <span class="nv">app</span><span class="p">:</span> <span class="kt">UIApplication</span><span class="p">,</span> <span class="n">open</span> <span class="nv">url</span><span class="p">:</span> <span class="kt">URL</span><span class="p">,</span> <span class="nv">options</span><span class="p">:</span> <span class="p">[</span><span class="kt">UIApplicationOpenURLOptionsKey</span> <span class="p">:</span> <span class="kt">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">[:])</span> <span class="o">-&gt;</span> <span class="kt">Bool</span> <span class="p">{</span>
+<pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">application</span><span class="p">(</span><span class="n">_</span> <span class="nv">app</span><span class="p">:</span> <span class="kt">UIApplication</span><span class="p">,</span> <span class="kd">open</span> <span class="nv">url</span><span class="p">:</span> <span class="kt">URL</span><span class="p">,</span> <span class="nv">options</span><span class="p">:</span> <span class="p">[</span><span class="kt">UIApplicationOpenURLOptionsKey</span> <span class="p">:</span> <span class="kt">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">[:])</span> <span class="o">-&gt;</span> <span class="kt">Bool</span> <span class="p">{</span>
     <span class="k">guard</span> <span class="o">!</span><span class="kt">PiaSDK</span><span class="o">.</span><span class="nf">willHandleRedirect</span><span class="p">(</span><span class="nv">with</span><span class="p">:</span> <span class="n">url</span><span class="p">,</span> <span class="nv">andOptions</span><span class="p">:</span> <span class="n">options</span><span class="p">)</span> <span class="k">else</span> <span class="p">{</span>
         <span class="c1">// SDK has handled the redirect and will invoke the `redirect` callback explained below</span>
         <span class="k">return</span>
@@ -466,8 +466,8 @@ PiaSDK will notify the redirect where the app can commit / rollback the transact
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2020 <a class="link" href="https://nets.eu" target="_blank" rel="external">Nets</a>. All rights reserved. (Last updated: 2020-10-27)</p>
-      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.0</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+      <p>&copy; 2020 <a class="link" href="https://nets.eu" target="_blank" rel="external">Nets</a>. All rights reserved. (Last updated: 2020-12-10)</p>
+      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>
 </div>

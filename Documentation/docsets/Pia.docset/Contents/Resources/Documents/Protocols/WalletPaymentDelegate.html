@@ -21,9 +21,9 @@
     <header class="header">
       <p class="header-col header-col--primary">
         <a class="header-link" href="../index.html">
-          Pia Docs
+          Pia 1.4.0 Docs
         </a>
-         (81% documented)
+         (82% documented)
       </p>
     
       <p class="header-col--secondary">
@@ -219,46 +219,46 @@
             </ul>
           </li>
           <li class="nav-group-name">
-            <a class="nav-group-name-link" href="../Type Definitions.html">Type Definitions</a>
+            <a class="nav-group-name-link" href="../Type%20Definitions.html">Type Definitions</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Type Definitions.html#/c:PaymentRegistration.h@T@CardError">CardError</a>
+                <a class="nav-group-task-link" href="../Type%20Definitions.html#/c:PaymentRegistration.h@T@CardError">CardError</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Type Definitions.html#/c:PaymentRegistration.h@T@CompletionCallback">CompletionCallback</a>
+                <a class="nav-group-task-link" href="../Type%20Definitions.html#/c:PaymentRegistration.h@T@CompletionCallback">CompletionCallback</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Type Definitions.html#/c:PaymentProcess.h@T@Currency">Currency</a>
+                <a class="nav-group-task-link" href="../Type%20Definitions.html#/c:PaymentProcess.h@T@Currency">Currency</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Type Definitions.html#/c:PaymentRegistration.h@T@FailureCompletionCallback">FailureCompletionCallback</a>
+                <a class="nav-group-task-link" href="../Type%20Definitions.html#/c:PaymentRegistration.h@T@FailureCompletionCallback">FailureCompletionCallback</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Type Definitions/NPIErrorCode.html">NPIErrorCode</a>
+                <a class="nav-group-task-link" href="../Type%20Definitions/NPIErrorCode.html">NPIErrorCode</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Type Definitions.html#/c:PaymentRegistration.h@T@RedirectURL">RedirectURL</a>
+                <a class="nav-group-task-link" href="../Type%20Definitions.html#/c:PaymentRegistration.h@T@RedirectURL">RedirectURL</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Type Definitions.html#/c:PaymentRegistration.h@T@TransactionCallback">TransactionCallback</a>
+                <a class="nav-group-task-link" href="../Type%20Definitions.html#/c:PaymentRegistration.h@T@TransactionCallback">TransactionCallback</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Type Definitions.html#/c:PaymentRegistration.h@T@TransactionID">TransactionID</a>
+                <a class="nav-group-task-link" href="../Type%20Definitions.html#/c:PaymentRegistration.h@T@TransactionID">TransactionID</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Type Definitions.html#/c:NSError+Wallets.h@T@WalletError">WalletError</a>
+                <a class="nav-group-task-link" href="../Type%20Definitions.html#/c:NSError+Wallets.h@T@WalletError">WalletError</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Type Definitions.html#/c:PaymentRegistration.h@T@WalletFailureWithError">WalletFailureWithError</a>
+                <a class="nav-group-task-link" href="../Type%20Definitions.html#/c:PaymentRegistration.h@T@WalletFailureWithError">WalletFailureWithError</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Type Definitions.html#/c:PaymentRegistration.h@T@WalletRedirectWithoutInterruption">WalletRedirectWithoutInterruption</a>
+                <a class="nav-group-task-link" href="../Type%20Definitions.html#/c:PaymentRegistration.h@T@WalletRedirectWithoutInterruption">WalletRedirectWithoutInterruption</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Type Definitions.html#/c:PaymentRegistration.h@T@WalletURL">WalletURL</a>
+                <a class="nav-group-task-link" href="../Type%20Definitions.html#/c:PaymentRegistration.h@T@WalletURL">WalletURL</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Type Definitions.html#/c:PaymentRegistration.h@T@WalletURLCallback">WalletURLCallback</a>
+                <a class="nav-group-task-link" href="../Type%20Definitions.html#/c:PaymentRegistration.h@T@WalletURLCallback">WalletURLCallback</a>
               </li>
             </ul>
           </li>
@@ -267,11 +267,17 @@
       <article class="main-content">
 
         <section class="section">
-          <div class="section-content">
+          <div class="section-content top-matter">
             <h1>WalletPaymentDelegate</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight"><code><span class="k">@protocol</span> <span class="nc">WalletPaymentDelegate</span> <span class="o">&lt;</span><span class="n">NSObject</span><span class="o">&gt;</span></code></pre>
+                  <p class="aside-title">Objective-C</p>
+                  <pre class="highlight objective_c"><code><span class="k">@protocol</span> <span class="nc">WalletPaymentDelegate</span> <span class="o">&lt;</span><span class="n">NSObject</span><span class="o">&gt;</span></code></pre>
+
+                </div>
+                <div class="language">
+                  <p class="aside-title">Swift</p>
+                  <pre class="highlight swift"><code><span class="kd">protocol</span> <span class="kt">WalletPaymentDelegate</span> <span class="p">:</span> <span class="kt">NSObjectProtocol</span></code></pre>
 
                 </div>
               </div>
@@ -289,7 +295,7 @@
                     <code>
                     <a name="/c:objc(pl)WalletPaymentDelegate(im)walletPayDidRedirect:"></a>
                     <a name="//apple_ref/objc/Method/-walletPayDidRedirect:" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(pl)WalletPaymentDelegate(im)walletPayDidRedirect:">-walletPayDidRedirect:</a>
+                    <a class="token" href="#/c:objc(pl)WalletPaymentDelegate(im)walletPayDidRedirect:">-walletPayDidRedirect:<wbr></a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -306,12 +312,12 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Objective-C</p>
-                          <pre class="highlight"><code><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">walletPayDidRedirect</span><span class="p">:(</span><span class="n">nullable</span> <span class="n">UIView</span> <span class="o">*</span><span class="p">)</span><span class="nv">transitionIndicatorView</span><span class="p">;</span></code></pre>
+                          <pre class="highlight objective_c"><code><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">walletPayDidRedirect</span><span class="p">:(</span><span class="n">nullable</span> <span class="n">UIView</span> <span class="o">*</span><span class="p">)</span><span class="nv">transitionIndicatorView</span><span class="p">;</span></code></pre>
 
                         </div>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">func</span> <span class="nf">walletPayDidRedirect</span><span class="p">(</span><span class="n">_</span> <span class="nv">transitionIndicatorView</span><span class="p">:</span> <span class="kt">UIView</span><span class="p">?)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">walletPayDidRedirect</span><span class="p">(</span><span class="n">_</span> <span class="nv">transitionIndicatorView</span><span class="p">:</span> <span class="kt">UIView</span><span class="p">?)</span></code></pre>
 
                         </div>
                       </div>
@@ -342,7 +348,7 @@
                     <code>
                     <a name="/c:objc(pl)WalletPaymentDelegate(im)walletPayDidInterrupt:"></a>
                     <a name="//apple_ref/objc/Method/-walletPayDidInterrupt:" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(pl)WalletPaymentDelegate(im)walletPayDidInterrupt:">-walletPayDidInterrupt:</a>
+                    <a class="token" href="#/c:objc(pl)WalletPaymentDelegate(im)walletPayDidInterrupt:">-walletPayDidInterrupt:<wbr></a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -359,12 +365,12 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Objective-C</p>
-                          <pre class="highlight"><code><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">walletPayDidInterrupt</span><span class="p">:(</span><span class="n">nullable</span> <span class="n">UIView</span> <span class="o">*</span><span class="p">)</span><span class="nv">transitionIndicatorView</span><span class="p">;</span></code></pre>
+                          <pre class="highlight objective_c"><code><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">walletPayDidInterrupt</span><span class="p">:(</span><span class="n">nullable</span> <span class="n">UIView</span> <span class="o">*</span><span class="p">)</span><span class="nv">transitionIndicatorView</span><span class="p">;</span></code></pre>
 
                         </div>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">func</span> <span class="nf">walletPayDidInterrupt</span><span class="p">(</span><span class="n">_</span> <span class="nv">transitionIndicatorView</span><span class="p">:</span> <span class="kt">UIView</span><span class="p">?)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">walletPayDidInterrupt</span><span class="p">(</span><span class="n">_</span> <span class="nv">transitionIndicatorView</span><span class="p">:</span> <span class="kt">UIView</span><span class="p">?)</span></code></pre>
 
                         </div>
                       </div>
@@ -395,7 +401,7 @@
                     <code>
                     <a name="/c:objc(pl)WalletPaymentDelegate(im)registerWalletPay:"></a>
                     <a name="//apple_ref/objc/Method/-registerWalletPay:" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(pl)WalletPaymentDelegate(im)registerWalletPay:">-registerWalletPay:</a>
+                    <a class="token" href="#/c:objc(pl)WalletPaymentDelegate(im)registerWalletPay:">-registerWalletPay:<wbr></a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -407,8 +413,8 @@
 following successful registration.</p>
 <div class="aside aside-note">
     <p class="aside-title">Note</p>
-    Add <q>vipps</q> for query name <q>wallet</q> in the redirect URL passed to merchant backend.
-e.g. <q>customer.redirect.scheme//piasdk?wallet=vipps</q>
+    Add &ldquo;vipps&rdquo; for query name &ldquo;wallet&rdquo; in the redirect URL passed to merchant backend.
+e.g. &ldquo;customer.redirect.scheme//piasdk?wallet=vipps&rdquo;
 
 </div>
 
@@ -417,14 +423,14 @@ e.g. <q>customer.redirect.scheme//piasdk?wallet=vipps</q>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Objective-C</p>
-                          <pre class="highlight"><code><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">registerWalletPay</span><span class="p">:</span>
+                          <pre class="highlight objective_c"><code><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">registerWalletPay</span><span class="p">:</span>
     <span class="p">(</span><span class="n">nonnull</span> <span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="n"><a href="../Classes/WalletRegistrationResponse.html">WalletRegistrationResponse</a></span> <span class="o">*</span><span class="n">_Nonnull</span><span class="p">))</span>
         <span class="n">completionWithWalletURL</span><span class="p">;</span></code></pre>
 
                         </div>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">func</span> <span class="nf">registerWalletPay</span><span class="p">(</span><span class="n">_</span> <span class="nv">completionWithWalletURL</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt"><a href="../Classes/WalletRegistrationResponse.html">WalletRegistrationResponse</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">registerWalletPay</span><span class="p">(</span><span class="n">_</span> <span class="nv">completionWithWalletURL</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt"><a href="../Classes/WalletRegistrationResponse.html">WalletRegistrationResponse</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -455,7 +461,7 @@ e.g. <q>customer.redirect.scheme//piasdk?wallet=vipps</q>
                     <code>
                     <a name="/c:objc(pl)WalletPaymentDelegate(im)walletPayDidFailWithError:"></a>
                     <a name="//apple_ref/objc/Method/-walletPayDidFailWithError:" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(pl)WalletPaymentDelegate(im)walletPayDidFailWithError:">-walletPayDidFailWithError:</a>
+                    <a class="token" href="#/c:objc(pl)WalletPaymentDelegate(im)walletPayDidFailWithError:">-walletPayDidFailWithError:<wbr></a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -479,12 +485,12 @@ The <code>VippsStatusCode</code> is nil if failure is internal.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Objective-C</p>
-                          <pre class="highlight"><code><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">walletPayDidFailWithError</span><span class="p">:(</span><span class="n">nonnull</span> <span class="n"><a href="../Type Definitions.html#/c:NSError+Wallets.h@T@WalletError">WalletError</a></span><span class="p">)</span><span class="nv">error</span><span class="p">;</span></code></pre>
+                          <pre class="highlight objective_c"><code><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">walletPayDidFailWithError</span><span class="p">:(</span><span class="n">nonnull</span> <span class="n"><a href="../Type%20Definitions.html#/c:NSError+Wallets.h@T@WalletError">WalletError</a></span><span class="p">)</span><span class="nv">error</span><span class="p">;</span></code></pre>
 
                         </div>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">func</span> <span class="nf">walletPayDidFailWithError</span><span class="p">(</span><span class="n">_</span> <span class="nv">error</span><span class="p">:</span> <span class="kt">Error</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">walletPayDidFailWithError</span><span class="p">(</span><span class="n">_</span> <span class="nv">error</span><span class="p">:</span> <span class="kt">Error</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -517,12 +523,12 @@ during app switch transitions.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Objective-C</p>
-                          <pre class="highlight"><code><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">walletPayWillRedirect</span><span class="p">;</span></code></pre>
+                          <pre class="highlight objective_c"><code><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">walletPayWillRedirect</span><span class="p">;</span></code></pre>
 
                         </div>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">optional</span> <span class="kd">func</span> <span class="nf">walletPayWillRedirect</span><span class="p">()</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">optional</span> <span class="kd">func</span> <span class="nf">walletPayWillRedirect</span><span class="p">()</span></code></pre>
 
                         </div>
                       </div>
@@ -537,8 +543,8 @@ during app switch transitions.</p>
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2020 <a class="link" href="https://nets.eu" target="_blank" rel="external">Nets</a>. All rights reserved. (Last updated: 2020-10-27)</p>
-      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.0</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+      <p>&copy; 2020 <a class="link" href="https://nets.eu" target="_blank" rel="external">Nets</a>. All rights reserved. (Last updated: 2020-12-10)</p>
+      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>
 </div>

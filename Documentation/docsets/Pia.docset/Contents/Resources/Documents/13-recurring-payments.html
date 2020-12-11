@@ -20,9 +20,9 @@
     <header class="header">
       <p class="header-col header-col--primary">
         <a class="header-link" href="index.html">
-          Pia Docs
+          Pia 1.4.0 Docs
         </a>
-         (81% documented)
+         (82% documented)
       </p>
     
       <p class="header-col--secondary">
@@ -218,46 +218,46 @@
             </ul>
           </li>
           <li class="nav-group-name">
-            <a class="nav-group-name-link" href="Type Definitions.html">Type Definitions</a>
+            <a class="nav-group-name-link" href="Type%20Definitions.html">Type Definitions</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Type Definitions.html#/c:PaymentRegistration.h@T@CardError">CardError</a>
+                <a class="nav-group-task-link" href="Type%20Definitions.html#/c:PaymentRegistration.h@T@CardError">CardError</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Type Definitions.html#/c:PaymentRegistration.h@T@CompletionCallback">CompletionCallback</a>
+                <a class="nav-group-task-link" href="Type%20Definitions.html#/c:PaymentRegistration.h@T@CompletionCallback">CompletionCallback</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Type Definitions.html#/c:PaymentProcess.h@T@Currency">Currency</a>
+                <a class="nav-group-task-link" href="Type%20Definitions.html#/c:PaymentProcess.h@T@Currency">Currency</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Type Definitions.html#/c:PaymentRegistration.h@T@FailureCompletionCallback">FailureCompletionCallback</a>
+                <a class="nav-group-task-link" href="Type%20Definitions.html#/c:PaymentRegistration.h@T@FailureCompletionCallback">FailureCompletionCallback</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Type Definitions/NPIErrorCode.html">NPIErrorCode</a>
+                <a class="nav-group-task-link" href="Type%20Definitions/NPIErrorCode.html">NPIErrorCode</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Type Definitions.html#/c:PaymentRegistration.h@T@RedirectURL">RedirectURL</a>
+                <a class="nav-group-task-link" href="Type%20Definitions.html#/c:PaymentRegistration.h@T@RedirectURL">RedirectURL</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Type Definitions.html#/c:PaymentRegistration.h@T@TransactionCallback">TransactionCallback</a>
+                <a class="nav-group-task-link" href="Type%20Definitions.html#/c:PaymentRegistration.h@T@TransactionCallback">TransactionCallback</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Type Definitions.html#/c:PaymentRegistration.h@T@TransactionID">TransactionID</a>
+                <a class="nav-group-task-link" href="Type%20Definitions.html#/c:PaymentRegistration.h@T@TransactionID">TransactionID</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Type Definitions.html#/c:NSError+Wallets.h@T@WalletError">WalletError</a>
+                <a class="nav-group-task-link" href="Type%20Definitions.html#/c:NSError+Wallets.h@T@WalletError">WalletError</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Type Definitions.html#/c:PaymentRegistration.h@T@WalletFailureWithError">WalletFailureWithError</a>
+                <a class="nav-group-task-link" href="Type%20Definitions.html#/c:PaymentRegistration.h@T@WalletFailureWithError">WalletFailureWithError</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Type Definitions.html#/c:PaymentRegistration.h@T@WalletRedirectWithoutInterruption">WalletRedirectWithoutInterruption</a>
+                <a class="nav-group-task-link" href="Type%20Definitions.html#/c:PaymentRegistration.h@T@WalletRedirectWithoutInterruption">WalletRedirectWithoutInterruption</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Type Definitions.html#/c:PaymentRegistration.h@T@WalletURL">WalletURL</a>
+                <a class="nav-group-task-link" href="Type%20Definitions.html#/c:PaymentRegistration.h@T@WalletURL">WalletURL</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Type Definitions.html#/c:PaymentRegistration.h@T@WalletURLCallback">WalletURLCallback</a>
+                <a class="nav-group-task-link" href="Type%20Definitions.html#/c:PaymentRegistration.h@T@WalletURLCallback">WalletURLCallback</a>
               </li>
             </ul>
           </li>
@@ -266,7 +266,7 @@
       <article class="main-content">
 
         <section class="section">
-          <div class="section-content">
+          <div class="section-content top-matter">
             
             <h1 id='recurring-payments' class='heading'>Recurring payments</h1>
 
@@ -283,7 +283,7 @@ With this flow, customer saves card details during initial transaction for later
 
 <ul>
 <li><strong>Recurring Type</strong> = R</li>
-<li><strong>Recurring frequency</strong> indicates how often the merchant may make subsequent payments on the card registered. A frequency of <q>1</q> will indicate that one payment is allowed each day, while <q>28</q> would be the recommended value for monthly subscriptions, to allow for the 28 days in February. If more than one payment should be possible daily, a recurring frequency of <q>0</q> can be used.</li>
+<li><strong>Recurring frequency</strong> indicates how often the merchant may make subsequent payments on the card registered. A frequency of &ldquo;1&rdquo; will indicate that one payment is allowed each day, while &ldquo;28&rdquo; would be the recommended value for monthly subscriptions, to allow for the 28 days in February. If more than one payment should be possible daily, a recurring frequency of &ldquo;0&rdquo; can be used.</li>
 <li><strong>Recurring expiry date</strong> is the date when the agreement between the merchant and the customer expires. This value must be registered on the format YYYYMMDD</li>
 <li><strong>updateStoredPaymentInfo = true</strong>, use this if the initial transaction is only a card registration</li>
 <li><strong>force3DS = true:</strong> For PSD2/SCA compliance, note that the initial transaction must always require 3D-Secure authentication.</li>
@@ -301,8 +301,8 @@ With this flow, customer saves card details during initial transaction for later
 
 <ul>
 <li>panHash = [stored token]</li>
-<li>recurringType = <q>R</q></li>
-<li>serviceType = <q>M</q></li>
+<li>recurringType = &ldquo;R&rdquo;</li>
+<li>serviceType = &ldquo;M&rdquo;</li>
 </ul>
 
 <p>After the successful Register call, skip the Terminal phase and continue directly with the Process call choosing either operation AUTH and CAPTURE or SALE as with a regular transaction.</p>
@@ -322,8 +322,8 @@ With this flow, customer saves card details during initial transaction for later
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2020 <a class="link" href="https://nets.eu" target="_blank" rel="external">Nets</a>. All rights reserved. (Last updated: 2020-10-27)</p>
-      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.0</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+      <p>&copy; 2020 <a class="link" href="https://nets.eu" target="_blank" rel="external">Nets</a>. All rights reserved. (Last updated: 2020-12-10)</p>
+      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>
 </div>
