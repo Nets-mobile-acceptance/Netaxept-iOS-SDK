@@ -19,6 +19,7 @@ extension String {
     static let titlePaymentMethods = "Payment Methods"
     static let titleStoredCards = "Stored Cards"
     static let titleAddCard = "Add Card"
+    static let titleSBusinessCard = "S-Business Card"
     static let titleMobileWallets = "Mobile Wallets"
     static let titleFinnishBanks = "Finnish bank payment"
 

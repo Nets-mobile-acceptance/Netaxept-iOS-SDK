@@ -18,6 +18,7 @@ protocol PaymentSelectionControllerDelegate: AnyObject {
 
     func openTokenizedCardPayment(sender: PaymentSelectionController, card: TokenizedCard, cvcRequired: Bool)
     func openCardPayment(sender: PaymentSelectionController)
+    func openSBusinessCardPayment(sender: PaymentSelectionController)
     func openApplePayment(sender: PaymentSelectionController, methodID: PaymentMethodID)
     func openPayPalPayment(sender: PaymentSelectionController, methodID: PaymentMethodID)
     func openVippsPayment(sender: PaymentSelectionController, methodID: PaymentMethodID, phoneNumber: PhoneNumber)
@@ -45,7 +46,7 @@ class PaymentSelectionController: UIViewController, UITableViewDataSource, UITab
         case swish = "SwishM"
         case mobilePay = "MobilePay"
     }
-
+    
     // MARK: Actions
 
     @objc private func fetchPaymentMethods() {
@@ -62,6 +63,8 @@ class PaymentSelectionController: UIViewController, UITableViewDataSource, UITab
             delegate.openTokenizedCardPayment(sender: self, card: card, cvcRequired: cvcRequired)
         case .addNewCardButton:
             delegate.openCardPayment(sender: self)
+        case .sBusinessCard:
+            delegate.openSBusinessCardPayment(sender: self)
         case .mobileWallets:
             didSelectMobileWallet(withID: mobileWallets[indexPath.row])
         case .finnishBanks:
@@ -138,6 +141,7 @@ class PaymentSelectionController: UIViewController, UITableViewDataSource, UITab
     private var tokenizedCards: [TokenizedCard] = []
     private var mobileWallets: [PaymentMethodID] = []
     private var finnishBanks: [PaymentMethodID] = []
+    private var sBusinessCard: [PaymentMethodID] = []
 
 
     // MARK: Update UI
@@ -150,22 +154,24 @@ class PaymentSelectionController: UIViewController, UITableViewDataSource, UITab
             .filter { $0.id != PaymentMethodID.easyPay.id }
             .sorted { $0.id < $1.id }
 
-        (mobileWallets,finnishBanks,newCardCell.iconNames) = mixedPaymentTypes.reduce(([], [], [])) {
-            var (mobileWallets, finnishBanks, cards) = ($0.0, $0.1, $0.2)
+        (mobileWallets,finnishBanks,newCardCell.iconNames,sBusinessCard) = mixedPaymentTypes.reduce(([], [], [],[])) {
+            var (mobileWallets, finnishBanks, cards, sBusinessCard) = ($0.0, $0.1, $0.2, $0.3)
             let wallets = MobileWallet.allCases.map { $0.rawValue }
             if ($1.id).localizedCaseInsensitiveContains("paytrail") {
                 finnishBanks.append($1)
+            } else if ($1.id).localizedCaseInsensitiveContains("sbusinesscard"){
+                sBusinessCard.append($1)
             } else if wallets.contains($1.id) {
                 mobileWallets.append($1)
             } else {
                 cards.append($1.id.lowercased())
             }
-            return (mobileWallets,finnishBanks, cards)
+            return (mobileWallets,finnishBanks, cards,sBusinessCard)
         }
 
         tableView.performBatchUpdate {
             let newContent: [(section: TableViewSection, data: [Any])] = [
-                (.tokenizedCards, tokenizedCards), (.mobileWallets, mobileWallets), (.finnishBanks, finnishBanks)
+                (.tokenizedCards, tokenizedCards),(.sBusinessCard,sBusinessCard), (.mobileWallets, mobileWallets), (.finnishBanks, finnishBanks)
             ]
             newContent.forEach { new in
                 let section = new.section.rawValue
@@ -198,7 +204,7 @@ class PaymentSelectionController: UIViewController, UITableViewDataSource, UITab
     // MARK: UITableViewDataSource
 
     private enum TableViewSection: Int, CaseIterable {
-        case tokenizedCards, addNewCardButton, mobileWallets, finnishBanks
+        case tokenizedCards, addNewCardButton, sBusinessCard, mobileWallets, finnishBanks
     }
 
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -209,6 +215,7 @@ class PaymentSelectionController: UIViewController, UITableViewDataSource, UITab
         switch TableViewSection(rawValue: section)! {
         case .tokenizedCards: return tokenizedCards.count
         case .addNewCardButton: return [newCardCell].count
+        case .sBusinessCard: return sBusinessCard.count
         case .mobileWallets: return mobileWallets.count
         case .finnishBanks: return finnishBanks.count
         }
@@ -220,6 +227,10 @@ class PaymentSelectionController: UIViewController, UITableViewDataSource, UITab
         let section = TableViewSection(rawValue: indexPath.section)!
         switch section {
         case .addNewCardButton: return newCardCell
+        case .sBusinessCard :
+            let card = sBusinessCard[indexPath.row].id
+            cellValues = (UIImage(named: card), "")
+            accessibilityLabel = card
         case .tokenizedCards:
             let card = tokenizedCards[indexPath.row]
             cellValues = card.displayValues
@@ -247,6 +258,7 @@ class PaymentSelectionController: UIViewController, UITableViewDataSource, UITab
         switch TableViewSection(rawValue: section)! {
         case .tokenizedCards: return tokenizedCards.isEmpty ? "" : .titleStoredCards
         case .addNewCardButton: return .titleAddCard
+        case .sBusinessCard : return .titleSBusinessCard
         case .mobileWallets: return .titleMobileWallets
         case .finnishBanks: return .titleFinnishBanks
         }

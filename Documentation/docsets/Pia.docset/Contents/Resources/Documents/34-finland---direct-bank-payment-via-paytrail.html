@@ -22,7 +22,7 @@
         <a class="header-link" href="index.html">
           Pia 1.4.0 Docs
         </a>
-         (82% documented)
+         (79% documented)
       </p>
     
       <p class="header-col--secondary">
@@ -150,7 +150,19 @@
                 <a class="nav-group-task-link" href="Classes/NPITransactionInfo.html">NPITransactionInfo</a>
               </li>
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/PayPalPaymentProcess.html">PayPalPaymentProcess</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/PayPalRegistrationResponse.html">PayPalRegistrationResponse</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Classes/PaymentProcess.html">PaymentProcess</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/PaytrailPaymentProcess.html">PaytrailPaymentProcess</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/PaytrailRegistrationResponse.html">PaytrailRegistrationResponse</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Classes/PiaSDK.html">PiaSDK</a>
@@ -212,9 +224,6 @@
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Protocols/PiaSDKTheme.html">PiaSDKTheme</a>
               </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Protocols/WalletPaymentDelegate.html">WalletPaymentDelegate</a>
-              </li>
             </ul>
           </li>
           <li class="nav-group-name">
@@ -234,6 +243,12 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Type%20Definitions/NPIErrorCode.html">NPIErrorCode</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Type%20Definitions.html#/c:PaymentRegistration.h@T@PayPalRegistrationCallback">PayPalRegistrationCallback</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Type%20Definitions.html#/c:PaymentRegistration.h@T@PaytrailRegistrationCallback">PaytrailRegistrationCallback</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Type%20Definitions.html#/c:PaymentRegistration.h@T@RedirectURL">RedirectURL</a>
@@ -289,6 +304,53 @@
 <li><p>Paytrail requires a unique reference number which is formulated according to Finnish reference number standard <a href="www.fkl.fi">www.fkl.fi</a>. For more information click <a href="https://shop.nets.eu/web/partners/transaction-reference">here</a>.</p></li>
 </ul>
 
+<p>Here is the flow diagram for Paytrail payment:</p>
+
+<p><img src="./img/Paytrail%20Payment%20Flow.png" alt="Paytrail Payment Flow"></p>
+
+<p><strong>Initializing a payment with Paytrail</strong></p>
+
+<p>For a Paytrail payment, create a paytrail-payment process providing merchant information (obtained from Netaxept) as shown below:</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">merchantDetails</span> <span class="o">=</span> <span class="kt">MerchantDetails</span><span class="o">.</span><span class="nf">merchant</span><span class="p">(</span><span class="nv">withID</span><span class="p">:</span> <span class="n">merchantID</span><span class="p">,</span> <span class="nv">inTest</span><span class="p">:</span> <span class="n">isTestMerchantID</span><span class="p">)</span>
+
+<span class="k">let</span> <span class="nv">paytrailPayment</span> <span class="o">=</span> <span class="kt">PaymentProcess</span><span class="o">.</span><span class="nf">paytrailPayment</span><span class="p">(</span>
+     <span class="nv">withMerchant</span><span class="p">:</span> <span class="n">merchantDetails</span>
+<span class="p">)</span>
+
+
+</code></pre>
+
+<p>The SDK offers a declarative API to instantiate a controller for paytrail payment with result callbacks for success, cancellation and failure. Present this controller and handle the callbacks accordingly.</p>
+<pre class="highlight swift"><code>
+<span class="kt">PiaSDK</span><span class="o">.</span><span class="nf">controller</span><span class="p">(</span>
+    <span class="nv">for</span><span class="p">:</span> <span class="n">paytrailPayment</span><span class="p">,</span>
+    <span class="nv">paytrailRegistrationCallback</span><span class="p">:</span> <span class="nf">registerPayPalPayment</span><span class="p">(</span><span class="nv">piaCallback</span><span class="p">:),</span>
+    <span class="nv">success</span><span class="p">:</span> <span class="p">{</span> <span class="n">piaController</span> <span class="k">in</span>  <span class="p">},</span>        <span class="c1">// Commit the transaction with your merchant backend</span>
+    <span class="nv">cancellation</span><span class="p">:</span> <span class="p">{</span> <span class="n">piaController</span> <span class="k">in</span> <span class="p">},</span>    <span class="c1">// User canceled, rollback the transaction</span>
+    <span class="nv">failure</span><span class="p">:</span> <span class="p">{</span> <span class="n">piaController</span><span class="p">,</span> <span class="n">error</span> <span class="k">in</span><span class="p">}</span>    <span class="c1">// Rollback transaction, check error object for detail. </span>
+<span class="p">)</span>
+</code></pre>
+
+<ul>
+<li>paytrailRegistrationCallback: Make a registration request with your backend and callback SDK with the response.</li>
+</ul>
+
+<p>The following sample code demonstrates how registration results are returned to the SDK via callback. </p>
+<pre class="highlight swift"><code>
+<span class="n">fun</span> <span class="nf">paytrailRegistrationCallback</span><span class="p">(</span><span class="nv">piaCallback</span><span class="p">:</span> <span class="p">(</span><span class="kt">TransactionID</span><span class="p">,</span> <span class="kt">RedirectURL</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span> <span class="p">{</span>
+
+    <span class="c1">// Make a paytrail registration request with your backend to retrieve a transactionID and redirectURL. </span>
+
+    <span class="c1">// Callback with `transactionID` and `redirectURL` obtained from your merchant backend</span>
+    <span class="nf">callback</span><span class="p">(</span><span class="o">.</span><span class="nf">success</span><span class="p">(</span><span class="nv">withTransactionID</span><span class="p">:</span> <span class="n">response</span><span class="o">.</span><span class="n">transactionId</span><span class="p">,</span> <span class="nv">redirectURL</span><span class="p">:</span> <span class="n">response</span><span class="o">.</span><span class="n">redirectURL</span><span class="p">))</span>
+
+    <span class="c1">// If registration request failed with your backend, callback the SDK with the error. </span>
+    <span class="nf">callback</span><span class="p">(</span><span class="o">.</span><span class="nf">failure</span><span class="p">(</span><span class="n">error</span><span class="p">))</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>After the transaction has been registered, Netaxept will send back the url for performing the Paytrail payment which will be loaded inside a webView. The webView will look like below: </p>
+
 <table><thead>
 <tr>
 <th style="text-align: center">Paytrail Flow</th>
@@ -299,71 +361,6 @@
 </tr>
 </tbody></table>
 
-<p>Here is the flow diagram for Paytrail payment:</p>
-
-<p><img src="./img/Paytrail%20Payment%20Flow.png" alt="Paytrail Payment Flow"></p>
-
-<p><strong>Initializing a payment with Paytrail</strong></p>
-
-<ul>
-<li>The merchant app needs to make a register call to Netaxept which will reutrn a <code>transactionId</code> which needs to be passed to the SDK along with the <code>merchantId</code> and <code>testMode</code> to initiate Paytrail payment.</li>
-</ul>
-
-<p>The following is an example of Paytrail payment registeration and initialization</p>
-<pre class="highlight swift"><code>
-    <span class="kd">func</span> <span class="nf">openFinnishBankPayment</span><span class="p">(</span><span class="nv">sender</span><span class="p">:</span> <span class="kt">PaymentSelectionController</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">self</span><span class="o">.</span><span class="n">registerPayment</span><span class="p">{</span> <span class="p">(</span><span class="n">transactionInfo</span><span class="p">)</span> <span class="k">in</span>
-            <span class="k">self</span><span class="o">.</span><span class="nf">present</span><span class="p">(</span><span class="kt">PiaSDKController</span><span class="p">(</span><span class="nv">paytrailBankPaymentWithMerchantID</span><span class="p">:</span> <span class="k">self</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">merchant</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="nv">transactionInfo</span><span class="p">:</span> <span class="n">transactionInfo</span><span class="p">,</span> <span class="nv">testMode</span><span class="p">:</span> <span class="k">self</span><span class="o">.</span><span class="n">isTestMode</span><span class="p">))</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-
-    <span class="kd">func</span> <span class="nf">registerPayment</span><span class="p">(</span>
-        <span class="n">withPaytrailWithCompletion</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">NPITransactionInfo</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span> <span class="p">{</span>
-
-        <span class="c1">// Create a registration request body with order, payment and customer details</span>
-        <span class="c1">// The sample backend identifies Paytrail with its method ID:</span>
-        <span class="c1">// `PaymentMethodID(id: "PaytrailNordea", displayName: "PaytrailNordea", fee: 0)`</span>
-        <span class="k">let</span> <span class="nv">requestBody</span><span class="p">:</span> <span class="kt">RegistrationRequest</span> <span class="c1">// see section: Backend Models (1.1)</span>
-
-        <span class="kt">URLSession</span><span class="o">.</span><span class="n">shared</span><span class="o">.</span><span class="nf">makeRegisterRequest</span><span class="p">(</span><span class="nv">with</span><span class="p">:</span> <span class="n">requestBody</span><span class="p">)</span> <span class="p">{</span> <span class="n">transaction</span> <span class="k">in</span>
-            <span class="k">guard</span> <span class="k">let</span> <span class="nv">transaction</span> <span class="o">=</span> <span class="n">transaction</span> <span class="k">else</span> <span class="p">{</span>
-                <span class="k">return</span> <span class="c1">// handle error</span>
-            <span class="p">}</span>
-
-            <span class="c1">// Grab the transaction ID, its used to later commit/rollback the registration</span>
-            <span class="c1">// The SDK will callback the delegate with success/error result</span>
-            <span class="c1">// Customer app is responsible for displaying the result to user</span>
-            <span class="k">self</span><span class="o">.</span><span class="n">transaction</span> <span class="o">=</span> <span class="n">transaction</span>
-
-            <span class="nf">completionHandler</span><span class="p">(</span><span class="n">transaction</span><span class="p">?</span><span class="o">.</span><span class="n">npiTransaction</span><span class="p">)</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-
-   <span class="kd">func</span> <span class="nf">present</span><span class="p">(</span><span class="n">_</span> <span class="nv">piaController</span><span class="p">:</span> <span class="kt">PiaSDKController</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">piaController</span><span class="o">.</span><span class="n">piaDelegate</span> <span class="o">=</span> <span class="k">self</span>
-        <span class="n">navigationController</span><span class="o">.</span><span class="nf">present</span><span class="p">(</span><span class="n">piaController</span><span class="p">,</span> <span class="nv">animated</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nv">completion</span><span class="p">:</span> <span class="kc">nil</span><span class="p">)</span>
-    <span class="p">}</span>
-
-</code></pre>
-
-<p>After the transaction has been registered, PiA SDK will send to Netaxept the <code>merchantId</code> and the <code>transactionId</code> and Netaxept will send back the url for performing the Paytrail payment which will be loaded inside a webView.</p>
-
-<p>The <strong>PiaSDKController</strong> instance should also have a valid delegate. The SDK will notify the app when the Paytrail transaction is completed or the user cancels the process through the below mentioned delegate methods. </p>
-<pre class="highlight swift"><code>
-    <span class="kd">func</span> <span class="nf">piaSDKDidComplete</span><span class="p">(</span><span class="n">withSuccess</span> <span class="nv">piaController</span><span class="p">:</span> <span class="kt">PiaSDKController</span><span class="p">)</span> <span class="p">{</span>
-        <span class="c1">//commit transaction</span>
-    <span class="p">}</span>
-
-    <span class="c1">/// Called when user cancels the transaction.</span>
-    <span class="kd">func</span> <span class="nf">piaSDKDidCancel</span><span class="p">(</span><span class="n">_</span> <span class="nv">piaController</span><span class="p">:</span> <span class="kt">PiaSDKController</span><span class="p">)</span> <span class="p">{</span>
-        <span class="c1">// User canceled/interrupted payment process</span>
-    <span class="p">}</span>
-
-    <span class="kd">func</span> <span class="nf">piaSDK</span><span class="p">(</span><span class="n">_</span> <span class="nv">piaController</span><span class="p">:</span> <span class="kt">PiaSDKController</span><span class="p">,</span> <span class="n">didFailWithError</span> <span class="nv">error</span><span class="p">:</span> <span class="kt">NPIError</span><span class="p">)</span> <span class="p">{</span>
-         <span class="c1">// Handle error</span>
-    <span class="p">}</span>
-</code></pre>
-
 <p>Note: Netaxept backend integration tips can be found in <em>5.4 Backend Tips</em>,  <em>Request body - Paytrail payment registration</em> <a href="./54-backend-tips.html#request-body-paytrail-payment-registration">section</a></p>
 
           </div>
@@ -373,7 +370,7 @@
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2020 <a class="link" href="https://nets.eu" target="_blank" rel="external">Nets</a>. All rights reserved. (Last updated: 2020-12-10)</p>
+      <p>&copy; 2021 <a class="link" href="https://nets.eu" target="_blank" rel="external">Nets</a>. All rights reserved. (Last updated: 2021-01-14)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

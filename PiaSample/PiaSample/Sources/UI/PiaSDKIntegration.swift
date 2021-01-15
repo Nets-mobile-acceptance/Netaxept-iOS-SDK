@@ -91,11 +91,39 @@ extension AppNavigation {
     
     func openPayPalPayment(sender: PaymentSelectionController, methodID: PaymentMethodID) {
         orderDetails.method = methodID
-        present(PiaSDKController.init(
-            merchantInfo: api.merchant.npiInfo(cvcRequired: true),
-            payWithPayPal: true)
-        )
+
+        let paypalPayment = PaymentProcess.payPalPayment(withMerchant:.merchant(withID: api.merchant.id, inTest: isTestMode))
+        
+        navigationController.present(piaController(forPaymentType: paypalPayment), animated: true)
     }
+    
+    
+    private func piaController(
+        forPaymentType payPalPayment: PayPalPaymentProcess) -> UIViewController {
+        return PiaSDK.controller(
+            for: payPalPayment,
+            payPalRegistrationCallback: { callback in
+                self.api.registerPayPal(for: self.orderDetails) { response in
+                    switch response {
+                        case .success(let transaction):
+                            self.transaction = transaction
+                            callback(.success(withTransactionID: transaction.transactionId, redirectURL: transaction.redirectOK))
+                        case .failure(let error):
+                            callback(.failure(error))
+                    }
+                }
+
+        }, success: { piaController in
+            self.commitTransaction(transactionID: self.transaction!.transactionId,commitType:.payment) { result in
+                self.presentResult(sender: piaController, result)
+            }
+        }, cancellation: { piaController in
+            self.presentResult(sender: piaController, .cancelled)
+        }) { piaController, error in
+            self.presentResult(sender: piaController, .error(error, "PayPal payment Failed"))
+        }
+    }
+    
         
     // MARK: Vipps
     
@@ -182,7 +210,14 @@ extension AppNavigation {
         /// merchant BE expects order with a zero amount when saving a card
         orderDetails = SampleOrderDetails.make(with: Amount.zero)
         let cardStorage = PaymentProcess.cardStorage(withMerchant: .merchant(withID: api.merchant.id, inTest: isTestMode))
-        navigationController.present(piaController(forPaymentType: cardStorage), animated: true)
+        navigationController.present(piaController(forPaymentType: cardStorage,commitType: .verifyNewCard), animated: true)
+    }
+    
+    func registerNewSBusinessCard(_ sender: SettingsViewController) {
+        /// merchant BE expects order with a zero amount when saving a card
+        orderDetails = SampleOrderDetails.make(with: Amount.zero)
+        let cardStorage = PaymentProcess.cardStorage(withMerchant: .merchant(withID: api.merchant.id, inTest: isTestMode))
+        navigationController.present(piaControllerSBusiness(forPaymentType: cardStorage,commitType: .verifyNewCard), animated: true)
     }
 
     // MARK: New Card
@@ -198,8 +233,10 @@ extension AppNavigation {
 
         navigationController.present(piaController(forPaymentType: cardPayment), animated: true)
     }
-
-    private func piaController(forPaymentType cardPayment: CardPaymentProcess) -> UIViewController {
+    
+    private func piaController(
+        forPaymentType cardPayment: CardPaymentProcess,
+        commitType: MerchantAPI.CommitType = .payment) -> UIViewController {
         return PiaSDK.controller(
             for: cardPayment,
             isCVCRequired: true,
@@ -216,7 +253,49 @@ extension AppNavigation {
                 }
 
         }, success: { piaController in
-            self.commitTransaction(transactionID: self.transaction!.transactionId, commitType: .verifyNewCard) { result in
+            self.commitTransaction(transactionID: self.transaction!.transactionId,commitType:commitType) { result in
+                self.presentResult(sender: piaController, result)
+            }
+        }, cancellation: { piaController in
+            self.presentResult(sender: piaController, .cancelled)
+        }) { piaController, error in
+            self.presentResult(sender: piaController, .error(error, "Failed to save card"))
+        }
+    }
+    
+    func openSBusinessCardPayment(sender: PaymentSelectionController) {
+        orderDetails.method = .sBusinessCard
+
+        let cardPayment = PaymentProcess.cardPayment(
+            withMerchant: .merchant(withID: api.merchant.id, inTest: isTestMode),
+            amount: UInt(orderDetails.amount.totalAmount),
+            currency: orderDetails.amount.currencyCode
+        )
+
+        navigationController.present(piaControllerSBusiness(forPaymentType: cardPayment), animated: true)
+    }
+    
+    private func piaControllerSBusiness(
+        forPaymentType cardPayment: CardPaymentProcess,
+        commitType: MerchantAPI.CommitType = .payment) -> UIViewController {
+        
+        return PiaSDK.controller(
+            forSBusinessCardPaymentProcess: cardPayment,
+            isCVCRequired: true,
+            transactionCallback: { saveCard, callback in
+
+                self.api.registerCardPay(for: self.orderDetails, storeCard: saveCard) { response in
+                    switch response {
+                    case .success(let transaction):
+                        self.transaction = transaction
+                        callback(.success(withTransactionID: transaction.transactionId, redirectURL: transaction.redirectOK))
+                    case .failure(let error):
+                        callback(.failure(error))
+                    }
+                }
+
+        }, success: { piaController in
+            self.commitTransaction(transactionID: self.transaction!.transactionId,commitType:commitType) { result in
                 self.presentResult(sender: piaController, result)
             }
         }, cancellation: { piaController in
@@ -229,11 +308,39 @@ extension AppNavigation {
     // MARK: Paytrail Finnish Bank Payments
 
     func openFinnishBankPayment(sender: PaymentSelectionController, bankName: PaymentMethodID) {
-        PiaSDK.addTransitionView(in: UIApplication.shared.keyWindow!.rootViewController!.view)
         orderDetails.method = bankName
         orderDetails.orderNumber =  Utils.shared.getPaytrailOrderNumber()
-        self.registerPayment{ (transactionInfo) in
-            self.present(PiaSDKController(paytrailBankPaymentWithMerchantID: self.api.merchant.id, transactionInfo: transactionInfo, testMode: self.isTestMode))
+        
+        let paytrailPayment = PaymentProcess.paytrailPayment(withMerchant:.merchant(withID: api.merchant.id, inTest: isTestMode))
+        
+        navigationController.present(piaController(forPaymentType: paytrailPayment), animated: true)
+
+    }
+    
+    private func piaController(
+        forPaymentType paytrailPayment: PaytrailPaymentProcess) -> UIViewController {
+        return PiaSDK.controller(
+            for: paytrailPayment,
+            paytrailRegistrationCallback: { callback in
+                
+                self.api.registerPaytrailBankPayment(for: self.orderDetails, for: self.customerDetails) { response in
+                    switch response {
+                        case .success(let transaction):
+                            self.transaction = transaction
+                            callback(.success(withTransactionID: transaction.transactionId, redirectURL: transaction.redirectOK))
+                        case .failure(let error):
+                            callback(.failure(error))
+                    }
+                }
+
+        }, success: { piaController in
+            self.commitTransaction(transactionID: self.transaction!.transactionId,commitType:.payment) { result in
+                self.presentResult(sender: piaController, result)
+            }
+        }, cancellation: { piaController in
+            self.presentResult(sender: piaController, .cancelled)
+        }) { piaController, error in
+            self.presentResult(sender: piaController, .error(error, "Finnish bank payment Failed"))
         }
     }
     
@@ -301,8 +408,7 @@ extension AppNavigation: PiaSDKDelegate {
         }
     }
     
-    func registerPayment(
-        withPaytrailWithCompletion completionHandler: @escaping (NPITransactionInfo?) -> Void) {
+    func registerPayment(withPaytrail PiaSDKController: PiaSDKController, withCompletion completionHandler: @escaping (NPITransactionInfo?) -> Void) {
         api.registerPaytrailBankPayment(for: orderDetails, for: customerDetails){ result in
             self.completeRegistration(piaController: nil, result: result) { transaction in
                 completionHandler(transaction?.npiTransaction)
@@ -439,6 +545,7 @@ extension TokenizedCard {
             case let issuer where issuer.contains("Diners"): return DINERS_CLUB_INTERNATIONAL
             case let issuer where issuer.contains("Dankort"): return DANKORT
             case let issuer where issuer.contains("Maestro"): return MAESTRO
+            case let issuer where issuer.contains("SBusiness"): return SBUSINESS
             default: return OTHER
             }
         }()

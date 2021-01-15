@@ -2,14 +2,14 @@
   "warnings": [
     {
       "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/Controllers/Pia SDK/PiaSDKController.h",
-      "line": 69,
-      "symbol": "PiaSDKController.PiaDelegate",
+      "line": 75,
+      "symbol": "PiaSDKController.piaDelegate",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/Controllers/Pia SDK/PiaSDKController.h",
-      "line": 70,
+      "line": 76,
       "symbol": "PiaSDKController.strongPiaDelegate",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
@@ -219,7 +219,35 @@
     },
     {
       "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/PaymentProcess.h",
-      "line": 77,
+      "line": 74,
+      "symbol": "PayPalPaymentProcess.merchant",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/PaymentProcess.h",
+      "line": 75,
+      "symbol": "PayPalPaymentProcess.-init",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/PaymentProcess.h",
+      "line": 80,
+      "symbol": "PaytrailPaymentProcess.merchant",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/PaymentProcess.h",
+      "line": 81,
+      "symbol": "PaytrailPaymentProcess.-init",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/PaymentProcess.h",
+      "line": 86,
       "symbol": "PaymentProcess()",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
@@ -317,42 +345,98 @@
     },
     {
       "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/PaymentRegistration.h",
+      "line": 58,
+      "symbol": "PayPalRegistrationResponse",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/PaymentRegistration.h",
       "line": 59,
+      "symbol": "PayPalRegistrationResponse.transactionID",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/PaymentRegistration.h",
+      "line": 60,
+      "symbol": "PayPalRegistrationResponse.redirectURL",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/PaymentRegistration.h",
+      "line": 72,
+      "symbol": "PaytrailRegistrationResponse",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/PaymentRegistration.h",
+      "line": 73,
+      "symbol": "PaytrailRegistrationResponse.transactionID",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/PaymentRegistration.h",
+      "line": 74,
+      "symbol": "PaytrailRegistrationResponse.redirectURL",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/PaymentRegistration.h",
+      "line": 87,
       "symbol": "TransactionCallback",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.typedef",
       "warning": "undocumented"
     },
     {
       "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/PaymentRegistration.h",
-      "line": 60,
+      "line": 88,
+      "symbol": "PayPalRegistrationCallback",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.typedef",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/PaymentRegistration.h",
+      "line": 89,
+      "symbol": "PaytrailRegistrationCallback",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.typedef",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/PaymentRegistration.h",
+      "line": 90,
       "symbol": "WalletURLCallback",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.typedef",
       "warning": "undocumented"
     },
     {
       "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/PaymentRegistration.h",
-      "line": 61,
+      "line": 91,
       "symbol": "WalletRedirectWithoutInterruption",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.typedef",
       "warning": "undocumented"
     },
     {
       "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/PaymentRegistration.h",
-      "line": 62,
+      "line": 92,
       "symbol": "WalletFailureWithError",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.typedef",
       "warning": "undocumented"
     },
     {
       "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/PaymentRegistration.h",
-      "line": 63,
+      "line": 93,
       "symbol": "CompletionCallback",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.typedef",
       "warning": "undocumented"
     },
     {
       "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/PaymentRegistration.h",
-      "line": 64,
+      "line": 94,
       "symbol": "FailureCompletionCallback",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.typedef",
       "warning": "undocumented"

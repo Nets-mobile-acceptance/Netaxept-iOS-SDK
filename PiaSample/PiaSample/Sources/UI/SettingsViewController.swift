@@ -101,6 +101,7 @@ protocol SettingsDelegate: AnyObject {
 
     func setMerchant(_ setting: MerchantSettings, mode: MerchantSettings.Mode)
     func registerNewCard(_ sender: SettingsViewController)
+    func registerNewSBusinessCard(_ sender: SettingsViewController)
 }
 
 /**
@@ -319,6 +320,10 @@ class SettingsViewController: UIViewController {
 
     @IBAction func didPressSaveCardButton(_ sender: UIButton) {
         delegate.registerNewCard(self)
+    }
+    
+    @IBAction func didPressSBusinessSaveCardButton(_ sender: UIButton) {
+        delegate.registerNewSBusinessCard(self)
     }
 
     @IBAction func displayAppVersion(_ sender: UIButton) {

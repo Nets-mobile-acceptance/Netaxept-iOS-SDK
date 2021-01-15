@@ -1,4 +1,4 @@
-# PiA - Netaxept iOS SDK v2.0.2
+# PiA - Netaxept iOS SDK v2.1.0
 
 ![](./Resources/NetsLogo.jpg)
 
@@ -17,7 +17,7 @@ We have provided a sample project, PiaSample, in the repository which is written
 
 ## Project status
 Supported payment methods:
-* Cards: Visa, Mastercard, American Express, Diners, JCB, Dankort, Maestro
+* Cards: Visa, Mastercard, American Express, Diners, JCB, Dankort, Maestro, S-Business
 * Apple Pay
 * PayPal
 * Vipps

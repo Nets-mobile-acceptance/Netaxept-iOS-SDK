@@ -62,6 +62,8 @@ extension PaymentMethodID {
     static let easyPay = PaymentMethodID(id: "EasyPayment", displayName: "Easy Payment", fee: 0)
     /// Method ID of ApplePay payment method (defined in sample merchant BE)
     static let applePay = PaymentMethodID(id: "ApplePay", displayName: "Apple Pay", fee: 0)
+    /// Method ID of S-Business card payment method (defined in sample merchant BE)
+    static let sBusinessCard = PaymentMethodID(id: "SBusinessCard", displayName: "SBusinessCard", fee: 0)
 }
 
 // MARK: ApplePay Shipping Contact

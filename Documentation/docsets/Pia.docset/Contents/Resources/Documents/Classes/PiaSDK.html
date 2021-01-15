@@ -23,7 +23,7 @@
         <a class="header-link" href="../index.html">
           Pia 1.4.0 Docs
         </a>
-         (82% documented)
+         (79% documented)
       </p>
     
       <p class="header-col--secondary">
@@ -151,7 +151,19 @@
                 <a class="nav-group-task-link" href="../Classes/NPITransactionInfo.html">NPITransactionInfo</a>
               </li>
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/PayPalPaymentProcess.html">PayPalPaymentProcess</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/PayPalRegistrationResponse.html">PayPalRegistrationResponse</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Classes/PaymentProcess.html">PaymentProcess</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/PaytrailPaymentProcess.html">PaytrailPaymentProcess</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/PaytrailRegistrationResponse.html">PaytrailRegistrationResponse</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Classes/PiaSDK.html">PiaSDK</a>
@@ -213,9 +225,6 @@
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Protocols/PiaSDKTheme.html">PiaSDKTheme</a>
               </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Protocols/WalletPaymentDelegate.html">WalletPaymentDelegate</a>
-              </li>
             </ul>
           </li>
           <li class="nav-group-name">
@@ -235,6 +244,12 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Type%20Definitions/NPIErrorCode.html">NPIErrorCode</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Type%20Definitions.html#/c:PaymentRegistration.h@T@PayPalRegistrationCallback">PayPalRegistrationCallback</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Type%20Definitions.html#/c:PaymentRegistration.h@T@PaytrailRegistrationCallback">PaytrailRegistrationCallback</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Type%20Definitions.html#/c:PaymentRegistration.h@T@RedirectURL">RedirectURL</a>
@@ -315,6 +330,20 @@
                                          <span class="nf">cancellation</span><span class="p">:(</span><span class="n"><a href="../Type%20Definitions.html#/c:PaymentRegistration.h@T@CompletionCallback">CompletionCallback</a></span><span class="p">)</span><span class="nv">cancellation</span>
                                               <span class="nf">failure</span><span class="p">:(</span><span class="n"><a href="../Type%20Definitions.html#/c:PaymentRegistration.h@T@FailureCompletionCallback">FailureCompletionCallback</a></span><span class="p">)</span><span class="nv">failure</span><span class="p">;</span>
 
+<span class="c1">/// Returns SDK controller that presents the payment process to user</span>
+<span class="c1">/// @param paymentProcess An object that identifies the payment process type</span>
+<span class="c1">/// @param isCVCRequired Return according to configuration with Netaxept</span>
+<span class="c1">/// @param transactionCallback Callback with result following registration with merchant backend</span>
+<span class="c1">/// @param success Invoked if payment was completed with success. Commit payment following this.</span>
+<span class="c1">/// @param cancellation Invoked if user cancelled the payment. Rollback payment following this.</span>
+<span class="c1">/// @param failure Invoked if payment failed with an error. Rollback payment following this.</span>
+<span class="k">+</span> <span class="p">(</span><span class="n">UIViewController</span> <span class="o">*</span><span class="p">)</span><span class="nf">controllerForSBusinessCardPaymentProcess</span><span class="p">:(</span><span class="n"><a href="../Classes/CardPaymentProcess.html">CardPaymentProcess</a></span> <span class="o">*</span><span class="p">)</span><span class="nv">paymentProcess</span>
+                                        <span class="nf">isCVCRequired</span><span class="p">:(</span><span class="n">BOOL</span><span class="p">)</span><span class="nv">isCVCRequired</span>
+                                  <span class="nf">transactionCallback</span><span class="p">:(</span><span class="n"><a href="../Type%20Definitions.html#/c:PaymentRegistration.h@T@TransactionCallback">TransactionCallback</a></span><span class="p">)</span><span class="nv">transactionCallback</span>
+                                              <span class="nf">success</span><span class="p">:(</span><span class="n"><a href="../Type%20Definitions.html#/c:PaymentRegistration.h@T@CompletionCallback">CompletionCallback</a></span><span class="p">)</span><span class="nv">success</span>
+                                         <span class="nf">cancellation</span><span class="p">:(</span><span class="n"><a href="../Type%20Definitions.html#/c:PaymentRegistration.h@T@CompletionCallback">CompletionCallback</a></span><span class="p">)</span><span class="nv">cancellation</span>
+                                              <span class="nf">failure</span><span class="p">:(</span><span class="n"><a href="../Type%20Definitions.html#/c:PaymentRegistration.h@T@FailureCompletionCallback">FailureCompletionCallback</a></span><span class="p">)</span><span class="nv">failure</span><span class="p">;</span>
+
 <span class="c1">/// Initiate payment with a stored card. If the payment requires 3DS authentication,</span>
 <span class="c1">/// a webpage will be presented on the sender view controller.</span>
 <span class="c1">///</span>
@@ -343,22 +372,33 @@
                         <span class="nf">cancellation</span><span class="p">:(</span><span class="kt">void</span><span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="kt">void</span><span class="p">))</span><span class="nv">cancellation</span>
                              <span class="nf">failure</span><span class="p">:(</span><span class="kt">void</span><span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="n"><a href="../Classes/NPIError.html">NPIError</a></span> <span class="o">*</span> <span class="n">_Nonnull</span><span class="p">))</span><span class="nv">failure</span><span class="p">;</span>
 
+
+<span class="c1">/// Returns SDK controller that presents the payment process to user</span>
+<span class="c1">/// @param paymentProcess An object that identifies the payment process type</span>
+<span class="c1">/// @param payPalRegistrationCallback Callback with result following registration with merchant backend</span>
+<span class="c1">/// @param success Invoked if payment was completed with success. Commit payment following this.</span>
+<span class="c1">/// @param cancellation Invoked if user cancelled the payment. Rollback payment following this.</span>
+<span class="c1">/// @param failure Invoked if payment failed with an error. Rollback payment following this.</span>
+<span class="k">+</span> <span class="p">(</span><span class="n">UIViewController</span> <span class="o">*</span><span class="p">)</span><span class="nf">controllerForPayPalPaymentProcess</span><span class="p">:(</span><span class="n"><a href="../Classes/PayPalPaymentProcess.html">PayPalPaymentProcess</a></span> <span class="o">*</span><span class="p">)</span><span class="nv">paymentProcess</span>
+                             <span class="nf">payPalRegistrationCallback</span><span class="p">:(</span><span class="n"><a href="../Type%20Definitions.html#/c:PaymentRegistration.h@T@PayPalRegistrationCallback">PayPalRegistrationCallback</a></span><span class="p">)</span><span class="nv">payPalRegistrationCallback</span>
+                                              <span class="nf">success</span><span class="p">:(</span><span class="n"><a href="../Type%20Definitions.html#/c:PaymentRegistration.h@T@CompletionCallback">CompletionCallback</a></span><span class="p">)</span><span class="nv">success</span>
+                                         <span class="nf">cancellation</span><span class="p">:(</span><span class="n"><a href="../Type%20Definitions.html#/c:PaymentRegistration.h@T@CompletionCallback">CompletionCallback</a></span><span class="p">)</span><span class="nv">cancellation</span>
+                                              <span class="nf">failure</span><span class="p">:(</span><span class="n"><a href="../Type%20Definitions.html#/c:PaymentRegistration.h@T@FailureCompletionCallback">FailureCompletionCallback</a></span><span class="p">)</span><span class="nv">failure</span><span class="p">;</span>
+
+<span class="c1">/// Returns SDK controller that presents the payment process to user</span>
+<span class="c1">/// @param paymentProcess An object that identifies the payment process type</span>
+<span class="c1">/// @param paytrailRegistrationCallback Callback with result following registration with merchant backend</span>
+<span class="c1">/// @param success Invoked if payment was completed with success. Commit payment following this.</span>
+<span class="c1">/// @param cancellation Invoked if user cancelled the payment. Rollback payment following this.</span>
+<span class="c1">/// @param failure Invoked if payment failed with an error. Rollback payment following this.</span>
+<span class="k">+</span> <span class="p">(</span><span class="n">UIViewController</span> <span class="o">*</span><span class="p">)</span><span class="nf">controllerForPaytrailPaymentProcess</span><span class="p">:(</span><span class="n"><a href="../Classes/PaytrailPaymentProcess.html">PaytrailPaymentProcess</a></span> <span class="o">*</span><span class="p">)</span><span class="nv">paymentProcess</span>
+                             <span class="nf">paytrailRegistrationCallback</span><span class="p">:(</span><span class="n"><a href="../Type%20Definitions.html#/c:PaymentRegistration.h@T@PaytrailRegistrationCallback">PaytrailRegistrationCallback</a></span><span class="p">)</span><span class="nv">paytrailRegistrationCallback</span>
+                                              <span class="nf">success</span><span class="p">:(</span><span class="n"><a href="../Type%20Definitions.html#/c:PaymentRegistration.h@T@CompletionCallback">CompletionCallback</a></span><span class="p">)</span><span class="nv">success</span>
+                                         <span class="nf">cancellation</span><span class="p">:(</span><span class="n"><a href="../Type%20Definitions.html#/c:PaymentRegistration.h@T@CompletionCallback">CompletionCallback</a></span><span class="p">)</span><span class="nv">cancellation</span>
+                                              <span class="nf">failure</span><span class="p">:(</span><span class="n"><a href="../Type%20Definitions.html#/c:PaymentRegistration.h@T@FailureCompletionCallback">FailureCompletionCallback</a></span><span class="p">)</span><span class="nv">failure</span><span class="p">;</span>
+
 <span class="cp">#pragma - mark Redirect From Wallet App
 </span>
-<span class="c1">/// Notify SDK app is opened from wallet app redirect.</span>
-<span class="c1">/// @param redirectURL The redirect url received in `UIApplication:open url:options:`</span>
-<span class="c1">/// @param options The options dictionary received in `UIApplication:open url:options:`</span>
-<span class="c1">/// @return True if a redirect observer is registered with the SDK</span>
-<span class="c1">///</span>
-<span class="c1">/// @warning This API returns true as long as the SDK is expecting redirect. In the corner case where</span>
-<span class="c1">///     the redirect URL is unrecognized (unknown to the SDK) while the SDK is waiting for</span>
-<span class="c1">///     redirect from a wallet app, the API will return true and attempts to handle the redirect.</span>
-<span class="c1">///     Use the new API `willHandleRedirectWith:(NSURL *)redirectURL andOptions:(NSDictionary *)options`</span>
-<span class="c1">///     along with the correct "customer.redirect.scheme//piasdk?wallet=walletName" query during payment registration.</span>
-<span class="c1">///</span>
-<span class="k">+</span> <span class="p">(</span><span class="n">BOOL</span><span class="p">)</span><span class="nf">applicationDidOpenFromRedirectWith</span><span class="p">:(</span><span class="n">NSURL</span> <span class="o">*</span><span class="p">)</span><span class="nv">redirectURL</span> <span class="nf">andOptions</span><span class="p">:(</span><span class="n">NSDictionary</span> <span class="o">*</span><span class="p">)</span><span class="nv">options</span>
-<span class="n">__deprecated_msg</span><span class="p">(</span><span class="s">"Use `willHandleRedirectWith:` instead. Make sure to add the wallet name during registration - `…//piasdk?wallet=walletName`"</span><span class="p">);</span>
-
 <span class="c1">/// Notify SDK that app is opened from wallet app redirect.</span>
 <span class="c1">/// @param redirectURL The redirect url received in `UIApplication:open url:options:`</span>
 <span class="c1">/// @param options The options dictionary received in `UIApplication:open url:options:`</span>
@@ -779,6 +819,127 @@
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/c:objc(cs)PiaSDK(cm)controllerForSBusinessCardPaymentProcess:isCVCRequired:transactionCallback:success:cancellation:failure:"></a>
+                    <a name="//apple_ref/objc/Method/+controllerForSBusinessCardPaymentProcess:isCVCRequired:transactionCallback:success:cancellation:failure:" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)PiaSDK(cm)controllerForSBusinessCardPaymentProcess:isCVCRequired:transactionCallback:success:cancellation:failure:">+controllerForSBusinessCardPaymentProcess:<wbr>isCVCRequired:<wbr>transactionCallback:<wbr>success:<wbr>cancellation:<wbr>failure:<wbr></a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns SDK controller that presents the payment process to user</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">+</span> <span class="p">(</span><span class="n">nonnull</span> <span class="n">UIViewController</span> <span class="o">*</span><span class="p">)</span>
+    <span class="nf">controllerForSBusinessCardPaymentProcess</span><span class="p">:</span>
+        <span class="p">(</span><span class="n">nonnull</span> <span class="n"><a href="../Classes/CardPaymentProcess.html">CardPaymentProcess</a></span> <span class="o">*</span><span class="p">)</span><span class="nv">paymentProcess</span>
+                               <span class="nf">isCVCRequired</span><span class="p">:(</span><span class="n">BOOL</span><span class="p">)</span><span class="nv">isCVCRequired</span>
+                         <span class="nf">transactionCallback</span><span class="p">:</span>
+                             <span class="p">(</span><span class="n">nonnull</span> <span class="n"><a href="../Type%20Definitions.html#/c:PaymentRegistration.h@T@TransactionCallback">TransactionCallback</a></span><span class="p">)</span><span class="nv">transactionCallback</span>
+                                     <span class="nf">success</span><span class="p">:(</span><span class="n">nonnull</span> <span class="n"><a href="../Type%20Definitions.html#/c:PaymentRegistration.h@T@CompletionCallback">CompletionCallback</a></span><span class="p">)</span><span class="nv">success</span>
+                                <span class="nf">cancellation</span><span class="p">:</span>
+                                    <span class="p">(</span><span class="n">nonnull</span> <span class="n"><a href="../Type%20Definitions.html#/c:PaymentRegistration.h@T@CompletionCallback">CompletionCallback</a></span><span class="p">)</span><span class="nv">cancellation</span>
+                                     <span class="nf">failure</span><span class="p">:(</span><span class="n">nonnull</span> <span class="n"><a href="../Type%20Definitions.html#/c:PaymentRegistration.h@T@FailureCompletionCallback">FailureCompletionCallback</a></span><span class="p">)</span>
+                                                 <span class="n">failure</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">class</span> <span class="kd">func</span> <span class="nf">controller</span><span class="p">(</span><span class="n">forSBusinessCardPaymentProcess</span> <span class="nv">paymentProcess</span><span class="p">:</span> <span class="kt"><a href="../Classes/CardPaymentProcess.html">CardPaymentProcess</a></span><span class="p">,</span> <span class="nv">isCVCRequired</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">,</span> <span class="nv">transactionCallback</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="kt"><a href="../Type%20Definitions.html#/c:PaymentRegistration.h@T@TransactionCallback">TransactionCallback</a></span><span class="p">,</span> <span class="nv">success</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="kt"><a href="../Type%20Definitions.html#/c:PaymentRegistration.h@T@CompletionCallback">CompletionCallback</a></span><span class="p">,</span> <span class="nv">cancellation</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="kt"><a href="../Type%20Definitions.html#/c:PaymentRegistration.h@T@CompletionCallback">CompletionCallback</a></span><span class="p">,</span> <span class="nv">failure</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="kt"><a href="../Type%20Definitions.html#/c:PaymentRegistration.h@T@FailureCompletionCallback">FailureCompletionCallback</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">UIViewController</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>paymentProcess</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>An object that identifies the payment process type</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>isCVCRequired</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Return according to configuration with Netaxept</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>transactionCallback</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Callback with result following registration with merchant backend</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>success</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Invoked if payment was completed with success. Commit payment following this.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>cancellation</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Invoked if user cancelled the payment. Rollback payment following this.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>failure</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Invoked if payment failed with an error. Rollback payment following this.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/c:objc(cs)PiaSDK(cm)initiateTokenizedCardPayFrom:testMode:showsActivityIndicator:merchantID:redirectURL:transactionID:success:cancellation:failure:"></a>
                     <a name="//apple_ref/objc/Method/+initiateTokenizedCardPayFrom:testMode:showsActivityIndicator:merchantID:redirectURL:transactionID:success:cancellation:failure:" class="dashAnchor"></a>
                     <a class="token" href="#/c:objc(cs)PiaSDK(cm)initiateTokenizedCardPayFrom:testMode:showsActivityIndicator:merchantID:redirectURL:transactionID:success:cancellation:failure:">+initiateTokenizedCardPayFrom:<wbr>testMode:<wbr>showsActivityIndicator:<wbr>merchantID:<wbr>redirectURL:<wbr>transactionID:<wbr>success:<wbr>cancellation:<wbr>failure:<wbr></a>
@@ -941,44 +1102,37 @@ removed by the SDK before executing any of the completion blocks.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/c:objc(cs)PiaSDK(cm)applicationDidOpenFromRedirectWith:andOptions:"></a>
-                    <a name="//apple_ref/objc/Method/+applicationDidOpenFromRedirectWith:andOptions:" class="dashAnchor"></a>
-                    <a class="token discouraged" href="#/c:objc(cs)PiaSDK(cm)applicationDidOpenFromRedirectWith:andOptions:">+applicationDidOpenFromRedirectWith:<wbr>andOptions:<wbr></a>
+                    <a name="/c:objc(cs)PiaSDK(cm)controllerForPayPalPaymentProcess:payPalRegistrationCallback:success:cancellation:failure:"></a>
+                    <a name="//apple_ref/objc/Method/+controllerForPayPalPaymentProcess:payPalRegistrationCallback:success:cancellation:failure:" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)PiaSDK(cm)controllerForPayPalPaymentProcess:payPalRegistrationCallback:success:cancellation:failure:">+controllerForPayPalPaymentProcess:<wbr>payPalRegistrationCallback:<wbr>success:<wbr>cancellation:<wbr>failure:<wbr></a>
                     </code>
                   </div>
                   <div class="height-container">
                     <div class="pointer-container"></div>
                     <section class="section">
                       <div class="pointer"></div>
-                      <div class="aside aside-deprecated">
-                        <p class="aside-title">Deprecated</p>
-                        <p>Use <code>willHandleRedirectWith:</code> instead. Make sure to add the wallet name during registration - <code>…//piasdk?wallet=walletName</code></p>
-
-                      </div>
                       <div class="abstract">
-                        <p>Notify SDK app is opened from wallet app redirect.</p>
-<div class="aside aside-warning">
-    <p class="aside-title">Warning</p>
-    <p>This API returns true as long as the SDK is expecting redirect. In the corner case where
-the redirect URL is unrecognized (unknown to the SDK) while the SDK is waiting for
-redirect from a wallet app, the API will return true and attempts to handle the redirect.
-Use the new API <code>willHandleRedirectWith:(NSURL *)redirectURL andOptions:(NSDictionary *)options</code>
-along with the correct &ldquo;customer.redirect.scheme//piasdk?wallet=walletName&rdquo; query during payment registration.</p>
-
-</div>
+                        <p>Returns SDK controller that presents the payment process to user</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code><span class="k">+</span> <span class="p">(</span><span class="n">BOOL</span><span class="p">)</span><span class="nf">applicationDidOpenFromRedirectWith</span><span class="p">:(</span><span class="n">nonnull</span> <span class="n">NSURL</span> <span class="o">*</span><span class="p">)</span><span class="nv">redirectURL</span>
-                                <span class="nf">andOptions</span><span class="p">:(</span><span class="n">nonnull</span> <span class="n">NSDictionary</span> <span class="o">*</span><span class="p">)</span><span class="nv">options</span><span class="p">;</span></code></pre>
+                          <pre class="highlight objective_c"><code><span class="k">+</span> <span class="p">(</span><span class="n">nonnull</span> <span class="n">UIViewController</span> <span class="o">*</span><span class="p">)</span>
+    <span class="nf">controllerForPayPalPaymentProcess</span><span class="p">:</span>
+        <span class="p">(</span><span class="n">nonnull</span> <span class="n"><a href="../Classes/PayPalPaymentProcess.html">PayPalPaymentProcess</a></span> <span class="o">*</span><span class="p">)</span><span class="nv">paymentProcess</span>
+           <span class="nf">payPalRegistrationCallback</span><span class="p">:</span>
+               <span class="p">(</span><span class="n">nonnull</span> <span class="n"><a href="../Type%20Definitions.html#/c:PaymentRegistration.h@T@PayPalRegistrationCallback">PayPalRegistrationCallback</a></span><span class="p">)</span><span class="nv">payPalRegistrationCallback</span>
+                              <span class="nf">success</span><span class="p">:(</span><span class="n">nonnull</span> <span class="n"><a href="../Type%20Definitions.html#/c:PaymentRegistration.h@T@CompletionCallback">CompletionCallback</a></span><span class="p">)</span><span class="nv">success</span>
+                         <span class="nf">cancellation</span><span class="p">:(</span><span class="n">nonnull</span> <span class="n"><a href="../Type%20Definitions.html#/c:PaymentRegistration.h@T@CompletionCallback">CompletionCallback</a></span><span class="p">)</span><span class="nv">cancellation</span>
+                              <span class="nf">failure</span><span class="p">:</span>
+                                  <span class="p">(</span><span class="n">nonnull</span> <span class="n"><a href="../Type%20Definitions.html#/c:PaymentRegistration.h@T@FailureCompletionCallback">FailureCompletionCallback</a></span><span class="p">)</span><span class="nv">failure</span><span class="p">;</span></code></pre>
 
                         </div>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">class</span> <span class="kd">func</span> <span class="nf">applicationDidOpenFromRedirect</span><span class="p">(</span><span class="n">with</span> <span class="nv">redirectURL</span><span class="p">:</span> <span class="kt">URL</span><span class="p">,</span> <span class="n">andOptions</span> <span class="nv">options</span><span class="p">:</span> <span class="p">[</span><span class="kt">AnyHashable</span> <span class="p">:</span> <span class="kt">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">[:])</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">class</span> <span class="kd">func</span> <span class="nf">controller</span><span class="p">(</span><span class="k">for</span> <span class="nv">paymentProcess</span><span class="p">:</span> <span class="kt"><a href="../Classes/PayPalPaymentProcess.html">PayPalPaymentProcess</a></span><span class="p">,</span> <span class="nv">payPalRegistrationCallback</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="kt"><a href="../Type%20Definitions.html#/c:PaymentRegistration.h@T@PayPalRegistrationCallback">PayPalRegistrationCallback</a></span><span class="p">,</span> <span class="nv">success</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="kt"><a href="../Type%20Definitions.html#/c:PaymentRegistration.h@T@CompletionCallback">CompletionCallback</a></span><span class="p">,</span> <span class="nv">cancellation</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="kt"><a href="../Type%20Definitions.html#/c:PaymentRegistration.h@T@CompletionCallback">CompletionCallback</a></span><span class="p">,</span> <span class="nv">failure</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="kt"><a href="../Type%20Definitions.html#/c:PaymentRegistration.h@T@FailureCompletionCallback">FailureCompletionCallback</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">UIViewController</span></code></pre>
 
                         </div>
                       </div>
@@ -989,33 +1143,172 @@ along with the correct &ldquo;customer.redirect.scheme//piasdk?wallet=walletName
                             <tr>
                               <td>
                                 <code>
-                                <em>redirectURL</em>
+                                <em>paymentProcess</em>
                                 </code>
                               </td>
                               <td>
                                 <div>
-                                  <p>The redirect url received in <code>UIApplication:open url:options:</code></p>
+                                  <p>An object that identifies the payment process type</p>
                                 </div>
                               </td>
                             </tr>
                             <tr>
                               <td>
                                 <code>
-                                <em>options</em>
+                                <em>payPalRegistrationCallback</em>
                                 </code>
                               </td>
                               <td>
                                 <div>
-                                  <p>The options dictionary received in <code>UIApplication:open url:options:</code></p>
+                                  <p>Callback with result following registration with merchant backend</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>success</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Invoked if payment was completed with success. Commit payment following this.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>cancellation</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Invoked if user cancelled the payment. Rollback payment following this.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>failure</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Invoked if payment failed with an error. Rollback payment following this.</p>
                                 </div>
                               </td>
                             </tr>
                           </tbody>
                         </table>
                       </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)PiaSDK(cm)controllerForPaytrailPaymentProcess:paytrailRegistrationCallback:success:cancellation:failure:"></a>
+                    <a name="//apple_ref/objc/Method/+controllerForPaytrailPaymentProcess:paytrailRegistrationCallback:success:cancellation:failure:" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)PiaSDK(cm)controllerForPaytrailPaymentProcess:paytrailRegistrationCallback:success:cancellation:failure:">+controllerForPaytrailPaymentProcess:<wbr>paytrailRegistrationCallback:<wbr>success:<wbr>cancellation:<wbr>failure:<wbr></a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns SDK controller that presents the payment process to user</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">+</span> <span class="p">(</span><span class="n">nonnull</span> <span class="n">UIViewController</span> <span class="o">*</span><span class="p">)</span>
+    <span class="nf">controllerForPaytrailPaymentProcess</span><span class="p">:</span>
+        <span class="p">(</span><span class="n">nonnull</span> <span class="n"><a href="../Classes/PaytrailPaymentProcess.html">PaytrailPaymentProcess</a></span> <span class="o">*</span><span class="p">)</span><span class="nv">paymentProcess</span>
+           <span class="nf">paytrailRegistrationCallback</span><span class="p">:(</span><span class="n">nonnull</span> <span class="n"><a href="../Type%20Definitions.html#/c:PaymentRegistration.h@T@PaytrailRegistrationCallback">PaytrailRegistrationCallback</a></span><span class="p">)</span>
+                                            <span class="n">paytrailRegistrationCallback</span>
+                                <span class="n">success</span><span class="o">:</span><span class="p">(</span><span class="n">nonnull</span> <span class="n"><a href="../Type%20Definitions.html#/c:PaymentRegistration.h@T@CompletionCallback">CompletionCallback</a></span><span class="p">)</span><span class="n">success</span>
+                           <span class="n">cancellation</span><span class="o">:</span><span class="p">(</span><span class="n">nonnull</span> <span class="n"><a href="../Type%20Definitions.html#/c:PaymentRegistration.h@T@CompletionCallback">CompletionCallback</a></span><span class="p">)</span><span class="n">cancellation</span>
+                                <span class="n">failure</span><span class="o">:</span>
+                                    <span class="p">(</span><span class="n">nonnull</span> <span class="n"><a href="../Type%20Definitions.html#/c:PaymentRegistration.h@T@FailureCompletionCallback">FailureCompletionCallback</a></span><span class="p">)</span><span class="n">failure</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">class</span> <span class="kd">func</span> <span class="nf">controller</span><span class="p">(</span><span class="k">for</span> <span class="nv">paymentProcess</span><span class="p">:</span> <span class="kt"><a href="../Classes/PaytrailPaymentProcess.html">PaytrailPaymentProcess</a></span><span class="p">,</span> <span class="nv">paytrailRegistrationCallback</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="kt"><a href="../Type%20Definitions.html#/c:PaymentRegistration.h@T@PaytrailRegistrationCallback">PaytrailRegistrationCallback</a></span><span class="p">,</span> <span class="nv">success</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="kt"><a href="../Type%20Definitions.html#/c:PaymentRegistration.h@T@CompletionCallback">CompletionCallback</a></span><span class="p">,</span> <span class="nv">cancellation</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="kt"><a href="../Type%20Definitions.html#/c:PaymentRegistration.h@T@CompletionCallback">CompletionCallback</a></span><span class="p">,</span> <span class="nv">failure</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="kt"><a href="../Type%20Definitions.html#/c:PaymentRegistration.h@T@FailureCompletionCallback">FailureCompletionCallback</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">UIViewController</span></code></pre>
+
+                        </div>
+                      </div>
                       <div>
-                        <h4>Return Value</h4>
-                        <p>True if a redirect observer is registered with the SDK</p>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>paymentProcess</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>An object that identifies the payment process type</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>paytrailRegistrationCallback</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Callback with result following registration with merchant backend</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>success</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Invoked if payment was completed with success. Commit payment following this.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>cancellation</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Invoked if user cancelled the payment. Rollback payment following this.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>failure</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Invoked if payment failed with an error. Rollback payment following this.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
                     </section>
                   </div>
@@ -1387,7 +1680,7 @@ The value can be passed in the payment-data field to Netaxept directly without f
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2020 <a class="link" href="https://nets.eu" target="_blank" rel="external">Nets</a>. All rights reserved. (Last updated: 2020-12-10)</p>
+      <p>&copy; 2021 <a class="link" href="https://nets.eu" target="_blank" rel="external">Nets</a>. All rights reserved. (Last updated: 2021-01-14)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>
