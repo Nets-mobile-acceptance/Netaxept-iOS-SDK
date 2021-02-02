@@ -6,6 +6,8 @@
 
 PiA Netaxept iOS SDK is a library that provides the native in-app interactions to accept payments with Netaxept directly from native iOS apps while minimizing PCI DSS requirements for you.
 
+Detailed documentation can be found [here](https://nets-mobile-acceptance.github.io/Netaxept-iOS-SDK/).
+
 PiA - Netaxept Mobile SDK Android can be found [here](https://github.com/Nets-mobile-acceptance/Netaxept-Android-SDK).
 
 | ![](./Resources/pia-demo.gif)  | 
@@ -70,10 +72,10 @@ Alternatively, if you wish to install the SDK manually, please refer to the foll
 2. Use [GitHub large file system](https://git-lfs.github.com/) to continue uploading framework within your working project
 
 ## Frequently Asked Questions
-If you encounter any blockers when integrating the `Netaxept - iOS SDK`, feel free to check the [Frequently Asked Questions](FAQs.md) page. If any of these answers does not fit your question, don't hesitate to [contact us](#contact).
+If you encounter any blockers when integrating the `Netaxept - iOS SDK`, feel free to check the [Frequently Asked Questions](https://nets-mobile-acceptance.github.io/Netaxept-iOS-SDK/53-faqs.html) page. If any of these answers does not fit your question, don't hesitate to [contact us](#contact).
 
 ## Usage
-After setup is ready, using PiA SDK is easy. For full references, please download our [**Documentation**](https://github.com/Nets-mobile-acceptance/Netaxept-iOS-SDK/tree/master/Documentation) folder and access the `START - Overview of Netaxept iOS SDK.html`
+After setup is ready, using PiA SDK is easy. For full references, please check our detailed [**documentation**](https://nets-mobile-acceptance.github.io/Netaxept-iOS-SDK/).
 
 
 ## Integration - Run Script
