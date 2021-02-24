@@ -71,6 +71,9 @@ Alternatively, if you wish to install the SDK manually, please refer to the foll
 1. Add "Pia.framework" to your **.gitignore** list
 2. Use [GitHub large file system](https://git-lfs.github.com/) to continue uploading framework within your working project
 
+Xcode 11+ users can now replace **Pia.framework** in Xcode-Targets Frameworks, Libraries and Embedded Contents
+with **Pia.XCFramework** for iOS and iOS Simulator architectures.
+
 ## Frequently Asked Questions
 If you encounter any blockers when integrating the `Netaxept - iOS SDK`, feel free to check the [Frequently Asked Questions](https://nets-mobile-acceptance.github.io/Netaxept-iOS-SDK/53-faqs.html) page. If any of these answers does not fit your question, don't hesitate to [contact us](#contact).
 
