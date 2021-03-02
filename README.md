@@ -1,4 +1,4 @@
-# PiA - Netaxept iOS SDK v2.1.0
+# PiA - Netaxept iOS SDK v2.1.1
 
 ![](./Resources/NetsLogo.jpg)
 
@@ -6,9 +6,9 @@
 
 PiA Netaxept iOS SDK is a library that provides the native in-app interactions to accept payments with Netaxept directly from native iOS apps while minimizing PCI DSS requirements for you.
 
-Detailed documentation can be found [here](https://nets-mobile-acceptance.github.io/Netaxept-iOS-SDK/).
-
 PiA - Netaxept Mobile SDK Android can be found [here](https://github.com/Nets-mobile-acceptance/Netaxept-Android-SDK).
+
+Detailed documentation can be found [here](https://nets-mobile-acceptance.github.io/Netaxept-iOS-SDK/).
 
 | ![](./Resources/pia-demo.gif)  | 
 | --- |
@@ -62,6 +62,8 @@ github "Nets-mobile-acceptance/Netaxept-iOS-SDK"
 * Add Pia.framework to Link Binary With Libraries.
 * Add Pia.framework to Embedded Binaries from the General tab.
 
+Xcode 11+ users can now replace **Pia.framework** in Xcode-Targets Frameworks, Libraries and Embedded Contents with **Pia.XCFramework** for iOS and iOS Simulator architectures.
+
 ### NOTE
 Because of enabling Bitcode, the framework size exceeds the 100MB limit of GitHub uploading policy.
 
@@ -70,9 +72,6 @@ One option is to use Carthage for automated installation.
 Alternatively, if you wish to install the SDK manually, please refer to the following walk-around for uploading to GitHub:
 1. Add "Pia.framework" to your **.gitignore** list
 2. Use [GitHub large file system](https://git-lfs.github.com/) to continue uploading framework within your working project
-
-Xcode 11+ users can now replace **Pia.framework** in Xcode-Targets Frameworks, Libraries and Embedded Contents
-with **Pia.XCFramework** for iOS and iOS Simulator architectures.
 
 ## Frequently Asked Questions
 If you encounter any blockers when integrating the `Netaxept - iOS SDK`, feel free to check the [Frequently Asked Questions](https://nets-mobile-acceptance.github.io/Netaxept-iOS-SDK/53-faqs.html) page. If any of these answers does not fit your question, don't hesitate to [contact us](#contact).
