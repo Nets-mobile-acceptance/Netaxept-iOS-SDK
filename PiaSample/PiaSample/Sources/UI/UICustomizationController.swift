@@ -27,6 +27,12 @@
 import UIKit
 import Pia
 
+
+enum PayButtonText: String, CaseIterable {
+    case Pay = "Pay"
+    case Reserve = "Reserve"
+}
+
 /**
  This viewcontroller is used to demonstate how to use UI Customization from PiA SDK
  */
@@ -75,6 +81,8 @@ class UICustomizationController: UIViewController {
 
     @IBOutlet weak var roundedCornerField: UISwitch!
     @IBOutlet weak var roundedCornerForButton: UISwitch!
+    
+    @IBOutlet weak var payButtonTextSelectionButton: UIButton!
 
 
     //Card IO IBOutlets
@@ -128,7 +136,35 @@ class UICustomizationController: UIViewController {
     fileprivate var cardIOButtonTextColorVar: UIColor? = nil
     fileprivate var cardIOTextFontVar: UIFont? = nil
     fileprivate var cardIOButtonTextFontVar: UIFont? = nil
-
+    
+    lazy var payButtonTextPicker: SelectionView = {
+        let (picker, constraints) = SelectionView.makeWithConstraints(
+            triggerView: payButtonTextSelectionButton,
+            titles: PayButtonText.allCases.map { $0.rawValue },
+            selected: PayButtonText.allCases
+                .firstIndex(of:PayButtonText(rawValue: selectedPayButtonText)!)!,
+            didSelectIndex: selectPayButtonText(at:)
+        )
+        view.addSubview(picker)
+        NSLayoutConstraint.activate(constraints, for: picker)
+        return picker
+    }()
+    
+    var selectedPayButtonText: PayButtonText.RawValue = ""
+    
+    private func getCurrentPayButtonText () -> String{
+        switch NPIInterfaceConfiguration.sharedInstance()?.payButtonTextLabelOption {
+            case PAY:
+                selectedPayButtonText = PayButtonText.Pay.rawValue
+            case RESERVE:
+                selectedPayButtonText = PayButtonText.Reserve.rawValue
+            default:
+                selectedPayButtonText = PayButtonText.Pay.rawValue
+        }
+        return selectedPayButtonText
+    }
+    
+    
     // UIViewController lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -138,6 +174,13 @@ class UICustomizationController: UIViewController {
         navigationItem.rightBarButtonItems = [
             UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveChanges(_:)))
         ]
+        
+        payButtonTextSelectionButton.setTitle(self.getCurrentPayButtonText(), for: .normal)
+        payButtonTextSelectionButton.addTarget(self, action: #selector(showPayButtonSelection(_:)), for: .touchUpInside)
+        payButtonTextPicker.setHidden(true)
+        view.addGestureRecognizer(
+            UITapGestureRecognizer(target: self, action: #selector(resignFirstResponders(_:)))
+        )
 /*#light_version_section_start
 
         self.cardIOSpecificLabel.isHidden = true
@@ -279,6 +322,21 @@ class UICustomizationController: UIViewController {
     @IBAction func changeTokenCardCVCColor(_ sender: UIButton) {
         self.tokenCardCVCColor.textColor = sender.backgroundColor
         self.tokenCardCVCColorVar = sender.backgroundColor
+    }
+    
+    private func selectPayButtonText(at index: Int) {
+        selectedPayButtonText = PayButtonText.allCases[index].rawValue
+        payButtonTextSelectionButton.setTitle(selectedPayButtonText, for: .normal)
+        payButtonTextPicker.setHidden(true)
+    }
+    
+    @objc private func showPayButtonSelection(_: UIButton) {
+        payButtonTextPicker.setHidden(false)
+    }
+    
+    @objc private func resignFirstResponders(_: UITapGestureRecognizer) {
+        [payButtonTextPicker]
+            .forEach { $0.setHidden(true) }
     }
 
     // This function gives a hint how you can set your own customization.
@@ -450,7 +508,15 @@ class UICustomizationController: UIViewController {
             PiaSDK.setTheme(theme)
         }
         
-
+        switch selectedPayButtonText {
+            case PayButtonText.Pay.rawValue:
+                NPIInterfaceConfiguration.sharedInstance()?.payButtonTextLabelOption = PAY
+            case PayButtonText.Reserve.rawValue:
+                NPIInterfaceConfiguration.sharedInstance()?.payButtonTextLabelOption = RESERVE
+            default:
+                NPIInterfaceConfiguration.sharedInstance()?.payButtonTextLabelOption = PAY
+        }
+        
         self.navigationController?.popViewController(animated: true)
     }
 

@@ -25,7 +25,7 @@
 //
 
 #import <React/RCTBridgeModule.h>
-#import "Pia.framework/Headers/Pia.h"
+#import <Pia/Pia.h>
 #import <React/RCTEventEmitter.h>
 
 @interface PiaSDKBridge : RCTEventEmitter <RCTBridgeModule, PiaSDKDelegate>

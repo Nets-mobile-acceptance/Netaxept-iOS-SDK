@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -1017,10 +1017,10 @@
                                         <rect key="frame" x="5" y="5" width="365" height="1990"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="gPa-W5-1bm">
-                                                <rect key="frame" x="0.0" y="0.0" width="365" height="1873.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="365" height="1921.5"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="K0f-V5-WtA">
-                                                        <rect key="frame" x="0.0" y="0.0" width="322" height="1505"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="322" height="1553"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Global UI Customization" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d6f-Bh-Grh">
                                                                 <rect key="frame" x="0.0" y="0.0" width="214" height="21.5"/>
@@ -1029,7 +1029,7 @@
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="top" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="gWq-IE-ybZ" userLabel="Normal UI Customization">
-                                                                <rect key="frame" x="0.0" y="36.5" width="322" height="1468.5"/>
+                                                                <rect key="frame" x="0.0" y="36.5" width="322" height="1516.5"/>
                                                                 <subviews>
                                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="QvW-30-GPq" userLabel="Switch thumb color">
                                                                         <rect key="frame" x="0.0" y="0.0" width="201" height="30"/>
@@ -1893,12 +1893,31 @@
                                                                             </switch>
                                                                         </subviews>
                                                                     </stackView>
+                                                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="76e-YN-C4S" userLabel="Pay Button Text">
+                                                                        <rect key="frame" x="0.0" y="1483.5" width="229" height="33"/>
+                                                                        <subviews>
+                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pay Button Text" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3c4-iE-OxT">
+                                                                                <rect key="frame" x="0.0" y="0.0" width="119" height="33"/>
+                                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                                <nil key="textColor"/>
+                                                                                <nil key="highlightedColor"/>
+                                                                            </label>
+                                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nwE-Es-taK" customClass="PiaSamplePickerButton" customModule="PiaSample" customModuleProvider="target">
+                                                                                <rect key="frame" x="129" y="0.0" width="100" height="33"/>
+                                                                                <constraints>
+                                                                                    <constraint firstAttribute="width" constant="100" id="aYf-ba-Y4V"/>
+                                                                                </constraints>
+                                                                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
+                                                                                <state key="normal" title="Button"/>
+                                                                            </button>
+                                                                        </subviews>
+                                                                    </stackView>
                                                                 </subviews>
                                                             </stackView>
                                                         </subviews>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="wIg-iZ-mFA">
-                                                        <rect key="frame" x="0.0" y="1535" width="333" height="338.5"/>
+                                                        <rect key="frame" x="0.0" y="1583" width="333" height="338.5"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Card scanner UI Customization" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YX2-WO-mB0">
                                                                 <rect key="frame" x="0.0" y="0.0" width="276" height="21.5"/>
@@ -2161,6 +2180,7 @@
                         <outlet property="navBarLeftItemColorLabel" destination="ezU-n1-bi7" id="qQo-dV-iyo"/>
                         <outlet property="navBarRightItemColorLabel" destination="bXZ-a6-5tW" id="rJW-jf-tpT"/>
                         <outlet property="navBarTitleColorLabel" destination="GCN-oF-rbs" id="dCz-r1-aSH"/>
+                        <outlet property="payButtonTextSelectionButton" destination="nwE-Es-taK" id="Xs3-6O-uJL"/>
                         <outlet property="roundedCornerField" destination="hZG-r7-Ki1" id="ENf-0i-l3D"/>
                         <outlet property="roundedCornerForButton" destination="dpL-Lg-GIF" id="Bdx-Vj-nCD"/>
                         <outlet property="sampleButtonBottomMarginSwitch" destination="rzl-uh-Dbz" id="1vW-6L-LVt"/>

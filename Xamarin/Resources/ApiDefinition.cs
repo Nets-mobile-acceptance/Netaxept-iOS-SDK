@@ -251,39 +251,44 @@ namespace XamarinPia
     [Model]
     interface PiaSDKDelegate : IUINavigationControllerDelegate
     {
-        // @required -(void)doInitialAPICall:(PiaSDKController * _Nonnull)PiaSDKController storeCard:(BOOL)storeCard withCompletion:(void (^ _Nonnull)(NPITransactionInfo * _Nullable))completionHandler;
+        // @required -(void)doInitialAPICall:(PiaSDKController * _Nonnull)piaSDKController storeCard:(BOOL)storeCard withCompletion:(void (^ _Nonnull)(NPITransactionInfo * _Nullable))completionHandler;
         [Abstract]
-        [Export("doInitialAPICall:storeCard:withCompletion:")]
-        void DoInitialAPICall(PiaSDKController PiaSDKController, bool storeCard, Action<NPITransactionInfo> completionHandler);
+        [Export ("doInitialAPICall:storeCard:withCompletion:")]
+        void DoInitialAPICall (PiaSDKController piaSDKController, bool storeCard, Action<NPITransactionInfo> completionHandler);
 
-        // @required -(void)registerPaymentWithPayPal:(PiaSDKController * _Nonnull)PiaSDKController withCompletion:(void (^ _Nonnull)(NPITransactionInfo * _Nullable))completionHandler;
+        // @required -(void)registerPaymentWithPayPal:(PiaSDKController * _Nonnull)piaSDKController withCompletion:(void (^ _Nonnull)(NPITransactionInfo * _Nullable))completionHandler;
         [Abstract]
-        [Export("registerPaymentWithPayPal:withCompletion:")]
-        void RegisterPaymentWithPayPal(PiaSDKController PiaSDKController, Action<NPITransactionInfo> completionHandler);
+        [Export ("registerPaymentWithPayPal:withCompletion:")]
+        void RegisterPaymentWithPayPal (PiaSDKController piaSDKController, Action<NPITransactionInfo> completionHandler);
 
-        // @required -(void)PiaSDK:(PiaSDKController * _Nonnull)PiaSDKController didFailWithError:(NPIError * _Nonnull)error;
+        // @required -(void)registerPaymentWithPaytrail:(PiaSDKController * _Nonnull)piaSDKController withCompletion:(void (^ _Nonnull)(NPITransactionInfo * _Nullable))completionHandler;
         [Abstract]
-        [Export("PiaSDK:didFailWithError:")]
-        void PiaSDK(PiaSDKController PiaSDKController, NPIError error);
+        [Export ("registerPaymentWithPaytrail:withCompletion:")]
+        void RegisterPaymentWithPaytrail (PiaSDKController piaSDKController, Action<NPITransactionInfo> completionHandler);
 
-        // @required -(void)PiaSDKDidCompleteWithSuccess:(PiaSDKController * _Nonnull)PiaSDKController;
+        // @required -(void)PiaSDK:(PiaSDKController * _Nonnull)piaSDKController didFailWithError:(NPIError * _Nonnull)error;
         [Abstract]
-        [Export("PiaSDKDidCompleteWithSuccess:")]
-        void PiaSDKDidCompleteWithSuccess(PiaSDKController PiaSDKController);
+        [Export ("PiaSDK:didFailWithError:")]
+        void PiaSDK (PiaSDKController piaSDKController, NPIError error);
 
-        // @required -(void)PiaSDKDidCompleteSaveCardWithSuccess:(PiaSDKController * _Nonnull)PiaSDKController;
+        // @required -(void)PiaSDKDidCompleteWithSuccess:(PiaSDKController * _Nonnull)piaSDKController;
         [Abstract]
-        [Export("PiaSDKDidCompleteSaveCardWithSuccess:")]
-        void PiaSDKDidCompleteSaveCardWithSuccess(PiaSDKController PiaSDKController);
+        [Export ("PiaSDKDidCompleteWithSuccess:")]
+        void PiaSDKDidCompleteWithSuccess (PiaSDKController piaSDKController);
 
-        // @required -(void)PiaSDKDidCancel:(PiaSDKController * _Nonnull)PiaSDKController;
+        // @required -(void)PiaSDKDidCompleteSaveCardWithSuccess:(PiaSDKController * _Nonnull)piaSDKController;
         [Abstract]
-        [Export("PiaSDKDidCancel:")]
-        void PiaSDKDidCancel(PiaSDKController PiaSDKController);
+        [Export ("PiaSDKDidCompleteSaveCardWithSuccess:")]
+        void PiaSDKDidCompleteSaveCardWithSuccess (PiaSDKController piaSDKController);
 
-        // @optional -(void)PiaSDK:(PiaSDKController * _Nonnull)PiaSDKController didChangeApplePayShippingContact:(PKContact * _Nonnull)contact withCompletion:(void (^ _Nonnull)(BOOL, NSDecimalNumber * _Nullable))completionHandler;
-        [Export("PiaSDK:didChangeApplePayShippingContact:withCompletion:")]
-        void PiaSDK(PiaSDKController PiaSDKController, PKContact contact, Action<bool, NSDecimalNumber> completionHandler);
+        // @required -(void)PiaSDKDidCancel:(PiaSDKController * _Nonnull)piaSDKController;
+        [Abstract]
+        [Export ("PiaSDKDidCancel:")]
+        void PiaSDKDidCancel (PiaSDKController piaSDKController);
+
+        // @optional -(void)PiaSDK:(PiaSDKController * _Nonnull)piaSDKController didChangeApplePayShippingContact:(PKContact * _Nonnull)contact withCompletion:(void (^ _Nonnull)(BOOL, NSDecimalNumber * _Nullable))completionHandler;
+        [Export ("PiaSDK:didChangeApplePayShippingContact:withCompletion:")]
+        void PiaSDK (PiaSDKController piaSDKController, PKContact contact, Action<bool, NSDecimalNumber> completionHandler);
     }
 
     // @interface PiaSDKController : UINavigationController
@@ -294,8 +299,8 @@ namespace XamarinPia
         [NullAllowed]
         PiaSDKDelegate PiaDelegate { get; set; }
 
-        // @property (nonatomic, weak) id<PiaSDKDelegate> _Nullable PiaDelegate;
-        [NullAllowed, Export ("PiaDelegate", ArgumentSemantic.Weak)]
+        // @property (nonatomic, weak) id<PiaSDKDelegate> _Nullable piaDelegate;
+        [NullAllowed, Export ("piaDelegate", ArgumentSemantic.Weak)]
         NSObject WeakPiaDelegate { get; set; }
 
         [Wrap ("WeakStrongPiaDelegate")]
@@ -322,9 +327,9 @@ namespace XamarinPia
         [Export ("initWithTestMode:tokenCardInfo:merchantID:orderInfo:requireCardConfirmation:")]
         IntPtr Constructor (bool testMode, NPITokenCardInfo tokenCardInfo, string merchantID, NPIOrderInfo orderInfo, bool requireCardConfirmation);
         
-        // -(instancetype _Nonnull)initWithOrderInfo:(NPIOrderInfo * _Nonnull)orderInfo merchantInfo:(NPIMerchantInfo * _Nonnull)merchantInfo;
-        [Export("initWithOrderInfo:merchantInfo:")]
-        IntPtr Constructor(NPIOrderInfo orderInfo, NPIMerchantInfo merchantInfo);
+        // -(instancetype _Nonnull)initWithOrderInfo:(NPIOrderInfo * _Nullable)orderInfo merchantInfo:(NPIMerchantInfo * _Nonnull)merchantInfo;
+        [Export ("initWithOrderInfo:merchantInfo:")]
+        IntPtr Constructor ([NullAllowed] NPIOrderInfo orderInfo, NPIMerchantInfo merchantInfo);
         
         // -(instancetype _Nonnull)initWithMerchantInfo:(NPIMerchantInfo * _Nonnull)merchantInfo payWithPayPal:(BOOL)payWithPayPal;
         [Export("initWithMerchantInfo:payWithPayPal:")]
@@ -338,9 +343,13 @@ namespace XamarinPia
         [Export("initWithMerchantInfo:")]
         IntPtr Constructor(NPIMerchantInfo merchantInfo);
 
-        // -(instancetype _Nonnull)initPaytrailBankPaymentWithMerchantID:(NSString * _Nonnull)merchantID transactionInfo:(NPITransactionInfo * _Nullable)transactionInfo testMode:(BOOL)testMode;
-        [Export("initPaytrailBankPaymentWithMerchantID:transactionInfo:testMode:")]
-        IntPtr Constructor(string merchantID, [NullAllowed] NPITransactionInfo transactionInfo, bool testMode);
+        // -(instancetype _Nonnull)initPaytrailBankPaymentWithMerchantID:(NSString * _Nonnull)merchantID transactionInfo:(NPITransactionInfo * _Nonnull)transactionInfo testMode:(BOOL)testMode;
+        [Export ("initPaytrailBankPaymentWithMerchantID:transactionInfo:testMode:")]
+        IntPtr Constructor (string merchantID, NPITransactionInfo transactionInfo, bool testMode);
+
+        // -(instancetype _Nonnull)initSBusinessCardPaymentWithMerchantInfo:(NPIMerchantInfo * _Nonnull)merchantInfo orderInfo:(NPIOrderInfo * _Nullable)orderInfo;
+        [Export ("initSBusinessCardPaymentWithMerchantInfo:orderInfo:")]
+        IntPtr Constructor (NPIMerchantInfo merchantInfo, [NullAllowed] NPIOrderInfo orderInfo);
     }
 
     // @interface NPIInterfaceConfiguration : NSObject
@@ -423,6 +432,10 @@ namespace XamarinPia
         [Static]
         [Export ("sharedInstance")]
         NPIInterfaceConfiguration SharedInstance ();
+        
+        // @property (nonatomic) PayButtonTextLabelOption payButtonTextLabelOption;
+        [Export ("payButtonTextLabelOption", ArgumentSemantic.Assign)]
+        PayButtonTextLabelOption PayButtonTextLabelOption { get; set; }
     }
 
     // bare interface
@@ -606,6 +619,16 @@ namespace XamarinPia
         [Static]
         [Export("walletPaymentForWallet:showActivityIndicator:")]
         WalletPaymentProcess WalletPaymentForWallet(Wallet wallet, bool showActivityIndicator);
+        
+        // +(PayPalPaymentProcess * _Nonnull)payPalPaymentWithMerchant:(MerchantDetails * _Nonnull)merchant;
+        [Static]
+        [Export ("payPalPaymentWithMerchant:")]
+        PayPalPaymentProcess PayPalPaymentWithMerchant (MerchantDetails merchant);
+
+        // +(PaytrailPaymentProcess * _Nonnull)paytrailPaymentWithMerchant:(MerchantDetails * _Nonnull)merchant;
+        [Static]
+        [Export ("paytrailPaymentWithMerchant:")]
+        PaytrailPaymentProcess PaytrailPaymentWithMerchant (MerchantDetails merchant);
     }
 
     // @interface CardPaymentProcess : PaymentProcess
@@ -649,6 +672,26 @@ namespace XamarinPia
         // @property (nonatomic) BOOL showActivityIndicator;
         [Export ("showActivityIndicator")]
         bool ShowActivityIndicator { get; set; }
+    }
+    
+    // @interface PayPalPaymentProcess : PaymentProcess
+    [BaseType (typeof(PaymentProcess))]
+    [DisableDefaultCtor]
+    interface PayPalPaymentProcess
+    {
+        // @property (nonatomic) MerchantDetails * _Nonnull merchant;
+        [Export ("merchant", ArgumentSemantic.Assign)]
+        MerchantDetails Merchant { get; set; }
+    }
+
+    // @interface PaytrailPaymentProcess : PaymentProcess
+    [BaseType (typeof(PaymentProcess))]
+    [DisableDefaultCtor]
+    interface PaytrailPaymentProcess
+    {
+        // @property (nonatomic) MerchantDetails * _Nonnull merchant;
+        [Export ("merchant", ArgumentSemantic.Assign)]
+        MerchantDetails Merchant { get; set; }
     }
 
     // @interface Wallets (NSError)
@@ -717,6 +760,52 @@ namespace XamarinPia
         [Export ("failure:")]
         CardRegistrationResponse Failure (NSError error);
     }
+    
+    // @interface PayPalRegistrationResponse : RegistrationResponse
+    [BaseType (typeof(RegistrationResponse))]
+    interface PayPalRegistrationResponse
+    {
+        // @property (nonatomic) TransactionID _Nullable transactionID;
+        [NullAllowed, Export ("transactionID")]
+        string TransactionID { get; set; }
+
+        // @property (nonatomic) RedirectURL _Nullable redirectURL;
+        [NullAllowed, Export ("redirectURL")]
+        string RedirectURL { get; set; }
+
+        // +(PayPalRegistrationResponse * _Nonnull)successWithTransactionID:(TransactionID _Nonnull)transactionID redirectURL:(RedirectURL _Nonnull)redirectURL;
+        [Static]
+        [Export ("successWithTransactionID:redirectURL:")]
+        PayPalRegistrationResponse SuccessWithTransactionID (string transactionID, string redirectURL);
+
+        // +(PayPalRegistrationResponse * _Nonnull)failure:(NSError * _Nonnull)error;
+        [Static]
+        [Export ("failure:")]
+        PayPalRegistrationResponse Failure (NSError error);
+    }
+
+    // @interface PaytrailRegistrationResponse : RegistrationResponse
+    [BaseType (typeof(RegistrationResponse))]
+    interface PaytrailRegistrationResponse
+    {
+        // @property (nonatomic) TransactionID _Nullable transactionID;
+        [NullAllowed, Export ("transactionID")]
+        string TransactionID { get; set; }
+
+        // @property (nonatomic) RedirectURL _Nullable redirectURL;
+        [NullAllowed, Export ("redirectURL")]
+        string RedirectURL { get; set; }
+
+        // +(PaytrailRegistrationResponse * _Nonnull)successWithTransactionID:(TransactionID _Nonnull)transactionID redirectURL:(RedirectURL _Nonnull)redirectURL;
+        [Static]
+        [Export ("successWithTransactionID:redirectURL:")]
+        PaytrailRegistrationResponse SuccessWithTransactionID (string transactionID, string redirectURL);
+
+        // +(PaytrailRegistrationResponse * _Nonnull)failure:(NSError * _Nonnull)error;
+        [Static]
+        [Export ("failure:")]
+        PaytrailRegistrationResponse Failure (NSError error);
+    }
 
     // typedef void (^TransactionCallback)(BOOL, void (^ _Nonnull)(CardRegistrationResponse * _Nonnull));
     delegate void TransactionCallback (bool arg0, [BlockCallback] CardRegistrationResponseCallback completionHandler);
@@ -726,6 +815,13 @@ namespace XamarinPia
     delegate void WalletURLCallback([BlockCallback] WalletCallbackCompletionHandler completionHandler);
     delegate void WalletCallbackCompletionHandler(WalletRegistrationResponse arg0);
 
+    // typedef void (^PayPalRegistrationCallback)(void (^ _Nonnull)(PayPalRegistrationResponse * _Nonnull));
+    delegate void PayPalRegistrationCallback([BlockCallback] PayPalResponseCallback completionHandler);
+    delegate void PayPalResponseCallback(PayPalRegistrationResponse arg0);
+
+    // typedef void (^PaytrailRegistrationCallback)(void (^ _Nonnull)(PaytrailRegistrationResponse * _Nonnull));
+    delegate void PaytrailRegistrationCallback([BlockCallback] PaytrailResponseCallback completionHandler);
+    delegate void PaytrailResponseCallback(PaytrailRegistrationResponse arg0);
 
     // typedef void (^WalletRedirectWithoutInterruption)(BOOL);
     delegate void WalletRedirectWithoutInterruption (bool arg0);
@@ -776,15 +872,26 @@ namespace XamarinPia
         [Export ("controllerForCardPaymentProcess:isCVCRequired:transactionCallback:success:cancellation:failure:")]
         UIViewController ControllerForCardPaymentProcess (CardPaymentProcess paymentProcess, bool isCVCRequired, TransactionCallback transactionCallback, CompletionCallback success, CompletionCallback cancellation, FailureCompletionCallback failure);
         
+        // +(UIViewController * _Nonnull)controllerForSBusinessCardPaymentProcess:(CardPaymentProcess * _Nonnull)paymentProcess isCVCRequired:(BOOL)isCVCRequired transactionCallback:(TransactionCallback _Nonnull)transactionCallback success:(CompletionCallback _Nonnull)success cancellation:(CompletionCallback _Nonnull)cancellation failure:(FailureCompletionCallback _Nonnull)failure;
+        [Static]
+        [Export ("controllerForSBusinessCardPaymentProcess:isCVCRequired:transactionCallback:success:cancellation:failure:")]
+        UIViewController ControllerForSBusinessCardPaymentProcess (CardPaymentProcess paymentProcess, bool isCVCRequired, TransactionCallback transactionCallback, CompletionCallback success, CompletionCallback cancellation, FailureCompletionCallback failure);
+        
         // +(void)initiateTokenizedCardPayFrom:(UIViewController * _Nonnull)sender testMode:(BOOL)isTestMode showsActivityIndicator:(BOOL)showsActivityIndicator merchantID:(NSString * _Nonnull)merchantID redirectURL:(NSString * _Nonnull)redirectURL transactionID:(NSString * _Nonnull)transactionID success:(void (^ _Nonnull)(void))success cancellation:(void (^ _Nonnull)(void))cancellation failure:(void (^ _Nonnull)(NPIError * _Nonnull))failure;
         [Static]
         [Export ("initiateTokenizedCardPayFrom:testMode:showsActivityIndicator:merchantID:redirectURL:transactionID:success:cancellation:failure:")]
         void InitiateTokenizedCardPayFrom (UIViewController sender, bool isTestMode, bool showsActivityIndicator, string merchantID, string redirectURL, string transactionID, Action success, Action cancellation, Action<NPIError> failure);
-
-        // +(BOOL)applicationDidOpenFromRedirectWith:(NSURL * _Nonnull)redirectURL andOptions:(NSDictionary * _Nonnull)options __attribute__((deprecated("Use `willHandleRedirectWith:` instead. Make sure to add the wallet name during registration - `…//piasdk?wallet=walletName`")));
+        
+        // +(UIViewController * _Nonnull)controllerForPayPalPaymentProcess:(PayPalPaymentProcess * _Nonnull)paymentProcess payPalRegistrationCallback:(PayPalRegistrationCallback _Nonnull)payPalRegistrationCallback success:(CompletionCallback _Nonnull)success cancellation:(CompletionCallback _Nonnull)cancellation failure:(FailureCompletionCallback _Nonnull)failure;
         [Static]
-        [Export ("applicationDidOpenFromRedirectWith:andOptions:")]
-        bool ApplicationDidOpenFromRedirectWith (NSUrl redirectURL, NSDictionary options);
+        [Export ("controllerForPayPalPaymentProcess:payPalRegistrationCallback:success:cancellation:failure:")]
+        UIViewController ControllerForPayPalPaymentProcess (PayPalPaymentProcess paymentProcess, PayPalRegistrationCallback payPalRegistrationCallback, CompletionCallback success, CompletionCallback cancellation, FailureCompletionCallback failure);
+
+        // +(UIViewController * _Nonnull)controllerForPaytrailPaymentProcess:(PaytrailPaymentProcess * _Nonnull)paymentProcess paytrailRegistrationCallback:(PaytrailRegistrationCallback _Nonnull)paytrailRegistrationCallback success:(CompletionCallback _Nonnull)success cancellation:(CompletionCallback _Nonnull)cancellation failure:(FailureCompletionCallback _Nonnull)failure;
+        [Static]
+        [Export ("controllerForPaytrailPaymentProcess:paytrailRegistrationCallback:success:cancellation:failure:")]
+        UIViewController ControllerForPaytrailPaymentProcess (PaytrailPaymentProcess paymentProcess, PaytrailRegistrationCallback paytrailRegistrationCallback, CompletionCallback success, CompletionCallback cancellation, FailureCompletionCallback failure);
+
 
         // +(BOOL)willHandleRedirectWith:(NSURL * _Nonnull)redirectURL andOptions:(NSDictionary * _Nonnull)options;
         [Static]

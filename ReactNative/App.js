@@ -48,8 +48,9 @@ const netsProduction = {
 const netsTest = {
     backendUrlTest: "YOUR TEST URL",
     merchantIdTest: "YOUR TEST MERHCANT_ID",
+    merchantIdTest2: "YOUR TEST MERHCANT_ID",
     tokenIdTest: "492500******0004",
-    schemeIdTest: "Visa",
+    schemeIdTest: "VISA",
     expiryDateTest: "12/22"
 };
 
@@ -79,7 +80,7 @@ export default class App extends Component<Props> {
                         <Button style={styles.button} onPress={this.pay} title="Buy" />
                     </View>
                     <View style={styles.button}>
-                        <Button style={styles.button} onPress={this.saveCard} title="Save Card" />
+                    <Button style={styles.button} onPress={this.payViaSBusinessCard} title="SBusinessCard" />
                     </View>
                     <View style={styles.button}>
                         <Button style={styles.button} onPress={this.payViaPaypal} title="Paypal" />
@@ -110,80 +111,33 @@ export default class App extends Component<Props> {
     }
 
     pay = () => {
-        //for pay with new card, set only the MechantInfo and Order info objects
-        PiaSDK.buildMerchantInfo(netsTest.merchantIdTest, true, true);
-        PiaSDK.buildOrderInfo(1, "EUR");
+        PiaSDK.cardPaymentProcess(100, "EUR", netsTest.merchantIdTest, true);
 
-        PiaSDK.start(() => {
+        PiaSDK.startCardPayment(true,
+        (registrationCallback) => { 
             fetch(netsTest.backendUrlTest + "v2/payment/" + netsTest.merchantIdTest + "/register", {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json;charset=utf-8;version=2.0',
                     'Content-Type': 'application/json;charset=utf-8;version=2.0'
                 },
-                body: '{"storeCard": true,"orderNumber": "PiaSDK-RN","customerId": "000012","amount": {"currencyCode": "EUR", "totalAmount": "100","vatAmount": 0}}'
+                body: '{"storeCard": true,"orderNumber": "PiaSDK-RN-iOS","customerId": "000012","amount": {"currencyCode": "EUR", "totalAmount": "100","vatAmount": 0}}'
             }).then((response) => response.json())
                 .then((responseJson) => {
                     console.log('onResponse' + responseJson.transactionId)
-                    PiaSDK.buildTransactionInfo(responseJson.transactionId, responseJson.redirectOK, null);
+                    PiaSDK.cardRegistrationCallbackWithTransactionId(responseJson.transactionId, responseJson.redirectOK);
                 })
                 .catch((error) => {
                     console.error(error);
-                    PiaSDK.buildTransactionInfo(null, null, null);
-                });
+                    PiaSDK.cardRegistrationCallbackWithTransactionId(null, null);
+                    });
         });
-    }
 
-    saveCard = () => {
-        //for save card only MerchantInfo object is required
-        PiaSDK.buildMerchantInfo(netsTest.merchantIdTest, true, true);
-
-        PiaSDK.saveCard(() => {
-            fetch(netsTest.backendUrlTest + "v2/payment/" + netsTest.merchantIdTest + "/register", {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json;charset=utf-8;version=2.0',
-                    'Content-Type': 'application/json;charset=utf-8;version=2.0'
-                },
-                body: '{"storeCard": true,"orderNumber": "PiaSDK-Android","customerId": "000012","amount": {"currencyCode": "EUR", "totalAmount": "1","vatAmount": 0}}'
-            }).then((response) => response.json())
-                .then((responseJson) => {
-                    PiaSDK.buildTransactionInfo(responseJson.transactionId, responseJson.redirectOK, null);
-                })
-                .catch((error) => {
-                    console.error(error);
-                    PiaSDK.buildTransactionInfo(null, null, null);
-                });
-        });
     }
 
     payViaPaypal = () => {
-        //for PayPal set only the MerchantInfo object
-        PiaSDK.buildMerchantInfo(netsProduction.merchantIdProd, false, true);
 
-        PiaSDK.saveCard(() => {
-            fetch(netsTest.backendUrlTest + "v2/payment/" + netsTest.merchantIdTest + "/register", {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json;charset=utf-8;version=2.0',
-                    'Content-Type': 'application/json;charset=utf-8;version=2.0'
-                },
-                body: '{"storeCard": true,"orderNumber": "PiaSDK-RN","customerId": "000012","amount": {"currencyCode": "EUR", "totalAmount": "1","vatAmount": 0}}'
-            }).then((response) => response.json())
-                .then((responseJson) => {
-                    PiaSDK.buildTransactionInfo(responseJson.transactionId, responseJson.redirectOK, null);
-                })
-                .catch((error) => {
-                    console.error(error);
-                    PiaSDK.buildTransactionInfo(null, null, null);
-                });
-        });
-    }
-    
-
-    payViaPaypal = () => {
-        //for PayPal set only the MerchantInfo object
-        PiaSDK.buildMerchantInfo(netsProduction.merchantIdProd, false, true);
+        PiaSDK.payPalPaymentProcess(netsProduction.merchantIdProd, false);
 
         PiaSDK.startPayPalProcess(() => {
             fetch(netsProduction.backendUrlProd + "v2/payment/" + netsProduction.merchantIdProd + "/register", {
@@ -192,17 +146,70 @@ export default class App extends Component<Props> {
                     'Accept': 'application/json;charset=utf-8;version=2.0',
                     'Content-Type': 'application/json;charset=utf-8;version=2.0'
                 },
-                body: '{"storeCard": true,"orderNumber": "PiaSDK-RN","customerId": "0000012","amount": {"currencyCode": "DKK", "totalAmount": "100","vatAmount": 0}, "method": {"id":"PayPal"}}'
+                body: '{"storeCard": true,"orderNumber": "PiaSDK-RN-iOS","customerId": "0000012","amount": {"currencyCode": "EUR", "totalAmount": "100","vatAmount": 0}, "method": {"id":"PayPal"}}'
             }).then((response) => response.json())
                 .then((responseJson) => {
-                    PiaSDK.buildTransactionInfo(responseJson.transactionId, responseJson.redirectOK, null);
+                    PiaSDK.payPalRegistrationCallbackWithTransactionId(responseJson.transactionId, responseJson.redirectOK);
                 })
                 .catch((error) => {
                     console.error(error);
-                    PiaSDK.buildTransactionInfo(null, null, null);
+                    PiaSDK.payPalRegistrationCallbackWithTransactionId(null, null);
                 });
         });
     }
+
+    payViaPaytrailNordea = () => {
+
+        PiaSDK.paytrailPaymentProcess(netsTest.merchantIdTest, true);
+
+        var orderId = this.getOrderId();
+        console.log('orderId ' + orderId);
+
+        PiaSDK.startPaytrailProcess(() => {
+            fetch(netsTest.backendUrlTest + "v2/payment/" + netsTest.merchantIdTest + "/register", {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json;charset=utf-8;version=2.0',
+                'Content-Type': 'application/json;charset=utf-8;version=2.0'
+            },
+            body: '{"amount":{"currencyCode":"EUR","totalAmount":1000,"vatAmount":0},"customerTown":"Helsinki","customerPostCode":"00510","customerLastName":"Buyer","customerId":"000012","customerAddress1":"Testaddress","customerCountry":"FI","customerEmail":"bill.buyer@nets.eu","customerFirstName":"Bill","customerId":"000013","method":{"id":"PaytrailNordea"},"orderNumber":' + orderId + ',"storeCard":false}'
+        }).then((response) => response.json())
+            .then((responseJson) => {
+                PiaSDK.paytrailRegistrationCallbackWithTransactionId(responseJson.transactionId, responseJson.redirectOK);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    });
+}
+
+    payViaSBusinessCard = () => {
+
+        PiaSDK.cardPaymentProcess(100, "EUR", netsTest.merchantIdTest2, true);
+
+        PiaSDK.startSBusinessCardPayment(true,
+            (registrationCallback) => {
+                fetch(netsTest.backendUrlTest + "v2/payment/" + netsTest.merchantIdTest2 + "/register", {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json;charset=utf-8;version=2.0',
+                        'Content-Type': 'application/json;charset=utf-8;version=2.0'
+                    },
+                    body: '{"storeCard": true,"orderNumber": "PiaSDK-RN-iOS","customerId": "000012","amount": {"currencyCode": "EUR", "totalAmount": "100","vatAmount": 0}}'
+                }).then((response) => response.json())
+                    .then((responseJson) => {
+                        console.log('onResponse' + responseJson.transactionId)
+                        PiaSDK.cardRegistrationCallbackWithTransactionId(responseJson.transactionId, responseJson.redirectOK);
+                    })
+                    .catch((error) => {
+                        console.error(error);
+                        PiaSDK.cardRegistrationCallbackWithTransactionId(null, null);
+                    });
+            });
+    }
+
+
+
 
     launchWalletNamed(walletName, registrationRequestURL, registrationRequestBody) {
 
@@ -287,7 +294,7 @@ export default class App extends Component<Props> {
         this.launchWalletNamed(
             'VippsTest',
             netsTest.backendUrlTest + "v2/payment/" + netsTest.merchantIdTest,
-            '{"amount":{"currencyCode":"NOK","totalAmount":100,"vatAmount":0},"customerId":"000012","method":{"id":"Vipps"},"orderNumber":"PiaSDK-RN","paymentMethodActionList":"[{PaymentMethod:Vipps}]","phoneNumber":"'+mobileNumber+'","redirectUrl":"eu.nets.pia.reactPia://piasdk","storeCard":false}'
+            '{"amount":{"currencyCode":"NOK","totalAmount":100,"vatAmount":0},"customerId":"000012","method":{"id":"Vipps"},"orderNumber":"PiaSDK-RN-iOS","paymentMethodActionList":"[{PaymentMethod:Vipps}]","phoneNumber":"'+mobileNumber+'","redirectUrl":"eu.nets.pia.reactPia://piasdk","storeCard":false}'
         ) 
     }
 
@@ -295,7 +302,7 @@ export default class App extends Component<Props> {
         this.launchWalletNamed(
             'Swish',
             netsProduction.backendUrlProd + "v2/payment/" + netsProduction.merchantIdProd,
-            '{"amount":{"currencyCode":"SEK","totalAmount":100,"vatAmount":0},"customerId":"000012","method":{"id":"SwishM"},"orderNumber":"PiaSDK-RN","paymentMethodActionList":"[{PaymentMethod:SwishM}]","redirectUrl":"eu.nets.pia.reactPia://piasdk","storeCard":false}'
+            '{"amount":{"currencyCode":"SEK","totalAmount":100,"vatAmount":0},"customerId":"000012","method":{"id":"SwishM"},"orderNumber":"PiaSDK-RN-iOS","paymentMethodActionList":"[{PaymentMethod:SwishM}]","redirectUrl":"eu.nets.pia.reactPia://piasdk","storeCard":false}'
         ) 
     }
 
@@ -303,7 +310,7 @@ export default class App extends Component<Props> {
         this.launchWalletNamed(
             'MobilePayTest',
             netsTest.backendUrlTest + "v2/payment/" + netsTest.merchantIdTest,
-			"{\"amount\":{\"totalAmount\":1000,\"vatAmount\":0,\"currencyCode\":\"EUR\"},\"storeCard\":false,\"method\":{\"id\":\"MobilePay\",\"fee\":0,\"displayName\":\"MobilePay\"},\"redirectUrl\":\"eu.nets.pia.reactPia://piasdk:\\/\\/piasdk?wallet=mobilepay\",\"customerId\":\"000002\",\"orderNumber\":\"PiaSDK-RN\"}"        
+			"{\"amount\":{\"totalAmount\":1000,\"vatAmount\":0,\"currencyCode\":\"EUR\"},\"storeCard\":false,\"method\":{\"id\":\"MobilePay\",\"fee\":0,\"displayName\":\"MobilePay\"},\"redirectUrl\":\"eu.nets.pia.reactPia://piasdk:\\/\\/piasdk?wallet=mobilepay\",\"customerId\":\"000002\",\"orderNumber\":\"PiaSDK-RN-iOS\"}"        
 		) 
     }
 
@@ -311,7 +318,7 @@ export default class App extends Component<Props> {
         this.launchWalletNamed(
             'MobilePay',
             netsProduction.backendUrlProd + "v2/payment/" + netsProduction.merchantIdProd,
-			"{\"amount\":{\"totalAmount\":1000,\"vatAmount\":0,\"currencyCode\":\"EUR\"},\"storeCard\":false,\"method\":{\"id\":\"MobilePay\",\"fee\":0,\"displayName\":\"MobilePay\"},\"redirectUrl\":\"eu.nets.pia.reactPia://piasdk:\\/\\/piasdk?wallet=mobilepay\",\"customerId\":\"000002\",\"orderNumber\":\"PiaSDK-RN\"}"        
+			"{\"amount\":{\"totalAmount\":1000,\"vatAmount\":0,\"currencyCode\":\"EUR\"},\"storeCard\":false,\"method\":{\"id\":\"MobilePay\",\"fee\":0,\"displayName\":\"MobilePay\"},\"redirectUrl\":\"eu.nets.pia.reactPia://piasdk:\\/\\/piasdk?wallet=mobilepay\",\"customerId\":\"000002\",\"orderNumber\":\"PiaSDK-RN-iOS\"}"        
 		) 
     }
 
@@ -328,17 +335,17 @@ export default class App extends Component<Props> {
                     'Accept': 'application/json;charset=utf-8;version=2.0',
                     'Content-Type': 'application/json;charset=utf-8;version=2.0'
                 },
-                body: '{"customerId":"000012","orderNumber":"PiaSDK-RN","amount": {"currencyCode": "EUR", "vatAmount":0, "totalAmount":"1000"},"method": {"id":"EasyPayment","displayName":"","fee":""},"cardId":"492500******0004","storeCard": true,"merchantId":"","token":"","serviceTyp":"","paymentMethodActionList":"","phoneNumber":"","currencyCode":"","redirectUrl":"","language":""}'
+                body: '{"customerId":"000012","orderNumber":"PiaSDK-RN-iOS","amount": {"currencyCode": "EUR", "vatAmount":0, "totalAmount":"1000"},"method": {"id":"EasyPayment","displayName":"","fee":""},"cardId":"492500******0004","storeCard": true,"merchantId":"","token":"","serviceTyp":"","paymentMethodActionList":"","phoneNumber":"","currencyCode":"","redirectUrl":"","language":""}'
 
             }).then((response) => response.json())
                 .then((responseJson) => {
                     console.log('onResponse: ' + responseJson)
                     console.log('onResponse' + responseJson.transactionId)
-                    PiaSDK.buildTransactionInfo(responseJson.transactionId, responseJson.redirectOK, null);
+                    PiaSDK.buildTransactionInfo(responseJson.transactionId, responseJson.redirectOK);
                 })
                 .catch((error) => {
                     console.error(error);
-                    PiaSDK.buildTransactionInfo(null, null, null);
+                    PiaSDK.buildTransactionInfo(null, null);
                 });
         });
     }
@@ -356,41 +363,21 @@ export default class App extends Component<Props> {
                     'Accept': 'application/json;charset=utf-8;version=2.0',
                     'Content-Type': 'application/json;charset=utf-8;version=2.0'
                 },
-                body: '{"customerId":"000012","orderNumber":"PiaSDK-RN","amount": {"currencyCode": "EUR", "vatAmount":0, "totalAmount":"1000"},"method": {"id":"EasyPayment","displayName":"","fee":""},"cardId":"492500******0004","storeCard": true,"merchantId":"","token":"","serviceTyp":"","paymentMethodActionList":"","phoneNumber":"","currencyCode":"","redirectUrl":"","language":""}'
+                body: '{"customerId":"000012","orderNumber":"PiaSDK-RN-iOS","amount": {"currencyCode": "EUR", "vatAmount":0, "totalAmount":"1000"},"method": {"id":"EasyPayment","displayName":"","fee":""},"cardId":"492500******0004","storeCard": true,"merchantId":"","token":"","serviceTyp":"","paymentMethodActionList":"","phoneNumber":"","currencyCode":"","redirectUrl":"","language":""}'
             }).then((response) => response.json())
                 .then((responseJson) => {
-                    PiaSDK.buildTransactionInfo(responseJson.transactionId, responseJson.redirectOK, null);
+                    PiaSDK.buildTransactionInfo(responseJson.transactionId, responseJson.redirectOK);
                 })
                 .catch((error) => {
                     console.error(error);
-                    PiaSDK.buildTransactionInfo(null, null, null);
+                    PiaSDK.buildTransactionInfo(null, null);
                 });
         });
     }
 
-    payViaPaytrailNordea = () => {
-        PiaSDK.buildOrderInfo(10, "EUR");
-        PiaSDK.buildMerchantInfo(netsTest.merchantIdTest, true, false);
+    
 
-        var orderId = this.getOrderId();
-        console.log('orderId ' + orderId);
-
-        fetch(netsTest.backendUrlTest + "v2/payment/" + netsTest.merchantIdTest + "/register", {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json;charset=utf-8;version=2.0',
-                'Content-Type': 'application/json;charset=utf-8;version=2.0'
-            },
-            body: '{"amount":{"currencyCode":"EUR","totalAmount":1000,"vatAmount":0},"customerTown":"Helsinki","customerPostCode":"00510","customerLastName":"Buyer","customerId":"000012","customerAddress1":"Testaddress","customerCountry":"FI","customerEmail":"bill.buyer@nets.eu","customerFirstName":"Bill","customerId":"000013","method":{"id":"PaytrailNordea"},"orderNumber":' + orderId + ',"storeCard":false}'
-        }).then((response) => response.json())
-            .then((responseJson) => {
-                PiaSDK.buildTransactionInfo(responseJson.transactionId, responseJson.redirectOK, null);
-                PiaSDK.startPaytrailProcess(netsTest.merchantIdTest,true);
-            })
-            .catch((error) => {
-                console.error(error);
-            });
-    }
+        
 
     getOrderId() {
         var checkDigit = -1;

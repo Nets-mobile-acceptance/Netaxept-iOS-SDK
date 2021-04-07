@@ -76,7 +76,7 @@ namespace XamarinPiaSample
 
                 var controller = PiaSDK.ControllerForCardPaymentProcess(cardPayment, true,
                     transactionCallback:(savecard, callback) => {
-                        registerCardPaymnet(false, completionHandler: () => {
+                        registerCardPaymnet(false, false, completionHandler: () => {
                             if(transactionInfo != null){
                                 callback(CardRegistrationResponse.SuccessWithTransactionID(transactionInfo.TransactionID, transactionInfo.redirectUrl));
                             } else {
@@ -199,7 +199,7 @@ namespace XamarinPiaSample
 
                 PiaSDK.AddTransitionViewIn(this.View);
 
-                registerCardPaymnet(false, completionHandler: () =>
+                registerCardPaymnet(false, false, completionHandler: () =>
                 {
                     var controller = new PiaSDKController(merchantId, transactionInfo, true);
                     PiaDelegate newDelegate = new PiaDelegate();
@@ -213,16 +213,69 @@ namespace XamarinPiaSample
                 });
             };
 
+
+            UIButton payWithSBusinessCard = new UIButton();
+            payWithSBusinessCard.Frame = new CGRect(40f, 480f, buttonWidth, 40f);
+            payWithSBusinessCard.SetTitle("Pay 10 EUR with SBusiness Card", UIControlState.Normal);
+            payWithSBusinessCard.BackgroundColor = UIColor.LightGray;
+
+            payWithSBusinessCard.TouchUpInside += (sender, e) =>
+            {
+
+                var merchantInfo = MerchantDetails.MerchantWithID("YOUR_MERCHANT_ID", true);
+
+                CardPaymentProcess cardPayment = PaymentProcess.CardPaymentWithMerchant(merchantInfo, 1000, @"EUR");
+
+                var controller = PiaSDK.ControllerForSBusinessCardPaymentProcess(cardPayment, true,
+                    transactionCallback: (savecard, callback) => {
+                        registerCardPaymnet(false, true, completionHandler: () => {
+                            if (transactionInfo != null)
+                            {
+                                callback(CardRegistrationResponse.SuccessWithTransactionID(transactionInfo.TransactionID, transactionInfo.redirectUrl));
+                            }
+                            else
+                            {
+                                callback(CardRegistrationResponse.Failure(registrationError));
+                            }
+                        }); ;
+                    },
+                    success: (piaController) => {
+                        InvokeOnMainThread(() => {
+                            piaController.DismissViewController(true, completionHandler: () => {
+                                showAlert("Payment is successfull");
+                            });
+                        });
+                    },
+                    cancellation: (piaController) => {
+                        InvokeOnMainThread(() => {
+                            piaController.DismissViewController(true, completionHandler: () => {
+                                showAlert("transaction cancelled");
+                            });
+                        });
+                    },
+                    failure: (piaController, error) => {
+                        InvokeOnMainThread(() => {
+                            piaController.DismissViewController(true, completionHandler: () => {
+                                showAlert(error.LocalizedDescription);
+                            });
+                        });
+                    });
+
+                this.PresentViewController(controller, true, null);
+
+            };
+
             this.View.AddSubview(payWithCard);
             this.View.AddSubview(payWithSavedCard);
             this.View.AddSubview(payWithSavedCardSkipConfirmation);
             this.View.AddSubview(payWithMobilePay);
             this.View.AddSubview(payWithPaytrail);
+            this.View.AddSubview(payWithSBusinessCard);
 
 
         }
 
-        public void registerCardPaymnet(bool payWithPayPal, Action completionHandler)
+        public void registerCardPaymnet(bool payWithPayPal, bool Sbusiness, Action completionHandler)
         {
 
             var merchantURL = @"YOUR MERCHANT BACKEND URL HERE";
@@ -361,7 +414,8 @@ namespace XamarinPiaSample
                     method.SetValueForKey(new NSString(@"Vipps"), new NSString(@"id"));
                     method.SetValueForKey(new NSString(@"Vipps"), new NSString(@"displayName"));
                     jsonDictionary.SetValueForKey(new NSString(@"+471111..."), new NSString(@"phoneNumber"));
-                    break;
+
+                        break;
                 }
                 case MobileWallet.Swish:
                 {
@@ -372,7 +426,7 @@ namespace XamarinPiaSample
                 }
                 case MobileWallet.MobilePay:
                 {
-                    amount.SetValueForKey(new NSString(@"EUR"), new NSString(@"currencyCode"));
+                    amount.SetValueForKey(new NSString(@"DKK"), new NSString(@"currencyCode"));
                     method.SetValueForKey(new NSString(@"MobilePay"), new NSString(@"id"));
                     method.SetValueForKey(new NSString(@"MobilePay"), new NSString(@"displayName"));
                     break;
@@ -387,9 +441,7 @@ namespace XamarinPiaSample
             jsonDictionary.SetValueForKey(new NSString(@"PiaSDK-iOS-xamarin"), new NSString(@"orderNumber"));
             jsonDictionary.SetValueForKey(new NSNumber(false), new NSString(@"storeCard"));
 
-
-
-             jsonDictionary.SetValueForKey(new NSString("YOUR_APP_SCHEME_URL://piasdk"), new NSString(@"redirectUrl"));
+             jsonDictionary.SetValueForKey(new NSString("YOUR_APP_SCHEME_URL://piasdk?wallet=WALLET_NAME(vipps/swish/mobilepay)"), new NSString(@"redirectUrl"));
 
 
 
@@ -418,18 +470,24 @@ namespace XamarinPiaSample
                             NSString transactionId = (Foundation.NSString)resultsDictionary[@"transactionId"];
                             NSString walletURL = (Foundation.NSString)resultsDictionary[@"walletUrl"];
                             transactionInfo = new NPITransactionInfo(walletURL);
-                            callback(WalletRegistrationResponse.SuccessWithWalletURL(NSUrl.FromString(transactionInfo.WalletUrl)));
+                            InvokeOnMainThread(() => {
+                                callback(WalletRegistrationResponse.SuccessWithWalletURL(NSUrl.FromString(transactionInfo.WalletUrl)));
+                            });
                         }
                         else
                         {
                             transactionInfo = null;
-                            callback(WalletRegistrationResponse.Failure(error));
+                            InvokeOnMainThread(() => {
+                                callback(WalletRegistrationResponse.Failure(error));
+                            });
                         }
                     }
                     else
                     {
                         transactionInfo = null;
-                        callback(WalletRegistrationResponse.Failure(error));
+                        InvokeOnMainThread(() => {
+                            callback(WalletRegistrationResponse.Failure(error));
+                        });
                     }
                 });
 
@@ -493,7 +551,7 @@ namespace XamarinPiaSample
 
         public override void DoInitialAPICall(PiaSDKController PiaSDKController, bool storeCard, Action<NPITransactionInfo> completionHandler)
         {
-            vc.registerCardPaymnet(false, completionHandler: () =>
+            vc.registerCardPaymnet(false,false, completionHandler: () =>
             {
                 completionHandler(vc.transactionInfo);
             });
@@ -539,6 +597,11 @@ namespace XamarinPiaSample
         }
 
         public override void RegisterPaymentWithPayPal(PiaSDKController PiaSDKController, Action<NPITransactionInfo> completionHandler)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void RegisterPaymentWithPaytrail(PiaSDKController PiaSDKController, Action<NPITransactionInfo> completionHandler)
         {
             throw new NotImplementedException();
         }

@@ -82,7 +82,7 @@ namespace XamarinPiaSample
 
         public override bool OpenUrl(UIApplication app, NSUrl url, NSDictionary options)
         {
-            return XamarinPia.PiaSDK.ApplicationDidOpenFromRedirectWith(url, options);
+            return XamarinPia.PiaSDK.WillHandleRedirectWith(url, options);
         }
     }
 }

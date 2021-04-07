@@ -36,6 +36,7 @@ namespace XamarinPia
         Dankort,
         Jcb,
         Maestro,
+	Sbusiness,
         Other
     }
 
@@ -78,6 +79,12 @@ namespace XamarinPia
         Danish,
         Norwegian,
         Finnish
+    }
+
+    public enum PayButtonTextLabelOption : uint
+    {
+	Pay = 0,
+	Reserve
     }
     
     [Native]

@@ -32,24 +32,42 @@ enum : NSUInteger {
 } MobileWallet;
 
 @interface PiaSDKBridge()
-{
-  RCTResponseSenderBlock registerPaymentCallback;
-  
-}
 @property (strong, nonatomic) NPITransactionInfo *_Nullable transactionInfo;
 @property (strong, nonatomic) NPIOrderInfo *_Nullable orderInfo;
 @property (strong, nonatomic) NPIMerchantInfo *_Nullable merchantInfo;
 @property (strong, nonatomic) NPITokenCardInfo *_Nullable tokenCardInfo;
+@property (strong, nonatomic) CardPaymentProcess *_Nullable cardPaymentProcess;
+@property (strong, nonatomic) PayPalPaymentProcess *_Nullable payPalPaymentProcess;
+@property (strong, nonatomic) PaytrailPaymentProcess *_Nullable paytrailPaymentProcess;
 @property (nonatomic, nullable) void (^completionHandler)(NPITransactionInfo*);
 @property (nonatomic, nullable) void (^completionWithWalletURL)(NSString*);
+@property (nonatomic, nullable) void (^cardRegistrationResponse)(CardRegistrationResponse * cardRegistrationResponse);
+@property (nonatomic, nullable) void (^payPalRegistrationResponse)(PayPalRegistrationResponse * payPalRegistrationResponse);
+@property (nonatomic, nullable) void (^paytrailRegistrationResponse)(PaytrailRegistrationResponse * paytrailRegistrationResponse);
+
 
 @end
 
 @implementation PiaSDKBridge
 
+RCTResponseSenderBlock registerPaymentCallback = ^(NSArray * unused){};
+
+
 RCT_EXPORT_MODULE()
 - (NSArray<NSString *> *)supportedEvents {
   return @[@"PiaSDKResult"];
+}
+
+RCT_EXPORT_METHOD(cardPaymentProcess:(int)amount currencyCode:(NSString*)currencyCode merchantId:(NSString*)merchantId testMode:(BOOL)testMode) {
+  _cardPaymentProcess = [PaymentProcess cardPaymentWithMerchant:[MerchantDetails merchantWithID:merchantId inTest:testMode] amount:amount currency:currencyCode];
+}
+
+RCT_EXPORT_METHOD(payPalPaymentProcess:(NSString*)merchantId testMode:(BOOL)testMode) {
+  _payPalPaymentProcess = [PaymentProcess payPalPaymentWithMerchant:[MerchantDetails merchantWithID:merchantId inTest:testMode]];
+}
+
+RCT_EXPORT_METHOD(paytrailPaymentProcess:(NSString*)merchantId testMode:(BOOL)testMode) {
+  _paytrailPaymentProcess = [PaymentProcess paytrailPaymentWithMerchant:[MerchantDetails merchantWithID:merchantId inTest:testMode]];
 }
 
 RCT_EXPORT_METHOD(buildOrderInfo:(int)amount currencyCode:(NSString*)currencyCode) {
@@ -59,61 +77,147 @@ RCT_EXPORT_METHOD(buildOrderInfo:(int)amount currencyCode:(NSString*)currencyCod
 RCT_EXPORT_METHOD(buildMerchantInfo:(NSString*)merchantId testMode:(BOOL)testMode cvcRequired:(BOOL)cvcRequired) {
   _merchantInfo = [[NPIMerchantInfo alloc] initWithIdentifier:merchantId testMode:testMode cvcRequired:cvcRequired];
 }
+
 RCT_EXPORT_METHOD(buildTokenCardInfo:(NSString*)tokenId schemeId:(NSString*)schemeId expiryDate:(NSString*)expiryDate cvcRequired:(BOOL)cvcRequired) {
   _tokenCardInfo = [[NPITokenCardInfo alloc] initWithTokenId:tokenId schemeType:[self mapCardScheme:schemeId] expiryDate:expiryDate cvcRequired:(BOOL)cvcRequired];
 }
 
-RCT_EXPORT_METHOD(buildTransactionInfo:(NSString*)transactionID redirectUrl:(NSString*)redirectUrl walleturl:(NSString*)walleturl) {
+RCT_EXPORT_METHOD(cardRegistrationCallbackWithTransactionId:(NSString*)transactionID
+                  redirectUrl:(NSString*)redirectUrl){
+  if(transactionID == nil) {
+    [self sendEventWithName:@"PiaSDKResult" body:@{@"name": @"Register call failed"}];
+  }else {
+    dispatch_async(dispatch_get_main_queue(), ^{
+    self.cardRegistrationResponse([CardRegistrationResponse successWithTransactionID:transactionID redirectURL:redirectUrl]);
+    });
+  }
+}
+
+RCT_EXPORT_METHOD(payPalRegistrationCallbackWithTransactionId:(NSString*)transactionID
+                  redirectUrl:(NSString*)redirectUrl){
+  if(transactionID == nil) {
+    [self sendEventWithName:@"PiaSDKResult" body:@{@"name": @"Register call failed"}];
+  }else {
+    dispatch_async(dispatch_get_main_queue(), ^{
+    self.payPalRegistrationResponse([PayPalRegistrationResponse successWithTransactionID:transactionID redirectURL:redirectUrl]);
+    });
+  }
+}
+
+RCT_EXPORT_METHOD(paytrailRegistrationCallbackWithTransactionId:(NSString*)transactionID
+                  redirectUrl:(NSString*)redirectUrl){
+  if(transactionID == nil) {
+    [self sendEventWithName:@"PiaSDKResult" body:@{@"name": @"Register call failed"}];
+  }else {
+    dispatch_async(dispatch_get_main_queue(), ^{
+    self.paytrailRegistrationResponse([PaytrailRegistrationResponse successWithTransactionID:transactionID redirectURL:redirectUrl]);
+    });
+  }
+}
+
+
+
+
+RCT_EXPORT_METHOD(buildTransactionInfo:(NSString*)transactionID
+                  redirectUrl:(NSString*)redirectUrl){
   
   if(transactionID == nil) {
     [self sendEventWithName:@"PiaSDKResult" body:@{@"name": @"Register call failed"}];
   }
-  
-  if(walleturl == nil) {
     _transactionInfo = [[NPITransactionInfo alloc] initWithTransactionID:transactionID redirectUrl:redirectUrl];
     dispatch_async(dispatch_get_main_queue(), ^{
-      if(self.completionHandler){
+    if(self.completionHandler){
         self.completionHandler(self.transactionInfo);
       }
     });
-  } else {
-    _transactionInfo = [[NPITransactionInfo alloc] initWithWalletUrl:walleturl];
-    dispatch_async(dispatch_get_main_queue(), ^{
-      if(self.completionWithWalletURL){
-        self.completionWithWalletURL(self.transactionInfo.walletUrl);
-      }
-    });
+}
+
+-(void)sendResult:(NSString*)message viewController:(UIViewController*)viewController{
+  dispatch_async(dispatch_get_main_queue(), ^{
+    [viewController dismissViewControllerAnimated:YES completion:^{
+      [self sendEventWithName:@"PiaSDKResult" body:@{@"name":message}];
+    }];
+  });
+}
+
+
+RCT_EXPORT_METHOD(startCardPayment:(BOOL)isCVCRequired
+                  registrationCallback:(RCTResponseSenderBlock)registrationCallback)
+{
+  dispatch_async(dispatch_get_main_queue(), ^{
     
-  }
+    UIViewController *controller = [PiaSDK controllerForCardPaymentProcess:self.cardPaymentProcess isCVCRequired:isCVCRequired transactionCallback:^(BOOL saveCard, void (^callback)(CardRegistrationResponse * cardRegistrationResponse)) {
+      self.cardRegistrationResponse = callback;
+      registrationCallback(@[]);
+    } success:^(UIViewController *viewController) {
+      [self sendResult:@"success" viewController:viewController];
+    } cancellation:^(UIViewController *viewController) {
+      [self sendResult:@"cancelled" viewController:viewController];
+    } failure:^(UIViewController *viewController, CardError cardError) {
+      [self sendResult:cardError.localizedDescription viewController:viewController];
+    }];
+
+    [[UIApplication sharedApplication].delegate.window.rootViewController presentViewController:controller animated:YES completion:nil];
+  });
+}
+
+RCT_EXPORT_METHOD(startPayPalProcess:(RCTResponseSenderBlock)registrationCallback) {
+  dispatch_async(dispatch_get_main_queue(), ^{
+
+    UIViewController *controller = [PiaSDK controllerForPayPalPaymentProcess:self.payPalPaymentProcess payPalRegistrationCallback:^(void (^callback)(PayPalRegistrationResponse * _Nonnull)) {
+      self.payPalRegistrationResponse = callback;
+      registrationCallback(@[]);
+    } success:^(UIViewController * viewController) {
+      [self sendResult:@"success" viewController:viewController];
+    } cancellation:^(UIViewController *viewController) {
+      [self sendResult:@"cancelled" viewController:viewController];
+    } failure:^(UIViewController *viewController, CardError cardError) {
+      [self sendResult:cardError.localizedDescription viewController:viewController];
+    }];
+
+    [[UIApplication sharedApplication].delegate.window.rootViewController presentViewController:controller animated:YES completion:nil];
+  });
+}
+
+RCT_EXPORT_METHOD(startPaytrailProcess:(RCTResponseSenderBlock)registrationCallback) {
+  dispatch_async(dispatch_get_main_queue(), ^{
     
-}
-
-RCT_EXPORT_METHOD(start:(RCTResponseSenderBlock)callback) {
-  registerPaymentCallback = callback;
-  dispatch_async(dispatch_get_main_queue(), ^{
-    PiaSDKController *controller = [[PiaSDKController alloc] initWithOrderInfo:self.orderInfo merchantInfo:self.merchantInfo];
-    controller.PiaDelegate = self;
+    UIViewController *controller = [PiaSDK controllerForPaytrailPaymentProcess:self.paytrailPaymentProcess
+                  paytrailRegistrationCallback:^(void (^ callback)(PaytrailRegistrationResponse * _Nonnull)) {
+     self.paytrailRegistrationResponse = callback;
+     registrationCallback(@[]);
+   } success:^(UIViewController * viewController) {
+     [self sendResult:@"success" viewController:viewController];
+   } cancellation:^(UIViewController *viewController) {
+     [self sendResult:@"cancelled" viewController:viewController];
+   } failure:^(UIViewController *viewController, CardError cardError) {
+     [self sendResult:cardError.localizedDescription viewController:viewController];
+   }];
+    
     [[UIApplication sharedApplication].delegate.window.rootViewController presentViewController:controller animated:YES completion:nil];
   });
 }
 
-RCT_EXPORT_METHOD(saveCard:(RCTResponseSenderBlock)callback) {
-  registerPaymentCallback = callback;
+RCT_EXPORT_METHOD(startSBusinessCardPayment:(BOOL)isCVCRequired
+                  registrationCallback:(RCTResponseSenderBlock)registrationCallback) {
   dispatch_async(dispatch_get_main_queue(), ^{
-    PiaSDKController *controller = [[PiaSDKController alloc] initWithMerchantInfo:self.merchantInfo];
-    controller.PiaDelegate = self;
+    
+    UIViewController *controller = [PiaSDK controllerForSBusinessCardPaymentProcess:self.cardPaymentProcess isCVCRequired:isCVCRequired transactionCallback:^(BOOL savecard, void (^ callback)(CardRegistrationResponse * _Nonnull)) {
+      self.cardRegistrationResponse = callback;
+      registrationCallback(@[]);
+    } success:^(UIViewController * viewController) {
+      [self sendResult:@"success" viewController:viewController];
+    } cancellation:^(UIViewController *viewController) {
+      [self sendResult:@"cancelled" viewController:viewController];
+    } failure:^(UIViewController *viewController, CardError cardError) {
+      [self sendResult:cardError.localizedDescription viewController:viewController];
+    }];
+    
     [[UIApplication sharedApplication].delegate.window.rootViewController presentViewController:controller animated:YES completion:nil];
   });
 }
 
-RCT_EXPORT_METHOD(startPayPalProcess:(RCTResponseSenderBlock)callback) {
-  registerPaymentCallback = callback;
-  dispatch_async(dispatch_get_main_queue(), ^{
-    PiaSDKController *controller = [[PiaSDKController alloc] initForPayPalPurchaseWithMerchantInfo:self.merchantInfo];
-    controller.PiaDelegate = self;
-    [[UIApplication sharedApplication].delegate.window.rootViewController presentViewController:controller animated:YES completion:nil];
-  });
-}
+
 
 - (WalletPaymentProcess * _Nullable)walletPaymentProcessForName:(NSString *)walletName {
   NSArray * supportedWallets = @[@"swish", @"vipps", @"vippstest", @"mobilepay", @"mobilepaytest"];
@@ -198,7 +302,7 @@ RCT_EXPORT_METHOD(startSkipConfirmation:(RCTResponseSenderBlock)callback) {
   registerPaymentCallback = callback;
   dispatch_async(dispatch_get_main_queue(), ^{
     PiaSDKController *controller = [[PiaSDKController alloc] initWithTokenCardInfo:self.tokenCardInfo merchantInfo:self.merchantInfo orderInfo:self.orderInfo];
-    controller.PiaDelegate = self;
+    controller.piaDelegate = self;
     [[UIApplication sharedApplication].delegate.window.rootViewController presentViewController:controller animated:YES completion:nil];
   });
 }
@@ -207,18 +311,11 @@ RCT_EXPORT_METHOD(startShowConfirmation:(RCTResponseSenderBlock)callback) {
   registerPaymentCallback = callback;
   dispatch_async(dispatch_get_main_queue(), ^{
     PiaSDKController *controller = [[PiaSDKController alloc] initWithTestMode:TRUE tokenCardInfo:self.tokenCardInfo merchantID:self.merchantInfo.identifier orderInfo:self.orderInfo requireCardConfirmation:TRUE];
-    controller.PiaDelegate = self;
+    controller.piaDelegate = self;
     [[UIApplication sharedApplication].delegate.window.rootViewController presentViewController:controller animated:YES completion:nil];
   });
 }
 
-RCT_EXPORT_METHOD(startPaytrailProcess:(NSString*)merchantId testMode:(BOOL)testMode) {
-  dispatch_async(dispatch_get_main_queue(), ^{
-    PiaSDKController *controller = [[PiaSDKController alloc] initPaytrailBankPaymentWithMerchantID:merchantId transactionInfo:self.transactionInfo testMode:testMode];
-    controller.PiaDelegate = self;
-    [[UIApplication sharedApplication].delegate.window.rootViewController presentViewController:controller animated:YES completion:nil];
-  });
-}
 
 #pragma mark - PiaSDKDelegate
 
@@ -255,21 +352,6 @@ RCT_EXPORT_METHOD(startPaytrailProcess:(NSString*)merchantId testMode:(BOOL)test
 - (void)registerPaymentWithApplePayData:(PiaSDKController * _Nonnull)PiaSDKController paymentData:(PKPaymentToken * _Nonnull)paymentData newShippingContact:(PKContact * _Nullable)newShippingContact withCompletion:(void (^ _Nonnull)(NPITransactionInfo * _Nullable))completionHandler {
 }
 
-- (void)registerPaymentWithPayPal:(PiaSDKController * _Nonnull)PiaSDKController withCompletion:(void (^ _Nonnull)(NPITransactionInfo * _Nullable))completionHandler {
-  _completionHandler = completionHandler;
-  registerPaymentCallback(@[]);
-}
-
-- (void)registerVippsPayment:(void (^)(NSString * _Nullable))completionWithWalletURL{
-  _completionWithWalletURL = completionWithWalletURL;
-  registerPaymentCallback(@[]);
-}
-
-- (void)registerSwishPayment:(void (^)(NSString * _Nullable))completionWithWalletURL {
-  _completionWithWalletURL = completionWithWalletURL;
-  registerPaymentCallback(@[]);
-}
-
 #pragma mark - WalletPaymentDelegate
 
 - (void)walletPaymentDidSucceed:(UIView *)transitionIndicatorView{
@@ -293,7 +375,7 @@ RCT_EXPORT_METHOD(startPaytrailProcess:(NSString*)merchantId testMode:(BOOL)test
 
 -(SchemeType)mapCardScheme:(NSString*)issuer {
   
-  if([issuer isEqualToString:@"visa"]){
+  if([issuer isEqualToString:@"VISA"]){
     return VISA;
   } else if ([issuer isEqualToString:@"mastercard"]) {
     return MASTER_CARD;
