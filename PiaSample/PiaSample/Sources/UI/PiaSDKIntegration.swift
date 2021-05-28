@@ -209,14 +209,20 @@ extension AppNavigation {
     func registerNewCard(_ sender: SettingsViewController) {
         /// merchant BE expects order with a zero amount when saving a card
         orderDetails = SampleOrderDetails.make(with: Amount.zero)
-        let cardStorage = PaymentProcess.cardStorage(withMerchant: .merchant(withID: api.merchant.id, inTest: isTestMode))
+        let cardStorage = PaymentProcess.cardStorage(
+            withMerchant: .merchant(withID: api.merchant.id, inTest: isTestMode),
+            excludedCardSchemeSet: Merchant.excludedCardSchemeSet // Optional parameter to exclude certain card schemes
+        )
         navigationController.present(piaController(forPaymentType: cardStorage,commitType: .verifyNewCard), animated: true)
     }
     
     func registerNewSBusinessCard(_ sender: SettingsViewController) {
         /// merchant BE expects order with a zero amount when saving a card
         orderDetails = SampleOrderDetails.make(with: Amount.zero)
-        let cardStorage = PaymentProcess.cardStorage(withMerchant: .merchant(withID: api.merchant.id, inTest: isTestMode))
+        let cardStorage = PaymentProcess.cardStorage(
+            withMerchant: .merchant(withID: api.merchant.id, inTest: isTestMode),
+            excludedCardSchemeSet: Merchant.excludedCardSchemeSet // Optional parameter to exclude certain card schemes
+        )
         navigationController.present(piaControllerSBusiness(forPaymentType: cardStorage,commitType: .verifyNewCard), animated: true)
     }
 
@@ -227,6 +233,7 @@ extension AppNavigation {
 
         let cardPayment = PaymentProcess.cardPayment(
             withMerchant: .merchant(withID: api.merchant.id, inTest: isTestMode),
+            excludedCardSchemeSet: Merchant.excludedCardSchemeSet, // Optional parameter to exclude certain card schemes
             amount: UInt(orderDetails.amount.totalAmount),
             currency: orderDetails.amount.currencyCode
         )
@@ -268,6 +275,7 @@ extension AppNavigation {
 
         let cardPayment = PaymentProcess.cardPayment(
             withMerchant: .merchant(withID: api.merchant.id, inTest: isTestMode),
+            excludedCardSchemeSet: Merchant.excludedCardSchemeSet, // Optional parameter to exclude certain card schemes
             amount: UInt(orderDetails.amount.totalAmount),
             currency: orderDetails.amount.currencyCode
         )

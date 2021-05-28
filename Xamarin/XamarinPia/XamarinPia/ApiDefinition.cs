@@ -605,10 +605,20 @@ namespace XamarinPia
         [Export("cardStorageWithMerchant:")]
         CardStorage CardStorageWithMerchant(MerchantDetails merchant);
 
+	    // +(CardStorage * _Nonnull)cardStorageWithMerchant:(MerchantDetails * _Nonnull)merchant excludedCardSchemeSet:(CardScheme)excludedCardSchemeSet;
+	    [Static]
+	    [Export ("cardStorageWithMerchant:excludedCardSchemeSet:")]
+	    CardStorage CardStorageWithMerchant (MerchantDetails merchant, CardScheme excludedCardSchemeSet);
+
         // +(CardPayment * _Nonnull)cardPaymentWithMerchant:(MerchantDetails * _Nonnull)merchant amount:(NSUInteger)amount currency:(Currency _Nonnull)currency;
         [Static]
         [Export("cardPaymentWithMerchant:amount:currency:")]
         CardPayment CardPaymentWithMerchant(MerchantDetails merchant, nuint amount, string currency);
+
+	    // +(CardPayment * _Nonnull)cardPaymentWithMerchant:(MerchantDetails * _Nonnull)merchant excludedCardSchemeSet:(CardScheme)excludedCardSchemeSet amount:(NSUInteger)amount currency:(Currency _Nonnull)currency;
+	    [Static]
+	    [Export ("cardPaymentWithMerchant:excludedCardSchemeSet:amount:currency:")]
+	    CardPayment CardPaymentWithMerchant (MerchantDetails merchant, CardScheme excludedCardSchemeSet, nuint amount, string currency);
 
         // +(WalletPaymentProcess * _Nonnull)walletPaymentForWallet:(Wallet)wallet;
         [Static]
@@ -639,6 +649,10 @@ namespace XamarinPia
         // @property (nonatomic) MerchantDetails * _Nonnull merchant;
         [Export ("merchant", ArgumentSemantic.Assign)]
         MerchantDetails Merchant { get; set; }
+
+	// @property (readonly) CardScheme excludedCardSchemeSet;
+	[Export ("excludedCardSchemeSet")]
+	CardScheme ExcludedCardSchemeSet { get; }
     }
 
     // @interface CardStorage : CardPaymentProcess
@@ -839,6 +853,12 @@ namespace XamarinPia
     [BaseType (typeof(NSObject))]
     interface PiaSDK
     {
+
+        // +(void)excludeCardSchemeOptionSet:(CardScheme)excludeOptionSet;
+        [Static]
+        [Export("excludeCardSchemeOptionSet:")]
+        void ExcludeCardSchemeOptionSet(CardScheme excludeOptionSet);
+
         // +(void)setTheme:(id<PiaSDKTheme> _Nonnull)theme forInterfaceStyle:(UIUserInterfaceStyle)interfaceStyle __attribute__((availability(ios, introduced=13.0)));
         [iOS(13, 0)]
         [Static]

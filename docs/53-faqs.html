@@ -22,7 +22,7 @@
         <a class="header-link" href="index.html">
           Pia Docs
         </a>
-         (80% documented)
+         (77% documented)
       </p>
     
       <p class="header-col--secondary">
@@ -202,6 +202,9 @@
             <a class="nav-group-name-link" href="Enums.html">Enumerations</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Enums/CardScheme.html">CardScheme</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Enums/PayButtonTextLabelOption.html">PayButtonTextLabelOption</a>
               </li>
               <li class="nav-group-task">
@@ -308,6 +311,7 @@
 <li><a href="#7-i-get-an-error-when-trying-to-install-netaxept-ios-sdk-through-carthage-what-should-i-do"><strong>I get an error when trying to install Netaxept iOS SDK through Carthage. What should I do?</strong></a></li>
 <li><a href="#8-github-upload-maximum-size-is-100mb-what-can-i-do-to-be-able-to-push-my-project-on-git"><strong>GitHub upload maximum size is 100MB. What can I do to be able to push my project on git?</strong></a></li>
 <li><a href="#9-my-app-was-rejected-by-apple-store-with-this-message-unable-to-process-application-at-this-time-due-to-the-following-error-invalid-bundle-how-can-i-fix-it"><strong>My app was rejected by Apple Store with this message: <em>&lsquo;Unable to process application at this time due to the following error: Invalid Bundle&rsquo;</em>. How can I fix it?</strong></a></li>
+<li><a href="#10-mobile-wallet-redirect-is-not-handled-by-the-sdk-despite-a-successful-redirect"><strong>Mobile wallet redirect is not handled by the SDK despite a successful redirect</strong></a></li>
 </ol>
 <h3 id='android-sdk-questions' class='heading'>Android SDK Questions</h3>
 
@@ -332,8 +336,10 @@
 <li><a href="#19-it-seems-a-fee-can-be-added-depending-on-the-payment-method-being-used-how-are-those-fees-handled-does-it-impact-the-reconciliation-reporting"><strong>It seems a fee can be added depending on the payment method being used. How are those fees handled? Does it impact the reconciliation reporting?</strong></a></li>
 <li><a href="#20-how-can-we-restrict-accepted-card-types-debitcredit-or-issuing-country-or-personalbusiness"><strong>How can we restrict accepted card types (debit/credit or issuing country or personal/business)?</strong></a></li>
 <li><a href="#21-is-it-possible-to-delete-information-of-a-card-saved-in-netaxept-eg-when-user-has-saved-a-card-and-then-want-to-delete-it"><strong>Is it possible to delete information of a card saved in Netaxept? E.g when user has saved a card and then want to delete it.</strong></a></li>
+<li><a href="#22-upon-a-transaction-error-response-from-netaxept-rest-apis-should-the-request-be-re-tried"><strong>Upon a transaction error response from Netaxept REST APIs, should the request be re-tried?</strong></a></li>
 </ol>
-<h2 id='21-a-href-22-upon-a-transaction-error-response-from-netaxept-rest-apis-should-the-request-be-re-tried-strong-upon-a-transaction-error-response-from-netaxept-rest-apis-should-the-request-be-re-tried-strong-a' class='heading'>21. <a href="#22-upon-a-transaction-error-response-from-netaxept-rest-apis-should-the-request-be-re-tried"><strong>Upon a transaction error response from Netaxept REST APIs, should the request be re-tried?</strong></a></h2>
+
+<hr>
 <h3 id='1-i-am-not-able-to-make-a-payment-save-a-card-the-sdk-returns-generic_error-how-can-i-find-the-root-cause' class='heading'>1. I am not able to make a payment / save a card. The SDK returns GENERIC_ERROR. How can I find the root cause?</h3>
 
 <hr>
@@ -447,7 +453,25 @@ mv "$FRAMEWORK_EXECUTABLE_PATH-merged" "$FRAMEWORK_EXECUTABLE_PATH"
 
 done 
 </code></pre>
-<h3 id='10-i-just-want-to-change-the-background-color-of-the-pay-button-how-can-i-do-that' class='heading'>10. I just want to change the background color of the PAY button. How can I do that?</h3>
+<h3 id='10-mobile-wallet-redirect-is-not-handled-by-the-sdk-despite-a-successful-redirect' class='heading'>10. Mobile wallet redirect is not handled by the SDK despite a successful redirect</h3>
+
+<hr>
+
+<p>This is mainly caused by missing information in the redirect URL. When making payment registration towards your merchant backend, a <code>redirectUrl: String</code> is required in the following format:</p>
+<pre class="highlight swift"><code><span class="nv">redirectUrl</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="s">"appScheme://piasdk?wallet=walletName"</span> <span class="p">(</span><span class="n">walletName</span> <span class="o">=</span> <span class="n">vipps</span><span class="o">/</span><span class="n">swish</span><span class="o">/</span><span class="n">mobilepay</span><span class="p">)</span>
+</code></pre>
+
+<p>Following a successful payment registration, this URL is passed to the wallet app which is then used when launching your application during redirect in <code>AppDelegate</code>:</p>
+<pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">application</span><span class="p">(</span><span class="n">_</span> <span class="nv">app</span><span class="p">:</span> <span class="kt">UIApplication</span><span class="p">,</span> <span class="kd">open</span> <span class="nv">url</span><span class="p">:</span> <span class="kt">URL</span><span class="p">,</span> <span class="nv">options</span><span class="p">:</span> <span class="p">[</span><span class="kt">UIApplication</span><span class="o">.</span><span class="kt">OpenURLOptionsKey</span> <span class="p">:</span> <span class="kt">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">[:])</span> <span class="o">-&gt;</span> <span class="kt">Bool</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="o">!</span><span class="kt">PiaSDK</span><span class="o">.</span><span class="nf">willHandleRedirect</span><span class="p">(</span><span class="nv">with</span><span class="p">:</span> <span class="n">url</span><span class="p">,</span> <span class="nv">andOptions</span><span class="p">:</span> <span class="n">options</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// This was not PiaSDK redirect, handle accordingly</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="kc">true</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>Regardless of a successful redirect, the SDK handles the redirect only if the <code>URL</code> contains the wallet name under <code>wallet</code> parameter.  </p>
+<h3 id='11-i-just-want-to-change-the-background-color-of-the-pay-button-how-can-i-do-that' class='heading'>11. I just want to change the background color of the PAY button. How can I do that?</h3>
 
 <hr>
 
@@ -469,7 +493,7 @@ done
 <p>Set the drawable through the API:</p>
 <pre class="highlight java"><code><span class="nc">PiaInterfaceConfiguration</span><span class="o">.</span><span class="na">getInstance</span><span class="o">().</span><span class="na">setMainButtonBackgroundColor</span><span class="o">(</span><span class="nc">ContextCompat</span><span class="o">.</span><span class="na">getDrawable</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="no">R</span><span class="o">.</span><span class="na">drawable</span><span class="o">.</span><span class="na">pay_btn_selector</span><span class="o">));</span> 
 </code></pre>
-<h3 id='11-why-is-my-release-apk-crashing-when-launching-sdk' class='heading'>11. Why is my release APK crashing when launching SDK?</h3>
+<h3 id='12-why-is-my-release-apk-crashing-when-launching-sdk' class='heading'>12. Why is my release APK crashing when launching SDK?</h3>
 
 <hr>
 
@@ -477,38 +501,38 @@ done
 <pre class="highlight gradle"><code><span class="o">-</span><span class="n">keep</span> <span class="kd">class</span> <span class="nc">eu</span><span class="o">.</span><span class="na">nets</span><span class="o">.</span><span class="na">pia</span><span class="o">.</span><span class="na">cardio</span><span class="o">.**</span> <span class="o">{</span> <span class="o">*;</span> <span class="o">}</span> 
 <span class="o">-</span><span class="n">dontwarn</span> <span class="n">eu</span><span class="o">.</span><span class="na">nets</span><span class="o">.</span><span class="na">pia</span><span class="o">.</span><span class="na">cardio</span><span class="o">.**</span> 
 </code></pre>
-<h3 id='12-i-am-trying-to-integrate-netaxept-sdk-but-my-application-cannot-import-classes-39-em-paymentflowcache-paymentregisterrequest-merchantrestclient-and-paymentregisterresponse-39-em-shouldn-39-t-these-classes-be-in-the-sdk-package' class='heading'>12. I am trying to integrate Netaxept SDK, but my application cannot import classes: &lsquo;<em>PaymentFlowCache, PaymentRegisterRequest, MerchantRestClient and PaymentRegisterResponse&rsquo;</em>. Shouldn&rsquo;t these classes be in the SDK package?</h3>
+<h3 id='13-i-am-trying-to-integrate-netaxept-sdk-but-my-application-cannot-import-classes-39-em-paymentflowcache-paymentregisterrequest-merchantrestclient-and-paymentregisterresponse-39-em-shouldn-39-t-these-classes-be-in-the-sdk-package' class='heading'>13. I am trying to integrate Netaxept SDK, but my application cannot import classes: &lsquo;<em>PaymentFlowCache, PaymentRegisterRequest, MerchantRestClient and PaymentRegisterResponse&rsquo;</em>. Shouldn&rsquo;t these classes be in the SDK package?</h3>
 
 <hr>
 
 <p>These classes are located in the <code>PiaSample</code> application, they are not part of the SDK. They suggest a way of integrating the SDK functionalities with the Sample Backend. You need to create your own flow based on your Backend Implementation. </p>
-<h3 id='13-when-integrating-the-sdk-in-my-project-is-sdk-initialization-required-from-application-class' class='heading'>13. When integrating the SDK in my project, is SDK initialization required from Application class?</h3>
+<h3 id='14-when-integrating-the-sdk-in-my-project-is-sdk-initialization-required-from-application-class' class='heading'>14. When integrating the SDK in my project, is SDK initialization required from Application class?</h3>
 
 <hr>
 
 <p>No, the Netaxept SDK does not require pre-initialization for payments. However, as our documentation states,  we suggest for best-practice to apply your UI Customization theme elements in the Application class, to have the SDK configured at run-time. </p>
-<h3 id='14-i-want-to-enable-specific-payment-methods-in-the-sdk-are-the-supported-card-schemes-visa-master-amex-etc-configured-somehow-via-the-sdk' class='heading'>14. I want to enable specific payment methods in the SDK. Are the supported card schemes (Visa, Master, Amex etc) configured somehow via the SDK?</h3>
+<h3 id='15-i-want-to-enable-specific-payment-methods-in-the-sdk-are-the-supported-card-schemes-visa-master-amex-etc-configured-somehow-via-the-sdk' class='heading'>15. I want to enable specific payment methods in the SDK. Are the supported card schemes (Visa, Master, Amex etc) configured somehow via the SDK?</h3>
 
 <hr>
 
 <p>The SDK supports multiple card types (it detects the card type while user is typing, it shows the card logo and handles CVC/CVV/CID length and validation according to it).<br>
 However, the SDK does not decide if your Merchant Configuration (based on MerchantID) is allowed to make payments with that specific card. This is handled on the Netaxept side. To support multiple card types payments, you need to add Acquirer Agreements in Netaxept Admin Portal. </p>
-<h3 id='15-the-sdk-is-failing-when-trying-to-make-a-payment-could-it-be-that-sdk-was-set-to-autofail-if-you-point-it-on-production-environment-with-a-debug-apk-build' class='heading'>15. The SDK is failing when trying to make a payment. Could it be that SDK was set to autofail if you point it on production environment with a debug APK build?</h3>
+<h3 id='16-the-sdk-is-failing-when-trying-to-make-a-payment-could-it-be-that-sdk-was-set-to-autofail-if-you-point-it-on-production-environment-with-a-debug-apk-build' class='heading'>16. The SDK is failing when trying to make a payment. Could it be that SDK was set to autofail if you point it on production environment with a debug APK build?</h3>
 
 <hr>
 
 <p>No! The SDK has no such functionality. Please refer to <a href="#1-i-am-not-able-to-make-a-payment--save-a-card-the-sdk-returns-generic_error-how-can-i-find-the-root-cause">this question</a>.</p>
-<h3 id='16-when-we-register-a-new-payment-card-is-it-possible-to-get-card-holder-name-from-netaxept' class='heading'>16. When we register a new payment card, is it possible to get card-holder name from Netaxept?</h3>
+<h3 id='17-when-we-register-a-new-payment-card-is-it-possible-to-get-card-holder-name-from-netaxept' class='heading'>17. When we register a new payment card, is it possible to get card-holder name from Netaxept?</h3>
 
 <hr>
 
 <p>No, get card-holder name is not supported by Nordic issuers and PSPs. </p>
-<h3 id='17-we-need-to-update-our-documentation-and-data-handling-policy-where-does-nets-store-the-payment-related-data' class='heading'>17. We need to update our documentation and data handling policy. Where does Nets store the payment related data?</h3>
+<h3 id='18-we-need-to-update-our-documentation-and-data-handling-policy-where-does-nets-store-the-payment-related-data' class='heading'>18. We need to update our documentation and data handling policy. Where does Nets store the payment related data?</h3>
 
 <hr>
 
 <p>As a <code>PCI-DSS Level 1</code> payment service provider, Netaxept data handling is complient with industry policy. Shall you need additional information, please contact Netaxept customer support.</p>
-<h3 id='18-can-3d-secure-be-forced-or-disabled' class='heading'>18. Can 3D Secure be forced or disabled?</h3>
+<h3 id='19-can-3d-secure-be-forced-or-disabled' class='heading'>19. Can 3D Secure be forced or disabled?</h3>
 
 <hr>
 
@@ -526,7 +550,7 @@ However, the SDK does not decide if your Merchant Configuration (based on Mercha
 </ul></li>
 <li>Shall you observe a different behaviour, please contact Netaxept customer support.</li>
 </ul>
-<h3 id='19-it-seems-a-fee-can-be-added-depending-on-the-payment-method-being-used-how-are-those-fees-handled-does-it-impact-the-reconciliation-reporting' class='heading'>19. It seems a fee can be added depending on the payment method being used. How are those fees handled? Does it impact the reconciliation reporting?</h3>
+<h3 id='20-it-seems-a-fee-can-be-added-depending-on-the-payment-method-being-used-how-are-those-fees-handled-does-it-impact-the-reconciliation-reporting' class='heading'>20. It seems a fee can be added depending on the payment method being used. How are those fees handled? Does it impact the reconciliation reporting?</h3>
 
 <hr>
 
@@ -539,7 +563,7 @@ The new directive doesn&rsquo;t cover the following: </p>
 </ul>
 
 <p>That means that it is still possible to surcharge for these card types. </p>
-<h3 id='20-how-can-we-restrict-accepted-card-types-debit-credit-or-issuing-country-or-personal-business' class='heading'>20. How can we restrict accepted card types (debit/credit or issuing country or personal/business)?</h3>
+<h3 id='21-how-can-we-restrict-accepted-card-types-debit-credit-or-issuing-country-or-personal-business' class='heading'>21. How can we restrict accepted card types (debit/credit or issuing country or personal/business)?</h3>
 
 <hr>
 
@@ -553,12 +577,12 @@ The new directive doesn&rsquo;t cover the following: </p>
 <li>rejected cards will trigger 301 error and users will be redirected to your app</li>
 <li>conversion tips: suggest user to retry transaction with another card / payment method</li>
 </ul>
-<h3 id='21-is-it-possible-to-delete-information-of-a-card-saved-in-netaxept-e-g-when-user-has-saved-a-card-and-then-want-to-delete-it' class='heading'>21. Is it possible to delete information of a card saved in Netaxept? E.g when user has saved a card and then want to delete it.</h3>
+<h3 id='22-is-it-possible-to-delete-information-of-a-card-saved-in-netaxept-e-g-when-user-has-saved-a-card-and-then-want-to-delete-it' class='heading'>22. Is it possible to delete information of a card saved in Netaxept? E.g when user has saved a card and then want to delete it.</h3>
 
 <hr>
 
 <p>If a user wants to delete a card, just delete the <code>panHash</code> from your database.</p>
-<h3 id='22-upon-a-transaction-error-response-from-netaxept-rest-apis-should-the-request-be-re-tried' class='heading'>22. Upon a transaction error response from Netaxept REST APIs, should the request be re-tried?</h3>
+<h3 id='23-upon-a-transaction-error-response-from-netaxept-rest-apis-should-the-request-be-re-tried' class='heading'>23. Upon a transaction error response from Netaxept REST APIs, should the request be re-tried?</h3>
 
 <hr>
 
@@ -571,7 +595,7 @@ The new directive doesn&rsquo;t cover the following: </p>
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2021 <a class="link" href="https://nets.eu" target="_blank" rel="external">Nets</a>. All rights reserved. (Last updated: 2021-04-07)</p>
+      <p>&copy; 2021 <a class="link" href="https://nets.eu" target="_blank" rel="external">Nets</a>. All rights reserved. (Last updated: 2021-05-26)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

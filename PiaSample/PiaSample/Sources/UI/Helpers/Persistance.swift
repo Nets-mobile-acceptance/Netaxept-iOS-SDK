@@ -28,6 +28,9 @@ enum PersistanceKey: String {
     case merchantID = "com.piaSample.merchantID"
     case baseURL = "com.piaSample.baseURL"
     case applePayMerchantID = "com.piaSample.applePayMerchantID"
+    
+    case excludedCardSchemeSet = "com.piaSample.excludedCardSchemeSet"
+
 }
 
 @propertyWrapper

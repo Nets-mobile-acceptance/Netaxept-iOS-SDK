@@ -83,7 +83,7 @@ enum Settings {
             NPIInterfaceConfiguration.sharedInstance()?.disableSaveCardOption = shouldDisableSavingCard
         }
     }
-
+    
 //#cardio_code_section_start
     @Persisted(.isCardIOEnabled, defaultValue: true)
     static var isCardIOEnabled: Bool {
@@ -94,8 +94,23 @@ enum Settings {
 //#cardio_code_section_end
 }
 
+extension Merchant {
+    static var excludedCardSchemeSet: CardScheme {
+        get {
+            CardScheme(rawValue: excludedCardSchemeSetRawValue)
+        }
+        set {
+            excludedCardSchemeSetRawValue = newValue.rawValue
+        }
+    }
+    
+    @Persisted(.excludedCardSchemeSet, defaultValue: 0)
+    private static var excludedCardSchemeSetRawValue: UInt // Option set value of `CardScheme`
+}
+
 protocol SettingsDelegate: AnyObject {
     var isTestMode: Bool { get set }
+
     var customerID: CustomerID { get set }
     var phoneNumber: PhoneNumber? { get set }
 
@@ -123,6 +138,8 @@ class SettingsViewController: UIViewController {
     @IBOutlet weak var changePhoneNumberView: UIView!
     @IBOutlet weak var disableCardIOSwitch: UISwitch!
     @IBOutlet weak var disableCardIOStackView: UIStackView!
+    @IBOutlet weak var includeOnlyVisaSchemeLabel: UILabel!
+    @IBOutlet weak var includeOnlyVisaSchemeSwitch: UISwitch!
 
     lazy var languagePicker: SelectionView = {
         let (picker, constraints) = SelectionView.makeWithConstraints(
@@ -187,6 +204,7 @@ class SettingsViewController: UIViewController {
         applicationVersionLabel.text = NPIPiaSemanticVersionString
 
         testModeSwitch.isOn = Merchant.isTestMode
+        includeOnlyVisaSchemeSwitch.isOn = !Merchant.excludedCardSchemeSet.isEmpty
         systemAuthenticationSwitch.isOn = Settings.shouldUseSystemAuthentication
 //#cardio_code_section_start
         disableCardIOSwitch.isOn = !Settings.isCardIOEnabled
@@ -194,7 +212,8 @@ class SettingsViewController: UIViewController {
 
         [testModeSwitch,
          systemAuthenticationSwitch,
-         disableCardIOSwitch].forEach { switchControl in
+         disableCardIOSwitch,
+         includeOnlyVisaSchemeSwitch].forEach { switchControl in
             switchControl.addTarget(self, action: #selector(toggle(_:)), for: .valueChanged)
         }
 /*#light_version_section_start
@@ -205,6 +224,10 @@ class SettingsViewController: UIViewController {
     @objc private func toggle(_ switchControl: UISwitch) {
         switch switchControl {
         case testModeSwitch: delegate.isTestMode = switchControl.isOn
+        case includeOnlyVisaSchemeSwitch:
+            Merchant.excludedCardSchemeSet = !switchControl.isOn ? [] : [
+                .JCB, .amex, .dankort, .dinersClubInternational, .maestro, .sBusiness, .masterCard
+            ]
         case systemAuthenticationSwitch: Settings.shouldUseSystemAuthentication = switchControl.isOn
         case disableCardIOSwitch:
 //#cardio_code_section_start

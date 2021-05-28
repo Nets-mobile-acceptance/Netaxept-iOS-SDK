@@ -1,4 +1,4 @@
-# PiA - Netaxept iOS SDK v2.2.0
+# PiA - Netaxept iOS SDK v2.3.0
 
 ![](./Resources/NetsLogo.jpg)
 

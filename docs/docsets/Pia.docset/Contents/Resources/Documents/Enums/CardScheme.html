@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>CardPaymentProcess Class Reference</title>
+    <title>CardScheme Enumeration Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset="utf-8">
@@ -14,9 +14,9 @@
   </head>
   <body>
 
-    <a name="//apple_ref/objc/Class/CardPaymentProcess" class="dashAnchor"></a>
+    <a name="//apple_ref/objc/Enum/CardScheme" class="dashAnchor"></a>
 
-    <a title="CardPaymentProcess Class Reference"></a>
+    <a title="CardScheme Enumeration Reference"></a>
 
     <header class="header">
       <p class="header-col header-col--primary">
@@ -38,7 +38,7 @@
     <p class="breadcrumbs">
       <a class="breadcrumb" href="../index.html">Pia Reference</a>
       <img class="carat" src="../img/carat.png" />
-      CardPaymentProcess Class Reference
+      CardScheme Enumeration Reference
     </p>
 
     <div class="content-wrapper">
@@ -289,20 +289,25 @@
 
         <section class="section">
           <div class="section-content top-matter">
-            <h1>CardPaymentProcess</h1>
+            <h1>CardScheme</h1>
               <div class="declaration">
                 <div class="language">
-                  <p class="aside-title">Objective-C</p>
-                  <pre class="highlight objective_c"><code><span class="k">@interface</span> <span class="nc">CardPaymentProcess</span> <span class="p">:</span> <span class="nc"><a href="../Classes/PaymentProcess.html">PaymentProcess</a></span></code></pre>
-
-                </div>
-                <div class="language">
-                  <p class="aside-title">Swift</p>
-                  <pre class="highlight swift"><code><span class="kd">class</span> <span class="kt">CardPaymentProcess</span> <span class="p">:</span> <span class="kt"><a href="../Classes/PaymentProcess.html">PaymentProcess</a></span></code></pre>
+                  
+                  <pre class="highlight objective_c"><code><span class="n">NS_OPTIONS</span><span class="p">(</span><span class="n">NSUInteger</span><span class="p">,</span> <span class="n">CardScheme</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">CardSchemeNone</span>                          <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="n">CardSchemeAmex</span>                          <span class="o">=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="n">CardSchemeVisa</span>                          <span class="o">=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="n">CardSchemeMasterCard</span>                    <span class="o">=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="n">CardSchemeDinersClubInternational</span>       <span class="o">=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">3</span><span class="p">,</span>
+    <span class="n">CardSchemeJCB</span>                           <span class="o">=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">4</span><span class="p">,</span>
+    <span class="n">CardSchemeDankort</span>                       <span class="o">=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">5</span><span class="p">,</span>
+    <span class="n">CardSchemeMaestro</span>                       <span class="o">=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">6</span><span class="p">,</span>
+    <span class="n">CardSchemeSBusiness</span>                     <span class="o">=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">7</span>
+<span class="p">}</span></code></pre>
 
                 </div>
               </div>
-            <p>An abstract superclass for <code><a href="../Classes.html#/c:objc(cs)CardStorage">CardStorage</a></code> and <code><a href="../Classes/CardPayment.html">CardPayment</a></code> processes.</p>
+            <p>Undocumented</p>
 
           </div>
         </section>
@@ -314,9 +319,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/c:objc(cs)CardPaymentProcess(py)merchant"></a>
-                    <a name="//apple_ref/objc/Property/merchant" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(cs)CardPaymentProcess(py)merchant">merchant</a>
+                    <a name="/c:@E@CardScheme@CardSchemeNone"></a>
+                    <a name="//apple_ref/objc/Case/CardSchemeNone" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@E@CardScheme@CardSchemeNone">CardSchemeNone</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -331,12 +336,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code><span class="k">@property</span><span class="p">(</span><span class="n">nonatomic</span><span class="p">)</span> <span class="n"><a href="../Classes/MerchantDetails.html">MerchantDetails</a></span> <span class="o">*</span><span class="n">merchant</span></code></pre>
-
-                        </div>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">merchant</span><span class="p">:</span> <span class="kt"><a href="../Classes/MerchantDetails.html">MerchantDetails</a></span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+                          <pre class="highlight objective_c"><code><span class="n">CardSchemeNone</span>                          <span class="o">=</span> <span class="mi">0</span></code></pre>
 
                         </div>
                       </div>
@@ -346,9 +346,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/c:objc(cs)CardPaymentProcess(py)excludedCardSchemeSet"></a>
-                    <a name="//apple_ref/objc/Property/excludedCardSchemeSet" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(cs)CardPaymentProcess(py)excludedCardSchemeSet">excludedCardSchemeSet</a>
+                    <a name="/c:@E@CardScheme@CardSchemeAmex"></a>
+                    <a name="//apple_ref/objc/Case/CardSchemeAmex" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@E@CardScheme@CardSchemeAmex">CardSchemeAmex</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -363,12 +363,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code><span class="k">@property</span><span class="p">(</span><span class="n">readonly</span><span class="p">)</span> <span class="n"><a href="../Enums/CardScheme.html">CardScheme</a></span> <span class="n">excludedCardSchemeSet</span></code></pre>
-
-                        </div>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">excludedCardSchemeSet</span><span class="p">:</span> <span class="kt"><a href="../Enums/CardScheme.html">CardScheme</a></span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+                          <pre class="highlight objective_c"><code><span class="n">CardSchemeAmex</span>                          <span class="o">=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">0</span></code></pre>
 
                         </div>
                       </div>
@@ -378,19 +373,15 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/c:objc(cs)CardPaymentProcess(im)init"></a>
-                    <a name="//apple_ref/objc/Method/-init" class="dashAnchor"></a>
-                    <a class="token discouraged" href="#/c:objc(cs)CardPaymentProcess(im)init">-init</a>
+                    <a name="/c:@E@CardScheme@CardSchemeVisa"></a>
+                    <a name="//apple_ref/objc/Case/CardSchemeVisa" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@E@CardScheme@CardSchemeVisa">CardSchemeVisa</a>
                     </code>
                   </div>
                   <div class="height-container">
                     <div class="pointer-container"></div>
                     <section class="section">
                       <div class="pointer"></div>
-                      <div class="aside aside-unavailable">
-                        <p class="aside-title">Unavailable</p>
-                        
-                      </div>
                       <div class="abstract">
                         <p>Undocumented</p>
 
@@ -399,7 +390,169 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code><span class="k">-</span> <span class="p">(</span><span class="n">instancetype</span><span class="p">)</span><span class="n">init</span> <span class="n">NS_UNAVAILABLE</span><span class="p">;</span></code></pre>
+                          <pre class="highlight objective_c"><code><span class="n">CardSchemeVisa</span>                          <span class="o">=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@E@CardScheme@CardSchemeMasterCard"></a>
+                    <a name="//apple_ref/objc/Case/CardSchemeMasterCard" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@E@CardScheme@CardSchemeMasterCard">CardSchemeMasterCard</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="n">CardSchemeMasterCard</span>                    <span class="o">=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">2</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@E@CardScheme@CardSchemeDinersClubInternational"></a>
+                    <a name="//apple_ref/objc/Case/CardSchemeDinersClubInternational" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@E@CardScheme@CardSchemeDinersClubInternational">CardSchemeDinersClubInternational</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="n">CardSchemeDinersClubInternational</span>       <span class="o">=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">3</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@E@CardScheme@CardSchemeJCB"></a>
+                    <a name="//apple_ref/objc/Case/CardSchemeJCB" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@E@CardScheme@CardSchemeJCB">CardSchemeJCB</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="n">CardSchemeJCB</span>                           <span class="o">=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">4</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@E@CardScheme@CardSchemeDankort"></a>
+                    <a name="//apple_ref/objc/Case/CardSchemeDankort" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@E@CardScheme@CardSchemeDankort">CardSchemeDankort</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="n">CardSchemeDankort</span>                       <span class="o">=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">5</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@E@CardScheme@CardSchemeMaestro"></a>
+                    <a name="//apple_ref/objc/Case/CardSchemeMaestro" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@E@CardScheme@CardSchemeMaestro">CardSchemeMaestro</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="n">CardSchemeMaestro</span>                       <span class="o">=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">6</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@E@CardScheme@CardSchemeSBusiness"></a>
+                    <a name="//apple_ref/objc/Case/CardSchemeSBusiness" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@E@CardScheme@CardSchemeSBusiness">CardSchemeSBusiness</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="n">CardSchemeSBusiness</span>                     <span class="o">=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">7</span></code></pre>
 
                         </div>
                       </div>

@@ -25,6 +25,7 @@
 //
 
 #import "PiaSDKBridge.h"
+#import <React/RCTConvert.h>
 
 enum : NSUInteger {
     Vipps = 0,
@@ -48,6 +49,7 @@ enum : NSUInteger {
 
 @end
 
+
 @implementation PiaSDKBridge
 
 RCTResponseSenderBlock registerPaymentCallback = ^(NSArray * unused){};
@@ -58,8 +60,28 @@ RCT_EXPORT_MODULE()
   return @[@"PiaSDKResult"];
 }
 
-RCT_EXPORT_METHOD(cardPaymentProcess:(int)amount currencyCode:(NSString*)currencyCode merchantId:(NSString*)merchantId testMode:(BOOL)testMode) {
-  _cardPaymentProcess = [PaymentProcess cardPaymentWithMerchant:[MerchantDetails merchantWithID:merchantId inTest:testMode] amount:amount currency:currencyCode];
+RCT_EXPORT_METHOD(cardPaymentProcess:(int)amount currencyCode:(NSString*)currencyCode merchantId:(NSString*)merchantId testMode:(BOOL)testMode excludedCardSchemes:(BOOL)excludedCardSchemes) {
+  
+  CardScheme excludedSchemes;
+  
+  if(excludedCardSchemes){
+    
+    // Assign the cards schemes you want to exclude
+    excludedSchemes = CardSchemeAmex |
+                      CardSchemeJCB |
+                      CardSchemeDankort |
+                      CardSchemeMaestro |
+                      CardSchemeSBusiness |
+                      CardSchemeMasterCard |
+                      CardSchemeDinersClubInternational;
+  } else {
+    // Do not exclude any schemes
+    excludedSchemes = CardSchemeNone;
+    
+  }
+  
+  _cardPaymentProcess = [PaymentProcess cardPaymentWithMerchant:[MerchantDetails merchantWithID:merchantId inTest:testMode] excludedCardSchemeSet:excludedSchemes amount:amount currency:currencyCode];
+  
 }
 
 RCT_EXPORT_METHOD(payPalPaymentProcess:(NSString*)merchantId testMode:(BOOL)testMode) {
@@ -317,6 +339,7 @@ RCT_EXPORT_METHOD(startShowConfirmation:(RCTResponseSenderBlock)callback) {
 }
 
 
+
 #pragma mark - PiaSDKDelegate
 
 - (void)PiaSDK:(PiaSDKController * _Nonnull)PiaSDKController didFailWithError:(NPIError * _Nonnull)error {
@@ -348,6 +371,16 @@ RCT_EXPORT_METHOD(startShowConfirmation:(RCTResponseSenderBlock)callback) {
     _completionHandler = completionHandler;
     registerPaymentCallback(@[]);
 }
+
+- (void)registerPaymentWithPayPal:(PiaSDKController * _Nonnull)piaSDKController withCompletion:(void (^ _Nonnull)(NPITransactionInfo * _Nullable))completionHandler {
+  
+}
+
+
+- (void)registerPaymentWithPaytrail:(PiaSDKController * _Nonnull)piaSDKController withCompletion:(void (^ _Nonnull)(NPITransactionInfo * _Nullable))completionHandler {
+  
+}
+
 
 - (void)registerPaymentWithApplePayData:(PiaSDKController * _Nonnull)PiaSDKController paymentData:(PKPaymentToken * _Nonnull)paymentData newShippingContact:(PKContact * _Nullable)newShippingContact withCompletion:(void (^ _Nonnull)(NPITransactionInfo * _Nullable))completionHandler {
 }

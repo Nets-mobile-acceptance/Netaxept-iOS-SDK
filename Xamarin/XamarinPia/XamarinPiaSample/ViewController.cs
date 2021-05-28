@@ -71,7 +71,7 @@ namespace XamarinPiaSample
 
                 var merchantInfo = MerchantDetails.MerchantWithID("YOUR_MERCHANT_ID", true);
 
-                CardPaymentProcess cardPayment = PaymentProcess.CardPaymentWithMerchant(merchantInfo, 1000, @"EUR");
+                CardPaymentProcess cardPayment = PaymentProcess.CardPaymentWithMerchant(merchantInfo, CardScheme.None, 1000, @"EUR");
 
 
                 var controller = PiaSDK.ControllerForCardPaymentProcess(cardPayment, true,
@@ -265,12 +265,74 @@ namespace XamarinPiaSample
 
             };
 
+            UIButton payWithExcludedCardSchemes = new UIButton();
+            payWithExcludedCardSchemes.Frame = new CGRect(40f, 540f, buttonWidth, 40f);
+            payWithExcludedCardSchemes.SetTitle("Pay 10 EUR with Card(Only VIsa)", UIControlState.Normal);
+            payWithExcludedCardSchemes.BackgroundColor = UIColor.LightGray;
+
+            payWithExcludedCardSchemes.TouchUpInside += (sender, e) =>
+            {
+
+                var merchantInfo = MerchantDetails.MerchantWithID("YOUR_MERCHANT_ID", true);
+
+                CardScheme cardScheme = (CardScheme.Amex |
+                                  CardScheme.Dankort |
+                                  CardScheme.DinersClubInternational |
+                                  CardScheme.Jcb |
+                                  CardScheme.Maestro |
+                                  CardScheme.MasterCard |
+                                  CardScheme.SBusiness);
+
+                CardPaymentProcess cardPayment = PaymentProcess.CardPaymentWithMerchant(merchantInfo, cardScheme, 1000, @"EUR");
+
+
+                var controller = PiaSDK.ControllerForCardPaymentProcess(cardPayment, true,
+                    transactionCallback: (savecard, callback) => {
+                        registerCardPaymnet(false, false, completionHandler: () => {
+                            if (transactionInfo != null)
+                            {
+                                callback(CardRegistrationResponse.SuccessWithTransactionID(transactionInfo.TransactionID, transactionInfo.redirectUrl));
+                            }
+                            else
+                            {
+                                callback(CardRegistrationResponse.Failure(registrationError));
+                            }
+                        }); ;
+                    },
+                    success: (piaController) => {
+                        InvokeOnMainThread(() => {
+                            piaController.DismissViewController(true, completionHandler: () => {
+                                showAlert("Payment is successfull");
+                            });
+                        });
+                    },
+                    cancellation: (piaController) => {
+                        InvokeOnMainThread(() => {
+                            piaController.DismissViewController(true, completionHandler: () => {
+                                showAlert("transaction cancelled");
+                            });
+                        });
+                    },
+                    failure: (piaController, error) => {
+                        InvokeOnMainThread(() => {
+                            piaController.DismissViewController(true, completionHandler: () => {
+                                showAlert(error.LocalizedDescription);
+                            });
+                        });
+                    });
+
+                this.PresentViewController(controller, true, null);
+
+            };
+
             this.View.AddSubview(payWithCard);
             this.View.AddSubview(payWithSavedCard);
             this.View.AddSubview(payWithSavedCardSkipConfirmation);
             this.View.AddSubview(payWithMobilePay);
             this.View.AddSubview(payWithPaytrail);
             this.View.AddSubview(payWithSBusinessCard);
+            this.View.AddSubview(payWithExcludedCardSchemes);
+
 
 
         }

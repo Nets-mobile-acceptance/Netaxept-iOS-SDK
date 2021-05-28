@@ -23,7 +23,7 @@
         <a class="header-link" href="../index.html">
           Pia Docs
         </a>
-         (80% documented)
+         (77% documented)
       </p>
     
       <p class="header-col--secondary">
@@ -203,6 +203,9 @@
             <a class="nav-group-name-link" href="../Enums.html">Enumerations</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/CardScheme.html">CardScheme</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Enums/PayButtonTextLabelOption.html">PayButtonTextLabelOption</a>
               </li>
               <li class="nav-group-task">
@@ -373,6 +376,71 @@ required to initiate a given payment process.</p>
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/c:objc(cs)PaymentProcess(cm)cardStorageWithMerchant:excludedCardSchemeSet:"></a>
+                    <a name="//apple_ref/objc/Method/+cardStorageWithMerchant:excludedCardSchemeSet:" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)PaymentProcess(cm)cardStorageWithMerchant:excludedCardSchemeSet:">+cardStorageWithMerchant:<wbr>excludedCardSchemeSet:<wbr></a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns object containing required parameter list for card-storage process.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">+</span> <span class="p">(</span><span class="n">nonnull</span> <span class="n"><a href="../Classes.html#/c:objc(cs)CardStorage">CardStorage</a></span> <span class="o">*</span><span class="p">)</span>
+    <span class="nf">cardStorageWithMerchant</span><span class="p">:(</span><span class="n">nonnull</span> <span class="n"><a href="../Classes/MerchantDetails.html">MerchantDetails</a></span> <span class="o">*</span><span class="p">)</span><span class="nv">merchant</span>
+      <span class="nf">excludedCardSchemeSet</span><span class="p">:(</span><span class="n"><a href="../Enums/CardScheme.html">CardScheme</a></span><span class="p">)</span><span class="nv">excludedCardSchemeSet</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">class</span> <span class="kd">func</span> <span class="nf">cardStorage</span><span class="p">(</span><span class="n">withMerchant</span> <span class="nv">merchant</span><span class="p">:</span> <span class="kt"><a href="../Classes/MerchantDetails.html">MerchantDetails</a></span><span class="p">,</span> <span class="nv">excludedCardSchemeSet</span><span class="p">:</span> <span class="kt"><a href="../Enums/CardScheme.html">CardScheme</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes.html#/c:objc(cs)CardStorage">CardStorage</a></span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>merchant</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The merchant details obtained from Netaxept</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>excludedCardSchemeSet</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Set of card schemes that should not be supported</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/c:objc(cs)PaymentProcess(cm)cardPaymentWithMerchant:amount:currency:"></a>
                     <a name="//apple_ref/objc/Method/+cardPaymentWithMerchant:amount:currency:" class="dashAnchor"></a>
                     <a class="token" href="#/c:objc(cs)PaymentProcess(cm)cardPaymentWithMerchant:amount:currency:">+cardPaymentWithMerchant:<wbr>amount:<wbr>currency:<wbr></a>
@@ -415,6 +483,97 @@ required to initiate a given payment process.</p>
                               <td>
                                 <div>
                                   <p>The merchant details obtained from Netaxept</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>amount</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Amount of payment in cents</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>currency</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Currency code following iSO 4217</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)PaymentProcess(cm)cardPaymentWithMerchant:excludedCardSchemeSet:amount:currency:"></a>
+                    <a name="//apple_ref/objc/Method/+cardPaymentWithMerchant:excludedCardSchemeSet:amount:currency:" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)PaymentProcess(cm)cardPaymentWithMerchant:excludedCardSchemeSet:amount:currency:">+cardPaymentWithMerchant:<wbr>excludedCardSchemeSet:<wbr>amount:<wbr>currency:<wbr></a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns object containing required parameter list for card-payment process.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">+</span> <span class="p">(</span><span class="n">nonnull</span> <span class="n"><a href="../Classes/CardPayment.html">CardPayment</a></span> <span class="o">*</span><span class="p">)</span>
+    <span class="nf">cardPaymentWithMerchant</span><span class="p">:(</span><span class="n">nonnull</span> <span class="n"><a href="../Classes/MerchantDetails.html">MerchantDetails</a></span> <span class="o">*</span><span class="p">)</span><span class="nv">merchant</span>
+      <span class="nf">excludedCardSchemeSet</span><span class="p">:(</span><span class="n"><a href="../Enums/CardScheme.html">CardScheme</a></span><span class="p">)</span><span class="nv">excludedCardSchemeSet</span>
+                     <span class="nf">amount</span><span class="p">:(</span><span class="n">NSUInteger</span><span class="p">)</span><span class="nv">amount</span>
+                   <span class="nf">currency</span><span class="p">:(</span><span class="n">nonnull</span> <span class="n"><a href="../Type%20Definitions.html#/c:PaymentProcess.h@T@Currency">Currency</a></span><span class="p">)</span><span class="nv">currency</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">class</span> <span class="kd">func</span> <span class="nf">cardPayment</span><span class="p">(</span><span class="n">withMerchant</span> <span class="nv">merchant</span><span class="p">:</span> <span class="kt"><a href="../Classes/MerchantDetails.html">MerchantDetails</a></span><span class="p">,</span> <span class="nv">excludedCardSchemeSet</span><span class="p">:</span> <span class="kt"><a href="../Enums/CardScheme.html">CardScheme</a></span><span class="p">,</span> <span class="nv">amount</span><span class="p">:</span> <span class="kt">UInt</span><span class="p">,</span> <span class="nv">currency</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/CardPayment.html">CardPayment</a></span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>merchant</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The merchant details obtained from Netaxept</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>excludedCardSchemeSet</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Set of card schemes that should not be supported</p>
                                 </div>
                               </td>
                             </tr>
@@ -676,7 +835,7 @@ required to initiate a given payment process.</p>
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2021 <a class="link" href="https://nets.eu" target="_blank" rel="external">Nets</a>. All rights reserved. (Last updated: 2021-04-07)</p>
+      <p>&copy; 2021 <a class="link" href="https://nets.eu" target="_blank" rel="external">Nets</a>. All rights reserved. (Last updated: 2021-05-26)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

@@ -106,34 +106,53 @@ export default class App extends Component<Props> {
                     <View style={styles.button}>
                         <Button style={styles.button} onPress={this.payViaPaytrailNordea} title="Paytrail Nordea" />
                     </View>
+                    <View style={styles.button}>
+                        <Button style={styles.button} onPress={this.payWithOnlyVisa} title="Pay with only VISA" />
+                    </View>
                 </View>
         );
     }
 
     pay = () => {
-        PiaSDK.cardPaymentProcess(100, "EUR", netsTest.merchantIdTest, true);
+        PiaSDK.cardPaymentProcess(100, "EUR", netsTest.merchantIdTest, true, false);
 
-        PiaSDK.startCardPayment(true,
-        (registrationCallback) => { 
-            fetch(netsTest.backendUrlTest + "v2/payment/" + netsTest.merchantIdTest + "/register", {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json;charset=utf-8;version=2.0',
-                    'Content-Type': 'application/json;charset=utf-8;version=2.0'
-                },
-                body: '{"storeCard": true,"orderNumber": "PiaSDK-RN-iOS","customerId": "000012","amount": {"currencyCode": "EUR", "totalAmount": "100","vatAmount": 0}}'
-            }).then((response) => response.json())
-                .then((responseJson) => {
-                    console.log('onResponse' + responseJson.transactionId)
-                    PiaSDK.cardRegistrationCallbackWithTransactionId(responseJson.transactionId, responseJson.redirectOK);
-                })
-                .catch((error) => {
-                    console.error(error);
-                    PiaSDK.cardRegistrationCallbackWithTransactionId(null, null);
-                    });
-        });
+        this.payWithCard();
 
     }
+
+
+    payWithOnlyVisa = () => {
+
+        PiaSDK.cardPaymentProcess(100, "EUR", netsTest.merchantIdTest, true, true);
+
+        this.payWithCard();
+    }
+
+
+    payWithCard() {
+
+        PiaSDK.startCardPayment(true,
+            (registrationCallback) => {
+                fetch(netsTest.backendUrlTest + "v2/payment/" + netsTest.merchantIdTest + "/register", {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json;charset=utf-8;version=2.0',
+                        'Content-Type': 'application/json;charset=utf-8;version=2.0'
+                    },
+                    body: '{"storeCard": true,"orderNumber": "PiaSDK-RN-iOS","customerId": "000012","amount": {"currencyCode": "EUR", "totalAmount": "100","vatAmount": 0}}'
+                }).then((response) => response.json())
+                    .then((responseJson) => {
+                        console.log('onResponse' + responseJson.transactionId)
+                        PiaSDK.cardRegistrationCallbackWithTransactionId(responseJson.transactionId, responseJson.redirectOK);
+                    })
+                    .catch((error) => {
+                        console.error(error);
+                        PiaSDK.cardRegistrationCallbackWithTransactionId(null, null);
+                    });
+            });
+
+    }
+
 
     payViaPaypal = () => {
 
@@ -185,7 +204,7 @@ export default class App extends Component<Props> {
 
     payViaSBusinessCard = () => {
 
-        PiaSDK.cardPaymentProcess(100, "EUR", netsTest.merchantIdTest2, true);
+        PiaSDK.cardPaymentProcess(100, "EUR", netsTest.merchantIdTest2, true, false);
 
         PiaSDK.startSBusinessCardPayment(true,
             (registrationCallback) => {
@@ -374,10 +393,6 @@ export default class App extends Component<Props> {
                 });
         });
     }
-
-    
-
-        
 
     getOrderId() {
         var checkDigit = -1;

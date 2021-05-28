@@ -104,4 +104,18 @@ namespace XamarinPia
         NoNetwork,
         WalletAppNotFound
     }
+
+    [Native]
+    public enum CardScheme : long
+    {
+        None = 0,
+        Amex = 1 << 0,
+        Visa = 1 << 1,
+        MasterCard = 1 << 2,
+        DinersClubInternational = 1 << 3,
+        Jcb = 1 << 4,
+        Dankort = 1 << 5,
+        Maestro = 1 << 6,
+        SBusiness = 1 << 7
+    }
 }

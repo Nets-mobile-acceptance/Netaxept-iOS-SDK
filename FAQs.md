@@ -15,6 +15,7 @@
 7. [**I get an error when trying to install Netaxept iOS SDK through Carthage. What should I do?**](#7-i-get-an-error-when-trying-to-install-netaxept-ios-sdk-through-carthage-what-should-i-do)
 8. [**GitHub upload maximum size is 100MB. What can I do to be able to push my project on git?**](#8-github-upload-maximum-size-is-100mb-what-can-i-do-to-be-able-to-push-my-project-on-git)
 9. [**My app was rejected by Apple Store with this message: _'Unable to process application at this time due to the following error: Invalid Bundle'_. How can I fix it?**](#9-my-app-was-rejected-by-apple-store-with-this-message-unable-to-process-application-at-this-time-due-to-the-following-error-invalid-bundle-how-can-i-fix-it)
+10. [**Mobile wallet redirect is not handled by the SDK despite a successful redirect**](#10-mobile-wallet-redirect-is-not-handled-by-the-sdk-despite-a-successful-redirect)
 
 ### Android SDK Questions
 ---
@@ -33,7 +34,8 @@
 19. [**It seems a fee can be added depending on the payment method being used. How are those fees handled? Does it impact the reconciliation reporting?**](#19-it-seems-a-fee-can-be-added-depending-on-the-payment-method-being-used-how-are-those-fees-handled-does-it-impact-the-reconciliation-reporting) 
 20. [**How can we restrict accepted card types (debit/credit or issuing country or personal/business)?**](#20-how-can-we-restrict-accepted-card-types-debitcredit-or-issuing-country-or-personalbusiness)
 21. [**Is it possible to delete information of a card saved in Netaxept? E.g when user has saved a card and then want to delete it.**](#21-is-it-possible-to-delete-information-of-a-card-saved-in-netaxept-eg-when-user-has-saved-a-card-and-then-want-to-delete-it)
-21. [**Upon a transaction error response from Netaxept REST APIs, should the request be re-tried?**](#22-upon-a-transaction-error-response-from-netaxept-rest-apis-should-the-request-be-re-tried)
+22. [**Upon a transaction error response from Netaxept REST APIs, should the request be re-tried?**](#22-upon-a-transaction-error-response-from-netaxept-rest-apis-should-the-request-be-re-tried)
+
 ---
 ### 1. I am not able to make a payment / save a card. The SDK returns GENERIC_ERROR. How can I find the root cause?
 ---
@@ -132,7 +134,24 @@ mv "$FRAMEWORK_EXECUTABLE_PATH-merged" "$FRAMEWORK_EXECUTABLE_PATH"
 done 
 ```
 
-### 10. I just want to change the background color of the PAY button. How can I do that?
+### 10. Mobile wallet redirect is not handled by the SDK despite a successful redirect
+---
+This is mainly caused by missing information in the redirect URL. When making payment registration towards your merchant backend, a `redirectUrl: String` is required in the following format:
+```swift
+redirectUrl: String = "appScheme://piasdk?wallet=walletName" (walletName = vipps/swish/mobilepay)
+```
+Following a successful payment registration, this URL is passed to the wallet app which is then used when launching your application during redirect in `AppDelegate`:
+```swift
+func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+    if !PiaSDK.willHandleRedirect(with: url, andOptions: options) {
+        // This was not PiaSDK redirect, handle accordingly
+    }
+    return true
+}
+```
+Regardless of a successful redirect, the SDK handles the redirect only if the `URL` contains the wallet name under `wallet` parameter.  
+
+### 11. I just want to change the background color of the PAY button. How can I do that?
 ---
 The customization of the `PAY` button in the SDK is special as you also need to consider the drawable selector added to enable the pressed animation. There are two ways to provide customization for it:
 + **Programatically** Create a `GradientDrawable` object, specifying backgroundColor, border thickness, corners, etc.  
@@ -151,7 +170,7 @@ Set the drawable through the API:
 PiaInterfaceConfiguration.getInstance().setMainButtonBackgroundColor(ContextCompat.getDrawable(this, R.drawable.pay_btn_selector)); 
 ```
 
-### 11. Why is my release APK crashing when launching SDK?
+### 12. Why is my release APK crashing when launching SDK?
 ---
 If your release APK is using the _proguard_ to obfuscate the code and the minification is enabled, you need to add the following rules to your `proguard-rules.pro` file:
 
@@ -160,32 +179,32 @@ If your release APK is using the _proguard_ to obfuscate the code and the minifi
 -dontwarn eu.nets.pia.cardio.** 
 ```
 
-### 12. I am trying to integrate Netaxept SDK, but my application cannot import classes: '_PaymentFlowCache, PaymentRegisterRequest, MerchantRestClient and PaymentRegisterResponse'_. Shouldn't these classes be in the SDK package?
+### 13. I am trying to integrate Netaxept SDK, but my application cannot import classes: '_PaymentFlowCache, PaymentRegisterRequest, MerchantRestClient and PaymentRegisterResponse'_. Shouldn't these classes be in the SDK package?
 ---
 These classes are located in the `PiaSample` application, they are not part of the SDK. They suggest a way of integrating the SDK functionalities with the Sample Backend. You need to create your own flow based on your Backend Implementation. 
 
-### 13. When integrating the SDK in my project, is SDK initialization required from Application class?
+### 14. When integrating the SDK in my project, is SDK initialization required from Application class?
 ---
 No, the Netaxept SDK does not require pre-initialization for payments. However, as our documentation states,  we suggest for best-practice to apply your UI Customization theme elements in the Application class, to have the SDK configured at run-time. 
 
-### 14. I want to enable specific payment methods in the SDK. Are the supported card schemes (Visa, Master, Amex etc) configured somehow via the SDK?
+### 15. I want to enable specific payment methods in the SDK. Are the supported card schemes (Visa, Master, Amex etc) configured somehow via the SDK?
 ---
 The SDK supports multiple card types (it detects the card type while user is typing, it shows the card logo and handles CVC/CVV/CID length and validation according to it).  
 However, the SDK does not decide if your Merchant Configuration (based on MerchantID) is allowed to make payments with that specific card. This is handled on the Netaxept side. To support multiple card types payments, you need to add Acquirer Agreements in Netaxept Admin Portal. 
 
-### 15. The SDK is failing when trying to make a payment. Could it be that SDK was set to autofail if you point it on production environment with a debug APK build?
+### 16. The SDK is failing when trying to make a payment. Could it be that SDK was set to autofail if you point it on production environment with a debug APK build?
 ---
 No! The SDK has no such functionality. Please refer to [this question](#1-i-am-not-able-to-make-a-payment--save-a-card-the-sdk-returns-generic_error-how-can-i-find-the-root-cause).
 
-### 16. When we register a new payment card, is it possible to get card-holder name from Netaxept?
+### 17. When we register a new payment card, is it possible to get card-holder name from Netaxept?
 ---
 No, get card-holder name is not supported by Nordic issuers and PSPs. 
 
-### 17. We need to update our documentation and data handling policy. Where does Nets store the payment related data?
+### 18. We need to update our documentation and data handling policy. Where does Nets store the payment related data?
 ---
 As a `PCI-DSS Level 1` payment service provider, Netaxept data handling is complient with industry policy. Shall you need additional information, please contact Netaxept customer support.
 
-### 18. Can 3D Secure be forced or disabled?
+### 19. Can 3D Secure be forced or disabled?
 ---
 + If you want to force 3DS (`force3DSecure=true`): 
     + some card issuers can decide not to challenge the cardholder with an authentication step and validate the 3D Secure based on their own Risk Assessment 
@@ -194,7 +213,7 @@ As a `PCI-DSS Level 1` payment service provider, Netaxept data handling is compl
     + Ask Netaxept to verify your Baxbis configuration to not request 3DS for any transaction 
 + Shall you observe a different behaviour, please contact Netaxept customer support.
 
-### 19. It seems a fee can be added depending on the payment method being used. How are those fees handled? Does it impact the reconciliation reporting?
+### 20. It seems a fee can be added depending on the payment method being used. How are those fees handled? Does it impact the reconciliation reporting?
 ---
 Indeed, you can define this fee in your backend and use it through the register call. However, you need to verify carefully when implementing this as it is regulated under PSD2. It is called **surcharging** and from the 1st of January 2018 a new directive from the EU does not allow for surcharging of private cards issued within the EU/EEA. This applies to transactions in both POS and E-com. 
 The new directive doesn't cover the following: 
@@ -203,7 +222,7 @@ The new directive doesn't cover the following:
 
 That means that it is still possible to surcharge for these card types. 
 
-### 20. How can we restrict accepted card types (debit/credit or issuing country or personal/business)?
+### 21. How can we restrict accepted card types (debit/credit or issuing country or personal/business)?
 ---
 You can define accepted card types during register call, using `CardType`, `CardOrigin` or `CardProductType`. Please refer to [Netaxept documentation](https://shop.nets.eu/web/partners/register). 
 
@@ -213,11 +232,11 @@ Handle rejected cards in mobile SDK:
 + rejected cards will trigger 301 error and users will be redirected to your app
 + conversion tips: suggest user to retry transaction with another card / payment method
 
-### 21. Is it possible to delete information of a card saved in Netaxept? E.g when user has saved a card and then want to delete it.
+### 22. Is it possible to delete information of a card saved in Netaxept? E.g when user has saved a card and then want to delete it.
 ---
 If a user wants to delete a card, just delete the `panHash` from your database.
 
-### 22. Upon a transaction error response from Netaxept REST APIs, should the request be re-tried?
+### 23. Upon a transaction error response from Netaxept REST APIs, should the request be re-tried?
 ---
 This depends on the type of the exception you encountered. The Query Call can provide you the details of the error and based on this you can chose if you will retry the request or not. But, Netaxept is done in such way that almost in any case the exceptions thrown are fatal, and there is no need for retry. 
 
