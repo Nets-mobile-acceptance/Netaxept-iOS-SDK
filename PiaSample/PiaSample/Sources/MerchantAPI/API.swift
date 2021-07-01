@@ -24,11 +24,11 @@ extension MerchantAPI {
     
     /// Register card payment (with merchant BE) for given `order`. Callback with `Transaction`.
     /// Should be called _after_ user has chosen **Card** payment in Pia SDK UI.
-    public func registerCardPay(
+    public func registerCardPayment(
         for order: OrderDetails,
-        storeCard: Bool,
-        callback: @escaping (Result<Transaction, RegisterError>) -> Void) {
-        
+        storeCard: Bool = false,
+        callback: @escaping (Result<Transaction, RegisterError>) -> Void
+    ) {
         let request = URLRequest(for: registerURL, method: .post, headers: headers)
         execute(request, callback: callback) { () -> Data in
             try self.encode(order: order, storeCard: storeCard)
@@ -37,8 +37,14 @@ extension MerchantAPI {
     
     // MARK: Register PayPal payment
     
-    public func registerPayPal(for order: OrderDetails, callback: @escaping (Result<Transaction, RegisterError>) -> Void) {
-        registerCardPay(for: order, storeCard: false, callback: callback)
+    public func registerPayPal(
+        for order: OrderDetails,
+        callback: @escaping (Result<Transaction, RegisterError>) -> Void
+    ) {
+        let request = URLRequest(for: registerURL, method: .post, headers: headers)
+        execute(request, callback: callback) { () -> Data in
+            try self.encode(order: order)
+        }
     }
     
     // MARK: Register ApplePay payment
@@ -46,8 +52,8 @@ extension MerchantAPI {
     public func registerApplePay(
         for order: OrderDetails,
         token: String,
-        callback: @escaping (Result<Transaction, RegisterError>) -> Void) {
-        
+        callback: @escaping (Result<Transaction, RegisterError>) -> Void
+    ) {
         let request = URLRequest(for: registerURL, method: .post, headers: headers)
         execute(request, callback: callback) { () -> Data in
             try self.encode(order: order, storeCard: false, applePayToken: token)
@@ -70,8 +76,8 @@ extension MerchantAPI {
     public func registerWallet(
         for order: OrderDetails,
         wallet: Wallet,
-        callback: @escaping (Result<WalletTransaction, RegisterError>) -> Void) {
-
+        callback: @escaping (Result<WalletTransaction, RegisterError>) -> Void
+    ) {
         let request = URLRequest(for: registerURL, method: .post, headers: headers)
         execute(request, callback: callback) { () -> Data in
             try self.encode(order: order, storeCard: false, phoneNumber: wallet.phone, redirectUrl: wallet.redirect)
@@ -98,14 +104,29 @@ extension MerchantAPI {
     }
 
     /// Commit the transaction of given `transactionID`. Callback with `CommitResponse`.
-    public func commitTransaction(
+    func commitTransaction(
         _ transactionID: String,
         commitType: CommitType,
-        callback: @escaping (Result<CommitResponse, CommitError>) -> Void) {
-        
+        callback: @escaping (Result<CommitResponse, CommitError>) -> Void
+    ) {
         let url = baseURL.appending(path: "v2/payment/\(merchant.id)/\(transactionID)")!
         let request = URLRequest(for: url, method: .put, headers: headers)
-        execute(request, callback: callback) { try self.encodeCommitOperation(commitType) }
+        
+        let commitCallback: (Result<CommitResponse, CommitError>) -> Void = { result in
+            switch result {
+            case .success(let response):
+                // Internal merchant backend logic to parse commit response
+                switch response.responseCode {
+                case "OK": callback(.success(response))
+                case "CANCELED": callback(.failure(CommitError.cancellation(response: response)))
+                case "ERROR": fallthrough
+                default: callback(.failure(.errorResponse(response: response)))//.error(nil, "Response: \(response)"))
+                }
+            case .failure(let error): callback(.failure(error))
+            }
+        }
+        
+        execute(request, callback: commitCallback) { try self.encodeCommitOperation(commitType) }
     }
 
     // MARK: Delete Transaction
@@ -113,8 +134,8 @@ extension MerchantAPI {
     /// Delete transaction (typically following unsuccessful commit)
     public func rollbackTransaction(
         _ transactionID: String,
-        callback: @escaping (AnyFetchError?) -> Void) {
-
+        callback: @escaping (AnyFetchError?) -> Void
+    ) {
         let url = baseURL.appending(path: "v2/payment/\(merchant.id)/\(transactionID)")!
         let request = URLRequest(for: url, method: .delete, headers: headers)
         sessionQueue.async { [weak self] in
@@ -128,8 +149,8 @@ extension MerchantAPI {
     func execute<Response: Decodable, Error: DataTaskError>(
         _ request: URLRequest,
         callback: @escaping (Result<Response, Error>) -> Void,
-        encode: (() throws -> Data)?) {
-        
+        encode: (() throws -> Data)?
+    ) {
         sessionQueue.async { [weak self] in
             guard let self = self else { return }
             var request = request

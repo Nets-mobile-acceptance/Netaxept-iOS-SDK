@@ -22,8 +22,9 @@ extension AppNavigation: PKPaymentAuthorizationViewControllerDelegate {
                 presentAppleWalletSetupEnquiry()
                 return
         }
-                
-        let itemCost = NSDecimalNumber(value: orderDetails.amount.inNotes - Double(orderDetails.shippingCost))
+            
+        let amountInNotes = Double(orderDetails.amount.totalAmount + orderDetails.amount.vatAmount) / 100
+        let itemCost = NSDecimalNumber(value: amountInNotes - Double(orderDetails.shippingCost))
         
         let request = PiaSDK.makeApplePayPaymentRequest(
             for: supportedApplePayNetworks,
@@ -60,7 +61,7 @@ extension AppNavigation: PKPaymentAuthorizationViewControllerDelegate {
         }
         
         controller.presentingViewController?.dismiss(animated: true) {
-            self.presentResult(result)
+            self.displayResultViewController(_ : .resultsViewController(for: result))
         }
     }
     

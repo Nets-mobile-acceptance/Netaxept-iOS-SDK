@@ -73,7 +73,7 @@ extension MerchantAPI {
     /// - Parameter customer: customer details for paytrail
     public func encode(
         order: OrderDetails,
-        storeCard: Bool,
+        storeCard: Bool = false,
         applePayToken: String? = nil,
         phoneNumber: String? = nil,
         redirectUrl: URL? = nil,

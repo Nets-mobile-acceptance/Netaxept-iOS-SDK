@@ -71,7 +71,9 @@ namespace XamarinPiaSample
 
                 var merchantInfo = MerchantDetails.MerchantWithID("YOUR_MERCHANT_ID", true);
 
-                CardPaymentProcess cardPayment = PaymentProcess.CardPaymentWithMerchant(merchantInfo, CardScheme.None, 1000, @"EUR");
+                
+
+                CardPaymentProcess cardPayment = CardPaymentProcess.CardPaymentWithMerchant(merchantInfo, CardScheme.None, 1000, @"EUR");
 
 
                 var controller = PiaSDK.ControllerForCardPaymentProcess(cardPayment, true,
@@ -201,11 +203,13 @@ namespace XamarinPiaSample
 
                 registerCardPaymnet(false, false, completionHandler: () =>
                 {
-                    var controller = new PiaSDKController(merchantId, transactionInfo, true);
-                    PiaDelegate newDelegate = new PiaDelegate();
-                    controller.PiaDelegate = newDelegate;
-                    newDelegate.vc = this;
                     InvokeOnMainThread(() => {
+
+                        var controller = new PiaSDKController(merchantId, transactionInfo, true);
+                        PiaDelegate newDelegate = new PiaDelegate();
+                        controller.PiaDelegate = newDelegate;
+                        newDelegate.vc = this;
+                    
                         PiaSDK.RemoveTransitionView();
                         this.PresentViewController(controller, true, null);
                     });
@@ -278,7 +282,7 @@ namespace XamarinPiaSample
                 CardScheme cardScheme = (CardScheme.Amex |
                                   CardScheme.Dankort |
                                   CardScheme.DinersClubInternational |
-                                  CardScheme.Jcb |
+                                  CardScheme.JCB |
                                   CardScheme.Maestro |
                                   CardScheme.MasterCard |
                                   CardScheme.SBusiness);
@@ -325,6 +329,71 @@ namespace XamarinPiaSample
 
             };
 
+            UIButton payWithSavedCardCustomImage = new UIButton();
+            payWithSavedCardCustomImage.Frame = new CGRect(40f, 600f, buttonWidth, 40f);
+            payWithSavedCardCustomImage.SetTitle("Pay with Saved Card Custom Image", UIControlState.Normal);
+            payWithSavedCardCustomImage.BackgroundColor = UIColor.LightGray;
+
+            payWithSavedCardCustomImage.TouchUpInside += (sender, e) =>
+            {
+
+                var merchantId = "YOUR_MERCHANT_ID";
+
+                isPayingWithToken = true;
+
+                var merchantDetails = MerchantDetails.MerchantWithID(merchantId, true);
+
+                UIImage image = UIImage.FromBundle("CustomCardImage");
+
+                var cardDisplay = CardDisplay.CustomCardImage(image, Card.Visa);
+
+                TokenizedCardPayment tokenCardPayment = PaymentProcess.TokenizedCardPaymentWithMerchant(merchantDetails, "492500******0004", "08/22",
+                    cardDisplay, TokenizedCardPrompt_.None, (callback) => {
+
+                        registerCardPaymnet(false, false, completionHandler: () => {
+                            if (transactionInfo != null)
+                            {
+                                callback(CardRegistrationResponse.SuccessWithTransactionID(transactionInfo.TransactionID, transactionInfo.redirectUrl));
+                            }
+                            else
+                            {
+                                callback(CardRegistrationResponse.Failure(registrationError));
+                            }
+                        });
+
+                    });
+
+
+                var controller = PiaSDK.ControllerForPaymentProcess(tokenCardPayment,
+                    success: (piaController,transactionId) => {
+                        InvokeOnMainThread(() => {
+                            piaController.DismissViewController(true, completionHandler: () => {
+                                showAlert("Payment is successfull");
+                            });
+                        });
+                    },
+                    cancellation: (piaController, transactionId) => {
+                        InvokeOnMainThread(() => {
+                            piaController.DismissViewController(true, completionHandler: () => {
+                                showAlert("transaction cancelled");
+                            });
+                        });
+                    },
+                    failure: (piaController, error) => {
+                        InvokeOnMainThread(() => {
+                            piaController.DismissViewController(true, completionHandler: () => {
+                                showAlert(error.LocalizedDescription);
+                            });
+                        });
+                    });
+                   
+
+
+
+                this.PresentViewController(controller, true, null);
+
+            };
+
             this.View.AddSubview(payWithCard);
             this.View.AddSubview(payWithSavedCard);
             this.View.AddSubview(payWithSavedCardSkipConfirmation);
@@ -332,8 +401,7 @@ namespace XamarinPiaSample
             this.View.AddSubview(payWithPaytrail);
             this.View.AddSubview(payWithSBusinessCard);
             this.View.AddSubview(payWithExcludedCardSchemes);
-
-
+            this.View.AddSubview(payWithSavedCardCustomImage);
 
         }
 

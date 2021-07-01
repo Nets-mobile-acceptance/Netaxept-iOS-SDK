@@ -134,6 +134,10 @@ namespace XamarinPia
         // @property (nonatomic) SchemeType schemeType;
         [Export("schemeType", ArgumentSemantic.Assign)]
         SchemeType SchemeType { get; set; }
+        
+        // @property (nonatomic) UIImage * _Nullable customCardSchemeImage;
+        [NullAllowed, Export ("customCardSchemeImage", ArgumentSemantic.Assign)]
+        UIImage CustomCardSchemeImage { get; set; }
 
         // -(instancetype _Nonnull)initWithTokenId:(NSString * _Nonnull)tokenId schemeType:(SchemeType)schemeType expiryDate:(NSString * _Nonnull)expiryDate cvcRequired:(BOOL)cvcRequired systemAuthenticationRequired:(BOOL)systemAuthenticationRequired __attribute__((deprecated("System authentication becomes obsolete due to PSD2/SCA regulation.
         //Replaced with `init(tokenId:schemeType:expiryDate:cvcRequired:);
@@ -577,140 +581,9 @@ namespace XamarinPia
         UIColor CardIOTextColor { get; set; }
     }
     
-    // @interface MerchantDetails : NSObject
-    [BaseType (typeof(NSObject))]
-    [DisableDefaultCtor]
-    interface MerchantDetails
-    {
-        // @property (nonatomic) NSString * _Nonnull merchantID;
-        [Export ("merchantID")]
-        string MerchantID { get; set; }
-
-        // @property (nonatomic) BOOL isTest;
-        [Export ("isTest")]
-        bool IsTest { get; set; }
-
-        // +(MerchantDetails * _Nonnull)merchantWithID:(NSString * _Nonnull)merchantID inTest:(BOOL)isTest;
-        [Static]
-        [Export ("merchantWithID:inTest:")]
-        MerchantDetails MerchantWithID (string merchantID, bool isTest);
-    }
-
-    // @interface PaymentProcess : NSObject
-    [BaseType (typeof(NSObject))]
-    interface PaymentProcess
-    {
-        // +(CardStorage * _Nonnull)cardStorageWithMerchant:(MerchantDetails * _Nonnull)merchant;
-        [Static]
-        [Export("cardStorageWithMerchant:")]
-        CardStorage CardStorageWithMerchant(MerchantDetails merchant);
-
-	// +(CardStorage * _Nonnull)cardStorageWithMerchant:(MerchantDetails * _Nonnull)merchant excludedCardSchemeSet:(CardScheme)excludedCardSchemeSet;
-	[Static]
-	[Export ("cardStorageWithMerchant:excludedCardSchemeSet:")]
-	CardStorage CardStorageWithMerchant (MerchantDetails merchant, CardScheme excludedCardSchemeSet);
-
-        // +(CardPayment * _Nonnull)cardPaymentWithMerchant:(MerchantDetails * _Nonnull)merchant amount:(NSUInteger)amount currency:(Currency _Nonnull)currency;
-        [Static]
-        [Export("cardPaymentWithMerchant:amount:currency:")]
-        CardPayment CardPaymentWithMerchant(MerchantDetails merchant, nuint amount, string currency);
-
-	// +(CardPayment * _Nonnull)cardPaymentWithMerchant:(MerchantDetails * _Nonnull)merchant excludedCardSchemeSet:(CardScheme)excludedCardSchemeSet amount:(NSUInteger)amount currency:(Currency _Nonnull)currency;
-	[Static]
-	[Export ("cardPaymentWithMerchant:excludedCardSchemeSet:amount:currency:")]
-	CardPayment CardPaymentWithMerchant (MerchantDetails merchant, CardScheme excludedCardSchemeSet, nuint amount, string currency);
-
-        // +(WalletPaymentProcess * _Nonnull)walletPaymentForWallet:(Wallet)wallet;
-        [Static]
-        [Export("walletPaymentForWallet:")]
-        WalletPaymentProcess WalletPaymentForWallet(Wallet wallet);
-
-        // +(WalletPaymentProcess * _Nonnull)walletPaymentForWallet:(Wallet)wallet showActivityIndicator:(BOOL)showActivityIndicator;
-        [Static]
-        [Export("walletPaymentForWallet:showActivityIndicator:")]
-        WalletPaymentProcess WalletPaymentForWallet(Wallet wallet, bool showActivityIndicator);
-        
-        // +(PayPalPaymentProcess * _Nonnull)payPalPaymentWithMerchant:(MerchantDetails * _Nonnull)merchant;
-        [Static]
-        [Export ("payPalPaymentWithMerchant:")]
-        PayPalPaymentProcess PayPalPaymentWithMerchant (MerchantDetails merchant);
-
-        // +(PaytrailPaymentProcess * _Nonnull)paytrailPaymentWithMerchant:(MerchantDetails * _Nonnull)merchant;
-        [Static]
-        [Export ("paytrailPaymentWithMerchant:")]
-        PaytrailPaymentProcess PaytrailPaymentWithMerchant (MerchantDetails merchant);
-    }
-
-    // @interface CardPaymentProcess : PaymentProcess
-    [BaseType (typeof(PaymentProcess))]
-    [DisableDefaultCtor]
-    interface CardPaymentProcess
-    {
-        // @property (nonatomic) MerchantDetails * _Nonnull merchant;
-        [Export ("merchant", ArgumentSemantic.Assign)]
-        MerchantDetails Merchant { get; set; }
-
-	// @property (readonly) CardScheme excludedCardSchemeSet;
-	[Export ("excludedCardSchemeSet")]
-	CardScheme ExcludedCardSchemeSet { get; }
-    }
-
-    // @interface CardStorage : CardPaymentProcess
-    [BaseType (typeof(CardPaymentProcess))]
-    interface CardStorage
-    {
-    }
-
-    // @interface CardPayment : CardPaymentProcess
-    [BaseType (typeof(CardPaymentProcess))]
-    interface CardPayment
-    {
-        // @property (nonatomic) NSUInteger amount;
-        [Export ("amount")]
-        nuint Amount { get; set; }
-
-        // @property (nonatomic) Currency _Nonnull currency;
-        [Export ("currency")]
-        string Currency { get; set; }
-    }
-
-    // @interface WalletPaymentProcess : PaymentProcess
-    [BaseType (typeof(PaymentProcess))]
-    [DisableDefaultCtor]
-    interface WalletPaymentProcess
-    {
-        // @property (nonatomic) Wallet wallet;
-        [Export ("wallet", ArgumentSemantic.Assign)]
-        Wallet Wallet { get; set; }
-
-        // @property (nonatomic) BOOL showActivityIndicator;
-        [Export ("showActivityIndicator")]
-        bool ShowActivityIndicator { get; set; }
-    }
-    
-    // @interface PayPalPaymentProcess : PaymentProcess
-    [BaseType (typeof(PaymentProcess))]
-    [DisableDefaultCtor]
-    interface PayPalPaymentProcess
-    {
-        // @property (nonatomic) MerchantDetails * _Nonnull merchant;
-        [Export ("merchant", ArgumentSemantic.Assign)]
-        MerchantDetails Merchant { get; set; }
-    }
-
-    // @interface PaytrailPaymentProcess : PaymentProcess
-    [BaseType (typeof(PaymentProcess))]
-    [DisableDefaultCtor]
-    interface PaytrailPaymentProcess
-    {
-        // @property (nonatomic) MerchantDetails * _Nonnull merchant;
-        [Export ("merchant", ArgumentSemantic.Assign)]
-        MerchantDetails Merchant { get; set; }
-    }
-
     // @interface Wallets (NSError)
-    [Category]
     [BaseType (typeof(NSError))]
+    [Category]
     interface NSError_Wallets
     {
         // +(WalletError _Nonnull)walletErrorWith:(WalletErrorCode)errorCode underlyingError:(NSObject * _Nonnull)underlyingError;
@@ -752,9 +625,39 @@ namespace XamarinPia
         WalletRegistrationResponse Failure ([NullAllowed] NSError error);
     }
 
-    // @interface CardRegistrationResponse : RegistrationResponse
+    // bare interface
+    interface IPaymentRegistrationResult { }
+
+    // @protocol PaymentRegistrationResult <NSObject>
+    [Model]
+    [BaseType (typeof(NSObject))]
+    interface PaymentRegistrationResult
+    {
+        // @required @property (nonatomic) TransactionID _Nullable transactionID;
+        [Abstract]
+        [NullAllowed, Export ("transactionID")]
+        string TransactionID { get; set; }
+
+        // @required @property (nonatomic) RedirectURL _Nullable redirectURL;
+        [Abstract]
+        [NullAllowed, Export ("redirectURL")]
+        string RedirectURL { get; set; }
+
+        // @required +(instancetype _Nonnull)successWithTransactionID:(TransactionID _Nonnull)transactionID redirectURL:(RedirectURL _Nonnull)redirectURL;
+        [Static]
+        [Export("successWithTransactionID:redirectURL:")]
+        PaymentRegistrationResult SuccessWithTransactionID(string transactionID, string redirectURL);
+
+        // @required +(instancetype _Nonnull)failure:(NSError * _Nonnull)error;
+        [Static]
+        [Export ("failure:")]
+        PaymentRegistrationResult Failure (NSError error);
+    }
+    
+    
+    // @interface CardRegistrationResponse : RegistrationResponse <PaymentRegistrationResult>
     [BaseType (typeof(RegistrationResponse))]
-    interface CardRegistrationResponse
+    interface CardRegistrationResponse : IPaymentRegistrationResult
     {
         // @property (nonatomic) TransactionID _Nullable transactionID;
         [NullAllowed, Export ("transactionID")]
@@ -775,9 +678,9 @@ namespace XamarinPia
         CardRegistrationResponse Failure (NSError error);
     }
     
-    // @interface PayPalRegistrationResponse : RegistrationResponse
+    // @interface PayPalRegistrationResponse : RegistrationResponse <PaymentRegistrationResult>
     [BaseType (typeof(RegistrationResponse))]
-    interface PayPalRegistrationResponse
+    interface PayPalRegistrationResponse : IPaymentRegistrationResult
     {
         // @property (nonatomic) TransactionID _Nullable transactionID;
         [NullAllowed, Export ("transactionID")]
@@ -798,9 +701,9 @@ namespace XamarinPia
         PayPalRegistrationResponse Failure (NSError error);
     }
 
-    // @interface PaytrailRegistrationResponse : RegistrationResponse
+    // @interface PaytrailRegistrationResponse : RegistrationResponse <PaymentRegistrationResult>
     [BaseType (typeof(RegistrationResponse))]
-    interface PaytrailRegistrationResponse
+    interface PaytrailRegistrationResponse : IPaymentRegistrationResult
     {
         // @property (nonatomic) TransactionID _Nullable transactionID;
         [NullAllowed, Export ("transactionID")]
@@ -820,34 +723,362 @@ namespace XamarinPia
         [Export ("failure:")]
         PaytrailRegistrationResponse Failure (NSError error);
     }
+    
+    // typedef void (^TokenizableCardRegistrationCallback)(TokenizeCardForLaterUse, void (^ _Nonnull)(CardRegistrationResponse * _Nonnull));
+    delegate void TokenizableCardRegistrationCallback (bool arg0, [BlockCallback] CardRegistrationResponseCallback completionHandler);
 
-    // typedef void (^TransactionCallback)(BOOL, void (^ _Nonnull)(CardRegistrationResponse * _Nonnull));
-    delegate void TransactionCallback (bool arg0, [BlockCallback] CardRegistrationResponseCallback completionHandler);
-    delegate void CardRegistrationResponseCallback(CardRegistrationResponse arg0);
+    // typedef void (^CardRegistrationCallback)(void (^ _Nonnull)(CardRegistrationResponse * _Nonnull));
+    delegate void CardRegistrationCallback ([BlockCallback] CardRegistrationResponseCallback completionHandler);
+
+    // typedef void (^PayPalRegistrationCallback)(void (^ _Nonnull)(PayPalRegistrationResponse * _Nonnull));
+    delegate void PayPalRegistrationCallback ([BlockCallback] CardRegistrationResponseCallback completionHandler);
+
+    // typedef void (^PaytrailRegistrationCallback)(void (^ _Nonnull)(PaytrailRegistrationResponse * _Nonnull));
+    delegate void PaytrailRegistrationCallback ([BlockCallback] CardRegistrationResponseCallback completionHandler);
 
     // typedef void (^WalletURLCallback)(void (^ _Nonnull)(WalletRegistrationResponse * _Nonnull));
     delegate void WalletURLCallback([BlockCallback] WalletCallbackCompletionHandler completionHandler);
-    delegate void WalletCallbackCompletionHandler(WalletRegistrationResponse arg0);
-
-    // typedef void (^PayPalRegistrationCallback)(void (^ _Nonnull)(PayPalRegistrationResponse * _Nonnull));
-    delegate void PayPalRegistrationCallback([BlockCallback] PayPalResponseCallback completionHandler);
-    delegate void PayPalResponseCallback(PayPalRegistrationResponse arg0);
-
-    // typedef void (^PaytrailRegistrationCallback)(void (^ _Nonnull)(PaytrailRegistrationResponse * _Nonnull));
-    delegate void PaytrailRegistrationCallback([BlockCallback] PaytrailResponseCallback completionHandler);
-    delegate void PaytrailResponseCallback(PaytrailRegistrationResponse arg0);
 
     // typedef void (^WalletRedirectWithoutInterruption)(BOOL);
     delegate void WalletRedirectWithoutInterruption (bool arg0);
 
     // typedef void (^WalletFailureWithError)(WalletError _Nonnull);
     delegate void WalletFailureWithError (NSError arg0);
-
+    
     // typedef void (^CompletionCallback)(UIViewController * _Nonnull);
     delegate void CompletionCallback (UIViewController arg0);
+    
+    // typedef void (^PaymentProcessCompletion)(UIViewController * _Nonnull, TransactionID _Nullable);
+    delegate void PaymentProcessCompletion (UIViewController arg0, [NullAllowed] string arg1);
 
     // typedef void (^FailureCompletionCallback)(UIViewController * _Nonnull, CardError _Nonnull);
     delegate void FailureCompletionCallback (UIViewController arg0, NPIError arg1);
+
+    // typedef void (^PaymentProcessFailure)(UIViewController * _Nonnull, NSError * _Nonnull);
+    delegate void PaymentProcessFailure (UIViewController arg0, NSError arg1);
+
+    // typedef TokenizableCardRegistrationCallback TransactionCallback;
+    delegate void TransactionCallback (bool arg0, [BlockCallback] CardRegistrationResponseCallback completionHandler);
+
+    // typedef PaymentProcessCompletion TransactionCompletion;
+    delegate void TransactionCompletion (UIViewController arg0, [NullAllowed] string arg1);
+    
+    delegate void WalletCallbackCompletionHandler(WalletRegistrationResponse arg0);
+    
+    delegate void CardRegistrationResponseCallback(CardRegistrationResponse arg0);
+    
+    // @interface CardDisplay : NSObject
+    [BaseType (typeof(NSObject))]
+    interface CardDisplay
+    {
+        // +(CardDisplay * _Nonnull)card:(Card)card;
+        [Static]
+        [Export ("card:")]
+        CardDisplay Card (Card card);
+
+        // +(CardDisplay * _Nonnull)customCardImage:(UIImage * _Nonnull)customCardImage card:(Card)card;
+        [Static]
+        [Export ("customCardImage:card:")]
+        CardDisplay CustomCardImage (UIImage customCardImage, Card card);
+    }
+    
+    // @interface MerchantDetails : NSObject
+    [BaseType (typeof(NSObject))]
+    [DisableDefaultCtor]
+    interface MerchantDetails
+    {
+        // @property (nonatomic) NSString * _Nonnull merchantID;
+        [Export ("merchantID")]
+        string MerchantID { get; set; }
+
+        // @property (nonatomic) BOOL isTest;
+        [Export ("isTest")]
+        bool IsTest { get; set; }
+
+        // +(MerchantDetails * _Nonnull)merchantWithID:(NSString * _Nonnull)merchantID inTest:(BOOL)isTest;
+        [Static]
+        [Export ("merchantWithID:inTest:")]
+        MerchantDetails MerchantWithID (string merchantID, bool isTest);
+    }
+
+
+    // bare interface
+    interface IPaymentRegistering { }
+
+    // @protocol PaymentRegistering <NSObject>
+    [Model]
+    [BaseType (typeof(NSObject))]
+    interface PaymentRegistering
+    {
+        // @required @property (nonatomic) id _Nonnull registrationCallback;
+        [Export ("registrationCallback", ArgumentSemantic.Assign)]
+        NSObject RegistrationCallback { get; set; }
+    }
+    
+    // @interface CardPaymentProcess : PaymentProcess <PaymentRegistering>
+    [BaseType (typeof(PaymentProcess))]
+    interface CardPaymentProcess : IPaymentRegistering
+    {
+        // @property (nonatomic) MerchantDetails * _Nonnull merchant;
+        [Export ("merchant", ArgumentSemantic.Assign)]
+        MerchantDetails Merchant { get; set; }
+
+        // @property (nonatomic) id _Nonnull registrationCallback;
+        [Export ("registrationCallback", ArgumentSemantic.Assign)]
+        NSObject RegistrationCallback { get; set; }
+    }
+
+    // @interface CardStorage : CardPaymentProcess
+    [BaseType (typeof(CardPaymentProcess))]
+    [DisableDefaultCtor]
+    interface CardStorage
+    {
+        // -(CardStorage * _Nonnull)sBusiness;
+        [Export ("sBusiness")]
+        CardStorage SBusiness { get; }
+    }
+
+
+    // @interface CardPayment : CardPaymentProcess
+    [BaseType (typeof(CardPaymentProcess))]
+    [DisableDefaultCtor]
+    interface CardPayment
+    {
+        // @property (nonatomic) NSUInteger amount;
+        [Export ("amount")]
+        nuint Amount { get; set; }
+
+        // @property (nonatomic) Currency _Nonnull currency;
+        [Export ("currency")]
+        string Currency { get; set; }
+
+        // -(CardPayment * _Nonnull)sBusiness;
+        [Export ("sBusiness")]
+        CardPayment SBusiness { get; }
+    }
+    
+    // @interface TokenizedCardPrompt : NSObject
+    [BaseType (typeof(NSObject))]
+    interface TokenizedCardPrompt
+    {
+        // -(BOOL)shouldPromptCVC;
+        [Export ("shouldPromptCVC")]
+        bool ShouldPromptCVC { get; }
+    }
+
+    // @interface TokenizedCardPromptNone : TokenizedCardPrompt
+    [BaseType (typeof(TokenizedCardPrompt))]
+    interface TokenizedCardPromptNone
+    {
+    }
+
+    // @interface TokenizedCardPromptConfirmation : TokenizedCardPrompt
+    [BaseType (typeof(TokenizedCardPrompt))]
+    [DisableDefaultCtor]
+    interface TokenizedCardPromptConfirmation
+    {
+        // @property (nonatomic) NSUInteger amount;
+        [Export ("amount")]
+        nuint Amount { get; set; }
+
+        // @property (nonatomic) Currency _Nonnull currency;
+        [Export ("currency")]
+        string Currency { get; set; }
+
+        // @property (nonatomic) BOOL shouldPromptCVC;
+        [Export ("shouldPromptCVC")]
+        bool ShouldPromptCVC { get; set; }
+    }
+
+    // @interface  (TokenizedCardPrompt)
+    [Category]
+    [BaseType (typeof(TokenizedCardPrompt))]
+    interface TokenizedCardPrompt_
+    {
+        // @property (readonly, nonatomic, class) TokenizedCardPromptNone * _Nonnull none;
+        [Static]
+        [Export ("none")]
+        TokenizedCardPromptNone None { get; }
+
+        // +(TokenizedCardPromptConfirmation * _Nonnull)forAmount:(NSUInteger)amount currency:(Currency _Nonnull)currency shouldPromptCVC:(BOOL)shouldPromptCVC;
+        [Static]
+        [Export ("forAmount:currency:shouldPromptCVC:")]
+        TokenizedCardPromptConfirmation ForAmount (nuint amount, string currency, bool shouldPromptCVC);
+    }
+
+    // @interface TokenizedCardPayment : CardPaymentProcess
+    [BaseType (typeof(CardPaymentProcess))]
+    [DisableDefaultCtor]
+    interface TokenizedCardPayment
+    {
+        // @property (nonatomic) NSString * _Nonnull token;
+        [Export ("token")]
+        string Token { get; set; }
+
+        // @property (nonatomic) CardDisplay * _Nonnull cardDisplay;
+        [Export ("cardDisplay", ArgumentSemantic.Assign)]
+        CardDisplay CardDisplay { get; set; }
+
+        // @property (nonatomic) NSString * _Nonnull expiryDate;
+        [Export ("expiryDate")]
+        string ExpiryDate { get; set; }
+
+        // @property (nonatomic) TokenizedCardPrompt * _Nonnull confirmatioPrompt;
+        [Export ("confirmatioPrompt", ArgumentSemantic.Assign)]
+        TokenizedCardPrompt ConfirmatioPrompt { get; set; }
+    }
+
+    // @interface TokenizedCardExpressCheckout : PaymentProcess
+    [BaseType (typeof(PaymentProcess))]
+    [DisableDefaultCtor]
+    interface TokenizedCardExpressCheckout
+    {
+        // @property (nonatomic) UIViewController * _Nonnull sender;
+        [Export ("sender", ArgumentSemantic.Assign)]
+        UIViewController Sender { get; set; }
+
+        // @property (nonatomic) MerchantDetails * _Nonnull merchant;
+        [Export ("merchant", ArgumentSemantic.Assign)]
+        MerchantDetails Merchant { get; set; }
+
+        // @property (nonatomic) TransactionID _Nonnull transactionID;
+        [Export ("transactionID")]
+        string TransactionID { get; set; }
+
+        // @property (nonatomic) NSURL * _Nonnull redirectURL;
+        [Export ("redirectURL", ArgumentSemantic.Assign)]
+        NSUrl RedirectURL { get; set; }
+    }
+
+    // @interface WalletPaymentProcess : PaymentProcess
+    [BaseType (typeof(PaymentProcess))]
+    [DisableDefaultCtor]
+    interface WalletPaymentProcess
+    {
+        // @property (nonatomic) Wallet wallet;
+        [Export ("wallet", ArgumentSemantic.Assign)]
+        Wallet Wallet { get; set; }
+
+        // @property (nonatomic) BOOL showActivityIndicator;
+        [Export ("showActivityIndicator")]
+        bool ShowActivityIndicator { get; set; }
+    }
+    
+    // @interface PayPalPaymentProcess : PaymentProcess <PaymentRegistering>
+    [BaseType (typeof(PaymentProcess))]
+    [DisableDefaultCtor]
+    interface PayPalPaymentProcess : IPaymentRegistering
+    {
+        // @property (nonatomic) MerchantDetails * _Nonnull merchant;
+        [Export ("merchant", ArgumentSemantic.Assign)]
+        MerchantDetails Merchant { get; set; }
+    }
+
+    // @interface PaytrailPaymentProcess : PaymentProcess <PaymentRegistering>
+    [BaseType (typeof(PaymentProcess))]
+    [DisableDefaultCtor]
+    interface PaytrailPaymentProcess : IPaymentRegistering
+    {
+        // @property (nonatomic) MerchantDetails * _Nonnull merchant;
+        [Export ("merchant", ArgumentSemantic.Assign)]
+        MerchantDetails Merchant { get; set; }
+    }
+
+
+    // @interface PaymentProcess : NSObject
+    //[BaseType(typeof(NSObject))]
+    //interface PaymentProcess
+    //{
+    //}
+
+    // @interface  (PaymentProcess)
+    //[Category]
+    [BaseType (typeof(PaymentRegistering))]
+    interface PaymentProcess
+    {
+    
+        // +(CardStorage * _Nonnull)cardStorageWithMerchant:(MerchantDetails * _Nonnull)merchant;
+        [Static]
+        [Export ("cardStorageWithMerchant:")]
+        CardStorage CardStorageWithMerchant (MerchantDetails merchant);
+
+        // +(CardStorage * _Nonnull)cardStorageWithMerchant:(MerchantDetails * _Nonnull)merchant registrationCallback:(CardRegistrationCallback _Nonnull)registrationCallback;
+        [Static]
+        [Export ("cardStorageWithMerchant:registrationCallback:")]
+        CardStorage CardStorageWithMerchant (MerchantDetails merchant, CardRegistrationCallback registrationCallback);
+
+        // +(CardStorage * _Nonnull)cardStorageWithMerchant:(MerchantDetails * _Nonnull)merchant excludedCardSchemeSet:(CardScheme)excludedCardSchemeSet;
+        [Static]
+        [Export ("cardStorageWithMerchant:excludedCardSchemeSet:")]
+        CardStorage CardStorageWithMerchant (MerchantDetails merchant, CardScheme excludedCardSchemeSet);
+
+        // +(CardStorage * _Nonnull)cardStorageWithMerchant:(MerchantDetails * _Nonnull)merchant excludedCardSchemeSet:(CardScheme)excludedCardSchemeSet registrationCallback:(CardRegistrationCallback _Nonnull)registrationCallback;
+        [Static]
+        [Export ("cardStorageWithMerchant:excludedCardSchemeSet:registrationCallback:")]
+        CardStorage CardStorageWithMerchant (MerchantDetails merchant, CardScheme excludedCardSchemeSet, CardRegistrationCallback registrationCallback);
+
+        // +(CardPayment * _Nonnull)cardPaymentWithMerchant:(MerchantDetails * _Nonnull)merchant amount:(NSUInteger)amount currency:(Currency _Nonnull)currency;
+        [Static]
+        [Export ("cardPaymentWithMerchant:amount:currency:")]
+        CardPayment CardPaymentWithMerchant (MerchantDetails merchant, nuint amount, string currency);
+
+        // +(CardPayment * _Nonnull)cardPaymentWithMerchant:(MerchantDetails * _Nonnull)merchant excludedCardSchemeSet:(CardScheme)excludedCardSchemeSet amount:(NSUInteger)amount currency:(Currency _Nonnull)currency;
+        [Static]
+        [Export ("cardPaymentWithMerchant:excludedCardSchemeSet:amount:currency:")]
+        CardPayment CardPaymentWithMerchant (MerchantDetails merchant, CardScheme excludedCardSchemeSet, nuint amount, string currency);
+
+        // +(CardPayment * _Nonnull)cardPaymentWithMerchant:(MerchantDetails * _Nonnull)merchant excludedCardSchemeSet:(CardScheme)excludedCardSchemeSet amount:(NSUInteger)amount currency:(Currency _Nonnull)currency registrationCallback:(TokenizableCardRegistrationCallback _Nonnull)registrationCallback;
+        [Static]
+        [Export ("cardPaymentWithMerchant:excludedCardSchemeSet:amount:currency:registrationCallback:")]
+        CardPayment CardPaymentWithMerchant (MerchantDetails merchant, CardScheme excludedCardSchemeSet, nuint amount, string currency, TokenizableCardRegistrationCallback registrationCallback);
+
+        // +(CardPayment * _Nonnull)cardPaymentWithMerchant:(MerchantDetails * _Nonnull)merchant amount:(NSUInteger)amount currency:(Currency _Nonnull)currency registrationCallback:(TokenizableCardRegistrationCallback _Nonnull)registrationCallback;
+        [Static]
+        [Export ("cardPaymentWithMerchant:amount:currency:registrationCallback:")]
+        CardPayment CardPaymentWithMerchant (MerchantDetails merchant, nuint amount, string currency, TokenizableCardRegistrationCallback registrationCallback);
+
+        // +(TokenizedCardPayment * _Nonnull)tokenizedCardPaymentWithMerchant:(MerchantDetails * _Nonnull)merchant token:(NSString * _Nonnull)token expiryDate:(NSString * _Nonnull)expiryDate cardDisplay:(CardDisplay * _Nonnull)cardDisplay confirmationPrompt:(TokenizedCardPrompt * _Nonnull)confirmationPrompt registrationCallback:(CardRegistrationCallback _Nonnull)registrationCallback;
+        [Static]
+        [Export ("tokenizedCardPaymentWithMerchant:token:expiryDate:cardDisplay:confirmationPrompt:registrationCallback:")]
+        TokenizedCardPayment TokenizedCardPaymentWithMerchant (MerchantDetails merchant, string token, string expiryDate, CardDisplay cardDisplay, TokenizedCardPrompt confirmationPrompt, CardRegistrationCallback registrationCallback);
+
+        // +(TokenizedCardExpressCheckout * _Nonnull)tokenizedCardExpressCheckoutFrom:(UIViewController * _Nonnull)sender merchant:(MerchantDetails * _Nonnull)merchant transactionID:(TransactionID _Nonnull)transactionID redirectURL:(NSURL * _Nonnull)redirectURL;
+        [Static]
+        [Export ("tokenizedCardExpressCheckoutFrom:merchant:transactionID:redirectURL:")]
+        TokenizedCardExpressCheckout TokenizedCardExpressCheckoutFrom (UIViewController sender, MerchantDetails merchant, string transactionID, NSUrl redirectURL);
+
+        // +(WalletPaymentProcess * _Nonnull)walletPaymentForWallet:(Wallet)wallet;
+        [Static]
+        [Export ("walletPaymentForWallet:")]
+        WalletPaymentProcess WalletPaymentForWallet (Wallet wallet);
+
+        // +(WalletPaymentProcess * _Nonnull)walletPaymentForWallet:(Wallet)wallet showActivityIndicator:(BOOL)showActivityIndicator;
+        [Static]
+        [Export ("walletPaymentForWallet:showActivityIndicator:")]
+        WalletPaymentProcess WalletPaymentForWallet (Wallet wallet, bool showActivityIndicator);
+
+        // +(PayPalPaymentProcess * _Nonnull)payPalPaymentWithMerchant:(MerchantDetails * _Nonnull)merchant;
+        [Static]
+        [Export ("payPalPaymentWithMerchant:")]
+        PayPalPaymentProcess PayPalPaymentWithMerchant (MerchantDetails merchant);
+
+        // +(PayPalPaymentProcess * _Nonnull)payPalPaymentWithMerchant:(MerchantDetails * _Nonnull)merchant registrationCallback:(PayPalRegistrationCallback _Nonnull)registrationCallback;
+        [Static]
+        [Export ("payPalPaymentWithMerchant:registrationCallback:")]
+        PayPalPaymentProcess PayPalPaymentWithMerchant (MerchantDetails merchant, PayPalRegistrationCallback registrationCallback);
+
+        // +(PaytrailPaymentProcess * _Nonnull)paytrailPaymentWithMerchant:(MerchantDetails * _Nonnull)merchant;
+        [Static]
+        [Export ("paytrailPaymentWithMerchant:")]
+        PaytrailPaymentProcess PaytrailPaymentWithMerchant (MerchantDetails merchant);
+
+        // +(PaytrailPaymentProcess * _Nonnull)paytrailPaymentWithMerchant:(MerchantDetails * _Nonnull)merchant registrationCallback:(PaytrailRegistrationCallback _Nonnull)registrationCallback;
+        [Static]
+        [Export ("paytrailPaymentWithMerchant:registrationCallback:")]
+        PaytrailPaymentProcess PaytrailPaymentWithMerchant (MerchantDetails merchant, PaytrailRegistrationCallback registrationCallback);
+    }
+
+    
 
     // @interface PiaSDK : NSObject
     [BaseType (typeof(NSObject))]
@@ -860,7 +1091,7 @@ namespace XamarinPia
         void ExcludeCardSchemeOptionSet(CardScheme excludeOptionSet);
 
         // +(void)setTheme:(id<PiaSDKTheme> _Nonnull)theme forInterfaceStyle:(UIUserInterfaceStyle)interfaceStyle __attribute__((availability(ios, introduced=13.0)));
-        [iOS(13, 0)]
+        [Introduced(PlatformName.iOS,PlatformArchitecture.All,"iOS 13")]
         [Static]
         [Export ("setTheme:forInterfaceStyle:")]
         void SetTheme (IPiaSDKTheme theme, UIUserInterfaceStyle interfaceStyle);
@@ -871,7 +1102,6 @@ namespace XamarinPia
         void SetTheme (IPiaSDKTheme theme);
 
         // +(id<PiaSDKTheme> _Nonnull)netsThemeCopyForInterfaceStyle:(UIUserInterfaceStyle)interfaceStyle __attribute__((availability(ios, introduced=12.0)));
-        [iOS(12,0)]
         [Static]
         [Export ("netsThemeCopyForInterfaceStyle:")]
         IPiaSDKTheme NetsThemeCopyForInterfaceStyle (UIUserInterfaceStyle interfaceStyle);
@@ -886,32 +1116,41 @@ namespace XamarinPia
         [Static]
         [Export ("launchWalletAppForWalletPaymentProcess:walletURLCallback:redirectWithoutInterruption:failure:")]
         bool LaunchWalletAppForWalletPaymentProcess (WalletPaymentProcess walletPaymentProcess, WalletURLCallback walletURLCallback, WalletRedirectWithoutInterruption redirectWithoutInterruption, WalletFailureWithError failure);
-        
-        // +(UIViewController * _Nonnull)controllerForCardPaymentProcess:(CardPaymentProcess * _Nonnull)paymentProcess isCVCRequired:(BOOL)isCVCRequired transactionCallback:(TransactionCallback _Nonnull)transactionCallback success:(CompletionCallback _Nonnull)success cancellation:(CompletionCallback _Nonnull)cancellation failure:(FailureCompletionCallback _Nonnull)failure;
+
+        // +(UIViewController * _Nonnull)controllerForCardPaymentProcess:(CardPaymentProcess * _Nonnull)paymentProcess isCVCRequired:(BOOL)isCVCRequired transactionCallback:(TransactionCallback _Nonnull)transactionCallback success:(CompletionCallback _Nonnull)success cancellation:(CompletionCallback _Nonnull)cancellation failure:(FailureCompletionCallback _Nonnull)failure __attribute__((deprecated("Use `PiaSDK.controller(for:success:cancellation:failure)` instead")));
         [Static]
         [Export ("controllerForCardPaymentProcess:isCVCRequired:transactionCallback:success:cancellation:failure:")]
-        UIViewController ControllerForCardPaymentProcess (CardPaymentProcess paymentProcess, bool isCVCRequired, TransactionCallback transactionCallback, CompletionCallback success, CompletionCallback cancellation, FailureCompletionCallback failure);
-        
-        // +(UIViewController * _Nonnull)controllerForSBusinessCardPaymentProcess:(CardPaymentProcess * _Nonnull)paymentProcess isCVCRequired:(BOOL)isCVCRequired transactionCallback:(TransactionCallback _Nonnull)transactionCallback success:(CompletionCallback _Nonnull)success cancellation:(CompletionCallback _Nonnull)cancellation failure:(FailureCompletionCallback _Nonnull)failure;
+        UIViewController ControllerForCardPaymentProcess (CardPaymentProcess paymentProcess, bool isCVCRequired, TokenizableCardRegistrationCallback transactionCallback, CompletionCallback success, CompletionCallback cancellation, FailureCompletionCallback failure);
+
+        // +(UIViewController * _Nonnull)controllerForPaymentProcess:(PaymentProcess<PaymentRegistering> * _Nonnull)paymentProcess success:(PaymentProcessCompletion _Nonnull)success cancellation:(PaymentProcessCompletion _Nonnull)cancellation failure:(PaymentProcessFailure _Nonnull)failure;
+        [Static]
+        [Export ("controllerForPaymentProcess:success:cancellation:failure:")]
+        UIViewController ControllerForPaymentProcess (PaymentRegistering paymentProcess, PaymentProcessCompletion success, PaymentProcessCompletion cancellation, PaymentProcessFailure failure);
+
+        // +(UIViewController * _Nonnull)controllerForSBusinessCardPaymentProcess:(CardPaymentProcess * _Nonnull)paymentProcess isCVCRequired:(BOOL)isCVCRequired transactionCallback:(TransactionCallback _Nonnull)transactionCallback success:(CompletionCallback _Nonnull)success cancellation:(CompletionCallback _Nonnull)cancellation failure:(FailureCompletionCallback _Nonnull)failure __attribute__((deprecated("Use `PiaSDK.controller(for:success:cancellation:failure)` instead. Card payment and tokenization process can be set s-business initiated using the the `PaymentProcess` instance method `sBusiness()`. e.g. let cardProcess = CardPayment/CardStorage(…).sBusiness()")));
         [Static]
         [Export ("controllerForSBusinessCardPaymentProcess:isCVCRequired:transactionCallback:success:cancellation:failure:")]
-        UIViewController ControllerForSBusinessCardPaymentProcess (CardPaymentProcess paymentProcess, bool isCVCRequired, TransactionCallback transactionCallback, CompletionCallback success, CompletionCallback cancellation, FailureCompletionCallback failure);
-        
-        // +(void)initiateTokenizedCardPayFrom:(UIViewController * _Nonnull)sender testMode:(BOOL)isTestMode showsActivityIndicator:(BOOL)showsActivityIndicator merchantID:(NSString * _Nonnull)merchantID redirectURL:(NSString * _Nonnull)redirectURL transactionID:(NSString * _Nonnull)transactionID success:(void (^ _Nonnull)(void))success cancellation:(void (^ _Nonnull)(void))cancellation failure:(void (^ _Nonnull)(NPIError * _Nonnull))failure;
+        UIViewController ControllerForSBusinessCardPaymentProcess (CardPaymentProcess paymentProcess, bool isCVCRequired, TokenizableCardRegistrationCallback transactionCallback, CompletionCallback success, CompletionCallback cancellation, FailureCompletionCallback failure);
+
+        // +(void)initiateTokenizedCardPayFrom:(UIViewController * _Nonnull)sender testMode:(BOOL)isTestMode showsActivityIndicator:(BOOL)showsActivityIndicator merchantID:(NSString * _Nonnull)merchantID redirectURL:(NSString * _Nonnull)redirectURL transactionID:(NSString * _Nonnull)transactionID success:(void (^ _Nonnull)(void))success cancellation:(void (^ _Nonnull)(void))cancellation failure:(void (^ _Nonnull)(NPIError * _Nonnull))failure __attribute__((deprecated("Use `PiaSDK.initiateCardPayment(with:success:cancellation:failure)` instead")));
         [Static]
         [Export ("initiateTokenizedCardPayFrom:testMode:showsActivityIndicator:merchantID:redirectURL:transactionID:success:cancellation:failure:")]
         void InitiateTokenizedCardPayFrom (UIViewController sender, bool isTestMode, bool showsActivityIndicator, string merchantID, string redirectURL, string transactionID, Action success, Action cancellation, Action<NPIError> failure);
-        
-        // +(UIViewController * _Nonnull)controllerForPayPalPaymentProcess:(PayPalPaymentProcess * _Nonnull)paymentProcess payPalRegistrationCallback:(PayPalRegistrationCallback _Nonnull)payPalRegistrationCallback success:(CompletionCallback _Nonnull)success cancellation:(CompletionCallback _Nonnull)cancellation failure:(FailureCompletionCallback _Nonnull)failure;
+
+        // +(void)initiateCardPaymentWithTokenizedCardExpressCheckout:(TokenizedCardExpressCheckout * _Nonnull)tokenizedCardPayment success:(PaymentProcessCompletion _Nonnull)success cancellation:(PaymentProcessCompletion _Nonnull)cancellation failure:(PaymentProcessFailure _Nonnull)failure;
+        [Static]
+        [Export ("initiateCardPaymentWithTokenizedCardExpressCheckout:success:cancellation:failure:")]
+        void InitiateCardPaymentWithTokenizedCardExpressCheckout (TokenizedCardExpressCheckout tokenizedCardPayment, PaymentProcessCompletion success, PaymentProcessCompletion cancellation, PaymentProcessFailure failure);
+
+        // +(UIViewController * _Nonnull)controllerForPayPalPaymentProcess:(PayPalPaymentProcess * _Nonnull)paymentProcess payPalRegistrationCallback:(PayPalRegistrationCallback _Nonnull)payPalRegistrationCallback success:(CompletionCallback _Nonnull)success cancellation:(CompletionCallback _Nonnull)cancellation failure:(FailureCompletionCallback _Nonnull)failure __attribute__((deprecated("Use `PiaSDK.controller(for:success:cancellation:failure)` instead")));
         [Static]
         [Export ("controllerForPayPalPaymentProcess:payPalRegistrationCallback:success:cancellation:failure:")]
         UIViewController ControllerForPayPalPaymentProcess (PayPalPaymentProcess paymentProcess, PayPalRegistrationCallback payPalRegistrationCallback, CompletionCallback success, CompletionCallback cancellation, FailureCompletionCallback failure);
 
-        // +(UIViewController * _Nonnull)controllerForPaytrailPaymentProcess:(PaytrailPaymentProcess * _Nonnull)paymentProcess paytrailRegistrationCallback:(PaytrailRegistrationCallback _Nonnull)paytrailRegistrationCallback success:(CompletionCallback _Nonnull)success cancellation:(CompletionCallback _Nonnull)cancellation failure:(FailureCompletionCallback _Nonnull)failure;
+        // +(UIViewController * _Nonnull)controllerForPaytrailPaymentProcess:(PaytrailPaymentProcess * _Nonnull)paymentProcess paytrailRegistrationCallback:(PaytrailRegistrationCallback _Nonnull)paytrailRegistrationCallback success:(CompletionCallback _Nonnull)success cancellation:(CompletionCallback _Nonnull)cancellation failure:(FailureCompletionCallback _Nonnull)failure __attribute__((deprecated("Use `PiaSDK.controller(for:success:cancellation:failure)` instead")));
         [Static]
         [Export ("controllerForPaytrailPaymentProcess:paytrailRegistrationCallback:success:cancellation:failure:")]
         UIViewController ControllerForPaytrailPaymentProcess (PaytrailPaymentProcess paymentProcess, PaytrailRegistrationCallback paytrailRegistrationCallback, CompletionCallback success, CompletionCallback cancellation, FailureCompletionCallback failure);
-
 
         // +(BOOL)willHandleRedirectWith:(NSURL * _Nonnull)redirectURL andOptions:(NSDictionary * _Nonnull)options;
         [Static]
@@ -920,23 +1159,23 @@ namespace XamarinPia
 
         // +(void)showActivityIndicatorIn:(UIViewController * _Nonnull)viewController __attribute__((deprecated("Use `addTransitionViewIn:` instead")));
         [Static]
-        [Export("showActivityIndicatorIn:")]
-        void ShowActivityIndicatorIn(UIViewController viewController);
+        [Export ("showActivityIndicatorIn:")]
+        void ShowActivityIndicatorIn (UIViewController viewController);
 
         // +(void)removeActivityIndicatorFrom:(UIViewController * _Nullable)viewController __attribute__((deprecated("Use `removeTransitionView` instead")));
         [Static]
-        [Export("removeActivityIndicatorFrom:")]
-        void RemoveActivityIndicatorFrom([NullAllowed] UIViewController viewController);
+        [Export ("removeActivityIndicatorFrom:")]
+        void RemoveActivityIndicatorFrom ([NullAllowed] UIViewController viewController);
 
         // +(void)addTransitionViewIn:(UIView * _Nonnull)superView;
         [Static]
-        [Export("addTransitionViewIn:")]
-        void AddTransitionViewIn(UIView superView);
+        [Export ("addTransitionViewIn:")]
+        void AddTransitionViewIn (UIView superView);
 
         // +(void)removeTransitionView;
         [Static]
-        [Export("removeTransitionView")]
-        void RemoveTransitionView();
+        [Export ("removeTransitionView")]
+        void RemoveTransitionView ();
 
     }
 

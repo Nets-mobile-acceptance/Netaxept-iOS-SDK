@@ -39,6 +39,12 @@ struct SampleOrderDetails: OrderDetails, ApplePayOrderDetails {
     static func make(withName name: String = "", with amount: Amount = .zero) -> Order {
         return SampleOrderDetails(amount: amount, displayName: name)
     }
+    
+    static func make(forCardToken cardToken: String, amount: Amount) -> Order {
+        var order = SampleOrderDetails(amount: amount, displayName: "")
+        order.cardId = cardToken
+        return order
+    }
 }
 
 struct SampleCustomerDetails: CustomerDetails {

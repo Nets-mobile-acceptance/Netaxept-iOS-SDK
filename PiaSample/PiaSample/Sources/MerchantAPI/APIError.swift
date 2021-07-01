@@ -54,10 +54,37 @@ public enum RegisterError: DataTaskError {
         case .serverFail: return "500 Server Failure"
         case .downstreamPSPError: return "503 Downstream PSP Error"
         case let .unknown(code, rawResponse: response):
-            return (response.data?.htmlString ?? "\(code) (no message)") 
+            return (response.data?.htmlString ?? "\(code) (no message)")
         }
     }
 }
 
-/// Payment _commit_ operation failure. TODO: align with BE
-public typealias CommitError = AnyFetchError
+public enum CommitError: DataTaskError {
+    case badRequest(BadRequest?)
+    case cancellation(response: MerchantAPI.CommitResponse)
+    case errorResponse(response: MerchantAPI.CommitResponse)
+    case unknown(statusCode: Int,  rawResponse: DataTaskResponse)
+    
+    public init(badRequest: BadRequest, rawResponse: DataTaskResponse?) {
+        self = .badRequest(badRequest)
+    }
+    
+    public init?(from rawResponse: DataTaskResponse) {
+        guard let urlResponse = rawResponse.urlResponse as? HTTPURLResponse else {
+            self = .badRequest(.noURLResponse(rawResponse.error))
+            return
+        }
+        if (200...299).contains(urlResponse.statusCode) { return nil }
+        self = .unknown(statusCode: urlResponse.statusCode,  rawResponse: rawResponse)
+    }
+    
+    public var errorMessage: String {
+        switch self {
+        case .badRequest(let request): return request?.description ?? "…"
+        case .cancellation(response: _): return "Cancelled"
+        case .errorResponse(response: _): return "Error"
+        case .unknown(statusCode: _, rawResponse: _): return "Unknown"
+        }
+    }
+    
+}

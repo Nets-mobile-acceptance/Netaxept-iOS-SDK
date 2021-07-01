@@ -30,7 +30,7 @@ enum PersistanceKey: String {
     case applePayMerchantID = "com.piaSample.applePayMerchantID"
     
     case excludedCardSchemeSet = "com.piaSample.excludedCardSchemeSet"
-
+    case customCardSchemeImage = "com.piaSample.customCardSchemeImage"
 }
 
 @propertyWrapper

@@ -93,9 +93,14 @@
   <ItemGroup>
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Contents.json" />
     <ImageAsset Include="Assets.xcassets\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\CustomCardImage.imageset\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\CustomCardImage.imageset\Custom card-08 %281%29.jpg" />
+    <ImageAsset Include="Assets.xcassets\CustomCardImage.imageset\Custom card-08 %281%29-1.jpg" />
+    <ImageAsset Include="Assets.xcassets\CustomCardImage.imageset\Custom card-08 %281%29-2.jpg" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
+    <Folder Include="Assets.xcassets\CustomCardImage.imageset\" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="LaunchScreen.storyboard" />

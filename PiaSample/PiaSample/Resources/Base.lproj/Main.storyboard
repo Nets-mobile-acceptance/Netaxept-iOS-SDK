@@ -514,7 +514,7 @@
                                                             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                                             <subviews>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="6nR-xh-8HE">
-                                                                    <rect key="frame" x="10" y="10" width="365" height="813"/>
+                                                                    <rect key="frame" x="10" y="10" width="365" height="854"/>
                                                                     <subviews>
                                                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="top" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="UgB-yu-YE7" userLabel="Customer ID">
                                                                             <rect key="frame" x="8" y="8" width="349" height="62"/>
@@ -666,7 +666,7 @@
                                                                             </subviews>
                                                                         </stackView>
                                                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="top" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="U1P-wI-bBa" userLabel="Configurations">
-                                                                            <rect key="frame" x="8" y="354" width="349" height="444"/>
+                                                                            <rect key="frame" x="8" y="354" width="349" height="485"/>
                                                                             <subviews>
                                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Configurations" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vP1-GM-p25">
                                                                                     <rect key="frame" x="0.0" y="0.0" width="140.5" height="24"/>
@@ -734,8 +734,23 @@
                                                                                         </switch>
                                                                                     </subviews>
                                                                                 </stackView>
+                                                                                <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="nxt-Ew-Mjg" userLabel="Sample images">
+                                                                                    <rect key="frame" x="0.0" y="198" width="244.5" height="31"/>
+                                                                                    <subviews>
+                                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Use Custom Card Image" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tzp-XR-BUN">
+                                                                                            <rect key="frame" x="0.0" y="5.5" width="185.5" height="20.5"/>
+                                                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                                            <nil key="textColor"/>
+                                                                                            <nil key="highlightedColor"/>
+                                                                                        </label>
+                                                                                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="45E-Eq-xP1">
+                                                                                            <rect key="frame" x="195.5" y="0.0" width="51" height="31"/>
+                                                                                            <color key="onTintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                                        </switch>
+                                                                                    </subviews>
+                                                                                </stackView>
                                                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="qF3-tu-BvT">
-                                                                                    <rect key="frame" x="0.0" y="198" width="240" height="33"/>
+                                                                                    <rect key="frame" x="0.0" y="239" width="240" height="33"/>
                                                                                     <subviews>
                                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Change Merchant Info" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q5j-Yk-8ej">
                                                                                             <rect key="frame" x="0.0" y="0.0" width="169" height="33"/>
@@ -754,7 +769,7 @@
                                                                                     </subviews>
                                                                                 </stackView>
                                                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="35v-XV-oXa">
-                                                                                    <rect key="frame" x="0.0" y="241" width="172.5" height="33"/>
+                                                                                    <rect key="frame" x="0.0" y="282" width="172.5" height="33"/>
                                                                                     <subviews>
                                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Customize UI" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iD6-FU-0ef">
                                                                                             <rect key="frame" x="0.0" y="6.5" width="101.5" height="20.5"/>
@@ -773,7 +788,7 @@
                                                                                     </subviews>
                                                                                 </stackView>
                                                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="4rj-IC-Qf7">
-                                                                                    <rect key="frame" x="0.0" y="284" width="243.5" height="33"/>
+                                                                                    <rect key="frame" x="0.0" y="325" width="243.5" height="33"/>
                                                                                     <subviews>
                                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Change Apple Pay Info" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XeT-Tc-BhI">
                                                                                             <rect key="frame" x="0.0" y="0.0" width="172.5" height="33"/>
@@ -792,7 +807,7 @@
                                                                                     </subviews>
                                                                                 </stackView>
                                                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="XwD-eg-S31">
-                                                                                    <rect key="frame" x="0.0" y="327" width="228" height="33"/>
+                                                                                    <rect key="frame" x="0.0" y="368" width="228" height="33"/>
                                                                                     <subviews>
                                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select SDK Language" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7dL-sr-R6r">
                                                                                             <rect key="frame" x="0.0" y="0.0" width="165" height="33"/>
@@ -808,7 +823,7 @@
                                                                                     </subviews>
                                                                                 </stackView>
                                                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="are-Mc-49E">
-                                                                                    <rect key="frame" x="0.0" y="370" width="344" height="74"/>
+                                                                                    <rect key="frame" x="0.0" y="411" width="344" height="74"/>
                                                                                     <subviews>
                                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Card confirmation type (applicable if cvc is not required)" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RYk-Dk-ip7">
                                                                                             <rect key="frame" x="0.0" y="0.0" width="344" height="41"/>
@@ -890,6 +905,8 @@
                         <outlet property="cardConfirmationTypeButton" destination="7R5-7f-fpK" id="kxT-RO-cjW"/>
                         <outlet property="changeCustomerIDView" destination="8HK-Ka-a31" id="mpe-uG-Gdg"/>
                         <outlet property="changePhoneNumberView" destination="CEh-Dd-Aog" id="Kst-sj-045"/>
+                        <outlet property="customCardSchemeImageLabel" destination="Tzp-XR-BUN" id="4pj-Sd-Ans"/>
+                        <outlet property="customCardSchemeImageSwitch" destination="45E-Eq-xP1" id="ft3-7p-PAk"/>
                         <outlet property="customerIDLabel" destination="gZE-82-Z6G" id="Oxj-oe-ODh"/>
                         <outlet property="customerIDTextField" destination="yac-Pr-mMc" id="3Dv-j9-rTd"/>
                         <outlet property="disableCardIOStackView" destination="pBL-1o-DDh" id="R8K-6f-ZYQ"/>

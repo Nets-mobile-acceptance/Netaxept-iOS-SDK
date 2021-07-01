@@ -36,7 +36,7 @@ namespace XamarinPia
         Dankort,
         Jcb,
         Maestro,
-	Sbusiness,
+        Sbusiness,
         Other
     }
 
@@ -83,20 +83,10 @@ namespace XamarinPia
 
     public enum PayButtonTextLabelOption : uint
     {
-	Pay = 0,
-	Reserve
+        Pay = 0,
+        Reserve
     }
     
-    [Native]
-    public enum Wallet : long
-    {
-        Swish,
-        Vipps,
-        VippsTest,
-        MobilePay,
-        MobilePayTest
-    }
-
     [Native]
     public enum WalletErrorCode : long
     {
@@ -113,9 +103,41 @@ namespace XamarinPia
         Visa = 1 << 1,
         MasterCard = 1 << 2,
         DinersClubInternational = 1 << 3,
-        Jcb = 1 << 4,
+        JCB = 1 << 4,
         Dankort = 1 << 5,
         Maestro = 1 << 6,
         SBusiness = 1 << 7
     }
+    
+    [Native]
+    public enum Card : long
+    {
+        Amex = CardScheme.Amex,
+        Visa = CardScheme.Visa,
+        MasterCard = CardScheme.MasterCard,
+        DinersClubInternational = CardScheme.DinersClubInternational,
+        Jcb = CardScheme.JCB,
+        Dankort = CardScheme.Dankort,
+        Maestro = CardScheme.Maestro,
+        SBusiness = CardScheme.SBusiness,
+        Other
+    }
+    
+    static class CFunctions
+    {
+        // extern BOOL isSBusinessInitiated (CardPaymentProcess * _Nonnull cardProcess);
+        static extern bool isSBusinessInitiated (CardPaymentProcess cardProcess);
+    }
+    
+    [Native]
+    public enum Wallet : long
+    {
+        Swish,
+        Vipps,
+        VippsTest,
+        MobilePay,
+        MobilePayTest
+    }
+
+    
 }

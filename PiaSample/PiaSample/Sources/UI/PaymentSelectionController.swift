@@ -17,7 +17,7 @@ protocol PaymentSelectionControllerDelegate: AnyObject {
         failure: ((String) -> Void)?)
 
     func openTokenizedCardPayment(sender: PaymentSelectionController, card: TokenizedCard, cvcRequired: Bool)
-    func openCardPayment(sender: PaymentSelectionController)
+    func openCardPayment(sender: PaymentSelectionController, cvcRequired: Bool)
     func openSBusinessCardPayment(sender: PaymentSelectionController)
     func openApplePayment(sender: PaymentSelectionController, methodID: PaymentMethodID)
     func openPayPalPayment(sender: PaymentSelectionController, methodID: PaymentMethodID)
@@ -62,7 +62,7 @@ class PaymentSelectionController: UIViewController, UITableViewDataSource, UITab
             let card: TokenizedCard = tokenizedCards[indexPath.row]
             delegate.openTokenizedCardPayment(sender: self, card: card, cvcRequired: cvcRequired)
         case .addNewCardButton:
-            delegate.openCardPayment(sender: self)
+            delegate.openCardPayment(sender: self, cvcRequired: cvcRequired)
         case .sBusinessCard:
             delegate.openSBusinessCardPayment(sender: self)
         case .mobileWallets:
@@ -341,7 +341,8 @@ private extension TokenizedCard {
         }
         switch issuer {
         case .some(let scheme):
-            let image = UIImage(named: "Background" + scheme) ?? TokenizedCard.blankCardIcon
+            let cardName = Settings.customCardSchemeImage ? "CustomeCard" : scheme
+            let image =  UIImage(named: "Background" + cardName) ?? TokenizedCard.blankCardIcon
             let title = "\(scheme) •••• \(tokenId.suffix(4))"
             return (image, title)
         case .none: return (TokenizedCard.blankCardIcon, "unknown")

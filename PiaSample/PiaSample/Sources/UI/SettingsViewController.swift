@@ -84,6 +84,9 @@ enum Settings {
         }
     }
     
+    @Persisted(.customCardSchemeImage, defaultValue: false)
+    static var customCardSchemeImage: Bool
+    
 //#cardio_code_section_start
     @Persisted(.isCardIOEnabled, defaultValue: true)
     static var isCardIOEnabled: Bool {
@@ -140,6 +143,9 @@ class SettingsViewController: UIViewController {
     @IBOutlet weak var disableCardIOStackView: UIStackView!
     @IBOutlet weak var includeOnlyVisaSchemeLabel: UILabel!
     @IBOutlet weak var includeOnlyVisaSchemeSwitch: UISwitch!
+    @IBOutlet weak var customCardSchemeImageLabel: UILabel!
+    @IBOutlet weak var customCardSchemeImageSwitch: UISwitch!
+
 
     lazy var languagePicker: SelectionView = {
         let (picker, constraints) = SelectionView.makeWithConstraints(
@@ -206,6 +212,7 @@ class SettingsViewController: UIViewController {
         testModeSwitch.isOn = Merchant.isTestMode
         includeOnlyVisaSchemeSwitch.isOn = !Merchant.excludedCardSchemeSet.isEmpty
         systemAuthenticationSwitch.isOn = Settings.shouldUseSystemAuthentication
+        customCardSchemeImageSwitch.isOn = Settings.customCardSchemeImage
 //#cardio_code_section_start
         disableCardIOSwitch.isOn = !Settings.isCardIOEnabled
 //#cardio_code_section_end
@@ -213,7 +220,8 @@ class SettingsViewController: UIViewController {
         [testModeSwitch,
          systemAuthenticationSwitch,
          disableCardIOSwitch,
-         includeOnlyVisaSchemeSwitch].forEach { switchControl in
+         includeOnlyVisaSchemeSwitch,
+         customCardSchemeImageSwitch].forEach { switchControl in
             switchControl.addTarget(self, action: #selector(toggle(_:)), for: .valueChanged)
         }
 /*#light_version_section_start
@@ -229,6 +237,7 @@ class SettingsViewController: UIViewController {
                 .JCB, .amex, .dankort, .dinersClubInternational, .maestro, .sBusiness, .masterCard
             ]
         case systemAuthenticationSwitch: Settings.shouldUseSystemAuthentication = switchControl.isOn
+        case customCardSchemeImageSwitch : Settings.customCardSchemeImage = switchControl.isOn
         case disableCardIOSwitch:
 //#cardio_code_section_start
                 Settings.isCardIOEnabled = !switchControl.isOn
