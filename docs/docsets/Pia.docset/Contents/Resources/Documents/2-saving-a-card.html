@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>2. Register flow  Reference</title>
+    <title>2. Saving a card  Reference</title>
     <link rel="stylesheet" type="text/css" href="css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="css/highlight.css" />
     <meta charset="utf-8">
@@ -15,7 +15,7 @@
   <body>
 
 
-    <a title="2. Register flow  Reference"></a>
+    <a title="2. Saving a card  Reference"></a>
 
     <header class="header">
       <p class="header-col header-col--primary">
@@ -37,7 +37,7 @@
     <p class="breadcrumbs">
       <a class="breadcrumb" href="index.html">Pia Reference</a>
       <img class="carat" src="img/carat.png" />
-      2. Register flow  Reference
+      2. Saving a card  Reference
     </p>
 
     <div class="content-wrapper">
@@ -59,7 +59,7 @@
                 <a class="nav-group-task-link" href="13-recurring-payments.html">1.3. Recurring payments</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="2-register-flow.html">2. Register flow</a>
+                <a class="nav-group-task-link" href="2-saving-a-card.html">2. Saving a card</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="31-apple-pay-integration.html">3.1. Apple Pay Integration</a>
@@ -342,34 +342,47 @@
         <section class="section">
           <div class="section-content top-matter">
             
-            <h1 id='register-flow-description' class='heading'>Register flow description</h1>
+            <h1 id='saving-a-card' class='heading'>Saving a card</h1>
 
-<p>Below you can find the interaction between the application that uses the <strong>PiA SDK</strong> and the SDK for the <strong>Register Flow</strong>.</p>
+<p>Below you can find the interaction between the application that uses the <strong>PiA SDK</strong> and the SDK for <strong>Saving a card</strong>.</p>
 
 <p><img src="./img/Register%20Flow.png" alt="Register Flow"></p>
-<h2 id='the-strong-register-flow-strong-logic-is-similar-to-em-basic-payment-flow-em-with-some-small-em-differences-em' class='heading'>The <strong>Register flow</strong> logic is similar to <em>Basic payment flow</em>, with some small <em>differences</em>:</h2>
+<h2 id='the-save-card-logic-is-similar-to-em-basic-payment-flow-em-with-some-small-em-differences-em' class='heading'>The Save card logic is similar to <em>Basic payment flow</em>, with some small <em>differences</em>:</h2>
 
-<ul>
-<li><p>OrderInfo object is not required in the init when calling <strong>PiaSDKController</strong>.</p></li>
-<li><p>TokenCardInfo object is not required in the init when calling <strong>PiaSDKController</strong>.</p></li>
-<li><p>When setting the PaymentRegisterRequest, make sure to specify the amount 0 (zero).</p></li>
-<li><p>In the delegate, if it is <strong>PiaSDKDidCompleteSaveCardWithSuccess</strong>, you will need to call <em>verifyPayment</em> API with the initial transactionId.</p></li>
-</ul>
-<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">testMode</span> <span class="o">=</span> <span class="kc">true</span> <span class="c1">//Notify the SDK to use the test environment</span>
-<span class="k">let</span> <span class="nv">merchantInfo</span> <span class="o">=</span> <span class="kt">NPIMerchantInfo</span><span class="p">(</span><span class="nv">identifier</span><span class="p">:</span> <span class="s">"your merchant ID here, provided by Nets"</span><span class="p">,</span> <span class="n">testMode</span><span class="p">)</span>
-
-<span class="k">let</span> <span class="nv">piaSDK</span> <span class="o">=</span> <span class="kt">PiaSDKController</span><span class="p">(</span><span class="nv">merchantInfo</span><span class="p">:</span> <span class="n">merchantInfo</span><span class="p">)</span>
-<span class="n">piaSDK</span><span class="o">.</span><span class="n">piaDelegate</span> <span class="o">=</span> <span class="k">self</span>
-<span class="k">self</span><span class="o">.</span><span class="nf">present</span><span class="p">(</span><span class="n">piaSDK</span><span class="p">,</span> <span class="nv">animated</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nv">completion</span><span class="p">:</span> <span class="kc">nil</span><span class="p">)</span>
+<p>You can start by creating a PaymentProcess object of type cardStorage.</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">cardStorage</span> <span class="o">=</span> <span class="kt">PaymentProcess</span><span class="o">.</span><span class="nf">cardStorage</span><span class="p">(</span>
+    <span class="nv">withMerchant</span><span class="p">:</span> <span class="n">merchantDetails</span><span class="p">)</span> <span class="p">{</span> <span class="p">[</span><span class="k">unowned</span> <span class="k">self</span><span class="p">]</span> <span class="n">callback</span> <span class="k">in</span>
+          <span class="c1">// Make the registeration call here and retrun the callback</span>
+    <span class="p">}</span>
 </code></pre>
-<h2 id='the-main-flow-for-registering-a-card' class='heading'>The main flow for registering a card:</h2>
+
+<p><em>Note:</em> If you do not support certain card schemes that are supported by the SDK, pass an exclude-card-scheme set to exclude the card schemes and present user with &ldquo;This card is not supported&rdquo; message during card entry. </p>
+<pre class="highlight swift"><code><span class="c1">// Exclude Amex and Visa from supported card scheme list. </span>
+<span class="k">let</span> <span class="nv">cardStorage</span> <span class="o">=</span> <span class="kt">PaymentProcess</span><span class="o">.</span><span class="nf">cardStorage</span><span class="p">(</span>
+    <span class="nv">withMerchant</span><span class="p">:</span> <span class="n">merchantDetails</span><span class="p">,</span>
+    <span class="nv">excludedCardSchemeSet</span><span class="p">:</span> <span class="p">[</span><span class="o">.</span><span class="n">amex</span><span class="p">,</span> <span class="o">.</span><span class="n">visa</span><span class="p">])</span> <span class="p">{</span> <span class="p">[</span><span class="k">unowned</span> <span class="k">self</span><span class="p">]</span> <span class="n">callback</span> <span class="k">in</span>
+           <span class="c1">// Make the registeration call here and retrun the callback</span>
+     <span class="p">}</span>
+
+</code></pre>
+
+<p>Present the controller and handle the callbacks</p>
+<pre class="highlight swift"><code>
+<span class="kt">PiaSDK</span><span class="o">.</span><span class="nf">controller</span><span class="p">(</span>
+    <span class="nv">for</span><span class="p">:</span> <span class="n">cardStorage</span><span class="p">,</span>                                     <span class="c1">// use cardStorage.sBusiness() for saving a S-Business Card</span>
+    <span class="nv">success</span><span class="p">:</span> <span class="p">{</span> <span class="n">piaController</span><span class="p">,</span> <span class="n">transactionId</span> <span class="k">in</span>  <span class="p">},</span>        <span class="c1">// Commit the transaction with your merchant backend</span>
+    <span class="nv">cancellation</span><span class="p">:</span> <span class="p">{</span> <span class="n">piaController</span><span class="p">,</span> <span class="n">transactionId</span> <span class="k">in</span> <span class="p">},</span>    <span class="c1">// User canceled, rollback the transaction</span>
+    <span class="nv">failure</span><span class="p">:</span> <span class="p">{</span> <span class="n">piaController</span><span class="p">,</span> <span class="n">error</span> <span class="k">in</span><span class="p">}</span>                   <span class="c1">// Rollback transaction, check error object for detail. </span>
+<span class="p">)</span>
+</code></pre>
+<h2 id='the-main-flow-for-saving-a-card' class='heading'>The main flow for saving a card:</h2>
 
 <ul>
 <li><p>Scan Credit Card screen is displayed. User can scan the card, to simplify the process, or can proceed to Manual Entry screen. After scanning successfully, user will be prompted to manual entry screen, with the fields pre-populated (card number and expiration date - if were detected by the Card.IO library), to check if the data is valid, and correct if necessary.</p></li>
 <li><p>User fills the CVV/CVC, and clicks Save Card button.</p></li>
 <li><p>3D Secure WebView is prompted (3DS authentication is performed unless it has been waived by your chosen card acquirer). Here user can navigate inside this web page, using custom build controls (Back, Forward, Close).</p></li>
 <li><p>If user closes the webview, user will return to the manual entry page.</p></li>
-<li><p>After filling the confirmation code in 3D Secure, the user is returned back to the application, with a result code, to be handled in the <em>PiaSDKController delegate</em>.</p></li>
+<li><p>After filling the confirmation code in 3D Secure, the user is returned back to the application, with a result code that is handled by the SDK and appropriate callbacks are fired.</p></li>
 </ul>
 
 <p><strong>Note:</strong> Since card scanning functionality requires <em>Camera Permission</em>, the camera usage must be added to <em>Info.plist</em> file in the host application.</p>
@@ -410,8 +423,8 @@
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2021 <a class="link" href="https://nets.eu" target="_blank" rel="external">Nets</a>. All rights reserved. (Last updated: 2021-07-12)</p>
-      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+      <p>&copy; 2021 <a class="link" href="https://nets.eu" target="_blank" rel="external">Nets</a>. All rights reserved. (Last updated: 2021-07-16)</p>
+      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.1</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>
 </div>
