@@ -7,11 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2593485D32126BE057E96E40 /* Pia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B66FBA2B8BD3401FEFD95158 /* Pia.framework */; };
 		3500D89021345FFE0094EAE8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3500D88D21345FFE0094EAE8 /* Assets.xcassets */; };
+		4666258BD372C97A0BDD6ED3 /* Pia.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B66FBA2B8BD3401FEFD95158 /* Pia.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5F338E9C20E13B1C00B3E608 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5F338E9E20E13B1C00B3E608 /* Localizable.strings */; };
 		5F338EA120E13B1D00B3E608 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5F338EA320E13B1D00B3E608 /* InfoPlist.strings */; };
 		6E5ADB422435B60C0093B631 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E5ADB412435B60C0093B631 /* Utils.swift */; };
-		71CF30807F9C1BFB303F3926 /* Pia.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 839971AA540EFFE885DCC17D /* Pia.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		7547DB6A204FDF8000C280AC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7547DB69204FDF8000C280AC /* AppDelegate.swift */; };
 		7547DB6F204FDF8000C280AC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7547DB6D204FDF8000C280AC /* Main.storyboard */; };
 		7547DB74204FDF8000C280AC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7547DB72204FDF8000C280AC /* LaunchScreen.storyboard */; };
@@ -44,7 +45,6 @@
 		A30AC99A238D2C2B00B8FF62 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30AC999238D2C2B00B8FF62 /* Colors.swift */; };
 		A377E3D523CCA4990026F112 /* ApplePayIntegration.swift in Sources */ = {isa = PBXBuildFile; fileRef = A377E3D423CCA4990026F112 /* ApplePayIntegration.swift */; };
 		E5F4F8AE27E06C9EA567BCB2 /* Pods_PiaSampleUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EF911800CEB5C1F14FC0BF7 /* Pods_PiaSampleUITests.framework */; };
-		F3C11F906451CC92AD95AFCF /* Pia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 839971AA540EFFE885DCC17D /* Pia.framework */; };
 		FB8389986800864C6F045126 /* Pods_PiaSampleTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F856BF6102DF1DFD0EC41584 /* Pods_PiaSampleTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -72,7 +72,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				71CF30807F9C1BFB303F3926 /* Pia.framework in Embed Frameworks */,
+				4666258BD372C97A0BDD6ED3 /* Pia.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -108,7 +108,6 @@
 		7547DB89204FDF8000C280AC /* PiaSampleUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PiaSampleUITests.swift; sourceTree = "<group>"; };
 		7547DB8B204FDF8000C280AC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7EF911800CEB5C1F14FC0BF7 /* Pods_PiaSampleUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PiaSampleUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		839971AA540EFFE885DCC17D /* Pia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pia.framework; path = ../libs/Pia.framework; sourceTree = "<group>"; };
 		85730E1621A2C86C0016FB69 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		857FE13921A2A9C30027D508 /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = nb.lproj/Main.strings; sourceTree = "<group>"; };
 		857FE13A21A2A9C40027D508 /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = nb.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
@@ -142,6 +141,7 @@
 		A30AC999238D2C2B00B8FF62 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		A377E3D423CCA4990026F112 /* ApplePayIntegration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplePayIntegration.swift; sourceTree = "<group>"; };
 		A377E41623DF2AAD0026F112 /* LICENSE.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = LICENSE.md; sourceTree = "<group>"; };
+		B66FBA2B8BD3401FEFD95158 /* Pia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pia.framework; path = ../libs/Pia.framework; sourceTree = "<group>"; };
 		F856BF6102DF1DFD0EC41584 /* Pods_PiaSampleTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PiaSampleTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -151,7 +151,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7554A34D2056BF7100773403 /* BuildFile in Frameworks */,
-				F3C11F906451CC92AD95AFCF /* Pia.framework in Frameworks */,
+				2593485D32126BE057E96E40 /* Pia.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -187,7 +187,7 @@
 		6EA791B6237979AC0019757B /* libs */ = {
 			isa = PBXGroup;
 			children = (
-				839971AA540EFFE885DCC17D /* Pia.framework */,
+				B66FBA2B8BD3401FEFD95158 /* Pia.framework */,
 			);
 			name = libs;
 			path = ../../libs;
@@ -680,7 +680,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 190;
+				CURRENT_PROJECT_VERSION = 192;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -744,7 +744,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 190;
+				CURRENT_PROJECT_VERSION = 192;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -777,7 +777,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 190;
+				CURRENT_PROJECT_VERSION = 192;
 				DEVELOPMENT_TEAM = EGNFYS6P3L;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = PiaSample/Info.plist;
@@ -804,7 +804,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 190;
+				CURRENT_PROJECT_VERSION = 192;
 				DEVELOPMENT_TEAM = EGNFYS6P3L;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = PiaSample/Info.plist;
