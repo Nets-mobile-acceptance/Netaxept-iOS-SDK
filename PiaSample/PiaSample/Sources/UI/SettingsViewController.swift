@@ -87,14 +87,6 @@ enum Settings {
     @Persisted(.customCardSchemeImage, defaultValue: false)
     static var customCardSchemeImage: Bool
     
-//#cardio_code_section_start
-    @Persisted(.isCardIOEnabled, defaultValue: true)
-    static var isCardIOEnabled: Bool {
-        didSet {
-            NPIInterfaceConfiguration.sharedInstance()?.disableCardIO = !Settings.isCardIOEnabled
-        }
-    }
-//#cardio_code_section_end
 }
 
 extension Merchant {
@@ -143,6 +135,8 @@ class SettingsViewController: UIViewController {
     @IBOutlet weak var disableCardIOStackView: UIStackView!
     @IBOutlet weak var includeOnlyVisaSchemeLabel: UILabel!
     @IBOutlet weak var includeOnlyVisaSchemeSwitch: UISwitch!
+    @IBOutlet weak var includeOnlyDankortSchemeLabel: UILabel!
+    @IBOutlet weak var enableCoBrandedDankortSwitch: UISwitch!
     @IBOutlet weak var customCardSchemeImageLabel: UILabel!
     @IBOutlet weak var customCardSchemeImageSwitch: UISwitch!
 
@@ -210,23 +204,30 @@ class SettingsViewController: UIViewController {
         applicationVersionLabel.text = NPIPiaSemanticVersionString
 
         testModeSwitch.isOn = Merchant.isTestMode
+        
+        // Allows to test `excludeSchemeSet` API by toggling exclusion of all schemes but VISA
+        // On -  Support only VISA scheme
+        // Off - Support all schemes
         includeOnlyVisaSchemeSwitch.isOn = !Merchant.excludedCardSchemeSet.isEmpty
+        
+        // Allows testing of pre-selection VISA/DANKORT for co-branded cards
+        // On  - Enable co-branded DANKORT
+        // Off - Preselect VISA for co-branded DANKORT
+       // enableCoBrandedDankortSwitch.isOn = !Merchant.excludedCardSchemeSet.contains(.coBrandedDankort)
+        
+        
         systemAuthenticationSwitch.isOn = Settings.shouldUseSystemAuthentication
         customCardSchemeImageSwitch.isOn = Settings.customCardSchemeImage
-//#cardio_code_section_start
-        disableCardIOSwitch.isOn = !Settings.isCardIOEnabled
-//#cardio_code_section_end
 
         [testModeSwitch,
          systemAuthenticationSwitch,
          disableCardIOSwitch,
          includeOnlyVisaSchemeSwitch,
+      //   enableCoBrandedDankortSwitch,
          customCardSchemeImageSwitch].forEach { switchControl in
             switchControl.addTarget(self, action: #selector(toggle(_:)), for: .valueChanged)
         }
-/*#light_version_section_start
         self.disableCardIOStackView.isHidden = true
-#light_version_section_end*/
     }
 
     @objc private func toggle(_ switchControl: UISwitch) {
@@ -234,14 +235,14 @@ class SettingsViewController: UIViewController {
         case testModeSwitch: delegate.isTestMode = switchControl.isOn
         case includeOnlyVisaSchemeSwitch:
             Merchant.excludedCardSchemeSet = !switchControl.isOn ? [] : [
-                .JCB, .amex, .dankort, .dinersClubInternational, .maestro, .sBusiness, .masterCard
+                .coBrandedDankort,.masterCard
             ]
+//            Merchant.excludedCardSchemeSet = !switchControl.isOn ? [] : [
+//                .JCB, .amex, .coBrandedDankort, .dankort, .dinersClubInternational, .maestro, .sBusiness, .masterCard
+//            ]
         case systemAuthenticationSwitch: Settings.shouldUseSystemAuthentication = switchControl.isOn
         case customCardSchemeImageSwitch : Settings.customCardSchemeImage = switchControl.isOn
         case disableCardIOSwitch:
-//#cardio_code_section_start
-                Settings.isCardIOEnabled = !switchControl.isOn
-//#cardio_code_section_end
             break
         default: break
         }

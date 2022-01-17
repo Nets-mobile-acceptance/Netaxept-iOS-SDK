@@ -1,4 +1,4 @@
-# PiA - Netaxept iOS SDK v2.5.0
+# PiA - Netaxept iOS SDK v2.6.0
 
 ![](./Resources/NetsLogo.jpg)
 
@@ -28,7 +28,7 @@ Supported payment methods:
 * MobilePay
 
 ## Requirements
-* PiA iOS SDK requires iOS 10 or above.
+* PiA iOS SDK requires iOS 12 or above.
 * Card scanning functionality requires *Camera Permission*, the camera usage must be added to *Info.plist* file in the host application.
 
 ```

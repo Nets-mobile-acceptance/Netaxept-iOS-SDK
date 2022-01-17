@@ -79,112 +79,126 @@
     },
     {
       "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/CardScheme.h",
-      "line": 26,
+      "line": 24,
+      "symbol": "CardScheme.CardSchemeCoBrandedDankort",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.enumcase",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/CardScheme.h",
+      "line": 27,
       "symbol": "Card",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.enum",
       "warning": "undocumented"
     },
     {
       "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/CardScheme.h",
-      "line": 26,
+      "line": 27,
       "symbol": "Card",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.typedef",
       "warning": "undocumented"
     },
     {
       "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/CardScheme.h",
-      "line": 27,
+      "line": 28,
       "symbol": "Card.CardAmex",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.enumcase",
       "warning": "undocumented"
     },
     {
       "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/CardScheme.h",
-      "line": 28,
+      "line": 29,
       "symbol": "Card.CardVisa",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.enumcase",
       "warning": "undocumented"
     },
     {
       "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/CardScheme.h",
-      "line": 29,
+      "line": 30,
       "symbol": "Card.CardMasterCard",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.enumcase",
       "warning": "undocumented"
     },
     {
       "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/CardScheme.h",
-      "line": 30,
+      "line": 31,
       "symbol": "Card.CardDinersClubInternational",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.enumcase",
       "warning": "undocumented"
     },
     {
       "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/CardScheme.h",
-      "line": 31,
+      "line": 32,
       "symbol": "Card.CardJcb",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.enumcase",
       "warning": "undocumented"
     },
     {
       "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/CardScheme.h",
-      "line": 32,
+      "line": 33,
       "symbol": "Card.CardDankort",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.enumcase",
       "warning": "undocumented"
     },
     {
       "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/CardScheme.h",
-      "line": 33,
+      "line": 34,
       "symbol": "Card.CardMaestro",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.enumcase",
       "warning": "undocumented"
     },
     {
       "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/CardScheme.h",
-      "line": 34,
+      "line": 35,
       "symbol": "Card.CardSBusiness",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.enumcase",
       "warning": "undocumented"
     },
     {
       "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/CardScheme.h",
-      "line": 35,
+      "line": 36,
+      "symbol": "Card.CardCoBrandedDankort",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.enumcase",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/CardScheme.h",
+      "line": 37,
       "symbol": "Card.CardOther",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.enumcase",
       "warning": "undocumented"
     },
     {
       "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/CardScheme.h",
-      "line": 44,
+      "line": 46,
       "symbol": "CardDisplay",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/CardScheme.h",
-      "line": 45,
+      "line": 47,
       "symbol": "CardDisplay.card",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/CardScheme.h",
-      "line": 46,
+      "line": 48,
       "symbol": "CardDisplay.customCardImage",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/CardScheme.h",
-      "line": 48,
+      "line": 50,
       "symbol": "CardDisplay.+card:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/janikytoaho/jenkins/workspace/pia-sdk-ios/Pia/Pia/CardScheme.h",
-      "line": 49,
+      "line": 51,
       "symbol": "CardDisplay.+customCardImage:card:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.class",
       "warning": "undocumented"

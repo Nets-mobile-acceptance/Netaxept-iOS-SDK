@@ -182,11 +182,9 @@ class UICustomizationController: UIViewController {
         view.addGestureRecognizer(
             UITapGestureRecognizer(target: self, action: #selector(resignFirstResponders(_:)))
         )
-/*#light_version_section_start
 
         self.cardIOSpecificLabel.isHidden = true
         self.cardIOSpecificStackView.isHidden = true
-#light_version_section_end*/
     }
 
     override func viewWillAppear(_ animated: Bool) {

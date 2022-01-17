@@ -39,9 +39,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if window == nil { window = UIWindow() }
         appNavigation.launch(in: window!)
         
-//#cardio_code_section_start
-        Settings.isCardIOEnabled = Settings.isCardIOEnabled
-//#cardio_code_section_end
         Settings.shouldDisableSavingCard = Settings.shouldDisableSavingCard
 
         /*
