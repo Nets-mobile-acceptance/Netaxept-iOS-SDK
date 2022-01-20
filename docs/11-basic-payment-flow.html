@@ -391,30 +391,8 @@ and card storage process using the SDK. </p>
 <span class="p">)</span>
 </code></pre>
 <h3 id='s-business-card' class='heading'>S-Business Card</h3>
-
 <p>The SDK offers a declarative API to instantiate a controller for S-Business card payment and card storage processes with result callbacks for <em>success</em>, <em>cancellation</em> and <em>failure</em>. Present this controller and handle the callbacks accordingly. </p>
-<pre class="highlight plaintext"><code>
-###Co-Branded card (Danish merchants only)
-
-Due to EU legislation and local cobranded card rules in Denmark, all danish merchants who support both Visa and Dankort schemes has to allow Dankort/Visa cobranded cardholder to select their preferred scheme used for the payment. Thus, for this compliance purpose, the SDK now supports pre-selection of scheme between Dankort and Visa when using Dankort-Visa Co-Branded card. This allows cardholders to pre-select either Visa or Dankort scheme before initiating a payment.
-
-By Default, Dankort is used, but if merchant wants to process transaction with Visa: the cobranded dankort card needs to be excluded as show in the following code snippet
-
-```swift
-// Only support Visa Card from supported card scheme list. 
-let cardPayment = PaymentProcess.cardPayment(
-    withMerchant: merchantDetails,
-    excludedCardSchemeSet: [.coBrandedDankort]
-    amount: amountInCents,
-    currency: currencyCode) { [unowned self] userSelectedToStoreCard, callback in
-
-           // Make the registeration call here and retrun the callback
-           registerCardPayment(userSelectedToStoreCard,callback)
-     }
-
-</code></pre>
-
-<p><em>Note:</em> If none of the schemes of Co-Branded card are excluded, Dankort would be used as default scheme by the SDK to process the payment.</p>
+<pre class="highlight plaintext">
 <pre class="highlight swift"><code>
 <span class="kt">PiaSDK</span><span class="o">.</span><span class="nf">controller</span><span class="p">(</span>
     <span class="nv">for</span><span class="p">:</span> <span class="n">cardPayment</span><span class="o">.</span><span class="nf">sBusiness</span><span class="p">(),</span>
@@ -423,23 +401,34 @@ let cardPayment = PaymentProcess.cardPayment(
     <span class="nv">failure</span><span class="p">:</span> <span class="p">{</span> <span class="n">piaController</span><span class="p">,</span> <span class="n">error</span> <span class="k">in</span><span class="p">}</span>                   <span class="c1">// Rollback transaction, check error object for detail. </span>
 <span class="p">)</span>
 </code></pre>
-
 <p>The following sample code demonstrates how registration results are returned to the SDK via callback. </p>
 <pre class="highlight swift"><code>
 <span class="n">fun</span> <span class="nf">registerCardPayment</span><span class="p">(</span><span class="n">userChoseToStoreCardForLater</span> <span class="nv">storeCard</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">,</span> <span class="nv">piaCallback</span><span class="p">:</span> <span class="p">(</span><span class="kt">TransactionID</span><span class="p">,</span> <span class="kt">RedirectURL</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span> <span class="p">{</span>
-
     <span class="c1">// Make a card registration request with your backend to retrieve a transactionID and redirectURL.</span>
     <span class="c1">// The SDK passes `true` for `storeCard` if the user has checked to store the card for later use. </span>
-
     <span class="c1">// Callback with `transactionID` and `redirectURL` obtained from your merchant backend</span>
     <span class="nf">callback</span><span class="p">(</span><span class="o">.</span><span class="nf">success</span><span class="p">(</span><span class="nv">withTransactionID</span><span class="p">:</span> <span class="n">response</span><span class="o">.</span><span class="n">transactionId</span><span class="p">,</span> <span class="nv">redirectURL</span><span class="p">:</span> <span class="n">response</span><span class="o">.</span><span class="n">redirectURL</span><span class="p">))</span>
-
     <span class="c1">// If registration request failed with your backend, callback the SDK with the error. </span>
     <span class="nf">callback</span><span class="p">(</span><span class="o">.</span><span class="nf">failure</span><span class="p">(</span><span class="n">error</span><span class="p">))</span>
 <span class="p">}</span>
 </code></pre>
-
 <p>Note: Netaxept backend integration tips can be found in <em>5.4 Backend Tips</em>,  <em>Register API</em> <a href="./54-backend-tips.html#register-api">section</a></p>
+<h3 id='co-Branded card' class='heading'>Co-Branded card (Danish merchants only)</h3>
+<pre class="highlight plaintext">
+<p>Due to EU legislation and local cobranded card rules in Denmark, all danish merchants who support both Visa and Dankort schemes has to allow Dankort/Visa cobranded cardholder to select their preferred scheme used for the payment. Thus, for this compliance purpose, the SDK now supports pre-selection of scheme between Dankort and Visa when using Dankort-Visa Co-Branded card. This allows cardholders to pre-select either Visa or Dankort scheme before initiating a payment.
+By Default, Dankort is used, but if merchant wants to process transaction with Visa: the cobranded dankort card needs to be excluded as show in the following code snippet</p>
+<pre class="highlight swift"><code>
+// Only support Visa Card from supported card scheme list. 
+let cardPayment = PaymentProcess.cardPayment(
+    withMerchant: merchantDetails,
+    excludedCardSchemeSet: [.coBrandedDankort]
+    amount: amountInCents,
+    currency: currencyCode) { [unowned self] userSelectedToStoreCard, callback in
+           // Make the registeration call here and retrun the callback
+           registerCardPayment(userSelectedToStoreCard,callback)
+     }
+</code></pre>
+<p><em>Note:</em> If none of the schemes of Co-Branded card are excluded, Dankort would be used as default scheme by the SDK to process the payment.</p>           
 <h2 id='backend-models-net-39-s-sample-merchant-backend-models' class='heading'>Backend Models - Net&rsquo;s sample merchant backend models</h2>
 <h3 id='registration-request-body' class='heading'>Registration Request Body</h3>
 <pre class="highlight swift"><code><span class="c1">// Note: The payment method (`PaymentMethodID`) is `SBusinessCard` for S-Business Card and `nil` for other cards </span>
