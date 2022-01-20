@@ -418,7 +418,6 @@ and card storage process using the SDK. </p>
 <p>Note: Netaxept backend integration tips can be found in <em>5.4 Backend Tips</em>,  <em>Register API</em> <a href="./54-backend-tips.html#register-api">section</a></p>
 
 <h3 id='co-Branded card' class='heading'>Co-Branded card (Danish merchants only)</h3>
-<pre class="highlight plaintext">
 <p>Due to EU legislation and local cobranded card rules in Denmark, all danish merchants who support both Visa and Dankort schemes has to allow Dankort/Visa cobranded cardholder to select their preferred scheme used for the payment. Thus, for this compliance purpose, the SDK now supports pre-selection of scheme between Dankort and Visa when using Dankort-Visa Co-Branded card. This allows cardholders to pre-select either Visa or Dankort scheme before initiating a payment.
 By Default, Dankort is used, but if merchant wants to process transaction with Visa: the cobranded dankort card needs to be excluded as show in the following code snippet</p>
 
