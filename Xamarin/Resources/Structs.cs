@@ -106,7 +106,8 @@ namespace XamarinPia
         JCB = 1 << 4,
         Dankort = 1 << 5,
         Maestro = 1 << 6,
-        SBusiness = 1 << 7
+        SBusiness = 1 << 7,
+        CoBrandedDankort = 1 << 8
     }
     
     [Native]
@@ -120,6 +121,7 @@ namespace XamarinPia
         Dankort = CardScheme.Dankort,
         Maestro = CardScheme.Maestro,
         SBusiness = CardScheme.SBusiness,
+        CoBrandedDankort = CardScheme.CoBrandedDankort,
         Other
     }
     

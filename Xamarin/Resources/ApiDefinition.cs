@@ -1194,4 +1194,121 @@ namespace XamarinPia
         [Export("netaxeptSOAPPaymentDataFrom:")]
         string NetaxeptSOAPPaymentDataFrom(PKPaymentToken token);
     }
+    //new code added
+    [Static]
+    partial interface Constants
+    {
+        //// extern const unsigned char [] PiaVersionString;
+        //[Field("PiaVersionString", "__Internal")]
+        //byte[] PiaVersionString { get; }
+
+        //// extern int *const _Nonnull NPIPiaSemanticVersionString;
+        //[Field("NPIPiaSemanticVersionString", "__Internal")]
+        //unsafe int* NPIPiaSemanticVersionString { get; }
+
+        //// extern int *const _Nonnull NPIPiaTechnicalVersionString;
+        //[Field("NPIPiaTechnicalVersionString", "__Internal")]
+        //unsafe int* NPIPiaTechnicalVersionString { get; }
+
+        // extern int id;
+        [Field("id", "__Internal")]
+        int id { get; }
+
+        // extern int SchemeType;
+        [Field("SchemeType", "__Internal")]
+        int SchemeType { get; }
+
+        // extern int NPIErrorCode;
+        [Field("NPIErrorCode", "__Internal")]
+        int NPIErrorCode { get; }
+
+        // extern int NSString;
+        [Field("NSString", "__Internal")]
+        int NSString { get; }
+
+        // extern int PiALanguage;
+        [Field("PiALanguage", "__Internal")]
+        int PiALanguage { get; }
+    }
+
+    partial interface Constants
+    {
+        // extern int WalletRegistrationResponse;
+        [Field("WalletRegistrationResponse", "__Internal")]
+        int WalletRegistrationResponse { get; }
+
+        // extern int CardRegistrationResponse;
+        [Field("CardRegistrationResponse", "__Internal")]
+        int CardRegistrationResponse { get; }
+
+
+        // extern int PayPalRegistrationResponse;
+        [Field("PayPalRegistrationResponse", "__Internal")]
+        int PayPalRegistrationResponse { get; }
+
+
+        // extern int PaytrailRegistrationResponse;
+        [Field("PaytrailRegistrationResponse", "__Internal")]
+        int PaytrailRegistrationResponse { get; }
+    }
+
+    partial interface Constants
+    {
+        // extern int CardDisplay;
+        [Field("CardDisplay", "__Internal")]
+        int CardDisplay { get; }
+
+        // extern int MerchantDetails;
+        [Field("MerchantDetails", "__Internal")]
+        int MerchantDetails { get; }
+
+        // extern int CardStorage;
+        [Field("CardStorage", "__Internal")]
+        int CardStorage { get; }
+
+        // extern int CardPayment;
+        [Field("CardPayment", "__Internal")]
+        int CardPayment { get; }
+
+        // extern int TokenizedCardPromptConfirmation;
+        [Field("TokenizedCardPromptConfirmation", "__Internal")]
+        int TokenizedCardPromptConfirmation { get; }
+    }
+
+    partial interface Constants
+    { 
+
+      // extern int TokenizedCardPayment;
+        [Field("TokenizedCardPayment", "__Internal")]
+        int TokenizedCardPayment { get; }
+
+        // extern int TokenizedCardExpressCheckout;
+        [Field("TokenizedCardExpressCheckout", "__Internal")]
+        int TokenizedCardExpressCheckout { get; }
+
+        // extern int WalletPaymentProcess;
+        [Field("WalletPaymentProcess", "__Internal")]
+        int WalletPaymentProcess { get; }
+
+        // extern int PayPalPaymentProcess;
+        [Field("PayPalPaymentProcess", "__Internal")]
+        int PayPalPaymentProcess { get; }
+
+     
+
+        // extern int PaytrailPaymentProcess;
+        [Field("PaytrailPaymentProcess", "__Internal")]
+        int PaytrailPaymentProcess { get; }
+
+        // extern int BOOL;
+        [Field("BOOL", "__Internal")]
+        int BOOL { get; }
+
+        // extern int UIViewController;
+        [Field("UIViewController", "__Internal")]
+        int UIViewController { get; }
+
+
+    }
+
 }

@@ -15,7 +15,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.6.0</string>
+	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -48,7 +48,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>195</string>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>mobilepayonline-test</string>
