@@ -15,7 +15,7 @@ extension AppNavigation: PKPaymentAuthorizationViewControllerDelegate {
     var canPayWithApplePay: Bool {
         PKPaymentAuthorizationViewController.canMakePayments()
     }
-
+    
     func presentPiaForApplePayPayment(_ orderDetails: Order) {
         guard PKPaymentAuthorizationViewController.canMakePayments(
             usingNetworks: supportedApplePayNetworks) else {

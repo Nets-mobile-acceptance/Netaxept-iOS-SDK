@@ -17,9 +17,10 @@ protocol ApplePayOrderDetails {
 }
 
 /// Apple pay networks supported by merchant
-let supportedApplePayNetworks: [PKPaymentNetwork] = [
-    .visa, .masterCard, .discover, .amex
-]
+let supportedApplePayNetworks: [PKPaymentNetwork] = {
+    var networks: [PKPaymentNetwork] = [.visa, .masterCard, .discover, .amex]
+    return networks
+}()
 
 typealias Order = (OrderDetails & ApplePayOrderDetails)
 typealias Customer = (CustomerDetails)
