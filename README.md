@@ -37,6 +37,27 @@ Value  :  $(PRODUCT_NAME) camera us
 ```
 
 ## Installation
+### Swift Package Manager
+#### Linking to an Xcode project
+* Go to File -> Add Packages...
+* Type package URL https://github.com/Nets-mobile-acceptance/Netaxept-iOS-SDK
+* Select Netaxept-iOS-SDK package, specify dependency rule, and click Add Package
+* Select Pia target and click Add Package
+#### Linking to a Swift package
+Add the following lines to your Package.swift file:
+```swift
+let package = Package(
+   ...,
+   dependencies: [
+      ...,
+      .package(name: "Netaxept-iOS-SDK", url: "https://github.com/Nets-mobile-acceptance/Netaxept-iOS-SDK", branch: "master")
+   ],
+   targets: [
+      .target(..., dependencies: [.product(name: "Pia", package: "Netaxept-iOS-SDK")]
+   ]
+   ...
+)
+```
 ### Carthage
 **NOTE: If this is the first time you are using Carthage, please refer to this [guide](https://github.com/Carthage/Carthage#adding-frameworks-to-an-application) for correct installation.**
 
