@@ -40,5 +40,11 @@
   <ItemGroup>
     <ObjcBindingCoreSource Include="Structs.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <NativeReference Include="..\..\..\..\..\Downloads\pia-sdk-ios-release-package-2.6.2 %281%29\Frameworks\Pia.xcframework">
+      <Kind>Static</Kind>
+      <SmartLink>False</SmartLink>
+    </NativeReference>
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.ObjCBinding.CSharp.targets" />
 </Project>

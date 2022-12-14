@@ -59,6 +59,15 @@
                 <a class="nav-group-task-link" href="13-recurring-payments.html">1.3. Recurring payments</a>
               </li>
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="14-payment-without-security-code.html">1.4. Payment Without Security Code</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="15-s-business-card.html">1.5. S-Business Card</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="16-co-branded-card-danish-merchants-only.html">1.6. Co-Branded card (Danish merchants only)</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="2-saving-a-card.html">2. Saving a card</a>
               </li>
               <li class="nav-group-task">
@@ -89,13 +98,16 @@
                 <a class="nav-group-task-link" href="54-backend-tips.html">5.4. Backend Tips</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="6-licenses.html">6. Licenses</a>
+                <a class="nav-group-task-link" href="6-limitations.html">6. Limitations</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="7-changelog.html">7. Changelog</a>
+                <a class="nav-group-task-link" href="7-licenses.html">7. Licenses</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="8-get-in-touch.html">8. Get in touch</a>
+                <a class="nav-group-task-link" href="8-changelog.html">8. Changelog</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="9-get-in-touch.html">9. Get in touch</a>
               </li>
             </ul>
           </li>
@@ -350,6 +362,15 @@ and card storage process using the SDK. </p>
 
 <p><img src="./img/Basic%20Payment%20Flow.png" alt="Basic Payment flow"></p>
 
+<p><strong>3DS Basics</strong>
+If the chosen card acquirer has the 3DS verification required, this process will be triggered in a WebView.
+In the case 3DS is not required, the transaction is performed directly.</p>
+
+<p><strong>PiA SDK</strong> also includes support for Nordea Visa Cards, which have an extra option inside the 3DS process: <strong>BankID Verification.</strong>
+If the user chooses the BankID option from the WebView, the BankID application will be opened automatically to confirm the payment.
+After the BankID authentication is complete, when returning back to the SDK, the web page will detect if the verification was performed and returns a proper result. 
+If the user does not have the BankID app installed on his device, he will be prompted to App store to install it. After that, he can resume the 3DS process.</p>
+
 <p>For a card payment, create a card-payment process providing merchant information (obtained from Netaxept), the amount to be charged (in cents), the currency code and registration callback as shown below:</p>
 <pre class="highlight swift"><code><span class="k">let</span> <span class="nv">merchantDetails</span> <span class="o">=</span> <span class="kt">MerchantDetails</span><span class="o">.</span><span class="nf">merchant</span><span class="p">(</span><span class="nv">withID</span><span class="p">:</span> <span class="n">merchantID</span><span class="p">,</span> <span class="nv">inTest</span><span class="p">:</span> <span class="n">isTestMerchantID</span><span class="p">)</span>
 
@@ -379,7 +400,7 @@ and card storage process using the SDK. </p>
      <span class="p">}</span>
 
 </code></pre>
-<h3 id='main-card-schemes-visa-mastercard-amex-dankort' class='heading'>Main card schemes (Visa, MasterCard, Amex, Dankort, &hellip;)</h3>
+<h3 id='main-card-schemes-visa-mastercard-amex-dankort-forbrugsforeningen' class='heading'>Main card schemes (Visa, MasterCard, Amex, Dankort, Forbrugsforeningen, &hellip;)</h3>
 
 <p>The SDK offers a declarative API to instantiate a controller for card payment and card storage processes with result callbacks for <em>success</em>, <em>cancellation</em> and <em>failure</em>. Present this controller and handle the callbacks accordingly. </p>
 <pre class="highlight swift"><code>
@@ -390,109 +411,10 @@ and card storage process using the SDK. </p>
     <span class="nv">failure</span><span class="p">:</span> <span class="p">{</span> <span class="n">piaController</span><span class="p">,</span> <span class="n">error</span> <span class="k">in</span><span class="p">}</span>                   <span class="c1">// Rollback transaction, check error object for detail. </span>
 <span class="p">)</span>
 </code></pre>
-<h3 id='s-business-card' class='heading'>S-Business Card</h3>
 
-<p>The SDK offers a declarative API to instantiate a controller for S-Business card payment and card storage processes with result callbacks for <em>success</em>, <em>cancellation</em> and <em>failure</em>. Present this controller and handle the callbacks accordingly. </p>
-<pre class="highlight plaintext"><code>
-###Co-Branded card (Danish merchants only)
-
-Due to EU legislation and local cobranded card rules in Denmark, all danish merchants who support both Visa and Dankort schemes has to allow Dankort/Visa cobranded cardholder to select their preferred scheme used for the payment. Thus, for this compliance purpose, the SDK now supports pre-selection of scheme between Dankort and Visa when using Dankort-Visa Co-Branded card. This allows cardholders to pre-select either Visa or Dankort scheme before initiating a payment.
-
-By Default, Dankort is used, but if merchant wants to process transaction with Visa: the cobranded dankort card needs to be excluded as show in the following code snippet
-
-```swift
-// Only support Visa Card from supported card scheme list. 
-let cardPayment = PaymentProcess.cardPayment(
-    withMerchant: merchantDetails,
-    excludedCardSchemeSet: [.coBrandedDankort]
-    amount: amountInCents,
-    currency: currencyCode) { [unowned self] userSelectedToStoreCard, callback in
-
-           // Make the registeration call here and retrun the callback
-           registerCardPayment(userSelectedToStoreCard,callback)
-     }
-
-</code></pre>
-
-<p><em>Note:</em> If none of the schemes of Co-Branded card are excluded, Dankort would be used as default scheme by the SDK to process the payment.</p>
-<pre class="highlight swift"><code>
-<span class="kt">PiaSDK</span><span class="o">.</span><span class="nf">controller</span><span class="p">(</span>
-    <span class="nv">for</span><span class="p">:</span> <span class="n">cardPayment</span><span class="o">.</span><span class="nf">sBusiness</span><span class="p">(),</span>
-    <span class="nv">success</span><span class="p">:</span> <span class="p">{</span> <span class="n">piaController</span><span class="p">,</span> <span class="n">transactionId</span> <span class="k">in</span>  <span class="p">},</span>        <span class="c1">// Commit the transaction with your merchant backend</span>
-    <span class="nv">cancellation</span><span class="p">:</span> <span class="p">{</span> <span class="n">piaController</span><span class="p">,</span> <span class="n">transactionId</span> <span class="k">in</span> <span class="p">},</span>    <span class="c1">// User canceled, rollback the transaction</span>
-    <span class="nv">failure</span><span class="p">:</span> <span class="p">{</span> <span class="n">piaController</span><span class="p">,</span> <span class="n">error</span> <span class="k">in</span><span class="p">}</span>                   <span class="c1">// Rollback transaction, check error object for detail. </span>
-<span class="p">)</span>
-</code></pre>
-
-<p>The following sample code demonstrates how registration results are returned to the SDK via callback. </p>
-<pre class="highlight swift"><code>
-<span class="n">fun</span> <span class="nf">registerCardPayment</span><span class="p">(</span><span class="n">userChoseToStoreCardForLater</span> <span class="nv">storeCard</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">,</span> <span class="nv">piaCallback</span><span class="p">:</span> <span class="p">(</span><span class="kt">TransactionID</span><span class="p">,</span> <span class="kt">RedirectURL</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span> <span class="p">{</span>
-
-    <span class="c1">// Make a card registration request with your backend to retrieve a transactionID and redirectURL.</span>
-    <span class="c1">// The SDK passes `true` for `storeCard` if the user has checked to store the card for later use. </span>
-
-    <span class="c1">// Callback with `transactionID` and `redirectURL` obtained from your merchant backend</span>
-    <span class="nf">callback</span><span class="p">(</span><span class="o">.</span><span class="nf">success</span><span class="p">(</span><span class="nv">withTransactionID</span><span class="p">:</span> <span class="n">response</span><span class="o">.</span><span class="n">transactionId</span><span class="p">,</span> <span class="nv">redirectURL</span><span class="p">:</span> <span class="n">response</span><span class="o">.</span><span class="n">redirectURL</span><span class="p">))</span>
-
-    <span class="c1">// If registration request failed with your backend, callback the SDK with the error. </span>
-    <span class="nf">callback</span><span class="p">(</span><span class="o">.</span><span class="nf">failure</span><span class="p">(</span><span class="n">error</span><span class="p">))</span>
-<span class="p">}</span>
-</code></pre>
+<p>Note: See <a href="https://developers.nets.eu/netaxept/en-EU/api/rest-v1/#netaxept-queryaspx-get" title="Netaxept">Netaxept</a> documentation for more details on this API.</p>
 
 <p>Note: Netaxept backend integration tips can be found in <em>5.4 Backend Tips</em>,  <em>Register API</em> <a href="./54-backend-tips.html#register-api">section</a></p>
-<h2 id='backend-models-net-39-s-sample-merchant-backend-models' class='heading'>Backend Models - Net&rsquo;s sample merchant backend models</h2>
-<h3 id='registration-request-body' class='heading'>Registration Request Body</h3>
-<pre class="highlight swift"><code><span class="c1">// Note: The payment method (`PaymentMethodID`) is `SBusinessCard` for S-Business Card and `nil` for other cards </span>
-<span class="c1">//       and `PaymentMethodID(id: "EasyPayment", displayName: "Easy Payment", fee: 0)`</span>
-<span class="c1">//       is used for payments with a previously stored/registered card, aka easy-payment.</span>
-<span class="c1">//       The `cardId` must have the card identifier token (String) for easy-payment. </span>
-<span class="c1">//</span>
-<span class="kd">struct</span> <span class="kt">RegistrationRequest</span><span class="p">:</span> <span class="kt">Encodable</span> <span class="p">{</span>
-    <span class="k">let</span> <span class="nv">customerId</span><span class="p">:</span> <span class="kt">String</span>
-    <span class="k">let</span> <span class="nv">orderNumber</span><span class="p">:</span> <span class="kt">String</span>
-    <span class="k">let</span> <span class="nv">amount</span><span class="p">:</span> <span class="kt">Amount</span>
-    <span class="k">let</span> <span class="nv">storeCard</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">?</span>
-    <span class="k">let</span> <span class="nv">method</span><span class="p">:</span> <span class="kt">PaymentMethodID</span><span class="p">?</span>
-    <span class="k">let</span> <span class="nv">cardId</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span>             <span class="c1">// set for payments with a stored card</span>
-    <span class="k">let</span> <span class="nv">items</span><span class="p">:</span> <span class="kt">LineItem</span><span class="p">?</span>
-    <span class="k">let</span> <span class="nv">paymentData</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span>        <span class="c1">// set for ApplePay payments</span>
-    <span class="k">let</span> <span class="nv">phoneNumber</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span>        <span class="c1">// set for Vipps payments</span>
-    <span class="k">let</span> <span class="nv">redirectUrl</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span>        <span class="c1">// set for Wallet App payments</span>
-    <span class="k">let</span> <span class="nv">customerEmail</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span>      <span class="c1">// set for Paytrail payments</span>
-    <span class="k">let</span> <span class="nv">customerFirstName</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span>  <span class="c1">// set for Paytrail payments</span>
-    <span class="k">let</span> <span class="nv">customerLastName</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span>   <span class="c1">// set for Paytrail payments</span>
-    <span class="k">let</span> <span class="nv">customerAddress1</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span>   <span class="c1">// set for Paytrail payments</span>
-    <span class="k">let</span> <span class="nv">customerPostCode</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span>   <span class="c1">// set for Paytrail payments</span>
-    <span class="k">let</span> <span class="nv">customerTown</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span>       <span class="c1">// set for Paytrail payments</span>
-    <span class="k">let</span> <span class="nv">customerCountry</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span>    <span class="c1">// set for Paytrail payments</span>
-<span class="p">}</span>
-</code></pre>
-<h3 id='registration-response-transaction' class='heading'>Registration Response - Transaction</h3>
-<pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">Transaction</span><span class="p">:</span> <span class="kt">Decodable</span> <span class="p">{</span>
-    <span class="k">let</span> <span class="nv">transactionId</span><span class="p">:</span> <span class="kt">String</span>
-    <span class="k">let</span> <span class="nv">redirectOK</span><span class="p">:</span> <span class="kt">String</span>
-    <span class="k">let</span> <span class="nv">redirectCancel</span><span class="p">:</span> <span class="kt">String</span>
-    <span class="k">let</span> <span class="nv">walletUrl</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span>
-<span class="p">}</span>
-</code></pre>
-<h3 id='commit-request-body' class='heading'>Commit Request Body</h3>
-
-<p>The commit call supports two operations in our sample backend: &ldquo;COMMIT&rdquo; and &ldquo;VERIFY&rdquo;
-to commit transaction and verify a registered (stored) card respectively</p>
-<pre class="highlight swift"><code><span class="kd">struct</span> <span class="kt">Commit</span><span class="p">:</span> <span class="kt">Encodable</span> <span class="p">{</span> 
-    <span class="k">let</span> <span class="nv">operation</span><span class="p">:</span> <span class="kt">String</span> 
-<span class="p">}</span>
-</code></pre>
-<h3 id='commit-response' class='heading'>Commit Response</h3>
-<pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">CommitResponse</span><span class="p">:</span> <span class="kt">Decodable</span> <span class="p">{</span>
-    <span class="k">let</span> <span class="nv">transactionId</span><span class="p">:</span> <span class="kt">String</span>
-    <span class="k">let</span> <span class="nv">responseCode</span><span class="p">:</span> <span class="kt">String</span>
-    <span class="k">let</span> <span class="nv">responseSource</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span>
-    <span class="k">let</span> <span class="nv">responseText</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span>
-    <span class="k">let</span> <span class="nv">authorizationId</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span>
-    <span class="k">let</span> <span class="nv">executionTimestamp</span><span class="p">:</span> <span class="kt">String</span>
-<span class="p">}</span>
-</code></pre>
 
           </div>
         </section>
@@ -501,7 +423,7 @@ to commit transaction and verify a registered (stored) card respectively</p>
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2022 <a class="link" href="https://nets.eu" target="_blank" rel="external">Nets</a>. All rights reserved. (Last updated: 2022-03-29)</p>
+      <p>&copy; 2022 <a class="link" href="https://nets.eu" target="_blank" rel="external">Nets</a>. All rights reserved. (Last updated: 2022-12-14)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

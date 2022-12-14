@@ -59,6 +59,15 @@
                 <a class="nav-group-task-link" href="13-recurring-payments.html">1.3. Recurring payments</a>
               </li>
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="14-payment-without-security-code.html">1.4. Payment Without Security Code</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="15-s-business-card.html">1.5. S-Business Card</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="16-co-branded-card-danish-merchants-only.html">1.6. Co-Branded card (Danish merchants only)</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="2-saving-a-card.html">2. Saving a card</a>
               </li>
               <li class="nav-group-task">
@@ -89,13 +98,16 @@
                 <a class="nav-group-task-link" href="54-backend-tips.html">5.4. Backend Tips</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="6-licenses.html">6. Licenses</a>
+                <a class="nav-group-task-link" href="6-limitations.html">6. Limitations</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="7-changelog.html">7. Changelog</a>
+                <a class="nav-group-task-link" href="7-licenses.html">7. Licenses</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="8-get-in-touch.html">8. Get in touch</a>
+                <a class="nav-group-task-link" href="8-changelog.html">8. Changelog</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="9-get-in-touch.html">9. Get in touch</a>
               </li>
             </ul>
           </li>
@@ -346,7 +358,7 @@
 
 <p>With the PiA SDK, you can allow Finnish customers to pay with Paytrail direct bank transfers. It supports through 1 integration, the 10 main banks which are part of this direct payment scheme.</p>
 
-<p>You can get more information about Paytrail via Netaxept from the <a href="https://shop.nets.eu/documents/535922/545797/Netaxept_Paytrail_GetStartedGuide_EN_v1.7.pdf/182ad7e8-ad0d-4c6f-9a74-bd8508300177">Paytrail Getting Started Guide</a>.</p>
+<p>You can get more information about Paytrail via Netaxept from the <a href="https://developers.nets.eu/netaxept/en-EU/docs/paytrail-direct-banks/">Paytrail Getting Started Guide</a>.</p>
 
 <p><strong>Pre-requisite to accept direct bank payments via Paytrail :</strong></p>
 
@@ -359,8 +371,8 @@
 
 <ul>
 <li><p>Merchant needs to use <code>ServiceType = B</code> while making the register call.</p></li>
-<li><p>Paytrail requires a set of customer details that need to be sent in the register call to Netaxpet. Merchants can use dummy data for this. Check the <a href="https://shop.nets.eu/documents/535922/545797/Netaxept_Paytrail_GetStartedGuide_EN_v1.7.pdf/182ad7e8-ad0d-4c6f-9a74-bd8508300177">Netaxept Paytrail Integration Guide</a> for more details.</p></li>
-<li><p>Paytrail requires a unique reference number which is formulated according to Finnish reference number standard <a href="www.fkl.fi">www.fkl.fi</a>. For more information click <a href="https://shop.nets.eu/web/partners/transaction-reference">here</a>.</p></li>
+<li><p>In Paytrail request customer email is manadatory that need to be sent in the register call to Netaxpet.In case merchant doesn´t send it, then Paytrail payment methods are not displayed in the terminal. When paymentMethodActionList includes Paytrail payment method name, then an error message is returned as &ldquo;Missing customer Email ID&rdquo;. Merchants can use dummy data for this. Check the <a href="https://developers.nets.eu/netaxept/en-EU/docs/paytrail-direct-banks/">Netaxept Paytrail SDK doc</a> for more details.</p></li>
+<li><p>Paytrail requires a unique reference number which is formulated according to Finnish reference number standard <a href="www.fkl.fi">www.fkl.fi</a>. For more information click <a href="https://developers.nets.eu/netaxept/en-EU/api/reference-numbers/">here</a>.</p></li>
 </ul>
 
 <p>Here is the flow diagram for Paytrail payment:</p>
@@ -413,6 +425,27 @@
 <td style="text-align: center"><img src="./Resources/Paytrail.gif" alt=""></td>
 </tr>
 </tbody></table>
+<h5 id='netaxept-backend-integration-request-body-paytrail-payment-registration' class='heading'>Netaxept backend integration request body - Paytrail payment registration:</h5>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"merchantId"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"integer"</span><span class="p">,</span><span class="w"> 
+    </span><span class="nl">"token"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"orderNumber"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"amount"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"integer"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"currencyCode"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">  
+    </span><span class="nl">"redirectUrl"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"serviceType"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"B"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"paymentMethodActionList"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> 
+        </span><span class="nl">"PaymentMethod"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"bank selected by the customer, example PaytrailOPBankFinland or PaytrailAktiaFinland"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"customerEmail"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"customerFirstName"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"customerLastName"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"customerAddress1"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"customerPostCode"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"customerTown"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"customerCountry"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
 
 <p>Note: Netaxept backend integration tips can be found in <em>5.4 Backend Tips</em>,  <em>Request body - Paytrail payment registration</em> <a href="./54-backend-tips.html#request-body-paytrail-payment-registration">section</a></p>
 
@@ -423,7 +456,7 @@
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2022 <a class="link" href="https://nets.eu" target="_blank" rel="external">Nets</a>. All rights reserved. (Last updated: 2022-03-29)</p>
+      <p>&copy; 2022 <a class="link" href="https://nets.eu" target="_blank" rel="external">Nets</a>. All rights reserved. (Last updated: 2022-12-14)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

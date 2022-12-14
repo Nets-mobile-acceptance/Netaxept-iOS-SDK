@@ -59,6 +59,15 @@
                 <a class="nav-group-task-link" href="13-recurring-payments.html">1.3. Recurring payments</a>
               </li>
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="14-payment-without-security-code.html">1.4. Payment Without Security Code</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="15-s-business-card.html">1.5. S-Business Card</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="16-co-branded-card-danish-merchants-only.html">1.6. Co-Branded card (Danish merchants only)</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="2-saving-a-card.html">2. Saving a card</a>
               </li>
               <li class="nav-group-task">
@@ -89,13 +98,16 @@
                 <a class="nav-group-task-link" href="54-backend-tips.html">5.4. Backend Tips</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="6-licenses.html">6. Licenses</a>
+                <a class="nav-group-task-link" href="6-limitations.html">6. Limitations</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="7-changelog.html">7. Changelog</a>
+                <a class="nav-group-task-link" href="7-licenses.html">7. Licenses</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="8-get-in-touch.html">8. Get in touch</a>
+                <a class="nav-group-task-link" href="8-changelog.html">8. Changelog</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="9-get-in-touch.html">9. Get in touch</a>
               </li>
             </ul>
           </li>
@@ -397,24 +409,88 @@
 <p><strong>Note:</strong> This amount won&rsquo;t be charged to the user, this is for verifying purpose only due to the requirement from the issuer.</p>
 
 <p><strong>Note:</strong> During the process, if users change the camera permission or any of the application&rsquo;s permissions, the application will be restarted automatically by the system (according to Apple&rsquo;s policy and security reason).</p>
-<h2 id='limitations' class='heading'>Limitations</h2>
+<h5 id='netaxept-backend-integration-request-body-saving-em-card-em-for-em-easy-recurring-payment-em' class='heading'>Netaxept backend integration request body - Saving <em>card</em> for <em>Easy/Recurring Payment</em></h5>
 
-<p><strong>Known limitations in the SDK</strong></p>
+<p>Note: See <a href="https://developers.nets.eu/netaxept/en-EU/api/rest-v1/#netaxept-queryaspx-get" title="Netaxept">Netaxept</a> documentation for more details on this API. </p>
 
-<p><em>Card.IO Library - Scanner</em></p>
+<blockquote>
+<p>Test: <a href="https://test.epayment.nets.eu">https://test.epayment.nets.eu</a>
+Production: <a href="https://epayment.nets.eu">https://epayment.nets.eu</a>
+Path:  <strong>/netaxept/register.aspx</strong>
+Method: <strong><em>POST</em></strong></p>
+</blockquote>
 
-<ul>
-<li>Non-embossed cards cannot be scanned</li>
-<li>Expiry Date cannot always be scanned</li>
-<li>Supported card schemes: Visa, MasterCard, American Express (15 digits)</li>
-<li>Scanner preview is only supported in 640x480 resolution.</li>
-<li>In any other, the scanner fails to detect the card.</li>
-</ul>
-<h2 id='disable-card-scanner' class='heading'>Disable card scanner</h2>
+<p>Request body:</p>
+<pre class="highlight swift"><code><span class="c1">// Saving card for Easy payment</span>
+<span class="p">{</span>
+    <span class="s">"merchantId"</span> <span class="p">:</span> <span class="s">"integer"</span><span class="p">,</span> 
+    <span class="s">"token"</span> <span class="p">:</span> <span class="s">"string"</span><span class="p">,</span>
+    <span class="s">"orderNumber"</span> <span class="p">:</span> <span class="s">"string"</span><span class="p">,</span>
+    <span class="s">"currencyCode"</span> <span class="p">:</span> <span class="s">"string"</span><span class="p">,</span>  
+    <span class="s">"redirectUrl"</span> <span class="p">:</span> <span class="s">"string"</span><span class="p">,</span>
+    <span class="s">"serviceType"</span> <span class="p">:</span> <span class="s">"M"</span><span class="p">,</span>
+    <span class="s">"recurringType"</span> <span class="p">:</span> <span class="s">"S"</span><span class="p">,</span>
+    <span class="s">"force3DSecure"</span> <span class="p">:</span> <span class="s">"true"</span><span class="p">,</span>
+    <span class="s">"updateStoredPaymentInfo"</span> <span class="p">:</span> <span class="s">"true"</span>
+<span class="p">}</span> 
 
-<p>If you wish to disable card scanning functionality, you can toggle the following parameter within UI Customization API.</p>
-<pre class="highlight swift"><code><span class="kt">NPIInterfaceConfiguration</span><span class="o">.</span><span class="nf">sharedInstance</span><span class="p">()?</span><span class="o">.</span><span class="n">disableCardIO</span> <span class="o">=</span> <span class="kc">true</span>
+<span class="c1">// Saving card for Recurring payment</span>
+<span class="p">{</span>
+    <span class="s">"merchantId"</span> <span class="p">:</span> <span class="s">"integer"</span><span class="p">,</span>
+    <span class="s">"token"</span> <span class="p">:</span> <span class="s">"string"</span><span class="p">,</span>
+    <span class="s">"orderNumber"</span> <span class="p">:</span> <span class="s">"string"</span><span class="p">,</span>
+    <span class="s">"currencyCode"</span> <span class="p">:</span> <span class="s">"string"</span><span class="p">,</span>
+    <span class="s">"redirectUrl"</span> <span class="p">:</span> <span class="s">"string"</span><span class="p">,</span>
+    <span class="s">"serviceType"</span> <span class="p">:</span> <span class="s">"M"</span><span class="p">,</span>
+    <span class="s">"recurringType"</span> <span class="p">:</span> <span class="s">"R"</span><span class="p">,</span>
+    <span class="s">"recurringExpiryDate"</span> <span class="p">:</span> <span class="s">"YYYYMMDD"</span><span class="p">,</span>
+    <span class="s">"recurringFrequency"</span> <span class="p">:</span> <span class="s">"integer"</span><span class="p">,</span>
+    <span class="s">"force3DSecure"</span> <span class="p">:</span> <span class="s">"true"</span><span class="p">,</span>
+    <span class="s">"updateStoredPaymentInfo"</span> <span class="p">:</span> <span class="s">"true"</span>
+<span class="p">}</span>
 </code></pre>
+
+<p>Netaxept returns transaction ID following the above register call. In order to store the card, make a verify API call to Netaxept with the given transaction ID.</p>
+
+<p>(Query the status of the register call with Netaxept to retreive and store the Pan-hash associated with the card)</p>
+
+<blockquote>
+<p>Test: <a href="https://test.epayment.nets.eu">https://test.epayment.nets.eu</a>
+Production: <a href="https://epayment.nets.eu">https://epayment.nets.eu</a>
+Path:  <strong>/netaxept/process.aspx</strong>
+Method: <strong><em>POST</em></strong></p>
+</blockquote>
+
+<p>Request body: </p>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"merchantId"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"token"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"transactionId"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"operation"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"VERIFY"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>Use the <em>query</em> API to fetch the Pan Hash associated with the card once process VERIFY is successful.</p>
+<h3 id='query-transaction-status' class='heading'>Query transaction status</h3>
+
+<blockquote>
+<p>Test: <a href="https://test.epayment.nets.eu">https://test.epayment.nets.eu</a>
+Production: <a href="https://epayment.nets.eu">https://epayment.nets.eu</a>
+Path:  <strong>/netaxept/query.aspx</strong>
+Method: <strong><em>POST</em></strong></p>
+</blockquote>
+
+<p>Request body: </p>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"merchantId"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"token"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"transactionId"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>Note: See <a href="https://developers.nets.eu/netaxept/en-EU/api/rest-v1/#netaxept-queryaspx-get" title="Netaxept">Netaxept</a> documentation for more details on this API. </p>
+
+<p>Note: Netaxept backend integration tips can be found in <em>5.4 Backend Tips</em>,  <em>Easy/Recurring Payment</em> <a href="./54-backend-tips.html#registering-easy-Payment">section</a></p>
 
           </div>
         </section>
@@ -423,7 +499,7 @@
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2022 <a class="link" href="https://nets.eu" target="_blank" rel="external">Nets</a>. All rights reserved. (Last updated: 2022-03-29)</p>
+      <p>&copy; 2022 <a class="link" href="https://nets.eu" target="_blank" rel="external">Nets</a>. All rights reserved. (Last updated: 2022-12-14)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

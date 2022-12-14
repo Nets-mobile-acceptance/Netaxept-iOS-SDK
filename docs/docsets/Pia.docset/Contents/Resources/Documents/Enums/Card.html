@@ -60,6 +60,15 @@
                 <a class="nav-group-task-link" href="../13-recurring-payments.html">1.3. Recurring payments</a>
               </li>
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../14-payment-without-security-code.html">1.4. Payment Without Security Code</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../15-s-business-card.html">1.5. S-Business Card</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../16-co-branded-card-danish-merchants-only.html">1.6. Co-Branded card (Danish merchants only)</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../2-saving-a-card.html">2. Saving a card</a>
               </li>
               <li class="nav-group-task">
@@ -90,13 +99,16 @@
                 <a class="nav-group-task-link" href="../54-backend-tips.html">5.4. Backend Tips</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../6-licenses.html">6. Licenses</a>
+                <a class="nav-group-task-link" href="../6-limitations.html">6. Limitations</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../7-changelog.html">7. Changelog</a>
+                <a class="nav-group-task-link" href="../7-licenses.html">7. Licenses</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../8-get-in-touch.html">8. Get in touch</a>
+                <a class="nav-group-task-link" href="../8-changelog.html">8. Changelog</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../9-get-in-touch.html">9. Get in touch</a>
               </li>
             </ul>
           </li>
@@ -356,6 +368,7 @@
     <span class="n">CardMaestro</span> <span class="o">=</span> <span class="n">CardSchemeMaestro</span><span class="p">,</span>
     <span class="n">CardSBusiness</span> <span class="o">=</span> <span class="n">CardSchemeSBusiness</span><span class="p">,</span>
     <span class="n">CardCoBrandedDankort</span> <span class="o">=</span> <span class="n">CardSchemeCoBrandedDankort</span><span class="p">,</span>
+    <span class="n">CardForbrugsForeningen</span> <span class="o">=</span> <span class="n">CardSchemeForbrugsForeningen</span><span class="p">,</span>
     <span class="n">CardOther</span>
 <span class="cp">#define CardLastCase CardOther
 </span><span class="p">}</span></code></pre>
@@ -667,6 +680,38 @@
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/c:@E@Card@CardForbrugsForeningen"></a>
+                    <a name="//apple_ref/objc/Case/CardForbrugsForeningen" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@E@Card@CardForbrugsForeningen">CardForbrugsForeningen</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="n">CardForbrugsForeningen</span> <span class="o">=</span> <span class="n">CardSchemeForbrugsForeningen</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">forbrugsForeningen</span> <span class="o">=</span> <span class="mi">512</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/c:@E@Card@CardOther"></a>
                     <a name="//apple_ref/objc/Case/CardOther" class="dashAnchor"></a>
                     <a class="token" href="#/c:@E@Card@CardOther">CardOther</a>
@@ -689,7 +734,7 @@
                         </div>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">other</span> <span class="o">=</span> <span class="mi">257</span></code></pre>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">other</span> <span class="o">=</span> <span class="mi">513</span></code></pre>
 
                         </div>
                       </div>
@@ -704,7 +749,7 @@
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2022 <a class="link" href="https://nets.eu" target="_blank" rel="external">Nets</a>. All rights reserved. (Last updated: 2022-03-29)</p>
+      <p>&copy; 2022 <a class="link" href="https://nets.eu" target="_blank" rel="external">Nets</a>. All rights reserved. (Last updated: 2022-12-14)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

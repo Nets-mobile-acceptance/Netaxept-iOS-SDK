@@ -463,6 +463,7 @@ extension TokenizedCard {
             case let issuer where issuer.contains("Dankort"): return .dankort
             case let issuer where issuer.contains("Maestro"): return .maestro
             case let issuer where issuer.contains("SBusiness"): return .sBusiness
+            case let issuer where issuer.contains("DanishConsumerCard"): return .forbrugsForeningen
             default: return .other
             }
         }

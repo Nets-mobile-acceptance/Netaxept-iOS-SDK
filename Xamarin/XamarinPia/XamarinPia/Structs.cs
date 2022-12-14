@@ -37,6 +37,7 @@ namespace XamarinPia
         Jcb,
         Maestro,
         Sbusiness,
+        Forbrugsforeningen,
         Other
     }
 
@@ -107,7 +108,8 @@ namespace XamarinPia
         Dankort = 1 << 5,
         Maestro = 1 << 6,
         SBusiness = 1 << 7,
-        CoBrandedDankort = 1 << 8
+        CoBrandedDankort = 1 << 8,
+        ForbrugsForeningen = 1 << 9
     }
     
     [Native]
@@ -122,6 +124,7 @@ namespace XamarinPia
         Maestro = CardScheme.Maestro,
         SBusiness = CardScheme.SBusiness,
         CoBrandedDankort = CardScheme.CoBrandedDankort,
+        ForbrugsForeningen = CardScheme.ForbrugsForeningen,
         Other
     }
     
