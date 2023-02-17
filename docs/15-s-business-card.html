@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>8. Get in touch  Reference</title>
+    <title>1.5. S-Business Card  Reference</title>
     <link rel="stylesheet" type="text/css" href="css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="css/highlight.css" />
     <meta charset="utf-8">
@@ -15,7 +15,7 @@
   <body>
 
 
-    <a title="8. Get in touch  Reference"></a>
+    <a title="1.5. S-Business Card  Reference"></a>
 
     <header class="header">
       <p class="header-col header-col--primary">
@@ -37,7 +37,7 @@
     <p class="breadcrumbs">
       <a class="breadcrumb" href="index.html">Pia Reference</a>
       <img class="carat" src="img/carat.png" />
-      8. Get in touch  Reference
+      1.5. S-Business Card  Reference
     </p>
 
     <div class="content-wrapper">
@@ -57,6 +57,15 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="13-recurring-payments.html">1.3. Recurring payments</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="14-payment-without-security-code.html">1.4. Payment Without Security Code</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="15-s-business-card.html">1.5. S-Business Card</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="16-co-branded-card-danish-merchants-only.html">1.6. Co-Branded card (Danish merchants only)</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="2-saving-a-card.html">2. Saving a card</a>
@@ -89,13 +98,16 @@
                 <a class="nav-group-task-link" href="54-backend-tips.html">5.4. Backend Tips</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="6-licenses.html">6. Licenses</a>
+                <a class="nav-group-task-link" href="6-limitations.html">6. Limitations</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="7-changelog.html">7. Changelog</a>
+                <a class="nav-group-task-link" href="7-licenses.html">7. Licenses</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="8-get-in-touch.html">8. Get in touch</a>
+                <a class="nav-group-task-link" href="8-changelog.html">8. Changelog</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="9-get-in-touch.html">9. Get in touch</a>
               </li>
             </ul>
           </li>
@@ -342,9 +354,47 @@
         <section class="section">
           <div class="section-content top-matter">
             
-            <h1 id='get-in-touch' class='heading'>Get in touch</h1>
+            <h1 id='s-business-card' class='heading'>S-Business Card</h1>
 
-<p>If you have any question or feedback, please contact us via email: <a href="mailto:mobile-acceptance@nets.eu">mobile-acceptance@nets.eu</a>.</p>
+<p>The SDK offers a declarative API to instantiate a controller for S-Business card payment and card storage processes with result callbacks for <em>success</em>, <em>cancellation</em> and <em>failure</em>. Present this controller and handle the callbacks accordingly. </p>
+<pre class="highlight swift"><code>
+<span class="kt">PiaSDK</span><span class="o">.</span><span class="nf">controller</span><span class="p">(</span>
+    <span class="nv">for</span><span class="p">:</span> <span class="n">cardPayment</span><span class="o">.</span><span class="nf">sBusiness</span><span class="p">(),</span>
+    <span class="nv">success</span><span class="p">:</span> <span class="p">{</span> <span class="n">piaController</span><span class="p">,</span> <span class="n">transactionId</span> <span class="k">in</span>  <span class="p">},</span>        <span class="c1">// Commit the transaction with your merchant backend</span>
+    <span class="nv">cancellation</span><span class="p">:</span> <span class="p">{</span> <span class="n">piaController</span><span class="p">,</span> <span class="n">transactionId</span> <span class="k">in</span> <span class="p">},</span>    <span class="c1">// User canceled, rollback the transaction</span>
+    <span class="nv">failure</span><span class="p">:</span> <span class="p">{</span> <span class="n">piaController</span><span class="p">,</span> <span class="n">error</span> <span class="k">in</span><span class="p">}</span>                      <span class="c1">// Rollback transaction, check error object for detail. </span>
+<span class="p">)</span>
+</code></pre>
+
+<p>The following sample code demonstrates how registration results are returned to the SDK via callback. </p>
+<pre class="highlight swift"><code>
+<span class="n">fun</span> <span class="nf">registerCardPayment</span><span class="p">(</span><span class="n">userChoseToStoreCardForLater</span> <span class="nv">storeCard</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">,</span> <span class="nv">piaCallback</span><span class="p">:</span> <span class="p">(</span><span class="kt">TransactionID</span><span class="p">,</span> <span class="kt">RedirectURL</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span> <span class="p">{</span>
+
+    <span class="c1">// Make a card registration request with your backend to retrieve a transactionID and redirectURL.</span>
+    <span class="c1">// The SDK passes `true` for `storeCard` if the user has checked to store the card for later use. </span>
+
+    <span class="c1">// Callback with `transactionID` and `redirectURL` obtained from your merchant backend</span>
+    <span class="nf">callback</span><span class="p">(</span><span class="o">.</span><span class="nf">success</span><span class="p">(</span><span class="nv">withTransactionID</span><span class="p">:</span> <span class="n">response</span><span class="o">.</span><span class="n">transactionId</span><span class="p">,</span> <span class="nv">redirectURL</span><span class="p">:</span> <span class="n">response</span><span class="o">.</span><span class="n">redirectURL</span><span class="p">))</span>
+
+    <span class="c1">// If registration request failed with your backend, callback the SDK with the error. </span>
+    <span class="nf">callback</span><span class="p">(</span><span class="o">.</span><span class="nf">failure</span><span class="p">(</span><span class="n">error</span><span class="p">))</span>
+<span class="p">}</span>
+</code></pre>
+<h5 id='netaxept-backend-integration-request-body-s-business-card-payment-registration' class='heading'>Netaxept backend integration request body - S-Business Card Payment registration:</h5>
+
+<blockquote>
+<p>Make sure to add the below parameter along with all other required parameters for card payment registeration.</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"paymentMethodActionList"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> 
+        </span><span class="nl">"PaymentMethod"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"SBusinessCard"</span><span class="w"> 
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>Note: Netaxept backend integration tips can be found in <em>5.4 Backend Tips</em>,  <em>S-Business Card Payment registration</em> <a href="./54-backend-tips.html#s-business-card-payment-registration">section</a></p>
+
+<p><strong>Deprecated:</strong> <em>system authentication</em> is no longer used.  </p>
 
           </div>
         </section>
@@ -353,7 +403,7 @@
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2022 <a class="link" href="https://nets.eu" target="_blank" rel="external">Nets</a>. All rights reserved. (Last updated: 2022-03-29)</p>
+      <p>&copy; 2022 <a class="link" href="https://nets.eu" target="_blank" rel="external">Nets</a>. All rights reserved. (Last updated: 2022-12-14)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>
