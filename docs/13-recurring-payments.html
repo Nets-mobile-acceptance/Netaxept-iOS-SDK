@@ -357,7 +357,8 @@
             <h1 id='recurring-payments' class='heading'>Recurring payments</h1>
 
 <p>Note: To be used only for recurring transactions as per PSD2/SCA requirements 
-With this flow, customer saves card details during initial transaction for later subsequent charges by the merchant. Transaction can be account verification (using 2. Register flow) or actual purchase. Due to PSD2/SCA requirements the initial transaction must always be performed with 3D-Secure.</p>
+With this flow, customer saves card details during initial transaction for later subsequent charges by the merchant. Transaction can be account verification (using 2. Register flow) or actual purchase. Due to PSD2/SCA requirements the initial transaction must always be 
+  ed with 3D-Secure.</p>
 
 <p>The payment flow for recurring transactions is the same as the 1.2 easy payment flow, only a few parameters change as detailed below. You can refer to the sequence diagram presented in section 1.2 of this documentation.</p>
 
@@ -391,7 +392,7 @@ With this flow, customer saves card details during initial transaction for later
 <li>serviceType = &ldquo;M&rdquo;</li>
 </ul>
 
-<p>After the successful Register call, perform the Terminal phase and continue with the Process call choosing either operation AUTH and CAPTURE or SALE as with a regular transaction.</p>
+<p>After the successful Register call, perform the Terminal call and continue with the Process call choosing either operation AUTH and CAPTURE or SALE as with a regular transaction.</p>
 
 <p>As per PSD2/SCA guidelines, 3D-Secure will be bypassed on all subsequent recurring transactions.</p>
 <h4 id='netaxept-backend-integration-request-body-registering-recurring-payment' class='heading'>Netaxept backend integration request body - Registering Recurring Payment</h4>
