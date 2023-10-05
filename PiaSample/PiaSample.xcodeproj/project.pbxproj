@@ -17,7 +17,7 @@
 		7547DB7F204FDF8000C280AC /* PiaSampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7547DB7E204FDF8000C280AC /* PiaSampleTests.swift */; };
 		7547DB8A204FDF8000C280AC /* PiaSampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7547DB89204FDF8000C280AC /* PiaSampleUITests.swift */; };
 		7554A34D2056BF7100773403 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		9A3B9838D038A9CDB1E16BD2 /* Pia.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF04373AA1FD7A1D83A575CD /* Pia.xcframework */; };
+		93D4BD7A2B1AC50A3A6C49E4 /* Pia.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 500EA8C880929F46A4F7155E /* Pia.xcframework */; };
 		A30AC93D237AC11E00B8FF62 /* SampleOrderDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30AC922237AC11E00B8FF62 /* SampleOrderDetails.swift */; };
 		A30AC93E237AC11E00B8FF62 /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30AC924237AC11E00B8FF62 /* SignupViewController.swift */; };
 		A30AC93F237AC11E00B8FF62 /* CheckoutController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30AC925237AC11E00B8FF62 /* CheckoutController.swift */; };
@@ -43,7 +43,7 @@
 		A30AC953237AC11E00B8FF62 /* MerchantDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30AC93C237AC11E00B8FF62 /* MerchantDefaults.swift */; };
 		A30AC99A238D2C2B00B8FF62 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30AC999238D2C2B00B8FF62 /* Colors.swift */; };
 		A377E3D523CCA4990026F112 /* ApplePayIntegration.swift in Sources */ = {isa = PBXBuildFile; fileRef = A377E3D423CCA4990026F112 /* ApplePayIntegration.swift */; };
-		CFB30C5D4CD152D687897FF1 /* Pia.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BF04373AA1FD7A1D83A575CD /* Pia.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		C76BAE46D9184D6060AD021B /* Pia.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 500EA8C880929F46A4F7155E /* Pia.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E5F4F8AE27E06C9EA567BCB2 /* Pods_PiaSampleUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EF911800CEB5C1F14FC0BF7 /* Pods_PiaSampleUITests.framework */; };
 		FB8389986800864C6F045126 /* Pods_PiaSampleTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F856BF6102DF1DFD0EC41584 /* Pods_PiaSampleTests.framework */; };
 /* End PBXBuildFile section */
@@ -72,7 +72,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				CFB30C5D4CD152D687897FF1 /* Pia.xcframework in Embed Frameworks */,
+				C76BAE46D9184D6060AD021B /* Pia.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -87,6 +87,7 @@
 		350B086B20F5E65E009470AC /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		350B086C20F5E65E009470AC /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/Localizable.strings; sourceTree = "<group>"; };
 		35FF4008213EA8D30095BB88 /* PiaSample.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PiaSample.entitlements; sourceTree = "<group>"; };
+		500EA8C880929F46A4F7155E /* Pia.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; name = Pia.xcframework; path = ../libs/Pia.xcframework; sourceTree = "<group>"; };
 		5F338E6D20DD321500B3E608 /* ro */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ro; path = ro.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		5F338E9D20E13B1C00B3E608 /* ro */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ro; path = ro.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5F338EA220E13B1D00B3E608 /* ro */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ro; path = ro.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -141,7 +142,6 @@
 		A30AC999238D2C2B00B8FF62 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		A377E3D423CCA4990026F112 /* ApplePayIntegration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplePayIntegration.swift; sourceTree = "<group>"; };
 		A377E41623DF2AAD0026F112 /* LICENSE.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = LICENSE.md; sourceTree = "<group>"; };
-		BF04373AA1FD7A1D83A575CD /* Pia.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; name = Pia.xcframework; path = ../libs/Pia.xcframework; sourceTree = "<group>"; };
 		F856BF6102DF1DFD0EC41584 /* Pods_PiaSampleTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PiaSampleTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -151,7 +151,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7554A34D2056BF7100773403 /* BuildFile in Frameworks */,
-				9A3B9838D038A9CDB1E16BD2 /* Pia.xcframework in Frameworks */,
+				93D4BD7A2B1AC50A3A6C49E4 /* Pia.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -187,7 +187,7 @@
 		6EA791B6237979AC0019757B /* libs */ = {
 			isa = PBXGroup;
 			children = (
-				BF04373AA1FD7A1D83A575CD /* Pia.xcframework */,
+				500EA8C880929F46A4F7155E /* Pia.xcframework */,
 			);
 			name = libs;
 			path = ../../libs;
@@ -761,13 +761,13 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 200;
+				CURRENT_PROJECT_VERSION = 201;
 				DEVELOPMENT_TEAM = EGNFYS6P3L;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = PiaSample/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 2.7.0;
+				MARKETING_VERSION = 2.7.1;
 				PRODUCT_BUNDLE_IDENTIFIER = eu.nets.mcommerce.PiA.PiaSample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = Nets_PiA_Sample_Development;
@@ -788,13 +788,13 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 200;
+				CURRENT_PROJECT_VERSION = 201;
 				DEVELOPMENT_TEAM = EGNFYS6P3L;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = PiaSample/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 2.7.0;
+				MARKETING_VERSION = 2.7.1;
 				PRODUCT_BUNDLE_IDENTIFIER = eu.nets.mcommerce.PiA.PiaSample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = Nets_PiA_Sample_Development;
