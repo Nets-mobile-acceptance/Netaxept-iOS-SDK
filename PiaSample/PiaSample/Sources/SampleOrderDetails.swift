@@ -19,6 +19,8 @@ protocol ApplePayOrderDetails {
 /// Apple pay networks supported by merchant
 let supportedApplePayNetworks: [PKPaymentNetwork] = {
     var networks: [PKPaymentNetwork] = [.visa, .masterCard, .discover, .amex]
+    // ApplePay supports Dankort on iOS 15.4 onwards
+    if #available(iOS 15.4, *) { networks.append(.dankort) }
     return networks
 }()
 

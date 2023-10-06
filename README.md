@@ -1,4 +1,4 @@
-# PiA - Netaxept iOS SDK v2.7.1
+# PiA - Netaxept iOS SDK v2.7.2
 
 ![](./Resources/NetsLogo.jpg)
 
@@ -117,7 +117,7 @@ done
 ```
 
 ## Contact
-If you have any question or feedback, please contact us via email: in-app-support@nets.eu.
+If you have any question or feedback, please contact us via email: mobile-acceptance@nets.eu.
 
 License
 ----
