@@ -1,6 +1,6 @@
 # PiA - Netaxept iOS SDK v2.7.2
 
-![](./Resources/NetsLogo.jpg)
+![](./Resource/NetsLogo.jpg)
 
 ## Getting started
 
@@ -10,7 +10,7 @@ PiA - Netaxept Mobile SDK Android can be found [here](https://github.com/Nets-mo
 
 Detailed documentation can be found [here](https://nets-mobile-acceptance.github.io/Netaxept-iOS-SDK/).
 
-| ![](./Resources/pia-demo.gif)  | 
+| ![](./Resource/pia-demo.gif)  | 
 | --- |
 
 ## Sample Project
@@ -117,7 +117,7 @@ done
 ```
 
 ## Contact
-If you have any question or feedback, please contact us via email: mobile-acceptance@nets.eu.
+If you have any question or feedback, please contact us via email: in-app-support@nets.eu.
 
 License
 ----
