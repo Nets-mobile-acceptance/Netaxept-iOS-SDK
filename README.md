@@ -1,4 +1,4 @@
-# PiA - Netaxept iOS SDK v2.7.2
+# PiA - Netaxept iOS SDK v2.7.3
 
 ![](./Resource/NetsLogo.jpg)
 
@@ -37,6 +37,23 @@ Value  :  $(PRODUCT_NAME) camera us
 ```
 
 ## Installation
+### Swift Package Manager
+
+You can use Swift Package Manager to integrate PiaSDK into your Xcode project.
+
+* In Xcode, select "File" > "Swift Packages" > "Add Package Dependency...".
+* Enter the URL of this repository: `https://github.com/Nets-mobile-acceptance/Netaxept-iOS-SDK`.
+* Specify the version rule as desired (e.g., `from: "2.7.3"`) or use main branch
+* Click "Next" and then "Finish".
+
+**Usage:**
+
+* Import the SDK module into your Swift file:
+
+   ```swift
+   import Pia
+    ```
+    
 ### Carthage
 **NOTE: If this is the first time you are using Carthage, please refer to this [guide](https://github.com/Carthage/Carthage#adding-frameworks-to-an-application) for correct installation.**
 

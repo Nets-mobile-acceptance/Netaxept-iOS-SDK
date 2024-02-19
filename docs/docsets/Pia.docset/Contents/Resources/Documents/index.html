@@ -354,9 +354,9 @@
         <section class="section">
           <div class="section-content top-matter">
             
-            <h1 id='pia-netaxept-ios-sdk-v2-7-2' class='heading'>PiA - Netaxept iOS SDK v2.7.2</h1>
+            <h1 id='pia-netaxept-ios-sdk-v2-7-3' class='heading'>PiA - Netaxept iOS SDK v2.7.3</h1>
 
-<p><img src="./Resources/NetsLogo.jpg" alt=""></p>
+<p><img src="./Resource/NetsLogo.jpg" alt=""></p>
 <h2 id='getting-started' class='heading'>Getting started</h2>
 
 <p>PiA Netaxept iOS SDK is a library that provides the native in-app interactions to accept payments with Netaxept directly from native iOS apps while minimizing PCI DSS requirements for you.</p>
@@ -367,7 +367,7 @@
 
 <table><thead>
 <tr>
-<th><img src="./Resources/pia-demo.gif" alt=""></th>
+<th><img src="./Resource/pia-demo.gif" alt=""></th>
 </tr>
 </thead><tbody>
 </tbody></table>
@@ -397,60 +397,76 @@
 Value  :  $(PRODUCT_NAME) camera us
 </code></pre>
 <h2 id='installation' class='heading'>Installation</h2>
-<h3 id='carthage' class='heading'>Carthage</h3>
+<h3 id='swift-package-manager' class='heading'>Swift Package Manager</h3>
 
-<p><strong>NOTE: If this is the first time you are using Carthage, please refer to this <a href="https://github.com/Carthage/Carthage#adding-frameworks-to-an-application">guide</a> for correct installation.</strong></p>
-
-<p>If you do not have Carthage yet, refer to this <a href="https://github.com/Carthage/Carthage">link</a> for complete instruction from Carthage.</p>
+<p>You can use Swift Package Manager to integrate PiaSDK into your Xcode project.</p>
 
 <ul>
-<li>Make the following entry in your Cartfile:</li>
+<li>In Xcode, select &ldquo;File&rdquo; &gt; &ldquo;Swift Packages&rdquo; &gt; &ldquo;Add Package Dependency&hellip;&rdquo;.</li>
+<li>Enter the URL of this repository: <code>https://github.com/Nets-mobile-acceptance/Netaxept-iOS-SDK</code>.</li>
+<li>Specify the version rule as desired (e.g., <code>from: &quot;2.7.3&quot;</code>) or use main branch</li>
+<li>Click &ldquo;Next&rdquo; and then &ldquo;Finish&rdquo;.</li>
 </ul>
-<pre class="highlight plaintext"><code>github "Nets-mobile-acceptance/Netaxept-iOS-SDK"
+
+<p><strong>Usage:</strong></p>
+
+<ul>
+<li>Import the SDK module into your Swift file:</li>
+</ul>
+<pre class="highlight swift"><code>   <span class="kd">import</span> <span class="kt">Pia</span>
+    <span class="err">```</span>
+
+<span class="cp">### Carthage</span>
+<span class="o">**</span><span class="kt">NOTE</span><span class="p">:</span> <span class="kt">If</span> <span class="n">this</span> <span class="k">is</span> <span class="n">the</span> <span class="n">first</span> <span class="n">time</span> <span class="n">you</span> <span class="n">are</span> <span class="n">using</span> <span class="kt">Carthage</span><span class="p">,</span> <span class="n">please</span> <span class="n">refer</span> <span class="n">to</span> <span class="n">this</span> <span class="p">[</span><span class="n">guide</span><span class="p">](</span><span class="nv">https</span><span class="p">:</span><span class="c1">//github.com/Carthage/Carthage#adding-frameworks-to-an-application) for correct installation.**</span>
+
+<span class="kt">If</span> <span class="n">you</span> <span class="k">do</span> <span class="n">not</span> <span class="n">have</span> <span class="kt">Carthage</span> <span class="n">yet</span><span class="p">,</span> <span class="n">refer</span> <span class="n">to</span> <span class="n">this</span> <span class="p">[</span><span class="n">link</span><span class="p">](</span><span class="nv">https</span><span class="p">:</span><span class="c1">//github.com/Carthage/Carthage) for complete instruction from Carthage.</span>
+
+<span class="o">*</span> <span class="kt">Make</span> <span class="n">the</span> <span class="n">following</span> <span class="n">entry</span> <span class="k">in</span> <span class="n">your</span> <span class="kt">Cartfile</span><span class="p">:</span>
+
 </code></pre>
 
-<ul>
-<li>Run <code>carthage update</code>.</li>
-<li>Go inside your project&rsquo;s folder in Carthage/Checkouts/Netaxept-iOS-SDK and unzip PiaSDKFramework.zip.</li>
-<li>Go to your project&rsquo;s target General tab and drag the Pia.framework into the Linked Frameworks and Libraries section.</li>
-<li>Add Pia.framework to Embedded Binaries from the General tab.</li>
-</ul>
-<h3 id='manually' class='heading'>Manually</h3>
+<p>github &ldquo;Nets-mobile-acceptance/Netaxept-iOS-SDK&rdquo;</p>
+<pre class="highlight plaintext"><code>
+* Run `carthage update`.
+* Go inside your project's folder in Carthage/Checkouts/Netaxept-iOS-SDK and unzip PiaSDKFramework.zip.
+* Go to your project's target General tab and drag the Pia.framework into the Linked Frameworks and Libraries section.
+* Add Pia.framework to Embedded Binaries from the General tab.
 
-<ul>
-<li>Download/clone this <a href="https://github.com/Nets-mobile-acceptance/Netaxept-iOS-SDK.git">https://github.com/Nets-mobile-acceptance/Netaxept-iOS-SDK.git</a></li>
-<li>Unzip <strong>PiaSDKFramework.zip</strong> to obtain <strong>Pia.framework</strong>.</li>
-<li>Drag and drop <strong>Pia.framework</strong> to your project.</li>
-<li>Go to your project target at Build Phases.</li>
-<li>Add Pia.framework to Link Binary With Libraries.</li>
-<li>Add Pia.framework to Embedded Binaries from the General tab.</li>
-</ul>
 
-<p>Xcode 11+ users can now replace <strong>Pia.framework</strong> in Xcode-Targets Frameworks, Libraries and Embedded Contents with <strong>Pia.XCFramework</strong> for iOS and iOS Simulator architectures.</p>
-<h3 id='note' class='heading'>NOTE</h3>
+### Manually
+* Download/clone this https://github.com/Nets-mobile-acceptance/Netaxept-iOS-SDK.git
+* Unzip **PiaSDKFramework.zip** to obtain **Pia.framework**.
+* Drag and drop **Pia.framework** to your project.
+* Go to your project target at Build Phases.
+* Add Pia.framework to Link Binary With Libraries.
+* Add Pia.framework to Embedded Binaries from the General tab.
 
-<p>Because of enabling Bitcode, the framework size exceeds the 100MB limit of GitHub uploading policy.</p>
+Xcode 11+ users can now replace **Pia.framework** in Xcode-Targets Frameworks, Libraries and Embedded Contents with **Pia.XCFramework** for iOS and iOS Simulator architectures.
 
-<p>One option is to use Carthage for automated installation.</p>
+### NOTE
+Because of enabling Bitcode, the framework size exceeds the 100MB limit of GitHub uploading policy.
 
-<p>Alternatively, if you wish to install the SDK manually, please refer to the following walk-around for uploading to GitHub:</p>
+One option is to use Carthage for automated installation.
 
-<ol>
-<li>Add &ldquo;Pia.framework&rdquo; to your <strong>.gitignore</strong> list</li>
-<li>Use <a href="https://git-lfs.github.com/">GitHub large file system</a> to continue uploading framework within your working project</li>
-</ol>
-<h2 id='frequently-asked-questions' class='heading'>Frequently Asked Questions</h2>
+Alternatively, if you wish to install the SDK manually, please refer to the following walk-around for uploading to GitHub:
+1. Add "Pia.framework" to your **.gitignore** list
+2. Use [GitHub large file system](https://git-lfs.github.com/) to continue uploading framework within your working project
 
-<p>If you encounter any blockers when integrating the <code>Netaxept - iOS SDK</code>, feel free to check the <a href="https://nets-mobile-acceptance.github.io/Netaxept-iOS-SDK/53-faqs.html">Frequently Asked Questions</a> page. If any of these answers does not fit your question, don&rsquo;t hesitate to <a href="#contact">contact us</a>.</p>
-<h2 id='usage' class='heading'>Usage</h2>
+## Frequently Asked Questions
+If you encounter any blockers when integrating the `Netaxept - iOS SDK`, feel free to check the [Frequently Asked Questions](https://nets-mobile-acceptance.github.io/Netaxept-iOS-SDK/53-faqs.html) page. If any of these answers does not fit your question, don't hesitate to [contact us](#contact).
 
-<p>After setup is ready, using PiA SDK is easy. For full references, please check our detailed <a href="https://nets-mobile-acceptance.github.io/Netaxept-iOS-SDK/"><strong>documentation</strong></a>.</p>
-<h2 id='integration-run-script' class='heading'>Integration - Run Script</h2>
+## Usage
+After setup is ready, using PiA SDK is easy. For full references, please check our detailed [**documentation**](https://nets-mobile-acceptance.github.io/Netaxept-iOS-SDK/).
 
-<p>To assist integration of <code>Pia.framework</code> in your project, navigate to the project&rsquo;s target (under TARGETS) in Xcode and add the following <em>Run Script</em> in <em>Build Phases</em> section. If you want to avoid the error when running on simulator, please also check the box for this. Note: Run script only when installing!</p>
 
-<p>Note: Make sure the run script is added after the <code>Embedded Framewoks</code> phase</p>
-<pre class="highlight plaintext"><code>APP_PATH="${TARGET_BUILD_DIR}/${WRAPPER_NAME}" 
+## Integration - Run Script
+
+To assist integration of `Pia.framework` in your project, navigate to the project's target (under TARGETS) in Xcode and add the following _Run Script_ in _Build Phases_ section. If you want to avoid the error when running on simulator, please also check the box for this. Note: Run script only when installing!
+
+Note: Make sure the run script is added after the ```Embedded Framewoks``` phase
+
+```objective-C
+APP_PATH="${TARGET_BUILD_DIR}/${WRAPPER_NAME}" 
 # This script loops through the frameworks embedded in the application and 
 # removes unused architectures. 
 find "$APP_PATH" -name 'Pia.framework' -type d | while read -r FRAMEWORK 
@@ -480,7 +496,7 @@ done
 </code></pre>
 <h2 id='contact' class='heading'>Contact</h2>
 
-<p>If you have any question or feedback, please contact us via email: <a href="mailto:mobile-acceptance@nets.eu">mobile-acceptance@nets.eu</a>.</p>
+<p>If you have any question or feedback, please contact us via email: <a href="mailto:in-app-support@nets.eu">in-app-support@nets.eu</a>.</p>
 <h2 id='license' class='heading'>License</h2>
 
 <p>**<strong><em>Copyright &copy; 2019 Nets Denmark A/S</em></strong>**</p>
@@ -506,7 +522,7 @@ done
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2023 <a class="link" href="https://nets.eu" target="_blank" rel="external noopener">Nets</a>. All rights reserved. (Last updated: 2023-10-06)</p>
+      <p>&copy; 2024 <a class="link" href="https://nets.eu" target="_blank" rel="external noopener">Nets</a>. All rights reserved. (Last updated: 2024-02-19)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
     </section>
   </body>
