@@ -11,7 +11,7 @@ let package = Package(
       .binaryTarget(
          name: "Pia",
          url: "https://github.com/Nets-mobile-acceptance/Netaxept-iOS-SDK/raw/master/Pia.xcframework.zip",
-         checksum: "06b15383b28b7f4a369522093a1d9dc222ec8ebf685da6f7eed511f019a73544"
+         checksum: "f4ed742a79f2c8858ff1252057717f0aff5cc18353dd10574c6cb1dececca20c"
       )
    ]
 )
