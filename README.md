@@ -1,4 +1,4 @@
-# PiA - Netaxept iOS SDK v2.7.4
+# PiA - Netaxept iOS SDK v2.7.5
 
 ![](./Resource/NetsLogo.jpg)
 
@@ -43,7 +43,7 @@ You can use Swift Package Manager to integrate PiaSDK into your Xcode project.
 
 * In Xcode, select "File" > "Swift Packages" > "Add Package Dependency...".
 * Enter the URL of this repository: `https://github.com/Nets-mobile-acceptance/Netaxept-iOS-SDK`.
-* Specify the version rule as desired (e.g., `from: "2.7.4"`) or use main branch
+* Specify the version rule as desired (e.g., `from: "2.7.5"`) or use main branch
 * Click "Next" and then "Finish".
 
 **Usage:**
