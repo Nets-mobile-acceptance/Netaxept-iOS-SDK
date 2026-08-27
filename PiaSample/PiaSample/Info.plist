@@ -69,10 +69,6 @@
 	<string>To scan credit card</string>
 	<key>NSFaceIDUsageDescription</key>
 	<string>$(PRODUCT_NAME) uses Face ID to confirm payment</string>
-	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>$(PRODUCT_NAME) uses Photo Library</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>$(PRODUCT_NAME) uses Photo Library</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
